@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pwanistays.com/sitemap.xml

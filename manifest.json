@@ -1,0 +1,26 @@
+{
+  "name": "PwaniStays",
+  "short_name": "PwaniStays",
+  "description": "Luxury coastal stays in Kenya",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d7a5f",
+  "theme_color": "#0d7a5f",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/color/96/000000/beach-umbrella.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/color/192/000000/beach-umbrella.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/color/512/000000/beach-umbrella.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

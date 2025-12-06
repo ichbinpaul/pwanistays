@@ -1,0 +1,2555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="PwaniStays.com - Luxury coastal accommodation in Kenya. Book beachfront villas, apartments & resorts in Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu. Airport transfers & coastal experiences included.">
+    <meta name="keywords" content="kenya beach accommodation, mombasa luxury villas, diani beach resorts, watamu hotels, nyali apartments, bamburi beach houses, shanzu vacation rentals, coastal kenya tourism, airport transfers mombasa, safari coastal packages">
+    <meta name="author" content="PwaniStays - Kenyan Coastal Experts">
+    <title>PwaniStays.com | Luxury Coastal Accommodation Kenya | Beach Villas & Resorts</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pwanistays.com/">
+    <meta property="og:title" content="PwaniStays.com | Your Premium Coastal Stay in Kenya">
+    <meta property="og:description" content="Experience luxury beachfront living in Kenya. From Mombasa to Diani, Watamu to Nyali - premium accommodation with airport transfers & local experiences.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:locale" content="en_KE">
+    <meta property="og:site_name" content="PwaniStays.com">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@PwaniStays">
+    <meta name="twitter:creator" content="@PwaniStays">
+    <meta name="twitter:title" content="PwaniStays.com | Luxury Coastal Stays in Kenya">
+    <meta name="twitter:description" content="Premium beachfront accommodation across the Kenyan coast with seamless transfers & authentic experiences.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    
+    <!-- Preload hero image -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" media="(min-width: 768px)">
+    
+    <!-- Inline Critical CSS -->
+    <style>
+        :root {
+            --primary: #0d7a5f;
+            --primary-light: #0f9b7a;
+            --secondary: #f8b400;
+            --dark: #1a2b3c;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+            background: #fff;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* FIXED: Logo alignment - icon and text on same line */
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            line-height: 1;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            display: inline-block;
+            line-height: 1;
+            margin: 0;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            font-weight: 600;
+            line-height: 1;
+            margin: 0;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        /* REMOVED: Currency Indicator styles */
+        
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .btn-book {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-book:hover {
+            background: #e09c00;
+            transform: translateY(-2px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+            padding: 0 20px;
+        }
+        
+        .hero-content h2 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Search Box */
+        .search-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .search-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .search-input i {
+            color: var(--primary);
+            min-width: 20px;
+        }
+        
+        .search-input select,
+        .search-input input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            background: transparent;
+            font-family: inherit;
+        }
+        
+        .search-btn-container {
+            grid-column: span 4;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            min-width: 200px;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(13, 122, 95, 0.3);
+        }
+        
+        /* Section Common Styles */
+        section {
+            padding: 100px 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Services Section */
+        .services {
+            background: var(--light);
+        }
+        
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 40px 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-light);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+        
+        .service-card p {
+            color: var(--gray);
+        }
+        
+        /* Featured Stays */
+        .featured-stays {
+            background: white;
+        }
+        
+        .stays-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+        }
+        
+        .stay-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .stay-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .stay-img {
+            height: 200px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 3rem;
+        }
+        
+        .stay-content {
+            padding: 25px;
+        }
+        
+        .stay-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .stay-location {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stay-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--gray);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .stay-features span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .amenities {
+            margin: 15px 0;
+            min-height: 40px;
+        }
+        
+        .amenity-tag {
+            display: inline-block;
+            background: #f0f8f4;
+            color: #0d7a5f;
+            padding: 4px 10px;
+            margin: 2px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .stay-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .price-amount {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .price-period {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .view-all {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Why Choose Us */
+        .why-us {
+            background: var(--light);
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .testimonials-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial-slider {
+            position: relative;
+            overflow: hidden;
+            height: 300px;
+        }
+        
+        .testimonial-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .testimonial-slide.active {
+            opacity: 1;
+        }
+        
+        .testimonial-content {
+            text-align: center;
+            max-width: 800px;
+        }
+        
+        .testimonial-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .testimonial-content p::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-light);
+            position: absolute;
+            top: -20px;
+            left: -30px;
+            opacity: 0.3;
+        }
+        
+        .testimonial-author h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .testimonial-author p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .rating {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .testimonial-prev,
+        .testimonial-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        
+        .testimonial-prev:hover,
+        .testimonial-next:hover {
+            background: var(--primary-light);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .testimonial-prev {
+            left: -70px;
+        }
+        
+        .testimonial-next {
+            right: -70px;
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .testimonial-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .testimonial-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+        
+        /* Destinations */
+        .destinations {
+            background: white;
+        }
+        
+        .destinations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .destination-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .destination-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            color: white;
+        }
+        
+        .destination-image h3 {
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .destination-content {
+            padding: 25px;
+        }
+        
+        .destination-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .btn-small {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn-small:hover {
+            background: var(--primary-light);
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: white;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 5px;
+            min-width: 24px;
+        }
+        
+        .contact-item h3 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-item p {
+            color: var(--gray);
+        }
+        
+        .contact-item a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        
+        small {
+            display: block;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-form h3 {
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 122, 95, 0.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-light);
+        }
+        
+        /* Footer - FIXED: Logo alignment */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            color: white;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-col ul li a {
+            transition: var(--transition);
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        /* FIXED: Footer logo alignment */
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .footer-logo-icon {
+            font-size: 2rem;
+            color: white;
+            line-height: 1;
+        }
+        
+        .footer-logo h2 {
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 600;
+            line-height: 1;
+            margin: 0;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+        
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .search-box {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-btn-container {
+                grid-column: span 1;
+            }
+            
+            .testimonial-prev {
+                left: 10px;
+            }
+            
+            .testimonial-next {
+                right: 10px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .testimonial-slider {
+                height: 400px;
+            }
+            
+            section {
+                padding: 80px 5%;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                margin-top: 70px;
+                padding: 0 15px;
+            }
+            
+            .search-box {
+                padding: 20px;
+            }
+            
+            .contact-form {
+                padding: 30px 20px;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .testimonial-content p {
+                font-size: 1rem;
+            }
+            
+            .footer-logo {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .footer-logo h2 {
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus styles */
+        :focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        /* IMPROVED: Calendar Date Picker Styles - FIXED BACKGROUND COLOR */
+        .calendar-overlay {
+            display: none;
+            position: absolute;
+            background: #f8f9fa; /* Changed from white to light gray for better contrast */
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1000;
+            padding: 20px;
+            width: 320px;
+            border: 2px solid var(--primary);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .calendar-header h4 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        .calendar-header button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .calendar-header button:hover {
+            background: var(--primary-light);
+            transform: scale(1.1);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day {
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border: 1px solid transparent;
+            color: var(--dark); /* Added text color for visibility */
+            background: #ffffff; /* Added white background for days */
+        }
+        
+        .calendar-day:hover {
+            background: #e8f4f1;
+            border-color: var(--primary-light);
+        }
+        
+        .calendar-day.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(13, 122, 95, 0.3);
+        }
+        
+        .calendar-day.between {
+            background: #e8f4f1;
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+        
+        .calendar-day.disabled {
+            color: #aaa; /* Lighter gray for disabled dates */
+            cursor: not-allowed;
+            background: #f0f0f0; /* Light gray background for disabled */
+        }
+        
+        .calendar-day.disabled:hover {
+            background: #f0f0f0;
+            border-color: transparent;
+        }
+        
+        .calendar-day.today {
+            background: var(--secondary);
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .calendar-day-header {
+            padding: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 5px;
+            background: #f8f9fa; /* Match calendar background */
+        }
+    </style>
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          media="print" onload="this.media='all'" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/color/96/000000/beach-umbrella.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pwanistays.com">
+    
+    <!-- Theme color -->
+    <meta name="theme-color" content="#0d7a5f">
+</head>
+<body>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20need%20help%20with%20a%20booking" 
+       class="whatsapp-float" 
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <!-- REMOVED: Currency Indicator element -->
+
+    <!-- Header -->
+    <header role="banner">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="#home" class="logo-link">
+                <div class="logo">
+                    <span class="logo-icon" role="img" aria-label="Beach umbrella">🏝️</span>
+                    <h1>Pwani<span>Stays</span>.com</h1>
+                </div>
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="#home" class="active" role="menuitem">Home</a></li>
+                <li role="none"><a href="#stays" role="menuitem">Stays</a></li>
+                <li role="none"><a href="#services" role="menuitem">Services</a></li>
+                <li role="none"><a href="#about" role="menuitem">About</a></li>
+                <li role="none"><a href="#testimonials" role="menuitem">Testimonials</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                <li role="none"><a href="#book-now" class="btn-book" role="menuitem">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home" role="region" aria-label="Hero section">
+        <div class="hero-content">
+            <h1 class="sr-only">PwaniStays - Luxury Coastal Accommodation in Kenya</h1>
+            <h2>Experience Luxury on the Kenyan Coast</h2>
+            <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
+            
+            <!-- Enhanced Search Box -->
+            <div class="search-box" role="search">
+                <div class="search-input">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <select id="searchLocation" aria-label="Select destination">
+                        <option value="">Select Destination</option>
+                        <option value="mombasa">Mombasa</option>
+                        <option value="nyali">Nyali</option>
+                        <option value="bamburi">Bamburi</option>
+                        <option value="shanzu">Shanzu</option>
+                        <option value="diani">Diani</option>
+                        <option value="watamu">Watamu</option>
+                        <option value="kilifi">Kilifi</option>
+                    </select>
+                </div>
+                <div class="search-input">
+                    <i class="fas fa-calendar" aria-hidden="true"></i>
+                    <input type="text" placeholder="Check-in Date" id="checkinDate" aria-label="Check-in date" readonly onclick="showCalendar(this, 'checkin')">
+                </div>
+                <div class="search-input">
+                    <i class="fas fa-calendar" aria-hidden="true"></i>
+                    <input type="text" placeholder="Check-out Date" id="checkoutDate" aria-label="Check-out date" readonly onclick="showCalendar(this, 'checkout')">
+                </div>
+                <div class="search-input">
+                    <i class="fas fa-user-friends" aria-hidden="true"></i>
+                    <input type="number" placeholder="Guests" id="searchGuests" aria-label="Number of guests" min="1" max="20" value="2">
+                </div>
+                <div class="search-btn-container">
+                    <button class="search-btn" onclick="searchStays()" aria-label="Search stays">
+                        <i class="fas fa-search" aria-hidden="true"></i> Search Stays
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Calendar Container -->
+            <div id="calendarContainer" class="calendar-overlay"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services" role="region" aria-label="Our services">
+        <div class="section-title">
+            <h2>Complete Coastal Experience</h2>
+            <p>End-to-end travel solutions for your Kenyan coastal vacation</p>
+        </div>
+        <div class="services-container">
+            <div class="service-card" role="article">
+                <div class="service-icon">
+                    <i class="fas fa-water" aria-hidden="true"></i>
+                </div>
+                <h3>Beachfront Luxury</h3>
+                <p>Exclusive beachfront villas and apartments with direct ocean access across all major Kenyan coastal destinations.</p>
+            </div>
+            <div class="service-card" role="article">
+                <div class="service-icon">
+                    <i class="fas fa-plane-arrival" aria-hidden="true"></i>
+                </div>
+                <h3>Seamless Transfers</h3>
+                <p>Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service.</p>
+            </div>
+            <div class="service-card" role="article">
+                <div class="service-icon">
+                    <i class="fas fa-ship" aria-hidden="true"></i>
+                </div>
+                <h3>Marine Experiences</h3>
+                <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides.</p>
+            </div>
+            <div class="service-card" role="article">
+                <div class="service-icon">
+                    <i class="fas fa-concierge-bell" aria-hidden="true"></i>
+                </div>
+                <h3>24/7 Local Support</h3>
+                <p>Dedicated local hosts available round-the-clock in English, Swahili, French, and German.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Stays -->
+    <section class="featured-stays" id="stays" role="region" aria-label="Featured stays">
+        <div class="section-title">
+            <h2>Premium Coastal Properties</h2>
+            <p>Hand-selected luxury accommodations across Kenya's finest beach destinations</p>
+        </div>
+        <div class="stays-container" id="staysContainer">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+        <div class="view-all">
+            <a href="#" class="btn-secondary" onclick="viewAllProperties()">View All 50+ Properties</a>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-us" id="about" role="region" aria-label="Why choose us">
+        <div class="section-title">
+            <h2>Why Choose PwaniStays?</h2>
+            <p>Local expertise meets international standards</p>
+        </div>
+        <div class="features-container">
+            <div class="feature" role="article">
+                <i class="fas fa-award" aria-hidden="true"></i>
+                <h3>Coastal Specialists</h3>
+                <p>Deep local knowledge of Kenya's coastline with verified partnerships across all major coastal destinations.</p>
+            </div>
+            <div class="feature" role="article">
+                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                <h3>Property Vetting</h3>
+                <p>Every property personally inspected for safety, cleanliness, and guest satisfaction.</p>
+            </div>
+            <div class="feature" role="article">
+                <i class="fas fa-handshake" aria-hidden="true"></i>
+                <h3>Direct Owner Rates</h3>
+                <p>We work directly with property owners to offer you the best rates without middlemen fees.</p>
+            </div>
+            <div class="feature" role="article">
+                <i class="fas fa-headset" aria-hidden="true"></i>
+                <h3>Multi-lingual Support</h3>
+                <p>Customer service in English, Swahili, French, German, and Italian for international guests.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Carousel -->
+    <section class="testimonials" id="testimonials" role="region" aria-label="Client testimonials">
+        <div class="section-title">
+            <h2>What Our Guests Say</h2>
+            <p>Real experiences from local and international travelers</p>
+        </div>
+        <div class="testimonials-container">
+            <div class="testimonial-slider">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-content">
+                        <p>"Absolutely stunning villa in Nyali! The PwaniStays team made our family vacation seamless from airport pickup to checkout. The kids loved the private pool!"</p>
+                        <div class="testimonial-author">
+                            <h4>Sarah Johnson</h4>
+                            <p>From London, UK</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"As a local from Nairobi looking for a coastal getaway, PwaniStays provided excellent service. The Bamburi beach apartment was perfect and the rates were very competitive."</p>
+                        <div class="testimonial-author">
+                            <h4>David Mwangi</h4>
+                            <p>From Nairobi, Kenya</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Our honeymoon in Diani was magical thanks to PwaniStays. They arranged everything from the villa to a romantic dhow cruise. Highly recommended!"</p>
+                        <div class="testimonial-author">
+                            <h4>Maria & Thomas</h4>
+                            <p>From Berlin, Germany</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The service was exceptional! From the moment we landed in Mombasa until we left, everything was perfectly organized. The villa in Watamu was breathtaking."</p>
+                        <div class="testimonial-author">
+                            <h4>James Omondi</h4>
+                            <p>From Kampala, Uganda</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"I've used PwaniStays three times now for business retreats. Their corporate packages are excellent and the team is very professional."</p>
+                        <div class="testimonial-author">
+                            <h4>Fatima Ali</h4>
+                            <p>From Dubai, UAE</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The Shanzu apartment was exactly as pictured. Clean, modern, and perfectly located. The local host was incredibly helpful with restaurant recommendations."</p>
+                        <div class="testimonial-author">
+                            <h4>Robert Chen</h4>
+                            <p>From Shanghai, China</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Perfect for our large family reunion. The 6-bedroom villa in Diani accommodated all 12 of us comfortably. The chef prepared amazing Swahili dishes!"</p>
+                        <div class="testimonial-author">
+                            <h4>The Patel Family</h4>
+                            <p>From Mumbai, India</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"As a solo female traveler, I felt completely safe and well taken care of. The PwaniStays team checked in regularly and were always available."</p>
+                        <div class="testimonial-author">
+                            <h4>Sophie Martin</h4>
+                            <p>From Paris, France</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"We booked last minute and were amazed by how quickly they arranged everything. The transfer was waiting at the airport as promised."</p>
+                        <div class="testimonial-author">
+                            <h4>Michael & Grace</h4>
+                            <p>From Johannesburg, South Africa</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The marine experiences they arranged were unforgettable. Snorkeling in Watamu Marine Park was the highlight of our trip."</p>
+                        <div class="testimonial-author">
+                            <h4>Carlos Rodriguez</h4>
+                            <p>From Barcelona, Spain</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Excellent value for money. The Nyali villa was luxurious but affordable, especially with the direct booking discount they offered."</p>
+                        <div class="testimonial-author">
+                            <h4>Linda Wang</h4>
+                            <p>From Singapore</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"We've been coming to the Kenyan coast for years, but this was our first time using PwaniStays. It was by far our best experience yet!"</p>
+                        <div class="testimonial-author">
+                            <h4>The Smith Family</h4>
+                            <p>From Sydney, Australia</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="testimonial-prev" aria-label="Previous testimonial">‹</button>
+            <button class="testimonial-next" aria-label="Next testimonial">›</button>
+            <div class="testimonial-dots"></div>
+        </div>
+    </section>
+
+    <!-- Coastal Destinations -->
+    <section class="destinations" id="destinations" role="region" aria-label="Coastal destinations">
+        <div class="section-title">
+            <h2>Explore Kenyan Coast Destinations</h2>
+            <p>From historic Mombasa to pristine Diani</p>
+        </div>
+        <div class="destinations-container">
+            <div class="destination-card">
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1573843989-c9d7ad1504e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    <h3>Mombasa</h3>
+                </div>
+                <div class="destination-content">
+                    <p>Historic Old Town, Fort Jesus, and vibrant markets. Perfect for culture enthusiasts.</p>
+                    <a href="#" onclick="filterStays('Mombasa')" class="btn-small">View Properties</a>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    <h3>Diani</h3>
+                </div>
+                <div class="destination-content">
+                    <p>White sandy beaches, luxury resorts, and water sports. Ideal for beach lovers.</p>
+                    <a href="#" onclick="filterStays('Diani')" class="btn-small">View Properties</a>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    <h3>Watamu</h3>
+                </div>
+                <div class="destination-content">
+                    <p>Marine National Park, snorkeling, and turtle watching. Great for marine adventures.</p>
+                    <a href="#" onclick="filterStays('Watamu')" class="btn-small">View Properties</a>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    <h3>Nyali & Bamburi</h3>
+                </div>
+                <div class="destination-content">
+                    <p>Family-friendly beaches, restaurants, and entertainment. Perfect for family vacations.</p>
+                    <a href="#" onclick="filterStays('Nyali')" class="btn-small">View Properties</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact" role="region" aria-label="Contact us">
+        <div class="section-title">
+            <h2>Start Your Coastal Journey</h2>
+            <p>Contact our coastal experts for personalized assistance</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                    <div>
+                        <h3>Call Us Direct</h3>
+                        <p><a href="tel:+254738544784">+254 738 544 784</a></p>
+                        <small>Local & International calls</small>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    <div>
+                        <h3>WhatsApp Chat</h3>
+                        <p><a href="https://wa.me/254738544784">+254 738 544 784</a></p>
+                        <small>Instant response guaranteed</small>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <div>
+                        <h3>Email Us</h3>
+                        <p><a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></p>
+                        <small>Response within 1 hour</small>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <div>
+                        <h3>Operating Hours</h3>
+                        <p>24/7 - 365 Days</p>
+                        <small>We're always available for you</small>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form" id="book-now" role="form" aria-label="Booking inquiry form">
+                <h3>Send Detailed Inquiry</h3>
+                <form id="inquiryForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Full Name *" id="name" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address *" id="email" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Phone Number with Country Code *" id="phone" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <select id="service" required aria-required="true">
+                            <option value="" disabled selected>Service Interested In *</option>
+                            <option value="stay">Accommodation Only</option>
+                            <option value="transfer">Accommodation + Transfers</option>
+                            <option value="tour">Full Package (Stay + Transfers + Tours)</option>
+                            <option value="corporate">Corporate/Group Booking</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Detailed Requirements (Travel dates, group size, budget, special requests) *" 
+                                  rows="5" id="message" required aria-required="true"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Detailed Inquiry</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="#home" class="logo-link">
+                    <div class="footer-logo">
+                        <span class="footer-logo-icon" role="img" aria-label="Beach umbrella">🏝️</span>
+                        <h2>Pwani<span>Stays</span>.com</h2>
+                    </div>
+                </a>
+                <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                    <a href="#" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                    <a href="#" title="TikTok" aria-label="TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
+                    <a href="#" title="TripAdvisor" aria-label="TripAdvisor"><i class="fab fa-tripadvisor" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#stays">Premium Properties</a></li>
+                    <li><a href="#services">Our Services</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#testimonials">Guest Reviews</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Coastal Destinations</h3>
+                <ul>
+                    <li><a href="#" onclick="filterStays('Mombasa')">Mombasa</a></li>
+                    <li><a href="#" onclick="filterStays('Nyali')">Nyali</a></li>
+                    <li><a href="#" onclick="filterStays('Bamburi')">Bamburi</a></li>
+                    <li><a href="#" onclick="filterStays('Shanzu')">Shanzu</a></li>
+                    <li><a href="#" onclick="filterStays('Diani')">Diani</a></li>
+                    <li><a href="#" onclick="filterStays('Watamu')">Watamu</a></li>
+                    <li><a href="#" onclick="filterStays('Kilifi')">Kilifi</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact & Support</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Mombasa, Coastal Kenya</li>
+                    <li><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
+                    <li><i class="fab fa-whatsapp" aria-hidden="true"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
+                    <li><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></li>
+                    <li><i class="fas fa-clock" aria-hidden="true"></i> 24/7 Customer Support</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> PwaniStays.com. All rights reserved. | 
+               <a href="/privacy">Privacy Policy</a> | 
+               <a href="/terms">Terms of Service</a> | 
+               <a href="/cancellation">Cancellation Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close menu when clicking links
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+            
+            // Set current year
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Initialize currency based on user location (defaults to KES)
+            initCurrency();
+            
+            // Initialize calendar dates
+            initCalendarDates();
+            
+            // Load stays
+            loadStays();
+            
+            // Initialize testimonials
+            initTestimonials();
+            
+            // Form submission
+            const inquiryForm = document.getElementById('inquiryForm');
+            if (inquiryForm) {
+                inquiryForm.addEventListener('submit', handleFormSubmit);
+            }
+            
+            // Header scroll effect
+            window.addEventListener('scroll', updateHeader);
+            updateHeader();
+            
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Close calendar when clicking outside
+            document.addEventListener('click', function(e) {
+                const calendar = document.getElementById('calendarContainer');
+                if (calendar && !calendar.contains(e.target) && 
+                    e.target.id !== 'checkinDate' && e.target.id !== 'checkoutDate') {
+                    calendar.style.display = 'none';
+                }
+            });
+        });
+        
+        // Currency functionality
+        let currentCurrency = 'KES';
+        
+        // Comprehensive country to currency mapping for 200+ countries
+        const countryCurrencyMap = {
+            // Africa
+            'KE': 'KES', // Kenya
+            'TZ': 'TZS', // Tanzania
+            'UG': 'UGX', // Uganda
+            'RW': 'RWF', // Rwanda
+            'BI': 'BIF', // Burundi
+            'ET': 'ETB', // Ethiopia
+            'ER': 'ERN', // Eritrea
+            'SD': 'SDG', // Sudan
+            'SS': 'SSP', // South Sudan
+            'DJ': 'DJF', // Djibouti
+            'SO': 'SOS', // Somalia
+            'EG': 'EGP', // Egypt
+            'LY': 'LYD', // Libya
+            'TN': 'TND', // Tunisia
+            'DZ': 'DZD', // Algeria
+            'MA': 'MAD', // Morocco
+            'MR': 'MRU', // Mauritania
+            'ML': 'XOF', // Mali
+            'SN': 'XOF', // Senegal
+            'GM': 'GMD', // Gambia
+            'GW': 'XOF', // Guinea-Bissau
+            'GN': 'GNF', // Guinea
+            'SL': 'SLL', // Sierra Leone
+            'LR': 'LRD', // Liberia
+            'CI': 'XOF', // Ivory Coast
+            'GH': 'GHS', // Ghana
+            'TG': 'XOF', // Togo
+            'BJ': 'XOF', // Benin
+            'NG': 'NGN', // Nigeria
+            'CM': 'XAF', // Cameroon
+            'GA': 'XAF', // Gabon
+            'CG': 'XAF', // Congo
+            'CD': 'CDF', // DR Congo
+            'AO': 'AOA', // Angola
+            'NA': 'NAD', // Namibia
+            'ZA': 'ZAR', // South Africa
+            'LS': 'LSL', // Lesotho
+            'SZ': 'SZL', // Eswatini
+            'BW': 'BWP', // Botswana
+            'ZW': 'ZWL', // Zimbabwe
+            'ZM': 'ZMW', // Zambia
+            'MW': 'MWK', // Malawi
+            'MZ': 'MZN', // Mozambique
+            'MG': 'MGA', // Madagascar
+            'MU': 'MUR', // Mauritius
+            'SC': 'SCR', // Seychelles
+            'KM': 'KMF', // Comoros
+            
+            // North America
+            'US': 'USD', // United States
+            'CA': 'CAD', // Canada
+            'MX': 'MXN', // Mexico
+            
+            // Central America & Caribbean
+            'GT': 'GTQ', // Guatemala
+            'BZ': 'BZD', // Belize
+            'SV': 'USD', // El Salvador
+            'HN': 'HNL', // Honduras
+            'NI': 'NIO', // Nicaragua
+            'CR': 'CRC', // Costa Rica
+            'PA': 'PAB', // Panama
+            'CU': 'CUP', // Cuba
+            'HT': 'HTG', // Haiti
+            'DO': 'DOP', // Dominican Republic
+            'JM': 'JMD', // Jamaica
+            'BS': 'BSD', // Bahamas
+            'BB': 'BBD', // Barbados
+            'GD': 'XCD', // Grenada
+            'VC': 'XCD', // St. Vincent
+            'LC': 'XCD', // St. Lucia
+            'DM': 'XCD', // Dominica
+            'AG': 'XCD', // Antigua & Barbuda
+            'KN': 'XCD', // St. Kitts & Nevis
+            'TT': 'TTD', // Trinidad & Tobago
+            
+            // South America
+            'BR': 'BRL', // Brazil
+            'AR': 'ARS', // Argentina
+            'CL': 'CLP', // Chile
+            'CO': 'COP', // Colombia
+            'PE': 'PEN', // Peru
+            'VE': 'VES', // Venezuela
+            'EC': 'USD', // Ecuador
+            'BO': 'BOB', // Bolivia
+            'PY': 'PYG', // Paraguay
+            'UY': 'UYU', // Uruguay
+            'GY': 'GYD', // Guyana
+            'SR': 'SRD', // Suriname
+            
+            // Europe
+            'GB': 'GBP', // United Kingdom
+            'IE': 'EUR', // Ireland
+            'FR': 'EUR', // France
+            'DE': 'EUR', // Germany
+            'ES': 'EUR', // Spain
+            'PT': 'EUR', // Portugal
+            'IT': 'EUR', // Italy
+            'GR': 'EUR', // Greece
+            'NL': 'EUR', // Netherlands
+            'BE': 'EUR', // Belgium
+            'LU': 'EUR', // Luxembourg
+            'AT': 'EUR', // Austria
+            'FI': 'EUR', // Finland
+            'SE': 'SEK', // Sweden
+            'DK': 'DKK', // Denmark
+            'NO': 'NOK', // Norway
+            'IS': 'ISK', // Iceland
+            'CH': 'CHF', // Switzerland
+            'PL': 'PLN', // Poland
+            'CZ': 'CZK', // Czech Republic
+            'SK': 'EUR', // Slovakia
+            'HU': 'HUF', // Hungary
+            'RO': 'RON', // Romania
+            'BG': 'BGN', // Bulgaria
+            'RS': 'RSD', // Serbia
+            'HR': 'EUR', // Croatia
+            'SI': 'EUR', // Slovenia
+            'BA': 'BAM', // Bosnia
+            'AL': 'ALL', // Albania
+            'MK': 'MKD', // North Macedonia
+            'ME': 'EUR', // Montenegro
+            'UA': 'UAH', // Ukraine
+            'BY': 'BYN', // Belarus
+            'RU': 'RUB', // Russia
+            'EE': 'EUR', // Estonia
+            'LV': 'EUR', // Latvia
+            'LT': 'EUR', // Lithuania
+            'MD': 'MDL', // Moldova
+            'GE': 'GEL', // Georgia
+            'AM': 'AMD', // Armenia
+            'AZ': 'AZN', // Azerbaijan
+            
+            // Middle East
+            'TR': 'TRY', // Turkey
+            'IL': 'ILS', // Israel
+            'PS': 'ILS', // Palestine
+            'LB': 'LBP', // Lebanon
+            'SY': 'SYP', // Syria
+            'JO': 'JOD', // Jordan
+            'IQ': 'IQD', // Iraq
+            'IR': 'IRR', // Iran
+            'SA': 'SAR', // Saudi Arabia
+            'YE': 'YER', // Yemen
+            'OM': 'OMR', // Oman
+            'AE': 'AED', // UAE
+            'QA': 'QAR', // Qatar
+            'BH': 'BHD', // Bahrain
+            'KW': 'KWD', // Kuwait
+            
+            // Asia
+            'CN': 'CNY', // China
+            'JP': 'JPY', // Japan
+            'KR': 'KRW', // South Korea
+            'KP': 'KPW', // North Korea
+            'MN': 'MNT', // Mongolia
+            'TW': 'TWD', // Taiwan
+            'HK': 'HKD', // Hong Kong
+            'MO': 'MOP', // Macau
+            'IN': 'INR', // India
+            'PK': 'PKR', // Pakistan
+            'BD': 'BDT', // Bangladesh
+            'NP': 'NPR', // Nepal
+            'BT': 'BTN', // Bhutan
+            'LK': 'LKR', // Sri Lanka
+            'MV': 'MVR', // Maldives
+            'AF': 'AFN', // Afghanistan
+            'UZ': 'UZS', // Uzbekistan
+            'KZ': 'KZT', // Kazakhstan
+            'KG': 'KGS', // Kyrgyzstan
+            'TJ': 'TJS', // Tajikistan
+            'TM': 'TMT', // Turkmenistan
+            'ID': 'IDR', // Indonesia
+            'MY': 'MYR', // Malaysia
+            'SG': 'SGD', // Singapore
+            'TH': 'THB', // Thailand
+            'VN': 'VND', // Vietnam
+            'PH': 'PHP', // Philippines
+            'MM': 'MMK', // Myanmar
+            'LA': 'LAK', // Laos
+            'KH': 'KHR', // Cambodia
+            'BN': 'BND', // Brunei
+            'TL': 'USD', // Timor-Leste
+            
+            // Oceania
+            'AU': 'AUD', // Australia
+            'NZ': 'NZD', // New Zealand
+            'PG': 'PGK', // Papua New Guinea
+            'FJ': 'FJD', // Fiji
+            'SB': 'SBD', // Solomon Islands
+            'VU': 'VUV', // Vanuatu
+            'NC': 'XPF', // New Caledonia
+            'PF': 'XPF', // French Polynesia
+            'WS': 'WST', // Samoa
+            'TO': 'TOP', // Tonga
+            'KI': 'AUD', // Kiribati
+            'FM': 'USD', // Micronesia
+            'MH': 'USD', // Marshall Islands
+            'PW': 'USD', // Palau
+            'NR': 'AUD', // Nauru
+            'TV': 'AUD'  // Tuvalu
+        };
+        
+        // Exchange rates (approximate, should use API in production)
+        const exchangeRates = {
+            'KES': 1,      // Base currency
+            'USD': 0.0077, 'EUR': 0.0071, 'GBP': 0.0061,
+            'ZAR': 0.14,   'UGX': 28.5,   'TZS': 19.8,
+            'AED': 0.028,  'INR': 0.64,   'CNY': 0.055,
+            'JPY': 1.13,   'AUD': 0.011,  'CAD': 0.010,
+            'CHF': 0.0068, 'NZD': 0.012,  'SEK': 0.081,
+            'NOK': 0.082,  'DKK': 0.053,  'SGD': 0.010,
+            'HKD': 0.060,  'KRW': 10.2,   'RUB': 0.70,
+            'BRL': 0.038,  'MXN': 0.13,   'ARS': 6.5,
+            'CLP': 7.5,    'COP': 30,     'PEN': 0.028,
+            'UYU': 0.30,   'PYG': 56,     'BOB': 0.053,
+            'CRC': 4.9,    'DOP': 0.45,   'GTQ': 0.060,
+            'HNL': 0.19,   'NIO': 0.28,   'PAB': 0.0077,
+            'BZD': 0.015,  'TTD': 0.052,  'XCD': 0.021,
+            'JMD': 1.19,   'BSD': 0.0077, 'BBD': 0.015,
+            'ANG': 0.014,  'AWG': 0.014,  'KYD': 0.0064,
+            'CUP': 0.18,   'CUC': 0.0077, 'HTG': 1.02,
+            'MAD': 0.077,  'DZD': 1.04,   'TND': 0.024,
+            'LYD': 0.037,  'EGP': 0.24,   'SDG': 0.46,
+            'SSP': 1.0,    'ERN': 0.12,   'ETB': 0.44,
+            'DJF': 1.37,   'SOS': 4.4,    'SLL': 150,
+            'GMD': 0.47,   'GNF': 66,     'LRD': 1.19,
+            'CDF': 19,     'RWF': 9.4,    'BIF': 22,
+            'MWK': 8.2,    'ZMW': 0.20,   'ZWL': 4.9,
+            'NAD': 0.14,   'LSL': 0.14,   'SZL': 0.14,
+            'BWP': 0.10,   'MZN': 0.49,   'MGA': 34,
+            'MUR': 0.35,   'SCR': 0.10,   'KMF': 3.5,
+            'STN': 0.16,   'CVE': 0.78,   'GHS': 0.092,
+            'NGN': 3.5,    'XOF': 4.7,    'XAF': 4.7,
+            'GMD': 0.47,   'MRU': 0.30,   'SLL': 150
+        };
+        
+        const currencySymbols = {
+            'KES': 'KSh', 'USD': '$', 'EUR': '€', 'GBP': '£',
+            'ZAR': 'R', 'UGX': 'USh', 'TZS': 'TSh', 'AED': 'د.إ',
+            'INR': '₹', 'CNY': '¥', 'JPY': '¥', 'AUD': 'A$',
+            'CAD': 'C$', 'CHF': 'CHF', 'NZD': 'NZ$', 'SEK': 'kr',
+            'NOK': 'kr', 'DKK': 'kr', 'SGD': 'S$', 'HKD': 'HK$',
+            'KRW': '₩', 'RUB': '₽', 'BRL': 'R$', 'MXN': '$',
+            'ARS': '$', 'CLP': '$', 'COP': '$', 'PEN': 'S/',
+            'UYU': '$U', 'PYG': '₲', 'BOB': 'Bs', 'CRC': '₡',
+            'DOP': 'RD$', 'GTQ': 'Q', 'HNL': 'L', 'NIO': 'C$',
+            'PAB': 'B/.', 'BZD': 'BZ$', 'TTD': 'TT$', 'XCD': 'EC$',
+            'JMD': 'J$', 'BSD': 'B$', 'BBD': 'Bds$', 'ANG': 'ƒ',
+            'AWG': 'ƒ', 'KYD': 'CI$', 'CUP': '₱', 'CUC': 'CUC$',
+            'HTG': 'G', 'MAD': 'د.م.', 'DZD': 'د.ج', 'TND': 'د.ت',
+            'LYD': 'ل.د', 'EGP': 'ج.م', 'SDG': 'ج.س.', 'SSP': '£',
+            'ERN': 'Nfk', 'ETB': 'Br', 'DJF': 'Fdj', 'SOS': 'Sh',
+            'SLL': 'Le', 'GMD': 'D', 'GNF': 'FG', 'LRD': 'L$',
+            'CDF': 'FC', 'RWF': 'RF', 'BIF': 'FBu', 'MWK': 'MK',
+            'ZMW': 'ZK', 'ZWL': 'Z$', 'NAD': 'N$', 'LSL': 'L',
+            'SZL': 'E', 'BWP': 'P', 'MZN': 'MT', 'MGA': 'Ar',
+            'MUR': '₨', 'SCR': '₨', 'KMF': 'CF', 'STN': 'Db',
+            'CVE': 'Esc', 'GHS': 'GH₵', 'NGN': '₦', 'XOF': 'CFA',
+            'XAF': 'FCFA', 'MRU': 'UM'
+        };
+        
+        const currencyNames = {
+            'KES': 'Kenyan Shilling', 'USD': 'US Dollar', 'EUR': 'Euro',
+            'GBP': 'British Pound', 'ZAR': 'South African Rand',
+            'UGX': 'Ugandan Shilling', 'TZS': 'Tanzanian Shilling',
+            'AED': 'UAE Dirham', 'INR': 'Indian Rupee', 'CNY': 'Chinese Yuan',
+            'JPY': 'Japanese Yen', 'AUD': 'Australian Dollar',
+            'CAD': 'Canadian Dollar', 'CHF': 'Swiss Franc',
+            'NZD': 'New Zealand Dollar', 'SEK': 'Swedish Krona',
+            'NOK': 'Norwegian Krone', 'DKK': 'Danish Krone',
+            'SGD': 'Singapore Dollar', 'HKD': 'Hong Kong Dollar',
+            'KRW': 'South Korean Won', 'RUB': 'Russian Ruble',
+            'BRL': 'Brazilian Real', 'MXN': 'Mexican Peso',
+            'ARS': 'Argentine Peso', 'CLP': 'Chilean Peso',
+            'COP': 'Colombian Peso', 'PEN': 'Peruvian Sol',
+            'UYU': 'Uruguayan Peso', 'PYG': 'Paraguayan Guarani',
+            'BOB': 'Bolivian Boliviano', 'CRC': 'Costa Rican Colón',
+            'DOP': 'Dominican Peso', 'GTQ': 'Guatemalan Quetzal',
+            'HNL': 'Honduran Lempira', 'NIO': 'Nicaraguan Córdoba',
+            'PAB': 'Panamanian Balboa', 'BZD': 'Belize Dollar',
+            'TTD': 'Trinidad and Tobago Dollar', 'XCD': 'East Caribbean Dollar',
+            'JMD': 'Jamaican Dollar', 'BSD': 'Bahamian Dollar',
+            'BBD': 'Barbadian Dollar'
+        };
+        
+        function initCurrency() {
+            // Check for saved preference first
+            const savedCurrency = localStorage.getItem('preferredCurrency');
+            if (savedCurrency) {
+                currentCurrency = savedCurrency;
+                return;
+            }
+            
+            // Try to detect user's location
+            detectUserLocation();
+        }
+        
+        function detectUserLocation() {
+            // Try IP-based geolocation (free service)
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    const countryCode = data.country_code;
+                    if (countryCode && countryCurrencyMap[countryCode]) {
+                        currentCurrency = countryCurrencyMap[countryCode];
+                    } else {
+                        // Default to KES if detection fails
+                        currentCurrency = 'KES';
+                    }
+                    // Store in localStorage for future visits
+                    localStorage.setItem('preferredCurrency', currentCurrency);
+                })
+                .catch(error => {
+                    console.log('IP detection failed, defaulting to KES:', error);
+                    // Default to KES if detection fails
+                    currentCurrency = 'KES';
+                    localStorage.setItem('preferredCurrency', currentCurrency);
+                });
+        }
+        
+        function convertCurrency(amountInKES, targetCurrency) {
+            const rate = exchangeRates[targetCurrency];
+            if (!rate) {
+                console.warn(`No exchange rate for ${targetCurrency}, using KES`);
+                return amountInKES;
+            }
+            return amountInKES * rate;
+        }
+        
+        function formatCurrency(amount, currency) {
+            const symbol = currencySymbols[currency] || currency;
+            const convertedAmount = convertCurrency(amount, currency);
+            
+            // Format based on currency type
+            const formatOptions = {
+                style: 'decimal',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            };
+            
+            // For currencies that typically use decimals
+            const decimalCurrencies = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'NZD', 'CHF', 'SGD', 'HKD'];
+            if (decimalCurrencies.includes(currency)) {
+                formatOptions.minimumFractionDigits = 0;
+                formatOptions.maximumFractionDigits = 2;
+            }
+            
+            // For currencies that use cents
+            const centCurrencies = ['KES', 'UGX', 'TZS', 'INR', 'IDR', 'JPY', 'KRW', 'VND'];
+            if (centCurrencies.includes(currency)) {
+                formatOptions.minimumFractionDigits = 0;
+                formatOptions.maximumFractionDigits = 0;
+            }
+            
+            const formattedAmount = convertedAmount.toLocaleString(undefined, formatOptions);
+            
+            // Position symbol based on currency
+            if (['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'NZD'].includes(currency)) {
+                return `${symbol}${formattedAmount}`;
+            } else if (currency === 'JPY' || currency === 'CNY') {
+                return `${symbol}${formattedAmount}`;
+            } else {
+                return `${formattedAmount} ${symbol}`;
+            }
+        }
+        
+        // Calendar functionality
+        let selectedCheckin = null;
+        let selectedCheckout = null;
+        let selectingFor = 'checkin';
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        
+        function initCalendarDates() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            selectedCheckin = today;
+            selectedCheckout = tomorrow;
+            
+            document.getElementById('checkinDate').value = formatDate(today);
+            document.getElementById('checkoutDate').value = formatDate(tomorrow);
+        }
+        
+        function showCalendar(inputElement, type) {
+            selectingFor = type;
+            const calendar = document.getElementById('calendarContainer');
+            
+            // Reset to current month
+            const today = new Date();
+            currentMonth = today.getMonth();
+            currentYear = today.getFullYear();
+            
+            // Position calendar near input
+            const rect = inputElement.getBoundingClientRect();
+            calendar.style.top = (rect.bottom + window.scrollY + 5) + 'px';
+            calendar.style.left = (rect.left + window.scrollX) + 'px';
+            
+            // Generate calendar
+            generateCalendar();
+            
+            // Show calendar
+            calendar.style.display = 'block';
+        }
+        
+        function generateCalendar() {
+            const calendar = document.getElementById('calendarContainer');
+            const today = new Date();
+            
+            // Generate calendar HTML
+            let html = `
+                <div class="calendar-header">
+                    <button onclick="changeMonth(-1)">‹</button>
+                    <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
+                    <button onclick="changeMonth(1)">›</button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+            `;
+            
+            // Get first day of month
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            
+            // Fill empty cells for first week
+            for (let i = 0; i < firstDay; i++) {
+                html += '<div class="calendar-day disabled"></div>';
+            }
+            
+            // Get days in month
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Create day cells
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const isToday = date.getDate() === today.getDate() && 
+                               date.getMonth() === today.getMonth() && 
+                               date.getFullYear() === today.getFullYear();
+                const isSelected = (selectingFor === 'checkin' && selectedCheckin && isSameDay(date, selectedCheckin)) ||
+                                  (selectingFor === 'checkout' && selectedCheckout && isSameDay(date, selectedCheckout));
+                const isDisabled = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const isBetween = selectedCheckin && selectedCheckout && 
+                                 date > selectedCheckin && date < selectedCheckout;
+                
+                let className = 'calendar-day';
+                if (isToday) className += ' today';
+                if (isSelected) className += ' selected';
+                if (isDisabled) className += ' disabled';
+                if (isBetween) className += ' between';
+                
+                const onClick = isDisabled ? '' : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+                
+                html += `<div class="${className}" ${onClick}>${day}</div>`;
+            }
+            
+            html += '</div>';
+            calendar.innerHTML = html;
+        }
+        
+        function selectDate(day, month, year) {
+            const date = new Date(year, month, day);
+            
+            if (selectingFor === 'checkin') {
+                selectedCheckin = date;
+                document.getElementById('checkinDate').value = formatDate(date);
+                
+                // Ensure checkout is after checkin
+                if (selectedCheckout && selectedCheckout <= date) {
+                    const nextDay = new Date(date);
+                    nextDay.setDate(nextDay.getDate() + 1);
+                    selectedCheckout = nextDay;
+                    document.getElementById('checkoutDate').value = formatDate(nextDay);
+                }
+            } else {
+                if (date <= selectedCheckin) {
+                    alert('Check-out date must be after check-in date');
+                    return;
+                }
+                selectedCheckout = date;
+                document.getElementById('checkoutDate').value = formatDate(date);
+            }
+            
+            // Update calendar to show selected dates
+            generateCalendar();
+        }
+        
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar();
+        }
+        
+        function isSameDay(date1, date2) {
+            if (!date1 || !date2) return false;
+            return date1.getDate() === date2.getDate() &&
+                   date1.getMonth() === date2.getMonth() &&
+                   date1.getFullYear() === date2.getFullYear();
+        }
+        
+        function getMonthName(month) {
+            const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[month];
+        }
+        
+        function formatDate(date) {
+            if (!date) return '';
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+        
+        // Testimonials functionality
+        let currentTestimonial = 0;
+        const totalTestimonials = 12;
+        
+        function initTestimonials() {
+            const dotsContainer = document.querySelector('.testimonial-dots');
+            
+            // Create dots
+            for (let i = 0; i < totalTestimonials; i++) {
+                const dot = document.createElement('button');
+                dot.className = `testimonial-dot ${i === 0 ? 'active' : ''}`;
+                dot.setAttribute('aria-label', `View testimonial ${i + 1}`);
+                dot.addEventListener('click', () => showTestimonial(i));
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Navigation buttons
+            document.querySelector('.testimonial-prev').addEventListener('click', prevTestimonial);
+            document.querySelector('.testimonial-next').addEventListener('click', nextTestimonial);
+            
+            // Auto-rotate
+            setInterval(nextTestimonial, 5000);
+        }
+        
+        function showTestimonial(index) {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const dots = document.querySelectorAll('.testimonial-dot');
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            if (slides[index]) {
+                slides[index].classList.add('active');
+            }
+            if (dots[index]) {
+                dots[index].classList.add('active');
+            }
+            currentTestimonial = index;
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
+            showTestimonial(currentTestimonial);
+        }
+        
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+            showTestimonial(currentTestimonial);
+        }
+        
+        // Stays data and loading - Base prices in KES
+        const staysData = [
+            {
+                id: 1,
+                name: "Nyali Oceanfront Villa",
+                location: "Nyali",
+                guests: 8,
+                bedrooms: 4,
+                bathrooms: 4,
+                price: 68000, // Base price in KES
+                period: "/night",
+                amenities: ["Private Pool", "Ocean View", "Chef", "Security"],
+                image: "🏖️"
+            },
+            {
+                id: 2,
+                name: "Bamburi Beach Resort",
+                location: "Bamburi",
+                guests: 12,
+                bedrooms: 6,
+                bathrooms: 5,
+                price: 102000, // Base price in KES
+                period: "/night",
+                amenities: ["Spa", "Restaurant", "Kids Club", "Beach Access"],
+                image: "🏨"
+            },
+            {
+                id: 3,
+                name: "Shanzu Executive Apartment",
+                location: "Shanzu",
+                guests: 4,
+                bedrooms: 2,
+                bathrooms: 2,
+                price: 33000, // Base price in KES
+                period: "/night",
+                amenities: ["Balcony", "Kitchen", "WiFi", "Parking"],
+                image: "🏠"
+            },
+            {
+                id: 4,
+                name: "Diani Luxury Villa",
+                location: "Diani",
+                guests: 10,
+                bedrooms: 5,
+                bathrooms: 5,
+                price: 125000, // Base price in KES
+                period: "/night",
+                amenities: ["Private Beach", "Garden", "BBQ", "Security"],
+                image: "🏝️"
+            },
+            {
+                id: 5,
+                name: "Watamu Beach House",
+                location: "Watamu",
+                guests: 6,
+                bedrooms: 3,
+                bathrooms: 3,
+                price: 55000, // Base price in KES
+                period: "/night",
+                amenities: ["Sea View", "Terrace", "WiFi", "Parking"],
+                image: "🌊"
+            },
+            {
+                id: 6,
+                name: "Mombasa City Apartment",
+                location: "Mombasa",
+                guests: 4,
+                bedrooms: 2,
+                bathrooms: 2,
+                price: 28000, // Base price in KES
+                period: "/night",
+                amenities: ["City View", "Balcony", "Kitchen", "Security"],
+                image: "🏙️"
+            }
+        ];
+        
+        function loadStays() {
+            const container = document.getElementById('staysContainer');
+            if (!container) return;
+            
+            container.innerHTML = staysData.map(stay => `
+                <div class="stay-card">
+                    <div class="stay-img">${stay.image}</div>
+                    <div class="stay-content">
+                        <h3>${stay.name}</h3>
+                        <div class="stay-location">
+                            <i class="fas fa-map-marker-alt"></i> ${stay.location}
+                        </div>
+                        <div class="stay-features">
+                            <span><i class="fas fa-user-friends"></i> ${stay.guests} guests</span>
+                            <span><i class="fas fa-bed"></i> ${stay.bedrooms} beds</span>
+                            <span><i class="fas fa-bath"></i> ${stay.bathrooms} baths</span>
+                        </div>
+                        <div class="amenities">
+                            ${stay.amenities.map(a => `<span class="amenity-tag">${a}</span>`).join('')}
+                        </div>
+                        <div class="stay-price">
+                            <div>
+                                <span class="price-amount">${formatCurrency(stay.price, currentCurrency)}</span>
+                                <span class="price-period">${stay.period}</span>
+                            </div>
+                            <button class="btn-primary" onclick="bookStay(${stay.id})">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Global functions
+        window.searchStays = function() {
+            const location = document.getElementById('searchLocation').value;
+            const guests = document.getElementById('searchGuests').value;
+            const checkin = document.getElementById('checkinDate').value;
+            const checkout = document.getElementById('checkoutDate').value;
+            
+            if (!location) {
+                alert('Please select a destination');
+                return;
+            }
+            
+            alert(`Searching ${location} properties for ${guests} guests from ${checkin} to ${checkout}...`);
+        };
+        
+        window.filterStays = function(location) {
+            event.preventDefault();
+            document.getElementById('searchLocation').value = location;
+            searchStays();
+        };
+        
+        window.bookStay = function(id) {
+            const stay = staysData.find(s => s.id === id);
+            const priceInCurrency = formatCurrency(stay.price, currentCurrency);
+            alert(`Booking ${stay.name} in ${stay.location} for ${priceInCurrency} per night. You'll be redirected to the booking form.`);
+            document.querySelector('#book-now').scrollIntoView({ behavior: 'smooth' });
+        };
+        
+        window.viewAllProperties = function() {
+            event.preventDefault();
+            alert('Loading all 50+ properties...');
+        };
+        
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value.trim()
+            };
+            
+            if (!formData.name || !formData.email || !formData.phone || !formData.service || !formData.message) {
+                alert('Please fill all required fields marked with *');
+                return;
+            }
+            
+            alert(`Thank you ${formData.name}! Our coastal experts will contact you within 30 minutes.`);
+            e.target.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function updateHeader() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        }
+    </script>
+</body>
+</html>

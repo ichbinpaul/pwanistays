@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="PwaniStays.com - Luxury coastal accommodation in Kenya. Book beachfront villas, apartments & resorts in Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu. Airport transfers & coastal experiences included.">
-    <meta name="keywords" content="kenya beach accommodation, mombasa luxury villas, diani beach resorts, watamu hotels, nyali apartments, bamburi beach houses, shanzu vacation rentals, coastal kenya tourism, airport transfers mombasa, safari coastal packages">
+    <meta name="description" content="PwaniStays.com - Luxury coastal accommodation in Kenya. Book beachfront villas, apartments & resorts in Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu. Airport transfers & coastal experiences included. FAQ: What is included in PwaniStays bookings? How do airport transfers work? What amenities are available? What is the cancellation policy?">
+    <meta name="keywords" content="kenya beach accommodation, mombasa luxury villas, diani beach resorts, watamu hotels, nyali apartments, bamburi beach houses, shanzu vacation rentals, coastal kenya tourism, airport transfers mombasa, safari coastal packages, faq, frequently asked questions, booking process, cancellation policy">
     <meta name="author" content="PwaniStays - Kenyan Coastal Experts">
     <title>PwaniStays.com | Luxury Coastal Accommodation Kenya | Beach Villas & Resorts</title>
     
@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pwanistays.com/">
     <meta property="og:title" content="PwaniStays.com | Your Premium Coastal Stay in Kenya">
-    <meta property="og:description" content="Experience luxury beachfront living in Kenya. From Mombasa to Diani, Watamu to Nyali - premium accommodation with airport transfers & local experiences.">
+    <meta property="og:description" content="Experience luxury beachfront living in Kenya. From Mombasa to Diani, Watamu to Nyali - premium accommodation with airport transfers & local experiences. FAQ: Booking process, amenities, transfers, cancellation.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
     <meta property="og:locale" content="en_KE">
     <meta property="og:site_name" content="PwaniStays.com">
@@ -22,7 +22,7 @@
     <meta name="twitter:site" content="@PwaniStays">
     <meta name="twitter:creator" content="@PwaniStays">
     <meta name="twitter:title" content="PwaniStays.com | Luxury Coastal Stays in Kenya">
-    <meta name="twitter:description" content="Premium beachfront accommodation across the Kenyan coast with seamless transfers & authentic experiences.">
+    <meta name="twitter:description" content="Premium beachfront accommodation across the Kenyan coast with seamless transfers & authentic experiences. FAQ included for easy booking.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
     
     <!-- Preload critical resources -->
@@ -120,8 +120,6 @@
         .logo span {
             color: var(--primary);
         }
-        
-        /* REMOVED: Currency Indicator styles */
         
         /* Navigation */
         .nav-links {
@@ -312,14 +310,14 @@
             margin: 0 auto;
         }
         
-        /* Services Section */
+        /* Services Section - UPDATED: 3 items for better alignment */
         .services {
             background: var(--light);
         }
         
         .services-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
@@ -1005,6 +1003,10 @@
             .testimonial-next {
                 right: 10px;
             }
+            
+            .services-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (max-width: 768px) {
@@ -1063,6 +1065,10 @@
                 font-size: 1.5rem;
                 bottom: 15px;
                 right: 15px;
+            }
+            
+            .services-container {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -1253,8 +1259,6 @@
         <i class="fab fa-whatsapp" aria-hidden="true"></i>
     </a>
 
-    <!-- REMOVED: Currency Indicator element -->
-
     <!-- Header -->
     <header role="banner">
         <nav class="navbar" aria-label="Main navigation">
@@ -1325,7 +1329,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services Section - UPDATED: 3 items, removed 24/7 support, broader focus -->
     <section class="services" id="services" role="region" aria-label="Our services">
         <div class="section-title">
             <h2>Complete Coastal Experience</h2>
@@ -1334,10 +1338,10 @@
         <div class="services-container">
             <div class="service-card" role="article">
                 <div class="service-icon">
-                    <i class="fas fa-water" aria-hidden="true"></i>
+                    <i class="fas fa-umbrella-beach" aria-hidden="true"></i>
                 </div>
-                <h3>Beachfront Luxury</h3>
-                <p>Exclusive beachfront villas and apartments with direct ocean access across all major Kenyan coastal destinations.</p>
+                <h3>Coastal Accommodation</h3>
+                <p>Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations.</p>
             </div>
             <div class="service-card" role="article">
                 <div class="service-icon">
@@ -1352,13 +1356,6 @@
                 </div>
                 <h3>Marine Experiences</h3>
                 <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides.</p>
-            </div>
-            <div class="service-card" role="article">
-                <div class="service-icon">
-                    <i class="fas fa-concierge-bell" aria-hidden="true"></i>
-                </div>
-                <h3>24/7 Local Support</h3>
-                <p>Dedicated local hosts available round-the-clock in English, Swahili, French, and German.</p>
             </div>
         </div>
     </section>

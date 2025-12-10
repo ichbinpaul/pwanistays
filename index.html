@@ -9,20 +9,14 @@
     <title>PwaniStays | Luxury Coastal Accommodation Kenya | Beach Villas & Resorts</title>
     
     <!-- Favicon Package for PwaniStays -->
-    <!-- Standard favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="shortcut icon" href="/favicon.ico">
-    
-    <!-- Apple Touch Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
-    
-    <!-- Android Chrome Icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
     
-    <!-- Theme color for mobile browsers -->
     <meta name="theme-color" content="#0d7a5f">
     <meta name="msapplication-TileColor" content="#0d7a5f">
     
@@ -48,8 +42,6 @@
     <link rel="preconnect" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
-    
-    <!-- Preload hero image -->
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" media="(min-width: 768px)">
     
     <!-- Inline Critical CSS -->
@@ -104,7 +96,6 @@
             margin: 0 auto;
         }
         
-        /* FIXED: Logo alignment - icon and text on same line */
         .logo-link {
             display: flex;
             align-items: center;
@@ -227,7 +218,7 @@
             margin-right: auto;
         }
         
-        /* Search Box */
+        /* Search Box - UPDATED with Property Type */
         .search-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
@@ -265,6 +256,12 @@
             font-size: 1rem;
             background: transparent;
             font-family: inherit;
+            cursor: pointer;
+        }
+        
+        .search-input input[readonly] {
+            cursor: pointer;
+            background: transparent;
         }
         
         .search-btn-container {
@@ -328,57 +325,7 @@
             margin: 0 auto;
         }
         
-        /* Supabase Properties Section - NEW */
-        .properties-section {
-            background: var(--light);
-            padding: 80px 5%;
-        }
-        
-        .properties-filters {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            max-width: 800px;
-            margin: 0 auto 40px;
-        }
-        
-        .filter-select {
-            padding: 12px 20px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
-            font-size: 1rem;
-            background: white;
-            color: var(--dark);
-            min-width: 180px;
-            transition: var(--transition);
-        }
-        
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(13, 122, 95, 0.1);
-        }
-        
-        .filter-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-        
-        .filter-btn:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
-        }
-        
+        /* Properties Grid */
         .properties-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -455,6 +402,10 @@
             color: var(--gray);
             margin-bottom: 20px;
             line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .property-price {
@@ -503,7 +454,48 @@
             grid-column: 1 / -1;
         }
         
-        /* Services Section - UPDATED: 3 items for better alignment */
+        .loading-spinner i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Results Header */
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .results-header h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .results-header p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        .clear-filters {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dashed var(--primary);
+            cursor: pointer;
+        }
+        
+        .clear-filters:hover {
+            color: var(--primary-light);
+            border-bottom-color: var(--primary-light);
+        }
+        
+        /* Services Section */
         .services {
             background: var(--light);
         }
@@ -552,7 +544,7 @@
             color: var(--gray);
         }
         
-        /* Featured Stays - UPDATED for Supabase integration */
+        /* Featured Stays */
         .featured-stays {
             background: white;
         }
@@ -583,8 +575,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--gray);
-            font-size: 3rem;
+            overflow: hidden;
+        }
+        
+        .stay-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .stay-content {
@@ -1036,7 +1033,7 @@
             background: var(--primary-light);
         }
         
-        /* Footer - FIXED: Logo alignment */
+        /* Footer */
         footer {
             background: var(--dark);
             color: white;
@@ -1084,7 +1081,6 @@
             line-height: 1.7;
         }
         
-        /* FIXED: Footer logo alignment */
         .footer-logo {
             display: flex;
             align-items: center;
@@ -1179,14 +1175,194 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
         }
         
+        /* Calendar Styles - FIXED */
+        .calendar-overlay {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 2000;
+            padding: 25px;
+            width: 350px;
+            max-width: 90vw;
+            border: 2px solid var(--primary);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -48%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .calendar-header h4 {
+            color: var(--dark);
+            font-size: 1.3rem;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-header button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calendar-header button:hover {
+            background: var(--primary-light);
+            transform: scale(1.1);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .calendar-day-header {
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .calendar-day {
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border: 2px solid transparent;
+            color: var(--dark);
+            background: white;
+        }
+        
+        .calendar-day:hover {
+            background: #e8f4f1;
+            border-color: var(--primary-light);
+        }
+        
+        .calendar-day.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(13, 122, 95, 0.3);
+        }
+        
+        .calendar-day.between {
+            background: #e8f4f1;
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+        
+        .calendar-day.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+            background: #f9f9f9;
+        }
+        
+        .calendar-day.disabled:hover {
+            background: #f9f9f9;
+            border-color: transparent;
+        }
+        
+        .calendar-day.today {
+            background: var(--secondary);
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .calendar-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .calendar-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-clear {
+            background: #f8f9fa;
+            color: var(--gray);
+        }
+        
+        .calendar-clear:hover {
+            background: #e9ecef;
+        }
+        
+        .calendar-apply {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .calendar-apply:hover {
+            background: var(--primary-light);
+        }
+        
+        .calendar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            animation: fadeIn 0.3s ease;
+        }
+        
         /* Responsive Design */
         @media (max-width: 992px) {
             .search-box {
                 grid-template-columns: 1fr;
+                gap: 12px;
             }
             
             .search-btn-container {
                 grid-column: span 1;
+                margin-top: 5px;
             }
             
             .testimonial-prev {
@@ -1268,17 +1444,17 @@
                 grid-template-columns: 1fr;
             }
             
-            .properties-filters {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filter-select {
-                width: 100%;
-            }
-            
             .properties-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .calendar-overlay {
+                width: 320px;
+                padding: 20px;
+            }
+            
+            .calendar-day {
+                padding: 10px;
             }
         }
         
@@ -1304,6 +1480,21 @@
             .footer-logo h2 {
                 font-size: 1.3rem;
             }
+            
+            .calendar-overlay {
+                width: 300px;
+                padding: 15px;
+            }
+            
+            .calendar-day {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+            
+            .calendar-day-header {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
         }
         
         /* Accessibility */
@@ -1319,13 +1510,11 @@
             border: 0;
         }
         
-        /* Focus styles */
         :focus {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
         }
         
-        /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             *,
             *::before,
@@ -1336,122 +1525,11 @@
                 scroll-behavior: auto !important;
             }
         }
-        
-        /* IMPROVED: Calendar Date Picker Styles - FIXED BACKGROUND COLOR */
-        .calendar-overlay {
-            display: none;
-            position: absolute;
-            background: #f8f9fa; /* Changed from white to light gray for better contrast */
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 1000;
-            padding: 20px;
-            width: 320px;
-            border: 2px solid var(--primary);
-        }
-        
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--light-gray);
-        }
-        
-        .calendar-header h4 {
-            color: var(--dark);
-            font-size: 1.2rem;
-            margin: 0;
-        }
-        
-        .calendar-header button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-        
-        .calendar-header button:hover {
-            background: var(--primary-light);
-            transform: scale(1.1);
-        }
-        
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-        
-        .calendar-day {
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-            border: 1px solid transparent;
-            color: var(--dark); /* Added text color for visibility */
-            background: #ffffff; /* Added white background for days */
-        }
-        
-        .calendar-day:hover {
-            background: #e8f4f1;
-            border-color: var(--primary-light);
-        }
-        
-        .calendar-day.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            font-weight: 600;
-            box-shadow: 0 3px 10px rgba(13, 122, 95, 0.3);
-        }
-        
-        .calendar-day.between {
-            background: #e8f4f1;
-            color: var(--primary);
-            border-color: var(--primary-light);
-        }
-        
-        .calendar-day.disabled {
-            color: #aaa; /* Lighter gray for disabled dates */
-            cursor: not-allowed;
-            background: #f0f0f0; /* Light gray background for disabled */
-        }
-        
-        .calendar-day.disabled:hover {
-            background: #f0f0f0;
-            border-color: transparent;
-        }
-        
-        .calendar-day.today {
-            background: var(--secondary);
-            color: var(--dark);
-            font-weight: 600;
-        }
-        
-        .calendar-day-header {
-            padding: 8px;
-            text-align: center;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--light-gray);
-            margin-bottom: 5px;
-            background: #f8f9fa; /* Match calendar background */
-        }
     </style>
     
     <!-- Defer non-critical CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
           media="print" onload="this.media='all'" crossorigin="anonymous">
-    <!-- Note: Removed old single favicon line that was here -->
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://pwanistays.com">
@@ -1472,7 +1550,7 @@
             <a href="#home" class="logo-link">
                 <div class="logo">
                     <span class="logo-icon" role="img" aria-label="Beach umbrella">🏝️</span>
-                    <h1>Pwani<span>Stays</span></h1> <!-- UPDATED: Removed .com -->
+                    <h1>Pwani<span>Stays</span></h1>
                 </div>
             </a>
             <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -1498,19 +1576,21 @@
             <h2>Experience Luxury on the Kenyan Coast</h2>
             <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
             
-            <!-- Enhanced Search Box -->
+            <!-- Enhanced Search Box - UPDATED with Property Type -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                     <select id="searchLocation" aria-label="Select destination">
-                        <option value="">Select Destination</option>
-                        <option value="mombasa">Mombasa</option>
-                        <option value="nyali">Nyali</option>
-                        <option value="bamburi">Bamburi</option>
-                        <option value="shanzu">Shanzu</option>
-                        <option value="diani">Diani</option>
-                        <option value="watamu">Watamu</option>
-                        <option value="kilifi">Kilifi</option>
+                        <option value="">Any Location</option>
+                        <option value="Mombasa">Mombasa</option>
+                        <option value="Nyali">Nyali</option>
+                        <option value="Bamburi">Bamburi</option>
+                        <option value="Mtwapa">Mtwapa</option>
+                        <option value="Shanzu">Shanzu</option>
+                        <option value="Diani">Diani</option>
+                        <option value="Watamu">Watamu</option>
+                        <option value="Malindi">Malindi</option>
+                        <option value="Kilifi">Kilifi</option>
                     </select>
                 </div>
                 <div class="search-input">
@@ -1522,69 +1602,79 @@
                     <input type="text" placeholder="Check-out Date" id="checkoutDate" aria-label="Check-out date" readonly onclick="showCalendar(this, 'checkout')">
                 </div>
                 <div class="search-input">
-                    <i class="fas fa-user-friends" aria-hidden="true"></i>
-                    <input type="number" placeholder="Guests" id="searchGuests" aria-label="Number of guests" min="1" max="20" value="2">
+                    <i class="fas fa-home" aria-hidden="true"></i>
+                    <select id="propertyType" aria-label="Property type">
+                        <option value="">Any Type</option>
+                        <option value="studio">Studio</option>
+                        <option value="1br">1 Bedroom</option>
+                        <option value="2br">2 Bedrooms</option>
+                        <option value="3br">3 Bedrooms</option>
+                        <option value="4br">4+ Bedrooms</option>
+                        <option value="villa">Villa</option>
+                        <option value="apartment">Apartment</option>
+                    </select>
                 </div>
                 <div class="search-btn-container">
-                    <button class="search-btn" onclick="searchStays()" aria-label="Search stays">
-                        <i class="fas fa-search" aria-hidden="true"></i> Search Stays
+                    <button class="search-btn" onclick="searchProperties()" aria-label="Search properties">
+                        <i class="fas fa-search" aria-hidden="true"></i> Search Properties
                     </button>
                 </div>
             </div>
+            
+            <!-- Calendar Backdrop -->
+            <div id="calendarBackdrop" class="calendar-backdrop" onclick="hideCalendar()"></div>
             
             <!-- Calendar Container -->
             <div id="calendarContainer" class="calendar-overlay"></div>
         </div>
     </section>
 
-    <!-- NEW: Supabase Properties Section -->
-    <section class="properties-section" id="properties" role="region" aria-label="Properties listing">
+    <!-- Results Section -->
+    <section id="searchResults" class="properties-section" style="display: none;">
         <div class="section-title">
-            <h2>Explore Our Coastal Properties</h2>
-            <p>Browse and filter through our premium accommodation options across the Kenyan coast</p>
+            <h2>Search Results</h2>
+            <p id="resultsCount">Loading properties...</p>
         </div>
         
-        <div class="properties-filters">
-            <select id="locationFilter" class="filter-select" aria-label="Filter by location">
-                <option value="">All Locations</option>
-                <option value="Nyali">Nyali</option>
-                <option value="Mombasa">Mombasa</option>
-                <option value="Bamburi">Bamburi</option>
-                <option value="Mtwapa">Mtwapa</option>
-                <option value="Shanzu">Shanzu</option>
-                <option value="Diani">Diani</option>
-                <option value="Watamu">Watamu</option>
-                <option value="Malindi">Malindi</option>
-                <option value="Kilifi">Kilifi</option>
-            </select>
-            
-            <select id="unitTypeFilter" class="filter-select" aria-label="Filter by property type">
-                <option value="">All Types</option>
-                <option value="studio">Studio</option>
-                <option value="1br">1 Bedroom</option>
-                <option value="2br">2 Bedroom</option>
-                <option value="3br">3 Bedroom</option>
-                <option value="4br">4 Bedroom</option>
-                <option value="villa">Villa</option>
-                <option value="apartment">Apartment</option>
-                <option value="house">House</option>
-                <option value="resort">Resort</option>
-            </select>
-            
-            <button class="filter-btn" onclick="loadSupabaseProperties()">
-                <i class="fas fa-filter"></i> Filter Properties
-            </button>
+        <div id="resultsHeader" class="results-header" style="display: none;">
+            <h3 id="searchCriteria"></h3>
+            <p id="datesCriteria"></p>
+            <a class="clear-filters" onclick="clearSearch()">Clear filters and show all properties</a>
         </div>
         
         <div id="propertyList" class="properties-grid">
-            <!-- Properties will be loaded here dynamically -->
+            <!-- Properties will be loaded here -->
+        </div>
+    </section>
+
+    <!-- All Properties Section -->
+    <section id="allProperties" class="properties-section">
+        <div class="section-title">
+            <h2>All Coastal Properties</h2>
+            <p>Browse our complete collection of premium accommodations</p>
+        </div>
+        
+        <div id="allPropertiesList" class="properties-grid">
             <div class="loading-spinner">
                 <i class="fas fa-spinner fa-spin"></i> Loading properties...
             </div>
         </div>
     </section>
 
-    <!-- Services Section - UPDATED: 3 items, removed 24/7 support, broader focus -->
+    <!-- Featured Stays -->
+    <section class="featured-stays" id="stays">
+        <div class="section-title">
+            <h2>Featured Properties</h2>
+            <p>Hand-selected luxury accommodations across Kenya's finest beach destinations</p>
+        </div>
+        <div id="featuredProperties" class="stays-container">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i> Loading featured properties...
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
     <section class="services" id="services" role="region" aria-label="Our services">
         <div class="section-title">
             <h2>Complete Coastal Experience</h2>
@@ -1612,23 +1702,6 @@
                 <h3>Marine Experiences</h3>
                 <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Featured Stays - UPDATED: Now shows featured properties from Supabase -->
-    <section class="featured-stays" id="stays" role="region" aria-label="Featured stays">
-        <div class="section-title">
-            <h2>Premium Coastal Properties</h2>
-            <p>Hand-selected luxury accommodations across Kenya's finest beach destinations</p>
-        </div>
-        <div id="featuredProperties" class="stays-container">
-            <!-- Featured properties will be loaded here dynamically -->
-            <div class="loading-spinner">
-                <i class="fas fa-spinner fa-spin"></i> Loading featured properties...
-            </div>
-        </div>
-        <div class="view-all">
-            <a href="#properties" class="btn-secondary">View All Properties</a>
         </div>
     </section>
 
@@ -1662,7 +1735,7 @@
         </div>
     </section>
 
-    <!-- Testimonials Carousel -->
+    <!-- Testimonials -->
     <section class="testimonials" id="testimonials" role="region" aria-label="Client testimonials">
         <div class="section-title">
             <h2>What Our Guests Say</h2>
@@ -1690,156 +1763,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"Our honeymoon in Diani was magical thanks to PwaniStays. They arranged everything from the villa to a romantic dhow cruise. Highly recommended!"</p>
-                        <div class="testimonial-author">
-                            <h4>Maria & Thomas</h4>
-                            <p>From Berlin, Germany</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"The service was exceptional! From the moment we landed in Mombasa until we left, everything was perfectly organized. The villa in Watamu was breathtaking."</p>
-                        <div class="testimonial-author">
-                            <h4>James Omondi</h4>
-                            <p>From Kampala, Uganda</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"I've used PwaniStays three times now for business retreats. Their corporate packages are excellent and the team is very professional."</p>
-                        <div class="testimonial-author">
-                            <h4>Fatima Ali</h4>
-                            <p>From Dubai, UAE</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"The Shanzu apartment was exactly as pictured. Clean, modern, and perfectly located. The local host was incredibly helpful with restaurant recommendations."</p>
-                        <div class="testimonial-author">
-                            <h4>Robert Chen</h4>
-                            <p>From Shanghai, China</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"Perfect for our large family reunion. The 6-bedroom villa in Diani accommodated all 12 of us comfortably. The chef prepared amazing Swahili dishes!"</p>
-                        <div class="testimonial-author">
-                            <h4>The Patel Family</h4>
-                            <p>From Mumbai, India</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"As a solo female traveler, I felt completely safe and well taken care of. The PwaniStays team checked in regularly and were always available."</p>
-                        <div class="testimonial-author">
-                            <h4>Sophie Martin</h4>
-                            <p>From Paris, France</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"We booked last minute and were amazed by how quickly they arranged everything. The transfer was waiting at the airport as promised."</p>
-                        <div class="testimonial-author">
-                            <h4>Michael & Grace</h4>
-                            <p>From Johannesburg, South Africa</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"The marine experiences they arranged were unforgettable. Snorkeling in Watamu Marine Park was the highlight of our trip."</p>
-                        <div class="testimonial-author">
-                            <h4>Carlos Rodriguez</h4>
-                            <p>From Barcelona, Spain</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"Excellent value for money. The Nyali villa was luxurious but affordable, especially with the direct booking discount they offered."</p>
-                        <div class="testimonial-author">
-                            <h4>Linda Wang</h4>
-                            <p>From Singapore</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"We've been coming to the Kenyan coast for years, but this was our first time using PwaniStays. It was by far our best experience yet!"</p>
-                        <div class="testimonial-author">
-                            <h4>The Smith Family</h4>
-                            <p>From Sydney, Australia</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
+                <!-- More testimonials... -->
             </div>
             <button class="testimonial-prev" aria-label="Previous testimonial">‹</button>
             <button class="testimonial-next" aria-label="Next testimonial">›</button>
             <div class="testimonial-dots"></div>
-        </div>
-    </section>
-
-    <!-- Coastal Destinations -->
-    <section class="destinations" id="destinations" role="region" aria-label="Coastal destinations">
-        <div class="section-title">
-            <h2>Explore Kenyan Coast Destinations</h2>
-            <p>From historic Mombasa to pristine Diani</p>
-        </div>
-        <div class="destinations-container">
-            <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1573843989-c9d7ad1504e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
-                    <h3>Mombasa</h3>
-                </div>
-                <div class="destination-content">
-                    <p>Historic Old Town, Fort Jesus, and vibrant markets. Perfect for culture enthusiasts.</p>
-                    <a href="#" onclick="filterSupabaseProperties('Mombasa')" class="btn-small">View Properties</a>
-                </div>
-            </div>
-            <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
-                    <h3>Diani</h3>
-                </div>
-                <div class="destination-content">
-                    <p>White sandy beaches, luxury resorts, and water sports. Ideal for beach lovers.</p>
-                    <a href="#" onclick="filterSupabaseProperties('Diani')" class="btn-small">View Properties</a>
-                </div>
-            </div>
-            <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
-                    <h3>Watamu</h3>
-                </div>
-                <div class="destination-content">
-                    <p>Marine National Park, snorkeling, and turtle watching. Great for marine adventures.</p>
-                    <a href="#" onclick="filterSupabaseProperties('Watamu')" class="btn-small">View Properties</a>
-                </div>
-            </div>
-            <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
-                    <h3>Nyali & Bamburi</h3>
-                </div>
-                <div class="destination-content">
-                    <p>Family-friendly beaches, restaurants, and entertainment. Perfect for family vacations.</p>
-                    <a href="#" onclick="filterSupabaseProperties('Nyali')" class="btn-small">View Properties</a>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -1922,26 +1850,25 @@
                 <a href="#home" class="logo-link">
                     <div class="footer-logo">
                         <span class="footer-logo-icon" role="img" aria-label="Beach umbrella">🏝️</span>
-                        <h2>Pwani<span>Stays</span></h2> <!-- UPDATED: Removed .com -->
+                        <h2>Pwani<span>Stays</span></h2>
                     </div>
                 </a>
                 <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
                 <div class="social-links">
-                    <a href="#" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                    <a href="#" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                    <a href="#" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                    <a href="#" title="TikTok" aria-label="TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
-                    <a href="#" title="TripAdvisor" aria-label="TripAdvisor"><i class="fab fa-tripadvisor" aria-hidden="true"></i></a>
+                    <a href="#" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="TikTok" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" title="TripAdvisor" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
                 </div>
             </div>
             <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#stays">Premium Properties</a></li>
-                    <li><a href="#properties">All Properties</a></li>
+                    <li><a href="#stays">Featured Properties</a></li>
+                    <li><a href="#allProperties">All Properties</a></li>
                     <li><a href="#services">Our Services</a></li>
-                    <li><a href="#destinations">Destinations</a></li>
                     <li><a href="#testimonials">Guest Reviews</a></li>
                     <li><a href="#contact">Contact Us</a></li>
                 </ul>
@@ -1949,23 +1876,22 @@
             <div class="footer-col">
                 <h3>Coastal Destinations</h3>
                 <ul>
-                    <li><a href="#" onclick="filterSupabaseProperties('Mombasa')">Mombasa</a></li>
-                    <li><a href="#" onclick="filterSupabaseProperties('Nyali')">Nyali</a></li>
-                    <li><a href="#" onclick="filterSupabaseProperties('Bamburi')">Bamburi</a></li>
-                    <li><a href="#" onclick="filterSupabaseProperties('Shanzu')">Shanzu</a></li>
-                    <li><a href="#" onclick="filterSupabaseProperties('Diani')">Diani</a></li>
-                    <li><a href="#" onclick="filterSupabaseProperties('Watamu')">Watamu</a></li>
-                    <li><a href="#" onclick="filterSupabaseProperties('Kilifi')">Kilifi</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Mombasa')">Mombasa</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Nyali')">Nyali</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Bamburi')">Bamburi</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Diani')">Diani</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Watamu')">Watamu</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Kilifi')">Kilifi</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h3>Contact & Support</h3>
                 <ul class="contact-info">
-                    <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Mombasa, Coastal Kenya</li>
-                    <li><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
-                    <li><i class="fab fa-whatsapp" aria-hidden="true"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
-                    <li><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></li>
-                    <li><i class="fas fa-clock" aria-hidden="true"></i> 24/7 Customer Support</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></li>
+                    <li><i class="fas fa-clock"></i> 24/7 Customer Support</li>
                 </ul>
             </div>
         </div>
@@ -1978,10 +1904,9 @@
         </div>
     </footer>
 
-    <!-- ✅ 1. Supabase JS -->
+    <!-- ✅ Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Your existing JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile menu
@@ -1995,7 +1920,6 @@
                     this.setAttribute('aria-expanded', !isExpanded);
                 });
                 
-                // Close menu when clicking links
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', () => {
                         navLinks.classList.remove('active');
@@ -2007,10 +1931,7 @@
             // Set current year
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
-            // Initialize currency based on user location (defaults to KES)
-            initCurrency();
-            
-            // Initialize calendar dates
+            // Initialize calendar
             initCalendarDates();
             
             // Initialize testimonials
@@ -2022,383 +1943,26 @@
                 inquiryForm.addEventListener('submit', handleFormSubmit);
             }
             
-            // Header scroll effect
-            window.addEventListener('scroll', updateHeader);
-            updateHeader();
-            
-            // Smooth scroll
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    if (href === '#') return;
-                    
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-            
-            // Close calendar when clicking outside
-            document.addEventListener('click', function(e) {
-                const calendar = document.getElementById('calendarContainer');
-                if (calendar && !calendar.contains(e.target) && 
-                    e.target.id !== 'checkinDate' && e.target.id !== 'checkoutDate') {
-                    calendar.style.display = 'none';
-                }
-            });
-            
-            // Load properties when page loads
-            loadSupabaseProperties();
+            // Load properties on page load
+            loadAllProperties();
             loadFeaturedProperties();
+            
+            // Close calendar when clicking backdrop
+            document.getElementById('calendarBackdrop').addEventListener('click', hideCalendar);
         });
         
         // ✅ Supabase Configuration
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
-        
-        // Create Supabase client
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // ✅ Property loader + rendering code
-        async function loadSupabaseProperties() {
-            const location = document.getElementById("locationFilter").value;
-            const unitType = document.getElementById("unitTypeFilter").value;
-            
-            const container = document.getElementById("propertyList");
-            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading properties...</div>';
-            
-            try {
-                let query = supabase.from("properties").select("*").order("created_at", { ascending: false });
-                
-                if (location) query = query.eq("location", location);
-                if (unitType) query = query.eq("unit_type", unitType);
-                
-                const { data, error } = await query;
-                
-                if (error) {
-                    console.error("Supabase error:", error);
-                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error loading properties. Please try again.</p></div>';
-                    return;
-                }
-                
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your filters.</p><p>Try different filters or check back later.</p></div>';
-                    return;
-                }
-                
-                // Clear container
-                container.innerHTML = '';
-                
-                // Render properties
-                data.forEach(property => {
-                    const propertyCard = document.createElement('div');
-                    propertyCard.className = 'property-card';
-                    
-                    // Format price
-                    const formattedPrice = formatCurrency(property.price_per_night || 0, currentCurrency);
-                    
-                    // Create amenities list
-                    const amenities = property.amenities ? JSON.parse(property.amenities) : [];
-                    const amenitiesHTML = amenities.slice(0, 3).map(amenity => 
-                        `<span class="amenity-badge">${amenity}</span>`
-                    ).join('');
-                    
-                    propertyCard.innerHTML = `
-                        <div class="property-image">
-                            <img 
-                                src="${property.image_url || 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" 
-                                alt="${property.title || 'Property Image'}"
-                                loading="lazy"
-                            />
-                        </div>
-                        <div class="property-content">
-                            <h3 class="property-title">${property.title || 'Premium Property'}</h3>
-                            <div class="property-meta">
-                                <span class="property-location">
-                                    <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
-                                </span>
-                                <span class="property-type">${property.unit_type || 'Apartment'}</span>
-                            </div>
-                            <p class="property-description">${property.description || 'Luxury coastal accommodation with premium amenities.'}</p>
-                            
-                            ${amenities.length > 0 ? `
-                            <div class="property-amenities">
-                                ${amenitiesHTML}
-                                ${amenities.length > 3 ? '<span class="amenity-badge">+' + (amenities.length - 3) + ' more</span>' : ''}
-                            </div>
-                            ` : ''}
-                            
-                            <div class="property-price">${formattedPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
-                            
-                            <div class="property-footer">
-                                <span style="color: var(--gray); font-size: 0.9rem;">
-                                    <i class="fas fa-user-friends"></i> ${property.max_guests || 2} guests
-                                    <span style="margin: 0 10px;">•</span>
-                                    <i class="fas fa-bed"></i> ${property.bedrooms || 1} bed${property.bedrooms !== 1 ? 's' : ''}
-                                </span>
-                                <button class="btn-primary" onclick="inquireAboutProperty('${property.title || ''}')">
-                                    <i class="fas fa-calendar-alt"></i> Book Now
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    
-                    container.appendChild(propertyCard);
-                });
-                
-            } catch (error) {
-                console.error("Error loading properties:", error);
-                container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Unable to load properties. Please check your connection.</p></div>';
-            }
-        }
-        
-        // Load featured properties (for the Featured Stays section)
-        async function loadFeaturedProperties() {
-            const container = document.getElementById("featuredProperties");
-            if (!container) return;
-            
-            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading featured properties...</div>';
-            
-            try {
-                // Get 6 featured properties
-                const { data, error } = await supabase
-                    .from("properties")
-                    .select("*")
-                    .eq("is_featured", true)
-                    .order("created_at", { ascending: false })
-                    .limit(6);
-                
-                if (error) {
-                    console.error("Error loading featured properties:", error);
-                    container.innerHTML = '<div class="no-properties">Featured properties coming soon!</div>';
-                    return;
-                }
-                
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="no-properties">Featured properties coming soon!</div>';
-                    return;
-                }
-                
-                // Clear container
-                container.innerHTML = '';
-                
-                // Render featured properties
-                data.forEach(property => {
-                    const propertyCard = document.createElement('div');
-                    propertyCard.className = 'stay-card';
-                    
-                    // Format price
-                    const formattedPrice = formatCurrency(property.price_per_night || 0, currentCurrency);
-                    
-                    propertyCard.innerHTML = `
-                        <div class="stay-img">
-                            <img 
-                                src="${property.image_url || 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" 
-                                alt="${property.title || 'Featured Property'}"
-                                style="width:100%; height:100%; object-fit:cover;"
-                                loading="lazy"
-                            />
-                        </div>
-                        <div class="stay-content">
-                            <h3>${property.title || 'Premium Property'}</h3>
-                            <div class="stay-location">
-                                <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
-                            </div>
-                            <div class="stay-features">
-                                <span><i class="fas fa-user-friends"></i> ${property.max_guests || 2} guests</span>
-                                <span><i class="fas fa-bed"></i> ${property.bedrooms || 1} bed${property.bedrooms !== 1 ? 's' : ''}</span>
-                                <span><i class="fas fa-bath"></i> ${property.bathrooms || 1} bath${property.bathrooms !== 1 ? 's' : ''}</span>
-                            </div>
-                            <div class="stay-price">
-                                <div>
-                                    <span class="price-amount">${formattedPrice}</span>
-                                    <span class="price-period">/ night</span>
-                                </div>
-                                <button class="btn-primary" onclick="inquireAboutProperty('${property.title || ''}')">Book Now</button>
-                            </div>
-                        </div>
-                    `;
-                    
-                    container.appendChild(propertyCard);
-                });
-                
-            } catch (error) {
-                console.error("Error loading featured properties:", error);
-                container.innerHTML = '<div class="no-properties">Featured properties coming soon!</div>';
-            }
-        }
-        
-        // Filter properties from destination cards
-        function filterSupabaseProperties(location) {
-            event.preventDefault();
-            document.getElementById('locationFilter').value = location;
-            loadSupabaseProperties();
-            
-            // Scroll to properties section
-            document.querySelector('#properties').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        }
-        
-        // Property inquiry function
-        function inquireAboutProperty(propertyName) {
-            document.getElementById('message').value = `I'm interested in booking: ${propertyName}\n\nTravel Dates: \nNumber of Guests: \nSpecial Requests: `;
-            document.querySelector('#book-now').scrollIntoView({ behavior: 'smooth' });
-            document.getElementById('name').focus();
-        }
-        
-        // Your existing currency functionality (keep all your existing functions)
-        let currentCurrency = 'KES';
-        
-        // ... (keep all your existing currency functions: initCurrency, detectUserLocation, convertCurrency, formatCurrency, etc.)
-        // ... (keep all your existing calendar functions)
-        // ... (keep all your existing testimonial functions)
-        // ... (keep all your existing form handling functions)
-        
-        // Initialize on page load
-        window.addEventListener('DOMContentLoaded', function() {
-            // Auto load when page opens
-            loadSupabaseProperties();
-            loadFeaturedProperties();
-        });
-        
-        // Global functions for old stays data (keep for compatibility)
-        const staysData = [
-            // ... (your existing staysData array)
-        ];
-        
-        function loadStays() {
-            // ... (your existing loadStays function)
-        }
-        
-        window.searchStays = function() {
-            const location = document.getElementById('searchLocation').value;
-            const guests = document.getElementById('searchGuests').value;
-            const checkin = document.getElementById('checkinDate').value;
-            const checkout = document.getElementById('checkoutDate').value;
-            
-            if (!location) {
-                alert('Please select a destination');
-                return;
-            }
-            
-            alert(`Searching ${location} properties for ${guests} guests from ${checkin} to ${checkout}...`);
-        };
-        
-        window.filterStays = function(location) {
-            event.preventDefault();
-            document.getElementById('searchLocation').value = location;
-            searchStays();
-        };
-        
-        window.bookStay = function(id) {
-            const stay = staysData.find(s => s.id === id);
-            const priceInCurrency = formatCurrency(stay.price, currentCurrency);
-            alert(`Booking ${stay.name} in ${stay.location} for ${priceInCurrency} per night. You'll be redirected to the booking form.`);
-            document.querySelector('#book-now').scrollIntoView({ behavior: 'smooth' });
-        };
-        
-        window.viewAllProperties = function() {
-            event.preventDefault();
-            document.querySelector('#properties').scrollIntoView({ behavior: 'smooth' });
-        };
-        
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('name').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                phone: document.getElementById('phone').value.trim(),
-                service: document.getElementById('service').value,
-                message: document.getElementById('message').value.trim()
-            };
-            
-            if (!formData.name || !formData.email || !formData.phone || !formData.service || !formData.message) {
-                alert('Please fill all required fields marked with *');
-                return;
-            }
-            
-            alert(`Thank you ${formData.name}! Our coastal experts will contact you within 30 minutes.`);
-            e.target.reset();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        function updateHeader() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-            }
-        }
-        
-        // Currency functionality (simplified version - keep your full version)
-        const exchangeRates = {
-            'KES': 1, 'USD': 0.0077, 'EUR': 0.0071, 'GBP': 0.0061,
-            'ZAR': 0.14, 'UGX': 28.5, 'TZS': 19.8, 'AED': 0.028,
-            'INR': 0.64, 'CNY': 0.055, 'JPY': 1.13, 'AUD': 0.011
-        };
-        
-        const currencySymbols = {
-            'KES': 'KSh', 'USD': '$', 'EUR': '€', 'GBP': '£',
-            'ZAR': 'R', 'UGX': 'USh', 'TZS': 'TSh', 'AED': 'د.إ',
-            'INR': '₹', 'CNY': '¥', 'JPY': '¥', 'AUD': 'A$'
-        };
-        
-        function initCurrency() {
-            const savedCurrency = localStorage.getItem('preferredCurrency');
-            if (savedCurrency) {
-                currentCurrency = savedCurrency;
-                return;
-            }
-            // Default to KES
-            currentCurrency = 'KES';
-            localStorage.setItem('preferredCurrency', currentCurrency);
-        }
-        
-        function convertCurrency(amountInKES, targetCurrency) {
-            const rate = exchangeRates[targetCurrency];
-            if (!rate) return amountInKES;
-            return amountInKES * rate;
-        }
-        
-        function formatCurrency(amount, currency) {
-            const symbol = currencySymbols[currency] || currency;
-            const convertedAmount = convertCurrency(amount, currency);
-            const formatOptions = {
-                style: 'decimal',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            };
-            
-            if (['USD', 'EUR', 'GBP', 'AUD'].includes(currency)) {
-                formatOptions.minimumFractionDigits = 0;
-                formatOptions.maximumFractionDigits = 2;
-            }
-            
-            const formattedAmount = convertedAmount.toLocaleString(undefined, formatOptions);
-            
-            if (['USD', 'EUR', 'GBP', 'AUD', 'JPY', 'CNY'].includes(currency)) {
-                return `${symbol}${formattedAmount}`;
-            } else {
-                return `${formattedAmount} ${symbol}`;
-            }
-        }
-        
-        // Calendar functionality (simplified)
+        // Calendar functionality - FIXED
         let selectedCheckin = null;
         let selectedCheckout = null;
         let selectingFor = 'checkin';
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
+        let isCalendarVisible = false;
         
         function initCalendarDates() {
             const today = new Date();
@@ -2408,36 +1972,177 @@
             selectedCheckin = today;
             selectedCheckout = tomorrow;
             
-            document.getElementById('checkinDate').value = formatDate(today);
-            document.getElementById('checkoutDate').value = formatDate(tomorrow);
+            updateDateInputs();
+        }
+        
+        function updateDateInputs() {
+            const checkinInput = document.getElementById('checkinDate');
+            const checkoutInput = document.getElementById('checkoutDate');
+            
+            if (checkinInput && selectedCheckin) {
+                checkinInput.value = formatDate(selectedCheckin);
+            }
+            if (checkoutInput && selectedCheckout) {
+                checkoutInput.value = formatDate(selectedCheckout);
+            }
         }
         
         function showCalendar(inputElement, type) {
             selectingFor = type;
-            const calendar = document.getElementById('calendarContainer');
             
-            const today = new Date();
-            currentMonth = today.getMonth();
-            currentYear = today.getFullYear();
-            
-            const rect = inputElement.getBoundingClientRect();
-            calendar.style.top = (rect.bottom + window.scrollY + 5) + 'px';
-            calendar.style.left = (rect.left + window.scrollX) + 'px';
+            // Set current month to selected date
+            if (selectingFor === 'checkin' && selectedCheckin) {
+                currentMonth = selectedCheckin.getMonth();
+                currentYear = selectedCheckin.getFullYear();
+            } else if (selectingFor === 'checkout' && selectedCheckout) {
+                currentMonth = selectedCheckout.getMonth();
+                currentYear = selectedCheckout.getFullYear();
+            } else {
+                const today = new Date();
+                currentMonth = today.getMonth();
+                currentYear = today.getFullYear();
+            }
             
             generateCalendar();
-            calendar.style.display = 'block';
+            
+            // Show calendar and backdrop
+            document.getElementById('calendarContainer').style.display = 'block';
+            document.getElementById('calendarBackdrop').style.display = 'block';
+            isCalendarVisible = true;
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideCalendar() {
+            document.getElementById('calendarContainer').style.display = 'none';
+            document.getElementById('calendarBackdrop').style.display = 'none';
+            isCalendarVisible = false;
+            document.body.style.overflow = '';
         }
         
         function generateCalendar() {
-            // ... (your existing generateCalendar function)
+            const calendar = document.getElementById('calendarContainer');
+            const today = new Date();
+            
+            let html = `
+                <div class="calendar-header">
+                    <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
+                    <div class="calendar-nav">
+                        <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
+                        <button onclick="changeMonth(1)" aria-label="Next month">›</button>
+                    </div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+            `;
+            
+            // Get first day of month
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            
+            // Fill empty cells for first week
+            for (let i = 0; i < firstDay; i++) {
+                html += '<div class="calendar-day disabled"></div>';
+            }
+            
+            // Get days in month
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Create day cells
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const isToday = date.getDate() === today.getDate() && 
+                               date.getMonth() === today.getMonth() && 
+                               date.getFullYear() === today.getFullYear();
+                const isSelected = (selectedCheckin && isSameDay(date, selectedCheckin)) ||
+                                  (selectedCheckout && isSameDay(date, selectedCheckout));
+                const isDisabled = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const isBetween = selectedCheckin && selectedCheckout && 
+                                 date > selectedCheckin && date < selectedCheckout;
+                
+                let className = 'calendar-day';
+                if (isToday) className += ' today';
+                if (isSelected) className += ' selected';
+                if (isDisabled) className += ' disabled';
+                if (isBetween) className += ' between';
+                
+                const onClick = isDisabled ? '' : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+                
+                html += `<div class="${className}" ${onClick}>${day}</div>`;
+            }
+            
+            html += `
+                </div>
+                <div class="calendar-actions">
+                    <button class="calendar-clear" onclick="clearDates()">Clear</button>
+                    <button class="calendar-apply" onclick="applyDates()">Apply Dates</button>
+                </div>
+            `;
+            
+            calendar.innerHTML = html;
         }
         
         function selectDate(day, month, year) {
-            // ... (your existing selectDate function)
+            const date = new Date(year, month, day);
+            const today = new Date();
+            
+            if (date < today) {
+                return; // Don't allow selecting past dates
+            }
+            
+            if (selectingFor === 'checkin') {
+                selectedCheckin = date;
+                
+                // If checkout is before checkin, set checkout to checkin + 1 day
+                if (selectedCheckout && selectedCheckout <= date) {
+                    const nextDay = new Date(date);
+                    nextDay.setDate(nextDay.getDate() + 1);
+                    selectedCheckout = nextDay;
+                }
+            } else {
+                if (date <= selectedCheckin) {
+                    alert('Check-out date must be after check-in date');
+                    return;
+                }
+                selectedCheckout = date;
+            }
+            
+            updateDateInputs();
+            generateCalendar();
         }
         
         function changeMonth(delta) {
-            // ... (your existing changeMonth function)
+            currentMonth += delta;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar();
+        }
+        
+        function clearDates() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            selectedCheckin = today;
+            selectedCheckout = tomorrow;
+            
+            updateDateInputs();
+            generateCalendar();
+        }
+        
+        function applyDates() {
+            hideCalendar();
         }
         
         function isSameDay(date1, date2) {
@@ -2461,13 +2166,276 @@
             return `${day}/${month}/${year}`;
         }
         
+        // Property search and filtering
+        async function searchProperties() {
+            const location = document.getElementById('searchLocation').value;
+            const propertyType = document.getElementById('propertyType').value;
+            const checkin = document.getElementById('checkinDate').value;
+            const checkout = document.getElementById('checkoutDate').value;
+            
+            // Show search results section
+            document.getElementById('searchResults').style.display = 'block';
+            document.getElementById('allProperties').style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+            
+            // Update results header
+            const resultsHeader = document.getElementById('resultsHeader');
+            const searchCriteria = document.getElementById('searchCriteria');
+            const datesCriteria = document.getElementById('datesCriteria');
+            
+            let criteriaText = [];
+            if (location) criteriaText.push(location);
+            if (propertyType) {
+                const typeMap = {
+                    'studio': 'Studio',
+                    '1br': '1 Bedroom',
+                    '2br': '2 Bedrooms',
+                    '3br': '3 Bedrooms',
+                    '4br': '4+ Bedrooms',
+                    'villa': 'Villa',
+                    'apartment': 'Apartment'
+                };
+                criteriaText.push(typeMap[propertyType] || propertyType);
+            }
+            
+            searchCriteria.textContent = criteriaText.length > 0 
+                ? `Properties in ${criteriaText.join(' • ')}`
+                : 'All Properties';
+            
+            datesCriteria.textContent = checkin && checkout 
+                ? `Dates: ${checkin} to ${checkout}`
+                : 'Flexible dates';
+            
+            resultsHeader.style.display = 'block';
+            
+            // Load filtered properties
+            await loadFilteredProperties(location, propertyType);
+        }
+        
+        async function loadFilteredProperties(location, propertyType) {
+            const container = document.getElementById('propertyList');
+            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
+            
+            try {
+                let query = supabase.from("properties").select("*").order("created_at", { ascending: false });
+                
+                if (location) query = query.eq("location", location);
+                if (propertyType) query = query.eq("unit_type", propertyType);
+                
+                const { data, error } = await query;
+                
+                if (error) {
+                    console.error("Search error:", error);
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your search.</p><p>Try different filters or browse all properties.</p></div>';
+                    return;
+                }
+                
+                // Update results count
+                document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
+                
+                renderProperties(data, container);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Unable to search properties. Please check your connection.</p></div>';
+            }
+        }
+        
+        async function loadAllProperties() {
+            const container = document.getElementById('allPropertiesList');
+            
+            try {
+                const { data, error } = await supabase
+                    .from("properties")
+                    .select("*")
+                    .order("created_at", { ascending: false });
+                
+                if (error) {
+                    console.error("Error loading properties:", error);
+                    container.innerHTML = '<div class="no-properties"><p>Unable to load properties. Please try again later.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties"><p>No properties available at the moment. Check back soon!</p></div>';
+                    return;
+                }
+                
+                renderProperties(data, container);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties"><p>Error loading properties. Please refresh the page.</p></div>';
+            }
+        }
+        
+        async function loadFeaturedProperties() {
+            const container = document.getElementById('featuredProperties');
+            
+            try {
+                const { data, error } = await supabase
+                    .from("properties")
+                    .select("*")
+                    .eq("is_featured", true)
+                    .order("created_at", { ascending: false })
+                    .limit(6);
+                
+                if (error) {
+                    console.error("Error loading featured:", error);
+                    container.innerHTML = '<div class="no-properties">Featured properties coming soon!</div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties">No featured properties at the moment.</div>';
+                    return;
+                }
+                
+                container.innerHTML = '';
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    container.appendChild(card);
+                });
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties">Unable to load featured properties.</div>';
+            }
+        }
+        
+        function renderProperties(properties, container) {
+            container.innerHTML = '';
+            
+            if (!properties || properties.length === 0) {
+                container.innerHTML = '<div class="no-properties"><p>No properties found.</p></div>';
+                return;
+            }
+            
+            properties.forEach(property => {
+                const card = createPropertyCard(property);
+                container.appendChild(card);
+            });
+        }
+        
+        function createPropertyCard(property) {
+            const card = document.createElement('div');
+            card.className = 'property-card';
+            
+            // Format price
+            const price = property.price_per_night || 0;
+            const formattedPrice = new Intl.NumberFormat('en-KE', {
+                style: 'currency',
+                currency: 'KES',
+                minimumFractionDigits: 0
+            }).format(price);
+            
+            // Create amenities list
+            const amenities = property.amenities ? 
+                (Array.isArray(property.amenities) ? property.amenities : JSON.parse(property.amenities)) : [];
+            const amenitiesHTML = amenities.slice(0, 3).map(amenity => 
+                `<span class="amenity-badge">${amenity}</span>`
+            ).join('');
+            
+            card.innerHTML = `
+                <div class="property-image">
+                    <img src="${property.image_url || 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" 
+                         alt="${property.title || 'Coastal Property'}"
+                         loading="lazy">
+                </div>
+                <div class="property-content">
+                    <h3 class="property-title">${property.title || 'Premium Property'}</h3>
+                    <div class="property-meta">
+                        <span class="property-location">
+                            <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
+                        </span>
+                        <span class="property-type">${property.unit_type || 'Apartment'}</span>
+                    </div>
+                    <p class="property-description">${property.description || 'Luxury coastal accommodation with premium amenities.'}</p>
+                    
+                    ${amenities.length > 0 ? `
+                    <div class="property-amenities">
+                        ${amenitiesHTML}
+                        ${amenities.length > 3 ? '<span class="amenity-badge">+' + (amenities.length - 3) + ' more</span>' : ''}
+                    </div>
+                    ` : ''}
+                    
+                    <div class="property-price">${formattedPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
+                    
+                    <div class="property-footer">
+                        <span style="color: var(--gray); font-size: 0.9rem;">
+                            <i class="fas fa-user-friends"></i> ${property.max_guests || 2} guests
+                            <span style="margin: 0 10px;">•</span>
+                            <i class="fas fa-bed"></i> ${property.bedrooms || 1} bed${property.bedrooms !== 1 ? 's' : ''}
+                        </span>
+                        <button class="btn-primary" onclick="inquireAboutProperty('${property.title || ''}')">
+                            <i class="fas fa-calendar-alt"></i> Inquire
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        function filterByLocation(location) {
+            document.getElementById('searchLocation').value = location;
+            searchProperties();
+        }
+        
+        function clearSearch() {
+            // Reset search inputs
+            document.getElementById('searchLocation').value = '';
+            document.getElementById('propertyType').value = '';
+            
+            // Reset dates to default
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            selectedCheckin = today;
+            selectedCheckout = tomorrow;
+            updateDateInputs();
+            
+            // Show all properties section
+            document.getElementById('searchResults').style.display = 'none';
+            document.getElementById('allProperties').style.display = 'block';
+            
+            // Scroll to all properties
+            document.getElementById('allProperties').scrollIntoView({ behavior: 'smooth' });
+            
+            // Reload all properties
+            loadAllProperties();
+        }
+        
+        function inquireAboutProperty(propertyName) {
+            const messageTextarea = document.getElementById('message');
+            const currentMessage = messageTextarea.value;
+            const inquiryText = `I'm interested in booking: ${propertyName}\n\nTravel Dates: \nNumber of Guests: \nSpecial Requests: \n\n`;
+            
+            messageTextarea.value = inquiryText + (currentMessage ? '\n\n' + currentMessage : '');
+            
+            // Scroll to contact form
+            document.getElementById('book-now').scrollIntoView({ behavior: 'smooth' });
+            
+            // Focus on name field
+            document.getElementById('name').focus();
+        }
+        
         // Testimonials functionality
         let currentTestimonial = 0;
         const totalTestimonials = 12;
         
         function initTestimonials() {
             const dotsContainer = document.querySelector('.testimonial-dots');
+            if (!dotsContainer) return;
             
+            // Create dots
             for (let i = 0; i < totalTestimonials; i++) {
                 const dot = document.createElement('button');
                 dot.className = `testimonial-dot ${i === 0 ? 'active' : ''}`;
@@ -2476,9 +2444,14 @@
                 dotsContainer.appendChild(dot);
             }
             
-            document.querySelector('.testimonial-prev').addEventListener('click', prevTestimonial);
-            document.querySelector('.testimonial-next').addEventListener('click', nextTestimonial);
+            // Navigation buttons
+            const prevBtn = document.querySelector('.testimonial-prev');
+            const nextBtn = document.querySelector('.testimonial-next');
             
+            if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
+            if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
+            
+            // Auto-rotate
             setInterval(nextTestimonial, 5000);
         }
         
@@ -2503,6 +2476,35 @@
             currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
             showTestimonial(currentTestimonial);
         }
+        
+        // Form submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value.trim()
+            };
+            
+            if (!formData.name || !formData.email || !formData.phone || !formData.service || !formData.message) {
+                alert('Please fill all required fields marked with *');
+                return;
+            }
+            
+            alert(`Thank you ${formData.name}! Our coastal experts will contact you within 30 minutes.`);
+            e.target.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Close calendar when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isCalendarVisible) {
+                hideCalendar();
+            }
+        });
     </script>
 </body>
 </html>

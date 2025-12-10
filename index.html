@@ -186,7 +186,7 @@
             color: var(--dark);
         }
         
-        /* Hero Section */
+        /* Hero Section - UPDATED */
         .hero {
             height: 100vh;
             min-height: 600px;
@@ -218,17 +218,17 @@
             margin-right: auto;
         }
         
-        /* Search Box */
+        /* Simplified Search Box - UPDATED */
         .search-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 30px;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-top: 30px;
-            max-width: 1000px;
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -265,7 +265,7 @@
         }
         
         .search-btn-container {
-            grid-column: span 4;
+            grid-column: span 3;
             display: flex;
             justify-content: center;
             margin-top: 10px;
@@ -288,6 +288,16 @@
             background: var(--primary-light);
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(13, 122, 95, 0.3);
+        }
+        
+        /* Date Range Input */
+        .date-range-input {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .date-range-input input {
+            width: 100%;
         }
         
         /* Section Common Styles */
@@ -1282,7 +1292,7 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
         }
         
-        /* Calendar Styles */
+        /* Calendar Styles - COMPLETELY UPDATED */
         .calendar-overlay {
             display: none;
             position: fixed;
@@ -1294,7 +1304,7 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             z-index: 2000;
             padding: 25px;
-            width: 380px;
+            width: 420px;
             max-width: 90vw;
             border: 2px solid var(--primary);
             animation: fadeIn 0.3s ease;
@@ -1323,7 +1333,7 @@
         
         .calendar-nav {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
         
@@ -1350,30 +1360,35 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
+            gap: 5px;
             margin-bottom: 15px;
         }
         
         .calendar-day-header {
-            padding: 10px;
+            padding: 12px 5px;
             text-align: center;
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             background: #f8f9fa;
-            border-radius: 8px;
+            border-radius: 6px;
         }
         
         .calendar-day {
-            padding: 12px;
+            padding: 12px 5px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
             border: 2px solid transparent;
             color: var(--dark);
             background: white;
+            font-size: 0.9rem;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .calendar-day:hover {
@@ -1459,6 +1474,25 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 1999;
             animation: fadeIn 0.3s ease;
+        }
+        
+        .selected-dates-display {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .selected-dates-display div {
+            text-align: center;
+        }
+        
+        .selected-dates-display strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 5px;
         }
         
         /* Responsive Design */
@@ -1565,12 +1599,13 @@
             }
             
             .calendar-overlay {
-                width: 350px;
+                width: 380px;
                 padding: 20px;
             }
             
             .calendar-day {
-                padding: 10px;
+                padding: 10px 3px;
+                font-size: 0.85rem;
             }
             
             .testimonial-content p::before,
@@ -1603,17 +1638,18 @@
             }
             
             .calendar-overlay {
-                width: 320px;
+                width: 350px;
                 padding: 15px;
             }
             
             .calendar-day {
-                padding: 8px;
-                font-size: 0.9rem;
+                padding: 8px 2px;
+                font-size: 0.8rem;
+                min-height: 35px;
             }
             
             .calendar-day-header {
-                padding: 8px;
+                padding: 10px 2px;
                 font-size: 0.8rem;
             }
             
@@ -1693,14 +1729,14 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - UPDATED -->
     <section class="hero" id="home" role="region" aria-label="Hero section">
         <div class="hero-content">
             <h1 class="sr-only">PwaniStays - Luxury Coastal Accommodation in Kenya</h1>
             <h2>Experience Luxury on the Kenyan Coast</h2>
             <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
             
-            <!-- Enhanced Search Box -->
+            <!-- Simplified Search Box - Only 3 inputs -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
@@ -1717,13 +1753,9 @@
                         <option value="Kilifi">Kilifi</option>
                     </select>
                 </div>
-                <div class="search-input">
+                <div class="search-input date-range-input" onclick="showCalendar()">
                     <i class="fas fa-calendar" aria-hidden="true"></i>
-                    <input type="text" placeholder="Check-in Date" id="checkinDate" aria-label="Check-in date" readonly onclick="showCalendar(this, 'checkin')">
-                </div>
-                <div class="search-input">
-                    <i class="fas fa-calendar" aria-hidden="true"></i>
-                    <input type="text" placeholder="Check-out Date" id="checkoutDate" aria-label="Check-out date" readonly onclick="showCalendar(this, 'checkout')">
+                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly>
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>
@@ -2304,12 +2336,13 @@
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Calendar functionality - UPDATED VERSION
+        // Calendar functionality - COMPLETELY REVISED
         let selectedCheckin = null;
         let selectedCheckout = null;
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let isCalendarVisible = false;
+        let isSelectingCheckout = false;
 
         function initCalendarDates() {
             const today = new Date();
@@ -2319,23 +2352,17 @@
             selectedCheckin = today;
             selectedCheckout = tomorrow;
             
-            updateDateInputs();
+            updateDateRangeInput();
         }
 
-        function updateDateInputs() {
-            const checkinInput = document.getElementById('checkinDate');
-            const checkoutInput = document.getElementById('checkoutDate');
-            
-            if (checkinInput && selectedCheckin) {
-                checkinInput.value = formatDate(selectedCheckin);
-            }
-            if (checkoutInput && selectedCheckout) {
-                checkoutInput.value = formatDate(selectedCheckout);
+        function updateDateRangeInput() {
+            const dateRangeInput = document.getElementById('dateRange');
+            if (dateRangeInput && selectedCheckin && selectedCheckout) {
+                dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
             }
         }
 
-        function showCalendar(inputElement, type) {
-            // Always show both dates in the same calendar
+        function showCalendar() {
             generateCalendar();
             
             document.getElementById('calendarContainer').style.display = 'block';
@@ -2358,7 +2385,7 @@
             
             let html = `
                 <div class="calendar-header">
-                    <h4>Select Dates</h4>
+                    <h4>Select Check-in & Check-out Dates</h4>
                     <div class="calendar-nav">
                         <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
                         <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
@@ -2377,6 +2404,7 @@
             
             const firstDay = new Date(currentYear, currentMonth, 1).getDay();
             
+            // Fill empty cells before first day of month
             for (let i = 0; i < firstDay; i++) {
                 html += '<div class="calendar-day disabled"></div>';
             }
@@ -2396,7 +2424,8 @@
                 
                 let className = 'calendar-day';
                 if (isToday) className += ' today';
-                if (isCheckin || isCheckout) className += ' selected';
+                if (isCheckin) className += ' selected';
+                if (isCheckout) className += ' selected';
                 if (isDisabled) className += ' disabled';
                 if (isBetween) className += ' between';
                 
@@ -2405,30 +2434,26 @@
                 html += `<div class="${className}" ${onClick}>${day}</div>`;
             }
             
-            // Add next month button if needed
-            const remainingCells = 42 - (firstDay + daysInMonth); // 6 rows * 7 days
-            if (remainingCells > 0) {
-                const nextMonth = currentMonth === 11 ? 0 : currentMonth + 1;
-                const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
-                
-                for (let day = 1; day <= remainingCells; day++) {
-                    html += '<div class="calendar-day disabled">' + day + '</div>';
-                }
+            // Fill remaining cells to complete the grid (always 42 cells for 6 rows)
+            const totalCells = 42; // 6 rows * 7 days
+            const cellsFilled = firstDay + daysInMonth;
+            const remainingCells = totalCells - cellsFilled;
+            
+            for (let i = 1; i <= remainingCells; i++) {
+                html += '<div class="calendar-day disabled">' + i + '</div>';
             }
             
             // Add selected dates display
             html += `
                 </div>
-                <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
-                    <div style="display: flex; justify-content: space-around;">
-                        <div>
-                            <strong>Check-in:</strong><br>
-                            ${selectedCheckin ? formatDate(selectedCheckin) : 'Not selected'}
-                        </div>
-                        <div>
-                            <strong>Check-out:</strong><br>
-                            ${selectedCheckout ? formatDate(selectedCheckout) : 'Not selected'}
-                        </div>
+                <div class="selected-dates-display">
+                    <div>
+                        <strong>Check-in</strong>
+                        ${selectedCheckin ? formatDate(selectedCheckin) : 'Not selected'}
+                    </div>
+                    <div>
+                        <strong>Check-out</strong>
+                        ${selectedCheckout ? formatDate(selectedCheckout) : 'Not selected'}
                     </div>
                 </div>
                 <div class="calendar-actions">
@@ -2448,25 +2473,29 @@
                 return;
             }
             
-            // If no check-in selected, or if clicked date is before check-in, set as check-in
-            if (!selectedCheckin || date < selectedCheckin || (selectedCheckin && selectedCheckout && date < selectedCheckin)) {
+            // If no check-in selected, or if clicked date is before current check-in
+            if (!selectedCheckin || date < selectedCheckin) {
                 selectedCheckin = date;
-                // Auto-set checkout to next day
-                const nextDay = new Date(date);
-                nextDay.setDate(nextDay.getDate() + 1);
-                selectedCheckout = nextDay;
+                // If check-out is before new check-in, reset check-out
+                if (selectedCheckout && selectedCheckout <= date) {
+                    selectedCheckout = null;
+                }
             } 
-            // If check-in is selected and clicked date is after check-in, set as checkout
+            // If check-in is selected and clicked date is after check-in
             else if (date > selectedCheckin) {
                 selectedCheckout = date;
             }
-            // If clicking the same date as check-in, do nothing (or could toggle)
+            // If clicking the same date as check-in, toggle check-out
             else if (isSameDay(date, selectedCheckin)) {
-                // Optional: allow selecting same date for check-in/check-out
-                // selectedCheckout = date;
+                // If check-out is same as check-in, clear check-out
+                if (selectedCheckout && isSameDay(date, selectedCheckout)) {
+                    selectedCheckout = null;
+                } else {
+                    selectedCheckout = date;
+                }
             }
             
-            updateDateInputs();
+            updateDateRangeInput();
             generateCalendar();
         }
 
@@ -2490,7 +2519,7 @@
             selectedCheckin = today;
             selectedCheckout = tomorrow;
             
-            updateDateInputs();
+            updateDateRangeInput();
             generateCalendar();
         }
 
@@ -2523,8 +2552,7 @@
         async function searchProperties() {
             const location = document.getElementById('searchLocation').value;
             const propertyType = document.getElementById('propertyType').value;
-            const checkin = document.getElementById('checkinDate').value;
-            const checkout = document.getElementById('checkoutDate').value;
+            const dateRange = document.getElementById('dateRange').value;
             
             // Show search results section
             document.getElementById('searchResults').style.display = 'block';
@@ -2548,7 +2576,6 @@
                     '3br': '3 Bedrooms',
                     '4br': '4+ Bedrooms',
                     'villa': 'Villa'
-                    // Removed 'apartment': 'Apartment' as requested
                 };
                 criteriaText.push(typeMap[propertyType] || propertyType);
             }
@@ -2557,8 +2584,8 @@
                 ? `Properties in ${criteriaText.join(' • ')}`
                 : 'All Properties';
             
-            datesCriteria.textContent = checkin && checkout 
-                ? `Dates: ${checkin} to ${checkout}`
+            datesCriteria.textContent = dateRange 
+                ? `Dates: ${dateRange}`
                 : 'Flexible dates';
             
             resultsHeader.style.display = 'block';
@@ -2778,7 +2805,7 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             selectedCheckin = today;
             selectedCheckout = tomorrow;
-            updateDateInputs();
+            updateDateRangeInput();
             
             // Show featured properties section
             document.getElementById('searchResults').style.display = 'none';
@@ -2950,18 +2977,6 @@
                 // Re-enable button
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Submit Your Review';
-                
-                // In a real application, you would send this data to your backend:
-                // const feedbackData = {
-                //     name: name,
-                //     city: city,
-                //     country: country,
-                //     rating: selectedRating,
-                //     comment: comment,
-                //     date: new Date().toISOString()
-                // };
-                // 
-                // Then send to your API or Supabase database
                 
             }, 1500);
         }

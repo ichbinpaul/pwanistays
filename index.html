@@ -1294,7 +1294,7 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             z-index: 2000;
             padding: 25px;
-            width: 350px;
+            width: 380px;
             max-width: 90vw;
             border: 2px solid var(--primary);
             animation: fadeIn 0.3s ease;
@@ -1323,7 +1323,8 @@
         
         .calendar-nav {
             display: flex;
-            gap: 10px;
+            gap: 20px;
+            align-items: center;
         }
         
         .calendar-header button {
@@ -1564,7 +1565,7 @@
             }
             
             .calendar-overlay {
-                width: 320px;
+                width: 350px;
                 padding: 20px;
             }
             
@@ -1602,7 +1603,7 @@
             }
             
             .calendar-overlay {
-                width: 300px;
+                width: 320px;
                 padding: 15px;
             }
             
@@ -1734,7 +1735,7 @@
                         <option value="3br">3 Bedrooms</option>
                         <option value="4br">4+ Bedrooms</option>
                         <option value="villa">Villa</option>
-                        <option value="apartment">Apartment</option>
+                        <!-- Removed "Apartment" option as requested -->
                     </select>
                 </div>
                 <div class="search-btn-container">
@@ -2303,14 +2304,13 @@
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Calendar functionality
+        // Calendar functionality - UPDATED VERSION
         let selectedCheckin = null;
         let selectedCheckout = null;
-        let selectingFor = 'checkin';
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let isCalendarVisible = false;
-        
+
         function initCalendarDates() {
             const today = new Date();
             const tomorrow = new Date(today);
@@ -2321,7 +2321,7 @@
             
             updateDateInputs();
         }
-        
+
         function updateDateInputs() {
             const checkinInput = document.getElementById('checkinDate');
             const checkoutInput = document.getElementById('checkoutDate');
@@ -2333,22 +2333,9 @@
                 checkoutInput.value = formatDate(selectedCheckout);
             }
         }
-        
+
         function showCalendar(inputElement, type) {
-            selectingFor = type;
-            
-            if (selectingFor === 'checkin' && selectedCheckin) {
-                currentMonth = selectedCheckin.getMonth();
-                currentYear = selectedCheckin.getFullYear();
-            } else if (selectingFor === 'checkout' && selectedCheckout) {
-                currentMonth = selectedCheckout.getMonth();
-                currentYear = selectedCheckout.getFullYear();
-            } else {
-                const today = new Date();
-                currentMonth = today.getMonth();
-                currentYear = today.getFullYear();
-            }
-            
+            // Always show both dates in the same calendar
             generateCalendar();
             
             document.getElementById('calendarContainer').style.display = 'block';
@@ -2357,23 +2344,24 @@
             
             document.body.style.overflow = 'hidden';
         }
-        
+
         function hideCalendar() {
             document.getElementById('calendarContainer').style.display = 'none';
             document.getElementById('calendarBackdrop').style.display = 'none';
             isCalendarVisible = false;
             document.body.style.overflow = '';
         }
-        
+
         function generateCalendar() {
             const calendar = document.getElementById('calendarContainer');
             const today = new Date();
             
             let html = `
                 <div class="calendar-header">
-                    <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
+                    <h4>Select Dates</h4>
                     <div class="calendar-nav">
                         <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
+                        <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
                         <button onclick="changeMonth(1)" aria-label="Next month">›</button>
                     </div>
                 </div>
@@ -2400,15 +2388,15 @@
                 const isToday = date.getDate() === today.getDate() && 
                                date.getMonth() === today.getMonth() && 
                                date.getFullYear() === today.getFullYear();
-                const isSelected = (selectedCheckin && isSameDay(date, selectedCheckin)) ||
-                                  (selectedCheckout && isSameDay(date, selectedCheckout));
+                const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
+                const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
                 const isDisabled = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
                 const isBetween = selectedCheckin && selectedCheckout && 
                                  date > selectedCheckin && date < selectedCheckout;
                 
                 let className = 'calendar-day';
                 if (isToday) className += ' today';
-                if (isSelected) className += ' selected';
+                if (isCheckin || isCheckout) className += ' selected';
                 if (isDisabled) className += ' disabled';
                 if (isBetween) className += ' between';
                 
@@ -2417,17 +2405,41 @@
                 html += `<div class="${className}" ${onClick}>${day}</div>`;
             }
             
+            // Add next month button if needed
+            const remainingCells = 42 - (firstDay + daysInMonth); // 6 rows * 7 days
+            if (remainingCells > 0) {
+                const nextMonth = currentMonth === 11 ? 0 : currentMonth + 1;
+                const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+                
+                for (let day = 1; day <= remainingCells; day++) {
+                    html += '<div class="calendar-day disabled">' + day + '</div>';
+                }
+            }
+            
+            // Add selected dates display
             html += `
                 </div>
+                <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-around;">
+                        <div>
+                            <strong>Check-in:</strong><br>
+                            ${selectedCheckin ? formatDate(selectedCheckin) : 'Not selected'}
+                        </div>
+                        <div>
+                            <strong>Check-out:</strong><br>
+                            ${selectedCheckout ? formatDate(selectedCheckout) : 'Not selected'}
+                        </div>
+                    </div>
+                </div>
                 <div class="calendar-actions">
-                    <button class="calendar-clear" onclick="clearDates()">Clear</button>
+                    <button class="calendar-clear" onclick="clearDates()">Clear Dates</button>
                     <button class="calendar-apply" onclick="applyDates()">Apply Dates</button>
                 </div>
             `;
             
             calendar.innerHTML = html;
         }
-        
+
         function selectDate(day, month, year) {
             const date = new Date(year, month, day);
             const today = new Date();
@@ -2436,26 +2448,28 @@
                 return;
             }
             
-            if (selectingFor === 'checkin') {
+            // If no check-in selected, or if clicked date is before check-in, set as check-in
+            if (!selectedCheckin || date < selectedCheckin || (selectedCheckin && selectedCheckout && date < selectedCheckin)) {
                 selectedCheckin = date;
-                
-                if (selectedCheckout && selectedCheckout <= date) {
-                    const nextDay = new Date(date);
-                    nextDay.setDate(nextDay.getDate() + 1);
-                    selectedCheckout = nextDay;
-                }
-            } else {
-                if (date <= selectedCheckin) {
-                    alert('Check-out date must be after check-in date');
-                    return;
-                }
+                // Auto-set checkout to next day
+                const nextDay = new Date(date);
+                nextDay.setDate(nextDay.getDate() + 1);
+                selectedCheckout = nextDay;
+            } 
+            // If check-in is selected and clicked date is after check-in, set as checkout
+            else if (date > selectedCheckin) {
                 selectedCheckout = date;
+            }
+            // If clicking the same date as check-in, do nothing (or could toggle)
+            else if (isSameDay(date, selectedCheckin)) {
+                // Optional: allow selecting same date for check-in/check-out
+                // selectedCheckout = date;
             }
             
             updateDateInputs();
             generateCalendar();
         }
-        
+
         function changeMonth(delta) {
             currentMonth += delta;
             if (currentMonth < 0) {
@@ -2467,7 +2481,7 @@
             }
             generateCalendar();
         }
-        
+
         function clearDates() {
             const today = new Date();
             const tomorrow = new Date(today);
@@ -2479,24 +2493,24 @@
             updateDateInputs();
             generateCalendar();
         }
-        
+
         function applyDates() {
             hideCalendar();
         }
-        
+
         function isSameDay(date1, date2) {
             if (!date1 || !date2) return false;
             return date1.getDate() === date2.getDate() &&
                    date1.getMonth() === date2.getMonth() &&
                    date1.getFullYear() === date2.getFullYear();
         }
-        
+
         function getMonthName(month) {
             const months = ['January', 'February', 'March', 'April', 'May', 'June',
                           'July', 'August', 'September', 'October', 'November', 'December'];
             return months[month];
         }
-        
+
         function formatDate(date) {
             if (!date) return '';
             const day = String(date.getDate()).padStart(2, '0');
@@ -2533,8 +2547,8 @@
                     '2br': '2 Bedrooms',
                     '3br': '3 Bedrooms',
                     '4br': '4+ Bedrooms',
-                    'villa': 'Villa',
-                    'apartment': 'Apartment'
+                    'villa': 'Villa'
+                    // Removed 'apartment': 'Apartment' as requested
                 };
                 criteriaText.push(typeMap[propertyType] || propertyType);
             }

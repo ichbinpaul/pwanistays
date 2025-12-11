@@ -96,19 +96,37 @@
             margin: 0 auto;
         }
         
+        /* Logo link styling */
         .logo-link {
             display: flex;
             align-items: center;
-            gap: 10px;
             text-decoration: none;
             line-height: 1;
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            line-height: 1;
+        /* Responsive logo styles */
+        .logo-desktop {
+            display: inline-block;
+        }
+        
+        .logo-mobile {
+            display: none;
+        }
+        
+        /* On mobile screens, hide desktop and show mobile logo */
+        @media (max-width: 768px) {
+            .logo-desktop {
+                display: none;
+            }
+            
+            .logo-mobile {
+                display: inline-block;
+            }
+        }
+        
+        /* Remove the old logo styles */
+        .logo, .footer-logo {
+            display: inline-block;
         }
         
         .logo-icon {
@@ -1199,9 +1217,7 @@
         }
         
         .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: inline-block;
             margin-bottom: 20px;
             line-height: 1;
         }
@@ -1708,11 +1724,16 @@
     <!-- Header -->
     <header role="banner">
         <nav class="navbar" aria-label="Main navigation">
+            <!-- UPDATED HEADER LOGO -->
             <a href="#home" class="logo-link">
-                <div class="logo">
-                    <span class="logo-icon" role="img" aria-label="Beach umbrella">🏝️</span>
-                    <h1>Pwani<span>Stays</span></h1>
-                </div>
+                <img src="/logo-header.png" 
+                     alt="PwaniStays - Luxury Coastal Stays" 
+                     class="logo-desktop"
+                     style="height: 50px; width: auto;">
+                <img src="/logo-mobile.png" 
+                     alt="PwaniStays" 
+                     class="logo-mobile"
+                     style="height: 50px; width: auto;">
             </a>
             <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars" aria-hidden="true"></i>
@@ -2214,12 +2235,17 @@
     <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
-                <a href="#home" class="logo-link">
-                    <div class="footer-logo">
-                        <span class="footer-logo-icon" role="img" aria-label="Beach umbrella">🏝️</span>
-                        <h2>Pwani<span>Stays</span></h2>
-                    </div>
-                </a>
+                <!-- UPDATED FOOTER LOGO -->
+                <div class="footer-logo">
+                    <img src="/logo-footer.png" 
+                         alt="PwaniStays - Luxury Coastal Stays" 
+                         class="logo-desktop"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                    <img src="/logo-mobile.png" 
+                         alt="PwaniStays" 
+                         class="logo-mobile"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                </div>
                 <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
                 <div class="social-links">
                     <!-- UPDATED: Correct social media links -->

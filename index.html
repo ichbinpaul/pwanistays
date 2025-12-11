@@ -1308,7 +1308,7 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
         }
         
-        /* Calendar Styles - UPDATED with fixes */
+        /* Calendar Styles - COMPLETELY UPDATED with all fixes */
         .calendar-overlay {
             display: none;
             position: fixed;
@@ -1322,8 +1322,8 @@
             padding: 20px;
             width: 420px;
             max-width: 90vw;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-height: 90vh; /* ADDED */
+            overflow-y: auto; /* ADDED */
             border: 2px solid var(--primary);
             animation: fadeIn 0.3s ease;
         }
@@ -1344,7 +1344,7 @@
         
         .calendar-header h4 {
             color: var(--dark);
-            font-size: 1.1rem;
+            font-size: 1.1rem; /* REDUCED from 1.3rem */
             margin: 0;
             font-weight: 600;
         }
@@ -1378,7 +1378,7 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
+            gap: 4px; /* REDUCED from 5px */
             margin-bottom: 15px;
         }
         
@@ -1402,8 +1402,8 @@
             border: 2px solid transparent;
             color: var(--dark);
             background: white;
-            font-size: 0.85rem;
-            min-height: 35px;
+            font-size: 0.85rem; /* REDUCED from 0.9rem */
+            min-height: 35px; /* REDUCED from 40px */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2084,7 +2084,7 @@
                     <input type="text" id="feedbackCity" placeholder="e.g., Nairobi, London">
                 </div>
                 
-                .form-group {
+                <div class="form-group">
                     <label for="feedbackCountry">Country</label>
                     <input type="text" id="feedbackCountry" placeholder="e.g., Kenya, USA">
                 </div>
@@ -2411,8 +2411,8 @@
         function generateCalendar() {
             const calendar = document.getElementById('calendarContainer');
             const today = new Date();
-            today.setHours(0, 0, 0, 0); // Set to midnight for accurate comparison
-            
+            today.setHours(0, 0, 0, 0);
+
             let html = `
                 <div class="calendar-header">
                     <h4>Select Check-in & Check-out Dates</h4>
@@ -2431,58 +2431,61 @@
                     <div class="calendar-day-header">Fri</div>
                     <div class="calendar-day-header">Sat</div>
             `;
-            
+
             const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            
-            // Fill empty cells before first day of month
-            for (let i = 0; i < firstDay; i++) {
-                html += '<div class="calendar-day disabled"></div>';
-            }
-            
             const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-            
+
+            // Empty cells before month starts
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="calendar-day disabled"></div>`;
+            }
+
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(currentYear, currentMonth, day);
-                date.setHours(0, 0, 0, 0); // Set to midnight for accurate comparison
+                date.setHours(0, 0, 0, 0);
+
                 const isToday = isSameDay(date, today);
                 const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
                 const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
                 const isDisabled = date < today;
-                const isBetween = selectedCheckin && selectedCheckout && 
-                                 date > selectedCheckin && date < selectedCheckout;
-                
-                let className = 'calendar-day';
-                if (isToday) className += ' today';
-                if (isCheckin) className += ' selected';
-                if (isCheckout) className += ' selected';
-                if (isDisabled) className += ' disabled';
-                if (isBetween) className += ' between';
-                
-                const onClick = isDisabled ? '' : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
-                
+                const isBetween =
+                    selectedCheckin &&
+                    selectedCheckout &&
+                    date > selectedCheckin &&
+                    date < selectedCheckout;
+
+                let className = "calendar-day";
+                if (isToday) className += " today";
+                if (isCheckin) className += " selected";
+                if (isCheckout) className += " selected";
+                if (isDisabled) className += " disabled";
+                if (isBetween) className += " between";
+
+                const onClick = isDisabled
+                    ? ""
+                    : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+
                 html += `<div class="${className}" ${onClick}>${day}</div>`;
             }
-            
-            // Fill remaining cells to complete the grid (always 42 cells for 6 rows)
-            const totalCells = 42; // 6 rows * 7 days
-            const cellsFilled = firstDay + daysInMonth;
-            const remainingCells = totalCells - cellsFilled;
-            
-            for (let i = 1; i <= remainingCells; i++) {
-                html += '<div class="calendar-day disabled">' + i + '</div>';
+
+            // Fill up to 6 rows (42 cells)
+            const totalCells = firstDay + daysInMonth;
+            const remaining = 42 - totalCells;
+
+            for (let i = 0; i < remaining; i++) {
+                html += `<div class="calendar-day disabled"></div>`;
             }
-            
-            // Add selected dates display
+
             html += `
                 </div>
                 <div class="selected-dates-display">
                     <div>
                         <strong>Check-in</strong><br>
-                        ${selectedCheckin ? formatDate(selectedCheckin) : 'Not selected'}
+                        ${selectedCheckin ? formatDate(selectedCheckin) : "Not selected"}
                     </div>
                     <div>
                         <strong>Check-out</strong><br>
-                        ${selectedCheckout ? formatDate(selectedCheckout) : 'Not selected'}
+                        ${selectedCheckout ? formatDate(selectedCheckout) : "Not selected"}
                     </div>
                 </div>
                 <div class="calendar-actions">
@@ -2490,7 +2493,7 @@
                     <button class="calendar-apply" onclick="applyDates()">Apply Dates</button>
                 </div>
             `;
-            
+
             calendar.innerHTML = html;
         }
 

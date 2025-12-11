@@ -1308,7 +1308,7 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
         }
         
-        /* Calendar Styles - FIXED */
+        /* Calendar Styles - UPDATED with fixes */
         .calendar-overlay {
             display: none;
             position: fixed;
@@ -1319,9 +1319,11 @@
             border-radius: 15px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             z-index: 2000;
-            padding: 25px;
+            padding: 20px;
             width: 420px;
             max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
             border: 2px solid var(--primary);
             animation: fadeIn 0.3s ease;
         }
@@ -1342,7 +1344,7 @@
         
         .calendar-header h4 {
             color: var(--dark);
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             margin: 0;
             font-weight: 600;
         }
@@ -1376,7 +1378,7 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+            gap: 4px;
             margin-bottom: 15px;
         }
         
@@ -1400,8 +1402,8 @@
             border: 2px solid transparent;
             color: var(--dark);
             background: white;
-            font-size: 0.9rem;
-            min-height: 40px;
+            font-size: 0.85rem;
+            min-height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2082,7 +2084,7 @@
                     <input type="text" id="feedbackCity" placeholder="e.g., Nairobi, London">
                 </div>
                 
-                <div class="form-group">
+                .form-group {
                     <label for="feedbackCountry">Country</label>
                     <input type="text" id="feedbackCountry" placeholder="e.g., Kenya, USA">
                 </div>
@@ -2494,36 +2496,46 @@
 
         function selectDate(day, month, year) {
             const date = new Date(year, month, day);
-            date.setHours(0, 0, 0, 0); // Set to midnight for accurate comparison
-            
+            date.setHours(0, 0, 0, 0);
+
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-            
-            if (date < today) {
-                return; // Can't select past dates
-            }
-            
-            // If no check-in selected, or if we're selecting a new check-in date
-            if (!selectedCheckin || date < selectedCheckin) {
+
+            if (date < today) return;
+
+            // CASE 1 — No check-in selected yet
+            if (!selectedCheckin) {
                 selectedCheckin = date;
-                // If check-out exists and is before or equal to new check-in, reset it
-                if (selectedCheckout && selectedCheckout <= date) {
-                    selectedCheckout = null;
-                }
-            } 
-            // If check-in is selected and we're selecting a date after check-in
+                selectedCheckout = null;
+            }
+
+            // CASE 2 — Selecting a new check-in BEFORE existing check-in
+            else if (date < selectedCheckin) {
+                selectedCheckin = date;
+                selectedCheckout = null;
+            }
+
+            // CASE 3 — Selecting check-out correctly (after check-in)
+            else if (!selectedCheckout && date > selectedCheckin) {
+                selectedCheckout = date;
+            }
+
+            // CASE 4 — Re-selecting a check-in date
+            else if (isSameDay(date, selectedCheckin)) {
+                selectedCheckout = null;
+            }
+
+            // CASE 5 — Selecting a check-out earlier than check-in
+            else if (date <= selectedCheckin) {
+                selectedCheckin = date;
+                selectedCheckout = null;
+            }
+
+            // CASE 6 — Update check-out to a new later date
             else if (date > selectedCheckin) {
                 selectedCheckout = date;
             }
-            // If clicking the same date as check-in
-            else if (isSameDay(date, selectedCheckin)) {
-                // If we already have a check-out, clicking check-in again does nothing
-                // (or could toggle check-out off if it's the same date)
-                if (selectedCheckout && isSameDay(date, selectedCheckout)) {
-                    selectedCheckout = null;
-                }
-            }
-            
+
             updateDateRangeInput();
             generateCalendar();
         }
@@ -2554,6 +2566,10 @@
         }
 
         function applyDates() {
+            if (!selectedCheckin || !selectedCheckout) {
+                alert("Please select check-in and check-out dates");
+                return;
+            }
             hideCalendar();
         }
 

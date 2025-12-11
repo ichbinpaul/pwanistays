@@ -1292,7 +1292,7 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
         }
         
-        /* Calendar Styles - COMPLETELY UPDATED */
+        /* Calendar Styles - FIXED */
         .calendar-overlay {
             display: none;
             position: fixed;
@@ -2336,16 +2336,17 @@
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Calendar functionality - COMPLETELY REVISED
+        // Calendar functionality - FIXED VERSION
         let selectedCheckin = null;
         let selectedCheckout = null;
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let isCalendarVisible = false;
-        let isSelectingCheckout = false;
 
         function initCalendarDates() {
             const today = new Date();
+            // Set time to midnight for clean date comparison
+            today.setHours(0, 0, 0, 0);
             const tomorrow = new Date(today);
             tomorrow.setDate(tomorrow.getDate() + 1);
             
@@ -2382,6 +2383,7 @@
         function generateCalendar() {
             const calendar = document.getElementById('calendarContainer');
             const today = new Date();
+            today.setHours(0, 0, 0, 0); // Set to midnight for accurate comparison
             
             let html = `
                 <div class="calendar-header">
@@ -2413,12 +2415,11 @@
             
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(currentYear, currentMonth, day);
-                const isToday = date.getDate() === today.getDate() && 
-                               date.getMonth() === today.getMonth() && 
-                               date.getFullYear() === today.getFullYear();
+                date.setHours(0, 0, 0, 0); // Set to midnight for accurate comparison
+                const isToday = isSameDay(date, today);
                 const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
                 const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
-                const isDisabled = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const isDisabled = date < today;
                 const isBetween = selectedCheckin && selectedCheckout && 
                                  date > selectedCheckin && date < selectedCheckout;
                 
@@ -2448,11 +2449,11 @@
                 </div>
                 <div class="selected-dates-display">
                     <div>
-                        <strong>Check-in</strong>
+                        <strong>Check-in</strong><br>
                         ${selectedCheckin ? formatDate(selectedCheckin) : 'Not selected'}
                     </div>
                     <div>
-                        <strong>Check-out</strong>
+                        <strong>Check-out</strong><br>
                         ${selectedCheckout ? formatDate(selectedCheckout) : 'Not selected'}
                     </div>
                 </div>
@@ -2467,31 +2468,33 @@
 
         function selectDate(day, month, year) {
             const date = new Date(year, month, day);
+            date.setHours(0, 0, 0, 0); // Set to midnight for accurate comparison
+            
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
             
             if (date < today) {
-                return;
+                return; // Can't select past dates
             }
             
-            // If no check-in selected, or if clicked date is before current check-in
+            // If no check-in selected, or if we're selecting a new check-in date
             if (!selectedCheckin || date < selectedCheckin) {
                 selectedCheckin = date;
-                // If check-out is before new check-in, reset check-out
+                // If check-out exists and is before or equal to new check-in, reset it
                 if (selectedCheckout && selectedCheckout <= date) {
                     selectedCheckout = null;
                 }
             } 
-            // If check-in is selected and clicked date is after check-in
+            // If check-in is selected and we're selecting a date after check-in
             else if (date > selectedCheckin) {
                 selectedCheckout = date;
             }
-            // If clicking the same date as check-in, toggle check-out
+            // If clicking the same date as check-in
             else if (isSameDay(date, selectedCheckin)) {
-                // If check-out is same as check-in, clear check-out
+                // If we already have a check-out, clicking check-in again does nothing
+                // (or could toggle check-out off if it's the same date)
                 if (selectedCheckout && isSameDay(date, selectedCheckout)) {
                     selectedCheckout = null;
-                } else {
-                    selectedCheckout = date;
                 }
             }
             
@@ -2513,6 +2516,7 @@
 
         function clearDates() {
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
             const tomorrow = new Date(today);
             tomorrow.setDate(tomorrow.getDate() + 1);
             
@@ -2529,9 +2533,10 @@
 
         function isSameDay(date1, date2) {
             if (!date1 || !date2) return false;
-            return date1.getDate() === date2.getDate() &&
+            // Compare year, month, and date only (ignore time)
+            return date1.getFullYear() === date2.getFullYear() &&
                    date1.getMonth() === date2.getMonth() &&
-                   date1.getFullYear() === date2.getFullYear();
+                   date1.getDate() === date2.getDate();
         }
 
         function getMonthName(month) {

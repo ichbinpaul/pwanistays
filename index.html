@@ -1308,7 +1308,7 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
         }
         
-        /* Calendar Styles - FIXED */
+        /* Calendar Styles - FIXED: Made more compact and fixed selection issues */
         .calendar-overlay {
             display: none;
             position: fixed;
@@ -1319,11 +1319,11 @@
             border-radius: 15px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             z-index: 2000;
-            padding: 20px;
-            width: 420px;
+            padding: 15px;
+            width: 380px; /* Reduced width */
             max-width: 90vw;
-            max-height: 70vh; /* REDUCED from 90vh */
-            overflow-y: auto;
+            max-height: 500px; /* Fixed maximum height */
+            overflow-y: hidden; /* No scrolling needed */
             border: 2px solid var(--primary);
             animation: fadeIn 0.3s ease;
         }
@@ -1337,21 +1337,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px; /* REDUCED */
-            padding-bottom: 10px; /* REDUCED */
+            margin-bottom: 10px; /* Reduced margin */
+            padding-bottom: 10px;
             border-bottom: 2px solid var(--light-gray);
         }
         
         .calendar-header h4 {
             color: var(--dark);
-            font-size: 1.1rem;
+            font-size: 1rem; /* Smaller font */
             margin: 0;
             font-weight: 600;
         }
         
         .calendar-nav {
             display: flex;
-            gap: 15px;
+            gap: 10px; /* Reduced gap */
             align-items: center;
         }
         
@@ -1359,11 +1359,11 @@
             background: var(--primary);
             color: white;
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 32px; /* Smaller buttons */
+            height: 32px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             transition: var(--transition);
             display: flex;
             align-items: center;
@@ -1378,35 +1378,40 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 3px; /* REDUCED */
-            margin-bottom: 10px; /* REDUCED */
+            gap: 3px; /* Reduced gap */
+            margin-bottom: 10px;
         }
         
         .calendar-day-header {
-            padding: 8px 5px; /* REDUCED */
+            padding: 8px 2px;
             text-align: center;
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.8rem; /* REDUCED */
+            font-size: 0.75rem; /* Smaller font */
             background: #f8f9fa;
-            border-radius: 6px;
+            border-radius: 4px;
+            height: 32px; /* Fixed height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .calendar-day {
-            padding: 8px 5px; /* REDUCED */
+            padding: 8px 2px;
             text-align: center;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
             border: 2px solid transparent;
             color: var(--dark);
             background: white;
-            font-size: 0.8rem; /* REDUCED */
-            min-height: 30px; /* REDUCED */
+            font-size: 0.8rem; /* Smaller font */
+            height: 32px; /* Fixed height */
             display: flex;
             align-items: center;
             justify-content: center;
+            min-width: 32px;
         }
         
         .calendar-day:hover {
@@ -1419,7 +1424,7 @@
             color: white;
             border-color: var(--primary);
             font-weight: 600;
-            box-shadow: 0 3px 10px rgba(13, 122, 95, 0.3);
+            box-shadow: 0 2px 5px rgba(13, 122, 95, 0.3);
         }
         
         .calendar-day.between {
@@ -1448,20 +1453,21 @@
         .calendar-actions {
             display: flex;
             justify-content: space-between;
-            gap: 15px;
-            margin-top: 15px; /* REDUCED */
-            padding-top: 15px; /* REDUCED */
+            gap: 10px; /* Reduced gap */
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px solid var(--light-gray);
         }
         
         .calendar-actions button {
             flex: 1;
-            padding: 10px; /* REDUCED */
+            padding: 10px; /* Reduced padding */
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            font-size: 0.9rem; /* Smaller font */
         }
         
         .calendar-clear {
@@ -1495,13 +1501,13 @@
         }
         
         .selected-dates-display {
-            margin-top: 10px; /* REDUCED */
-            padding: 8px; /* REDUCED */
+            margin-top: 10px;
+            padding: 8px;
             background: #f8f9fa;
             border-radius: 8px;
             display: flex;
             justify-content: space-around;
-            font-size: 0.9rem; /* REDUCED */
+            font-size: 0.85rem; /* Smaller font */
         }
         
         .selected-dates-display div {
@@ -1511,8 +1517,8 @@
         .selected-dates-display strong {
             display: block;
             color: var(--primary);
-            margin-bottom: 3px; /* REDUCED */
-            font-size: 0.9rem; /* REDUCED */
+            margin-bottom: 3px;
+            font-size: 0.8rem;
         }
         
         /* Responsive Design */
@@ -1619,14 +1625,21 @@
             }
             
             .calendar-overlay {
-                width: 380px;
-                padding: 15px; /* REDUCED */
-                max-height: 75vh; /* ADJUSTED for mobile */
+                width: 340px; /* Even smaller on mobile */
+                padding: 12px;
             }
             
             .calendar-day {
-                padding: 6px 3px; /* REDUCED */
-                font-size: 0.75rem; /* REDUCED */
+                padding: 6px 1px;
+                font-size: 0.75rem;
+                height: 30px;
+                min-width: 30px;
+            }
+            
+            .calendar-day-header {
+                padding: 6px 1px;
+                font-size: 0.7rem;
+                height: 30px;
             }
             
             .testimonial-content p::before,
@@ -1659,24 +1672,31 @@
             }
             
             .calendar-overlay {
-                width: 350px;
-                padding: 12px; /* REDUCED */
-                max-height: 80vh; /* ADJUSTED for mobile */
+                width: 320px;
+                padding: 10px;
+                max-height: 450px;
             }
             
             .calendar-day {
-                padding: 5px 2px; /* REDUCED */
-                font-size: 0.7rem; /* REDUCED */
-                min-height: 28px; /* REDUCED */
+                padding: 5px 0;
+                font-size: 0.7rem;
+                height: 28px;
+                min-width: 28px;
             }
             
             .calendar-day-header {
-                padding: 7px 2px; /* REDUCED */
-                font-size: 0.75rem; /* REDUCED */
+                padding: 5px 0;
+                font-size: 0.65rem;
+                height: 28px;
             }
             
             .star {
                 font-size: 1.5rem;
+            }
+            
+            .calendar-actions button {
+                padding: 8px;
+                font-size: 0.8rem;
             }
         }
         
@@ -2088,7 +2108,7 @@
                     <input type="text" id="feedbackCity" placeholder="e.g., Nairobi, London">
                 </div>
                 
-                .form-group {
+                <div class="form-group">
                     <label for="feedbackCountry">Country</label>
                     <input type="text" id="feedbackCountry" placeholder="e.g., Kenya, USA">
                 </div>
@@ -2341,7 +2361,7 @@
             // Set current year
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
-            // Initialize calendar - FIXED: NO auto-selection
+            // Initialize calendar with NO auto-selection
             initCalendarDates();
             
             // Initialize testimonials
@@ -2361,6 +2381,13 @@
             
             // Close calendar when clicking backdrop
             document.getElementById('calendarBackdrop').addEventListener('click', hideCalendar);
+            
+            // Close calendar when pressing Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isCalendarVisible) {
+                    hideCalendar();
+                }
+            });
         });
         
         // Supabase Configuration
@@ -2376,7 +2403,7 @@
         let isCalendarVisible = false;
 
         function initCalendarDates() {
-            // FIXED: Don't auto-select dates on page load
+            // Initialize with NO dates selected - user must choose
             selectedCheckin = null;
             selectedCheckout = null;
             
@@ -2389,9 +2416,9 @@
                 if (selectedCheckin && selectedCheckout) {
                     dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
                 } else if (selectedCheckin) {
-                    dateRangeInput.value = `${formatDate(selectedCheckin)} → Select check-out`;
+                    dateRangeInput.value = `${formatDate(selectedCheckin)} → Select checkout`;
                 } else {
-                    dateRangeInput.value = "Select check-in → Select check-out";
+                    dateRangeInput.value = 'Select check-in → Select check-out';
                 }
             }
         }
@@ -2473,7 +2500,7 @@
                 html += `<div class="${className}" ${onClick}>${day}</div>`;
             }
 
-            // Fill up to 6 rows (42 cells)
+            // Fill up to 6 rows (42 cells) to keep calendar compact
             const totalCells = firstDay + daysInMonth;
             const remaining = 42 - totalCells;
 
@@ -2511,36 +2538,28 @@
 
             if (date < today) return;
 
-            // CASE 1 — No check-in selected yet
+            // NEW LOGIC: Simplified date selection
             if (!selectedCheckin) {
+                // First click: set as check-in
                 selectedCheckin = date;
                 selectedCheckout = null;
-            }
-
-            // CASE 2 — Selecting a new check-in BEFORE existing check-in
-            else if (date < selectedCheckin) {
-                selectedCheckin = date;
-                selectedCheckout = null;
-            }
-
-            // CASE 3 — Selecting check-out correctly (after check-in)
-            else if (!selectedCheckout && date > selectedCheckin) {
+            } else if (!selectedCheckout && date > selectedCheckin) {
+                // Second click with valid date: set as check-out
                 selectedCheckout = date;
-            }
-
-            // CASE 4 — Re-selecting a check-in date
-            else if (isSameDay(date, selectedCheckin)) {
+            } else if (isSameDay(date, selectedCheckin)) {
+                // Clicking on check-in again: clear both
+                selectedCheckin = null;
                 selectedCheckout = null;
-            }
-
-            // CASE 5 — Selecting a check-out earlier than check-in
-            else if (date <= selectedCheckin) {
+            } else if (date < selectedCheckin) {
+                // Clicking earlier date: set as new check-in
                 selectedCheckin = date;
                 selectedCheckout = null;
-            }
-
-            // CASE 6 — Update check-out to a new later date
-            else if (date > selectedCheckin) {
+            } else if (selectedCheckin && !selectedCheckout && date <= selectedCheckin) {
+                // Clicking same or earlier date when only check-in is set: set as new check-in
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else {
+                // Otherwise: set as check-out
                 selectedCheckout = date;
             }
 
@@ -2561,7 +2580,6 @@
         }
 
         function clearDates() {
-            // FIXED: Clear both dates completely
             selectedCheckin = null;
             selectedCheckout = null;
             
@@ -2571,15 +2589,20 @@
 
         function applyDates() {
             if (!selectedCheckin || !selectedCheckout) {
-                alert("Please select check-in and check-out dates");
+                alert("Please select both check-in and check-out dates");
                 return;
             }
+            
+            if (selectedCheckin >= selectedCheckout) {
+                alert("Check-out date must be after check-in date");
+                return;
+            }
+            
             hideCalendar();
         }
 
         function isSameDay(date1, date2) {
             if (!date1 || !date2) return false;
-            // Compare year, month, and date only (ignore time)
             return date1.getFullYear() === date2.getFullYear() &&
                    date1.getMonth() === date2.getMonth() &&
                    date1.getDate() === date2.getDate();
@@ -2850,7 +2873,7 @@
             document.getElementById('searchLocation').value = '';
             document.getElementById('propertyType').value = '';
             
-            // Reset dates to default (no dates selected)
+            // Reset dates to empty
             selectedCheckin = null;
             selectedCheckout = null;
             updateDateRangeInput();
@@ -3062,13 +3085,6 @@
             e.target.reset();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
-        // Close calendar when pressing Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && isCalendarVisible) {
-                hideCalendar();
-            }
-        });
     </script>
 </body>
 </html>

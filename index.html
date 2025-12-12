@@ -44,6 +44,9 @@
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" media="(min-width: 768px)">
     
+    <!-- ✅ STEP 1 — Add Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
     <!-- Inline Critical CSS -->
     <style>
         :root {
@@ -372,6 +375,7 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            position: relative;
         }
         
         .property-card:hover {
@@ -379,22 +383,64 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         
-        .property-image {
-            height: 220px;
+        /* ✅ STEP 3 — Carousel CSS */
+        .property-gallery {
             width: 100%;
-            background: var(--light-gray);
+            max-width: 100%;
+            height: 220px;
+            position: relative;
             overflow: hidden;
         }
         
-        .property-image img {
+        .mainSwiper {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+        
+        .thumbSwiper {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            height: 50px;
+            z-index: 10;
+        }
+        
+        .thumbSwiper .swiper-slide {
+            width: 60px;
+            height: 40px;
+            opacity: 0.5;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .thumbSwiper .swiper-slide-thumb-active {
+            opacity: 1;
+            border: 2px solid white;
+        }
+        
+        .swiper-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
         }
         
-        .property-card:hover .property-image img {
-            transform: scale(1.05);
+        .swiper-pagination {
+            bottom: 10px !important;
+            z-index: 10;
+        }
+        
+        .swiper-pagination-bullet {
+            background: white;
+            opacity: 0.7;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: var(--primary);
+            opacity: 1;
         }
         
         .property-content {
@@ -1646,6 +1692,14 @@
             .testimonial-content p::after {
                 display: none;
             }
+            
+            .property-gallery {
+                height: 200px;
+            }
+            
+            .thumbSwiper {
+                display: none; /* Hide thumbnails on mobile for better experience */
+            }
         }
         
         @media (max-width: 576px) {
@@ -1697,6 +1751,10 @@
             .calendar-actions button {
                 padding: 8px;
                 font-size: 0.8rem;
+            }
+            
+            .property-gallery {
+                height: 180px;
             }
         }
         
@@ -2331,6 +2389,9 @@
 
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- ✅ STEP 1 — Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -2389,6 +2450,115 @@
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Object to store Swiper instances
+        const swiperInstances = {};
+        
+        // ✅ STEP 4 — Load images from Supabase Storage
+        async function loadPropertyImages(propertyId, primaryImageUrl) {
+            try {
+                // Create unique IDs for this property's carousel
+                const mainSwiperId = `mainSwiper-${propertyId}`;
+                const thumbSwiperId = `thumbSwiper-${propertyId}`;
+                const mainSliderId = `mainSlider-${propertyId}`;
+                const thumbSliderId = `thumbSlider-${propertyId}`;
+                
+                // Get images from Supabase Storage
+                const { data, error } = await supabase.storage
+                    .from("property_images")
+                    .list(`${propertyId}/`, { limit: 50 });
+                
+                let images = [];
+                
+                if (error) {
+                    console.log("Image load error:", error);
+                    // Fallback to primary image or placeholder
+                    images = primaryImageUrl 
+                        ? [{ name: 'primary', url: primaryImageUrl }]
+                        : [{ name: 'placeholder', url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }];
+                } else if (!data || data.length === 0) {
+                    // No images in storage, use primary image
+                    images = primaryImageUrl 
+                        ? [{ name: 'primary', url: primaryImageUrl }]
+                        : [{ name: 'placeholder', url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }];
+                } else {
+                    // Sort images to ensure consistent order
+                    const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+                    
+                    // Create image URLs
+                    images = sorted.map(img => ({
+                        name: img.name,
+                        url: supabase.storage
+                            .from("property_images")
+                            .getPublicUrl(`${propertyId}/${img.name}`).data.publicUrl
+                    }));
+                }
+                
+                // Get container elements
+                const mainContainer = document.getElementById(mainSliderId);
+                const thumbContainer = document.getElementById(thumbSliderId);
+                
+                if (!mainContainer || !thumbContainer) return;
+                
+                // Clear existing content
+                mainContainer.innerHTML = '';
+                thumbContainer.innerHTML = '';
+                
+                // Add images to sliders
+                images.forEach((img, index) => {
+                    mainContainer.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${img.url}" alt="Property image ${index + 1}" loading="lazy">
+                        </div>
+                    `;
+                    
+                    thumbContainer.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${img.url}" alt="Property thumbnail ${index + 1}" loading="lazy">
+                        </div>
+                    `;
+                });
+                
+                // Initialize thumb swiper first
+                const thumbSwiper = new Swiper(`#${thumbSwiperId}`, {
+                    spaceBetween: 6,
+                    slidesPerView: 'auto',
+                    watchSlidesProgress: true,
+                    freeMode: true,
+                    centeredSlides: false,
+                    slideToClickedSlide: true
+                });
+                
+                // Initialize main swiper with thumbnails control
+                const mainSwiper = new Swiper(`#${mainSwiperId}`, {
+                    spaceBetween: 0,
+                    slidesPerView: 1,
+                    pagination: {
+                        el: `.swiper-pagination`,
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: `.swiper-button-next`,
+                        prevEl: `.swiper-button-prev`,
+                    },
+                    thumbs: {
+                        swiper: thumbSwiper,
+                    },
+                    loop: false,
+                    effect: 'slide',
+                    speed: 300
+                });
+                
+                // Store instances for cleanup if needed
+                swiperInstances[propertyId] = {
+                    main: mainSwiper,
+                    thumb: thumbSwiper
+                };
+                
+            } catch (error) {
+                console.error("Error loading property images:", error);
+            }
+        }
         
         // Calendar functionality - FIXED VERSION
         let selectedCheckin = null;
@@ -2751,6 +2921,12 @@
                 data.forEach(property => {
                     const card = createPropertyCard(property);
                     container.appendChild(card);
+                    // ✅ STEP 5 — Load images for each property
+                    if (property.id) {
+                        setTimeout(() => {
+                            loadPropertyImages(property.id, property.image_url);
+                        }, 100);
+                    }
                 });
                 
             } catch (error) {
@@ -2770,6 +2946,12 @@
             properties.forEach(property => {
                 const card = createPropertyCard(property);
                 container.appendChild(card);
+                // ✅ STEP 5 — Load images for each property
+                if (property.id) {
+                    setTimeout(() => {
+                        loadPropertyImages(property.id, property.image_url);
+                    }, 100);
+                }
             });
         }
         
@@ -2792,12 +2974,33 @@
                 `<span class="amenity-badge">${amenity}</span>`
             ).join('');
             
-            card.innerHTML = `
-                <div class="property-image">
-                    <img src="${property.image_url || 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" 
-                         alt="${property.title || 'Coastal Property'}"
-                         loading="lazy">
+            // ✅ STEP 2 — Carousel HTML Structure
+            const carouselHTML = `
+                <div class="property-gallery">
+                    <!-- Main Image Slider -->
+                    <div class="swiper mainSwiper" id="mainSwiper-${property.id}">
+                        <div class="swiper-wrapper" id="mainSlider-${property.id}">
+                            <!-- Images will be loaded here by JavaScript -->
+                            <div class="swiper-slide">
+                                <div style="width: 100%; height: 100%; background: var(--light-gray); display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    
+                    <!-- Thumbnail Slider -->
+                    <div class="swiper thumbSwiper" id="thumbSwiper-${property.id}">
+                        <div class="swiper-wrapper" id="thumbSlider-${property.id}">
+                            <!-- Thumbnails will be loaded here by JavaScript -->
+                        </div>
+                    </div>
                 </div>
+            `;
+            
+            card.innerHTML = `
+                ${carouselHTML}
                 <div class="property-content">
                     <h3 class="property-title">${property.title || 'Premium Property'}</h3>
                     <div class="property-meta">

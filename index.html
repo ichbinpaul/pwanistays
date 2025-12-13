@@ -2454,8 +2454,8 @@
         // Object to store Swiper instances
         const swiperInstances = {};
         
-        // ✅ FIXED: Enhanced image loading from Supabase Storage
-        async function loadPropertyImages(propertyId) {
+        // ✅ FIXED: Enhanced image loading - Try multiple approaches
+        async function loadPropertyImages(propertyId, imageUrl) {
             try {
                 // Create unique IDs for this property's carousel
                 const mainSwiperId = `mainSwiper-${propertyId}`;
@@ -2463,48 +2463,58 @@
                 const mainSliderId = `mainSlider-${propertyId}`;
                 const thumbSliderId = `thumbSlider-${propertyId}`;
                 
-                // Get images from Supabase Storage
-                const { data, error } = await supabase.storage
-                    .from("property_images")
-                    .list(`${propertyId}/`, { limit: 50 });
-                
                 let images = [];
                 
-                if (error) {
-                    console.log("Image load error:", error);
-                    // Use placeholder image
-                    images = [{ 
-                        name: 'placeholder', 
-                        url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' 
-                    }];
-                } else if (!data || data.length === 0) {
-                    // No images in storage, use placeholder
-                    images = [{ 
-                        name: 'placeholder', 
-                        url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' 
-                    }];
-                } else {
-                    // Sort images numerically (01.jpg, 02.jpg, etc.)
-                    const sorted = data.sort((a, b) => {
-                        const numA = parseInt(a.name.replace(/\D/g, ''));
-                        const numB = parseInt(b.name.replace(/\D/g, ''));
-                        return (numA || 0) - (numB || 0);
-                    });
+                // First, try to get images from the property_images folder
+                try {
+                    const { data: folderData, error: folderError } = await supabase.storage
+                        .from("property_images")
+                        .list(`${propertyId}/`, { limit: 50 });
                     
-                    // Create image URLs
-                    images = sorted.map(img => ({
-                        name: img.name,
-                        url: supabase.storage
-                            .from("property_images")
-                            .getPublicUrl(`${propertyId}/${img.name}`).data.publicUrl
-                    }));
+                    if (!folderError && folderData && folderData.length > 0) {
+                        // Sort images numerically
+                        const sorted = folderData.sort((a, b) => {
+                            const numA = parseInt(a.name.replace(/\D/g, '')) || 0;
+                            const numB = parseInt(b.name.replace(/\D/g, '')) || 0;
+                            return numA - numB;
+                        });
+                        
+                        // Create image URLs
+                        images = sorted.map(img => ({
+                            name: img.name,
+                            url: supabase.storage
+                                .from("property_images")
+                                .getPublicUrl(`${propertyId}/${img.name}`).data.publicUrl
+                        }));
+                    }
+                } catch (folderErr) {
+                    console.log("Folder images not found:", folderErr);
+                }
+                
+                // If no images from folder, check if there's a single image_url
+                if (images.length === 0 && imageUrl) {
+                    images = [{ 
+                        name: 'main', 
+                        url: imageUrl 
+                    }];
+                }
+                
+                // If still no images, use placeholder
+                if (images.length === 0) {
+                    images = [{ 
+                        name: 'placeholder', 
+                        url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' 
+                    }];
                 }
                 
                 // Get container elements
                 const mainContainer = document.getElementById(mainSliderId);
                 const thumbContainer = document.getElementById(thumbSliderId);
                 
-                if (!mainContainer) return;
+                if (!mainContainer) {
+                    console.log(`Main container not found for property ${propertyId}`);
+                    return;
+                }
                 
                 // Clear existing content
                 mainContainer.innerHTML = '';
@@ -2514,62 +2524,71 @@
                 images.forEach((img, index) => {
                     mainContainer.innerHTML += `
                         <div class="swiper-slide">
-                            <img src="${img.url}" alt="Property image ${index + 1}" loading="lazy">
+                            <img src="${img.url}" alt="Property image ${index + 1}" loading="lazy" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';">
                         </div>
                     `;
                     
-                    // Add thumbnails if container exists
-                    if (thumbContainer) {
+                    // Add thumbnails if container exists and we have multiple images
+                    if (thumbContainer && images.length > 1) {
                         thumbContainer.innerHTML += `
                             <div class="swiper-slide">
-                                <img src="${img.url}" alt="Property thumbnail ${index + 1}" loading="lazy">
+                                <img src="${img.url}" alt="Property thumbnail ${index + 1}" loading="lazy"
+                                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';">
                             </div>
                         `;
                     }
                 });
                 
-                // Initialize thumb swiper first (if thumbnails exist)
+                // Initialize thumb swiper first (if thumbnails exist and we have multiple images)
                 let thumbSwiper = null;
                 if (thumbContainer && images.length > 1) {
-                    thumbSwiper = new Swiper(`#${thumbSwiperId}`, {
-                        spaceBetween: 6,
-                        slidesPerView: 'auto',
-                        watchSlidesProgress: true,
-                        freeMode: true,
-                        centeredSlides: false,
-                        slideToClickedSlide: true
-                    });
-                } else {
+                    try {
+                        thumbSwiper = new Swiper(`#${thumbSwiperId}`, {
+                            spaceBetween: 6,
+                            slidesPerView: 'auto',
+                            watchSlidesProgress: true,
+                            freeMode: true,
+                            centeredSlides: false,
+                            slideToClickedSlide: true
+                        });
+                    } catch (thumbErr) {
+                        console.log("Thumb swiper error:", thumbErr);
+                    }
+                } else if (thumbContainer) {
                     // Hide thumb container if only one image
-                    const thumbContainerEl = document.getElementById(thumbSwiperId);
-                    if (thumbContainerEl) thumbContainerEl.style.display = 'none';
+                    thumbContainer.style.display = 'none';
                 }
                 
                 // Initialize main swiper
-                const mainSwiper = new Swiper(`#${mainSwiperId}`, {
-                    spaceBetween: 0,
-                    slidesPerView: 1,
-                    pagination: {
-                        el: `.swiper-pagination`,
-                        clickable: true,
-                    },
-                    navigation: images.length > 1 ? {
-                        nextEl: `.swiper-button-next`,
-                        prevEl: `.swiper-button-prev`,
-                    } : {},
-                    thumbs: thumbSwiper ? {
-                        swiper: thumbSwiper,
-                    } : {},
-                    loop: images.length > 1,
-                    effect: 'slide',
-                    speed: 300
-                });
-                
-                // Store instances for cleanup if needed
-                swiperInstances[propertyId] = {
-                    main: mainSwiper,
-                    thumb: thumbSwiper
-                };
+                try {
+                    const mainSwiper = new Swiper(`#${mainSwiperId}`, {
+                        spaceBetween: 0,
+                        slidesPerView: 1,
+                        pagination: images.length > 1 ? {
+                            el: `.swiper-pagination`,
+                            clickable: true,
+                        } : false,
+                        navigation: images.length > 1 ? {
+                            nextEl: `.swiper-button-next`,
+                            prevEl: `.swiper-button-prev`,
+                        } : false,
+                        thumbs: thumbSwiper ? {
+                            swiper: thumbSwiper,
+                        } : {},
+                        loop: images.length > 1,
+                        effect: 'slide',
+                        speed: 300
+                    });
+                    
+                    // Store instances for cleanup if needed
+                    swiperInstances[propertyId] = {
+                        main: mainSwiper,
+                        thumb: thumbSwiper
+                    };
+                } catch (mainErr) {
+                    console.log("Main swiper error:", mainErr);
+                }
                 
             } catch (error) {
                 console.error("Error loading property images:", error);
@@ -2618,6 +2637,7 @@
             document.getElementById('calendarContainer').style.display = 'none';
             document.getElementById('calendarBackdrop').style.display = 'none';
             isCalendarVisible = false;
+            
             document.body.style.overflow = '';
         }
 
@@ -2828,7 +2848,7 @@
             }) : 'N/A';
         }
         
-        // Property search and filtering
+        // ✅ FIXED: Property search and filtering with better error handling
         async function searchProperties() {
             const location = document.getElementById('searchLocation').value;
             const propertyType = document.getElementById('propertyType').value;
@@ -2874,15 +2894,33 @@
             await loadFilteredProperties(location, propertyType);
         }
         
+        // ✅ FIXED: Enhanced filter function with debugging
         async function loadFilteredProperties(location, propertyType) {
             const container = document.getElementById('propertyList');
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
             
             try {
-                let query = supabase.from("properties").select("*").order("created_at", { ascending: false });
+                let query = supabase.from("properties").select("*");
                 
-                if (location) query = query.eq("location", location);
-                if (propertyType) query = query.eq("unit_type", propertyType);
+                // Debug: Log what we're filtering by
+                console.log("Filtering by - Location:", location, "Type:", propertyType);
+                
+                if (location && location !== "") {
+                    query = query.eq("location", location);
+                }
+                
+                if (propertyType && propertyType !== "") {
+                    // Try different column names that might be in your database
+                    try {
+                        query = query.eq("unit_type", propertyType);
+                    } catch (e) {
+                        console.log("Trying alternative column name...");
+                        query = query.eq("type", propertyType);
+                    }
+                }
+                
+                // Add ordering
+                query = query.order("created_at", { ascending: false });
                 
                 const { data, error } = await query;
                 
@@ -2891,6 +2929,8 @@
                     container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
                     return;
                 }
+                
+                console.log("Filtered data received:", data);
                 
                 if (!data || data.length === 0) {
                     container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your search.</p><p>Try different filters or browse all properties.</p></div>';
@@ -2940,12 +2980,21 @@
             const container = document.getElementById('featuredProperties');
             
             try {
-                const { data, error } = await supabase
+                // Try different column names for featured status
+                let query = supabase
                     .from("properties")
                     .select("*")
-                    .eq("is_featured", true)
                     .order("created_at", { ascending: false })
                     .limit(6);
+                
+                // Try to filter by featured if the column exists
+                try {
+                    query = query.eq("is_featured", true);
+                } catch (e) {
+                    console.log("Featured column not found, showing recent properties");
+                }
+                
+                const { data, error } = await query;
                 
                 if (error) {
                     console.error("Error loading featured:", error);
@@ -2965,7 +3014,7 @@
                     // ✅ Load images for each property
                     if (property.id) {
                         setTimeout(() => {
-                            loadPropertyImages(property.id);
+                            loadPropertyImages(property.id, property.image_url);
                         }, 100);
                     }
                 });
@@ -2990,16 +3039,17 @@
                 // ✅ Load images for each property
                 if (property.id) {
                     setTimeout(() => {
-                        loadPropertyImages(property.id);
+                        loadPropertyImages(property.id, property.image_url);
                     }, 100);
                 }
             });
         }
         
-        // ✅ FIXED: Updated createPropertyCard function with all changes
+        // ✅ FIXED: Updated createPropertyCard function
         function createPropertyCard(property) {
             const card = document.createElement('div');
             card.className = 'property-card';
+            card.id = `property-${property.id}`; // Add ID for WhatsApp link
             
             // ✅ Calculate price with commission
             const displayPrice = calculatePropertyPrice(property);
@@ -3036,6 +3086,17 @@
                 </div>
             `;
             
+            // Get property type display name
+            const typeMap = {
+                'studio': 'Studio',
+                '1br': '1 Bedroom',
+                '2br': '2 Bedrooms',
+                '3br': '3 Bedrooms',
+                '4br': '4+ Bedrooms',
+                'villa': 'Villa'
+            };
+            const propertyTypeDisplay = typeMap[property.unit_type] || property.unit_type || 'Apartment';
+            
             card.innerHTML = `
                 ${carouselHTML}
                 <div class="property-content">
@@ -3044,7 +3105,7 @@
                         <span class="property-location">
                             <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
                         </span>
-                        <span class="property-type">${property.unit_type || 'Apartment'}</span>
+                        <span class="property-type">${propertyTypeDisplay}</span>
                     </div>
                     <p class="property-description">${property.description || 'Luxury coastal accommodation with premium amenities.'}</p>
                     
@@ -3061,7 +3122,7 @@
                         <span style="color: var(--gray); font-size: 0.9rem;">
                             <i class="fas fa-bed"></i> ${property.beds || 1} bed${property.beds !== 1 ? 's' : ''}
                         </span>
-                        <button class="btn-primary" onclick="checkAvailability('${property.id}', '${property.title.replace(/'/g, "\\'")}')">
+                        <button class="btn-primary" onclick="checkAvailability('${property.id}', '${property.title ? property.title.replace(/'/g, "\\'") : 'Property'}')">
                             <i class="fas fa-calendar-alt"></i> Check Availability
                         </button>
                     </div>
@@ -3071,17 +3132,22 @@
             return card;
         }
         
-        // ✅ FIXED: New checkAvailability function
+        // ✅ FIXED: WhatsApp function with property-specific link
         function checkAvailability(propertyId, propertyTitle) {
-            let message = `Hello, I am interested in this property: ${propertyTitle}.\n`;
-            message += `Link: ${window.location.origin}${window.location.pathname}\n`;
+            // Create a shareable link with hash to this property
+            const currentUrl = window.location.href.split('#')[0]; // Remove existing hash
+            const propertyLink = `${currentUrl}#property-${propertyId}`;
+            
+            let message = `Hello PwaniStays! I am interested in this property:\n\n`;
+            message += `📌 *${propertyTitle}*\n`;
+            message += `🔗 ${propertyLink}\n\n`;
             
             // Include dates if user selected via filter
             if (selectedCheckin && selectedCheckout) {
-                message += `I would like to stay from ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}.\n`;
+                message += `📅 *Preferred Dates:* ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}\n`;
             }
             
-            message += `Is it available?`;
+            message += `Is this property available for my dates?`;
             
             const whatsappNumber = '+254738544784';
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -3137,21 +3203,6 @@
             
             // Reload featured properties
             loadFeaturedProperties();
-        }
-        
-        // Keep old function for backward compatibility
-        function inquireAboutProperty(propertyName) {
-            const messageTextarea = document.getElementById('message');
-            const currentMessage = messageTextarea.value;
-            const inquiryText = `I'm interested in booking: ${propertyName}\n\nTravel Dates: \nNumber of Guests: \nSpecial Requests: \n\n`;
-            
-            messageTextarea.value = inquiryText + (currentMessage ? '\n\n' + currentMessage : '');
-            
-            // Scroll to contact form
-            document.getElementById('book-now').scrollIntoView({ behavior: 'smooth' });
-            
-            // Focus on name field
-            document.getElementById('name').focus();
         }
         
         // Testimonials functionality - FIXED
@@ -3336,6 +3387,33 @@
             e.target.reset();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        
+        // ✅ FIXED: Auto-scroll to property when page loads with hash
+        window.addEventListener('load', function() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#property-')) {
+                const propertyId = hash.replace('#property-', '');
+                const propertyElement = document.getElementById(`property-${propertyId}`);
+                if (propertyElement) {
+                    // Show search results section if it's hidden
+                    document.getElementById('searchResults').style.display = 'block';
+                    document.getElementById('stays').style.display = 'none';
+                    
+                    // Load all properties and scroll to this one
+                    loadAllProperties();
+                    
+                    // Scroll to property after a short delay
+                    setTimeout(() => {
+                        propertyElement.scrollIntoView({ behavior: 'smooth' });
+                        // Add highlight effect
+                        propertyElement.style.boxShadow = '0 0 0 3px var(--primary)';
+                        setTimeout(() => {
+                            propertyElement.style.boxShadow = '';
+                        }, 2000);
+                    }, 1000);
+                }
+            }
+        });
     </script>
 </body>
 </html>

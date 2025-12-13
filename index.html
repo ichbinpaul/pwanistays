@@ -2454,8 +2454,8 @@
         // Object to store Swiper instances
         const swiperInstances = {};
         
-        // ✅ STEP 4 — Load images from Supabase Storage
-        async function loadPropertyImages(propertyId, primaryImageUrl) {
+        // ✅ FIXED: Enhanced image loading from Supabase Storage
+        async function loadPropertyImages(propertyId) {
             try {
                 // Create unique IDs for this property's carousel
                 const mainSwiperId = `mainSwiper-${propertyId}`;
@@ -2472,18 +2472,24 @@
                 
                 if (error) {
                     console.log("Image load error:", error);
-                    // Fallback to primary image or placeholder
-                    images = primaryImageUrl 
-                        ? [{ name: 'primary', url: primaryImageUrl }]
-                        : [{ name: 'placeholder', url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }];
+                    // Use placeholder image
+                    images = [{ 
+                        name: 'placeholder', 
+                        url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' 
+                    }];
                 } else if (!data || data.length === 0) {
-                    // No images in storage, use primary image
-                    images = primaryImageUrl 
-                        ? [{ name: 'primary', url: primaryImageUrl }]
-                        : [{ name: 'placeholder', url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }];
+                    // No images in storage, use placeholder
+                    images = [{ 
+                        name: 'placeholder', 
+                        url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' 
+                    }];
                 } else {
-                    // Sort images to ensure consistent order
-                    const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+                    // Sort images numerically (01.jpg, 02.jpg, etc.)
+                    const sorted = data.sort((a, b) => {
+                        const numA = parseInt(a.name.replace(/\D/g, ''));
+                        const numB = parseInt(b.name.replace(/\D/g, ''));
+                        return (numA || 0) - (numB || 0);
+                    });
                     
                     // Create image URLs
                     images = sorted.map(img => ({
@@ -2498,13 +2504,13 @@
                 const mainContainer = document.getElementById(mainSliderId);
                 const thumbContainer = document.getElementById(thumbSliderId);
                 
-                if (!mainContainer || !thumbContainer) return;
+                if (!mainContainer) return;
                 
                 // Clear existing content
                 mainContainer.innerHTML = '';
-                thumbContainer.innerHTML = '';
+                if (thumbContainer) thumbContainer.innerHTML = '';
                 
-                // Add images to sliders
+                // Add images to main slider
                 images.forEach((img, index) => {
                     mainContainer.innerHTML += `
                         <div class="swiper-slide">
@@ -2512,24 +2518,34 @@
                         </div>
                     `;
                     
-                    thumbContainer.innerHTML += `
-                        <div class="swiper-slide">
-                            <img src="${img.url}" alt="Property thumbnail ${index + 1}" loading="lazy">
-                        </div>
-                    `;
+                    // Add thumbnails if container exists
+                    if (thumbContainer) {
+                        thumbContainer.innerHTML += `
+                            <div class="swiper-slide">
+                                <img src="${img.url}" alt="Property thumbnail ${index + 1}" loading="lazy">
+                            </div>
+                        `;
+                    }
                 });
                 
-                // Initialize thumb swiper first
-                const thumbSwiper = new Swiper(`#${thumbSwiperId}`, {
-                    spaceBetween: 6,
-                    slidesPerView: 'auto',
-                    watchSlidesProgress: true,
-                    freeMode: true,
-                    centeredSlides: false,
-                    slideToClickedSlide: true
-                });
+                // Initialize thumb swiper first (if thumbnails exist)
+                let thumbSwiper = null;
+                if (thumbContainer && images.length > 1) {
+                    thumbSwiper = new Swiper(`#${thumbSwiperId}`, {
+                        spaceBetween: 6,
+                        slidesPerView: 'auto',
+                        watchSlidesProgress: true,
+                        freeMode: true,
+                        centeredSlides: false,
+                        slideToClickedSlide: true
+                    });
+                } else {
+                    // Hide thumb container if only one image
+                    const thumbContainerEl = document.getElementById(thumbSwiperId);
+                    if (thumbContainerEl) thumbContainerEl.style.display = 'none';
+                }
                 
-                // Initialize main swiper with thumbnails control
+                // Initialize main swiper
                 const mainSwiper = new Swiper(`#${mainSwiperId}`, {
                     spaceBetween: 0,
                     slidesPerView: 1,
@@ -2537,14 +2553,14 @@
                         el: `.swiper-pagination`,
                         clickable: true,
                     },
-                    navigation: {
+                    navigation: images.length > 1 ? {
                         nextEl: `.swiper-button-next`,
                         prevEl: `.swiper-button-prev`,
-                    },
-                    thumbs: {
+                    } : {},
+                    thumbs: thumbSwiper ? {
                         swiper: thumbSwiper,
-                    },
-                    loop: false,
+                    } : {},
+                    loop: images.length > 1,
                     effect: 'slide',
                     speed: 300
                 });
@@ -2787,6 +2803,31 @@
             return `${day}/${month}/${year}`;
         }
         
+        // ✅ FIXED: Calculate price with commission
+        function calculatePropertyPrice(property) {
+            if (!property) return 'N/A';
+            
+            const today = new Date();
+            const month = today.getMonth() + 1; // JS months 0-11
+            
+            // Determine base price based on season
+            // Peak season: July-December (months 7-12)
+            // Low season: January-June (months 1-6)
+            let basePrice = (month >= 7 && month <= 12) 
+                ? (property.peak_price || 0) 
+                : (property.low_price || 0);
+            
+            // Apply commission rate (default 20% or 0.2)
+            const commissionRate = property.commission_rate || 0.2;
+            const finalPrice = basePrice * (1 + commissionRate);
+            
+            // Format price with commas
+            return finalPrice ? finalPrice.toLocaleString('en-KE', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }) : 'N/A';
+        }
+        
         // Property search and filtering
         async function searchProperties() {
             const location = document.getElementById('searchLocation').value;
@@ -2921,10 +2962,10 @@
                 data.forEach(property => {
                     const card = createPropertyCard(property);
                     container.appendChild(card);
-                    // ✅ STEP 5 — Load images for each property
+                    // ✅ Load images for each property
                     if (property.id) {
                         setTimeout(() => {
-                            loadPropertyImages(property.id, property.image_url);
+                            loadPropertyImages(property.id);
                         }, 100);
                     }
                 });
@@ -2946,35 +2987,31 @@
             properties.forEach(property => {
                 const card = createPropertyCard(property);
                 container.appendChild(card);
-                // ✅ STEP 5 — Load images for each property
+                // ✅ Load images for each property
                 if (property.id) {
                     setTimeout(() => {
-                        loadPropertyImages(property.id, property.image_url);
+                        loadPropertyImages(property.id);
                     }, 100);
                 }
             });
         }
         
+        // ✅ FIXED: Updated createPropertyCard function with all changes
         function createPropertyCard(property) {
             const card = document.createElement('div');
             card.className = 'property-card';
             
-            // Format price
-            const price = property.price_per_night || 0;
-            const formattedPrice = new Intl.NumberFormat('en-KE', {
-                style: 'currency',
-                currency: 'KES',
-                minimumFractionDigits: 0
-            }).format(price);
+            // ✅ Calculate price with commission
+            const displayPrice = calculatePropertyPrice(property);
             
-            // Create amenities list
+            // ✅ Create amenities list
             const amenities = property.amenities ? 
                 (Array.isArray(property.amenities) ? property.amenities : JSON.parse(property.amenities)) : [];
             const amenitiesHTML = amenities.slice(0, 3).map(amenity => 
                 `<span class="amenity-badge">${amenity}</span>`
             ).join('');
             
-            // ✅ STEP 2 — Carousel HTML Structure
+            // ✅ Carousel HTML Structure
             const carouselHTML = `
                 <div class="property-gallery">
                     <!-- Main Image Slider -->
@@ -3018,22 +3055,37 @@
                     </div>
                     ` : ''}
                     
-                    <div class="property-price">${formattedPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
+                    <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
                     
                     <div class="property-footer">
                         <span style="color: var(--gray); font-size: 0.9rem;">
-                            <i class="fas fa-user-friends"></i> ${property.max_guests || 2} guests
-                            <span style="margin: 0 10px;">•</span>
-                            <i class="fas fa-bed"></i> ${property.bedrooms || 1} bed${property.bedrooms !== 1 ? 's' : ''}
+                            <i class="fas fa-bed"></i> ${property.beds || 1} bed${property.beds !== 1 ? 's' : ''}
                         </span>
-                        <button class="btn-primary" onclick="inquireAboutProperty('${property.title || ''}')">
-                            <i class="fas fa-calendar-alt"></i> Inquire
+                        <button class="btn-primary" onclick="checkAvailability('${property.id}', '${property.title.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-calendar-alt"></i> Check Availability
                         </button>
                     </div>
                 </div>
             `;
             
             return card;
+        }
+        
+        // ✅ FIXED: New checkAvailability function
+        function checkAvailability(propertyId, propertyTitle) {
+            let message = `Hello, I am interested in this property: ${propertyTitle}.\n`;
+            message += `Link: ${window.location.origin}${window.location.pathname}\n`;
+            
+            // Include dates if user selected via filter
+            if (selectedCheckin && selectedCheckout) {
+                message += `I would like to stay from ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}.\n`;
+            }
+            
+            message += `Is it available?`;
+            
+            const whatsappNumber = '+254738544784';
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
         }
         
         function showAllProperties() {
@@ -3087,6 +3139,7 @@
             loadFeaturedProperties();
         }
         
+        // Keep old function for backward compatibility
         function inquireAboutProperty(propertyName) {
             const messageTextarea = document.getElementById('message');
             const currentMessage = messageTextarea.value;

@@ -133,30 +133,6 @@
             }
         }
         
-        /* Remove the old logo styles */
-        .logo, .footer-logo {
-            display: inline-block;
-        }
-        
-        .logo-icon {
-            font-size: 2rem;
-            display: inline-block;
-            line-height: 1;
-            margin: 0;
-        }
-        
-        .logo h1 {
-            font-size: 1.5rem;
-            color: var(--dark);
-            font-weight: 600;
-            line-height: 1;
-            margin: 0;
-        }
-        
-        .logo span {
-            color: var(--primary);
-        }
-        
         /* Navigation */
         .nav-links {
             display: flex;
@@ -186,6 +162,41 @@
             width: 100%;
             height: 2px;
             background: var(--primary);
+        }
+        
+        /* 🔧 PHASE 4 — Header Search Icon */
+        .header-search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        #headerSearch {
+            width: 200px;
+            padding: 8px 15px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: none;
+        }
+        
+        #headerSearch.show {
+            display: block;
+        }
+        
+        #searchToggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 5px;
+            transition: var(--transition);
+        }
+        
+        #searchToggle:hover {
+            color: var(--primary);
         }
         
         .btn-book {
@@ -390,7 +401,7 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         
-        /* ✅ STEP 3 — Carousel CSS */
+        /* ✅ UPDATED: Carousel CSS for better Swiper integration */
         .property-gallery {
             width: 100%;
             max-width: 100%;
@@ -399,10 +410,39 @@
             overflow: hidden;
         }
         
-        .mainSwiper {
+        .property-gallery .swiper {
             width: 100%;
             height: 100%;
-            border-radius: 0;
+        }
+        
+        .property-gallery .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: var(--light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .property-gallery .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .property-gallery .swiper-pagination {
+            bottom: 10px !important;
+        }
+        
+        .property-gallery .swiper-pagination-bullet {
+            background: white;
+            opacity: 0.7;
+        }
+        
+        .property-gallery .swiper-pagination-bullet-active {
+            background: var(--primary);
+            opacity: 1;
         }
         
         .thumbSwiper {
@@ -427,27 +467,6 @@
         .thumbSwiper .swiper-slide-thumb-active {
             opacity: 1;
             border: 2px solid white;
-        }
-        
-        .swiper-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .swiper-pagination {
-            bottom: 10px !important;
-            z-index: 10;
-        }
-        
-        .swiper-pagination-bullet {
-            background: white;
-            opacity: 0.7;
-        }
-        
-        .swiper-pagination-bullet-active {
-            background: var(--primary);
-            opacity: 1;
         }
         
         .property-content {
@@ -483,29 +502,38 @@
             font-weight: 500;
         }
         
-        .property-description {
+        /* ✅ PHASE 3 — View More Description */
+        .property-desc {
             color: var(--gray);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.6;
+            overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
-            overflow: hidden;
         }
         
-        /* ✅ ADDED: View More link styling */
-        .view-more {
+        .property-desc.expanded {
+            -webkit-line-clamp: unset;
+            overflow: visible;
+        }
+        
+        .view-more-btn {
+            background: none;
+            border: none;
             color: var(--primary);
-            cursor: pointer;
             font-weight: 600;
-            margin-left: 5px;
-            display: inline-block;
+            cursor: pointer;
+            padding: 5px 0;
+            font-size: 0.9rem;
             transition: var(--transition);
+            display: inline-block;
+            margin-bottom: 15px;
         }
         
-        .view-more:hover {
-            text-decoration: underline;
+        .view-more-btn:hover {
             color: var(--primary-light);
+            text-decoration: underline;
         }
         
         .property-price {
@@ -515,28 +543,18 @@
             margin-bottom: 20px;
         }
         
-        .property-amenities {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .amenity-badge {
-            background: #f8f9fa;
-            color: var(--dark);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid var(--light-gray);
-        }
-        
         .property-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding-top: 20px;
             border-top: 1px solid var(--light-gray);
+        }
+        
+        .property-code {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
         
         .no-properties {
@@ -1236,100 +1254,6 @@
             background: var(--primary-light);
         }
         
-        /* ✅ ADDED: Modal for property details */
-        .property-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 3000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 15px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            padding: 30px;
-            position: relative;
-            animation: modalFadeIn 0.3s ease;
-        }
-        
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--gray);
-            transition: var(--transition);
-            background: none;
-            border: none;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
-        
-        .close-modal:hover {
-            color: var(--dark);
-        }
-        
-        .modal-title {
-            margin-bottom: 20px;
-            color: var(--dark);
-            font-size: 1.5rem;
-            padding-right: 40px;
-        }
-        
-        .modal-description {
-            margin: 20px 0;
-            line-height: 1.8;
-            color: var(--dark);
-            font-size: 1.1rem;
-        }
-        
-        .modal-amenities {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid var(--light-gray);
-        }
-        
-        .modal-amenity {
-            background: #f0f8f4;
-            color: var(--primary);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            border: 1px solid #d4e9e1;
-        }
-        
-        .modal-actions {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid var(--light-gray);
-            text-align: center;
-        }
-        
         /* Footer */
         footer {
             background: var(--dark);
@@ -1741,6 +1665,25 @@
                 left: 0;
             }
             
+            .header-search-container {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 15px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                display: none;
+            }
+            
+            .header-search-container.show {
+                display: block;
+            }
+            
+            #headerSearch {
+                width: 100%;
+            }
+            
             .testimonial-slider {
                 height: 400px;
             }
@@ -1945,6 +1888,13 @@
                 <li role="none"><a href="#about" role="menuitem">About</a></li>
                 <li role="none"><a href="#testimonials" role="menuitem">Reviews</a></li>
                 <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                <!-- 🔧 PHASE 4 — Header Search Icon -->
+                <li role="none" class="header-search-container" id="mobileSearchContainer">
+                    <button id="searchToggle" aria-label="Toggle search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
+                </li>
                 <li role="none"><a href="#book-now" class="btn-book" role="menuitem">Book Now</a></li>
             </ul>
         </nav>
@@ -2437,21 +2387,6 @@
         </div>
     </section>
 
-    <!-- ✅ ADDED: Property Modal -->
-    <div id="propertyModal" class="property-modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closePropertyModal()">&times;</button>
-            <h3 class="modal-title" id="modalTitle"></h3>
-            <div class="modal-description" id="modalDescription"></div>
-            <div class="modal-amenities" id="modalAmenities"></div>
-            <div class="modal-actions">
-                <button class="btn-primary" onclick="checkAvailabilityFromModal()">
-                    <i class="fas fa-calendar-alt"></i> Check Availability
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer role="contentinfo">
         <div class="footer-container">
@@ -2581,64 +2516,114 @@
                 }
             });
             
-            // ✅ FIX 1.1: Single source of truth for filter values
-            initFilterCapture();
+            // 🔧 PHASE 4 — Header Search Toggle
+            const searchToggle = document.getElementById('searchToggle');
+            const headerSearch = document.getElementById('headerSearch');
             
-            // Close modal when clicking outside
-            document.getElementById('propertyModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closePropertyModal();
-                }
-            });
-            
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && document.getElementById('propertyModal').style.display === 'flex') {
-                    closePropertyModal();
-                }
-            });
+            if (searchToggle && headerSearch) {
+                searchToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (window.innerWidth <= 768) {
+                        // On mobile, show the search container
+                        const mobileSearchContainer = document.getElementById('mobileSearchContainer');
+                        mobileSearchContainer.classList.toggle('show');
+                        if (mobileSearchContainer.classList.contains('show')) {
+                            headerSearch.focus();
+                        }
+                    } else {
+                        // On desktop, toggle the search input
+                        headerSearch.classList.toggle('show');
+                        if (headerSearch.classList.contains('show')) {
+                            headerSearch.focus();
+                        }
+                    }
+                });
+                
+                // Close search when clicking outside (desktop)
+                document.addEventListener('click', function(e) {
+                    if (window.innerWidth > 768 && 
+                        !headerSearch.contains(e.target) && 
+                        !searchToggle.contains(e.target)) {
+                        headerSearch.classList.remove('show');
+                    }
+                });
+                
+                // Handle search when pressing Enter in header search
+                headerSearch.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const searchTerm = this.value.trim();
+                        if (searchTerm) {
+                            document.getElementById('searchKeywords').value = searchTerm;
+                            searchProperties();
+                            // Close search on mobile
+                            if (window.innerWidth <= 768) {
+                                document.getElementById('mobileSearchContainer').classList.remove('show');
+                            }
+                            this.value = '';
+                            this.classList.remove('show');
+                        }
+                    }
+                });
+            }
         });
-        
-        // ✅ FIX 1.1: Single source of truth for filter values
-        let selectedLocation = '';
-        let selectedUnitType = '';
-        let selectedKeywords = '';
-        let selectedStartDate = null;
-        let selectedEndDate = null;
-        
-        function initFilterCapture() {
-            const locationSelect = document.getElementById('searchLocation');
-            const unitTypeSelect = document.getElementById('propertyType');
-            const keywordsInput = document.getElementById('searchKeywords');
-            
-            if (locationSelect) {
-                locationSelect.addEventListener('change', e => {
-                    selectedLocation = e.target.value;
-                });
-            }
-            
-            if (unitTypeSelect) {
-                unitTypeSelect.addEventListener('change', e => {
-                    selectedUnitType = e.target.value;
-                });
-            }
-            
-            if (keywordsInput) {
-                keywordsInput.addEventListener('input', e => {
-                    selectedKeywords = e.target.value;
-                });
-            }
-        }
         
         // Supabase Configuration
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Object to store Swiper instances
-        const swiperInstances = {};
+        // 🔧 PHASE 4 — Normalize search input
+        function normalizeSearch(q) {
+            if (!q) return '';
+            return q
+                .toLowerCase()
+                .replace(/bedrooms?|br/g, "br")
+                .replace(/three|3/gi, "3")
+                .replace(/two|2/gi, "2")
+                .replace(/one|1/gi, "1")
+                .replace(/\s+/g, " ");
+        }
         
-        // ✅ FIX 4: Unit Type Labels Mapping
+        // 🔧 PHASE 5 — Season Pricing Logic
+        function isPeakSeason(date) {
+            if (!date) {
+                date = new Date();
+            }
+            const m = date.getMonth() + 1; // JavaScript months are 0-11
+            const d = date.getDate();
+            
+            // Peak season logic:
+            // 1. Jan 1-10
+            // 2. July, August, November, December
+            if (m === 1 && d <= 10) return true;
+            if ([7, 8, 11, 12].includes(m)) return true;
+            return false;
+        }
+        
+        // Calculate display price with commission
+        function calculateDisplayPrice(property, checkinDate = null) {
+            if (!property) return 'N/A';
+            
+            // Use provided checkin date or current date
+            const date = checkinDate || new Date();
+            
+            // Determine base price based on season
+            const basePrice = isPeakSeason(date) 
+                ? (property.peak_price || 0) 
+                : (property.low_price || 0);
+            
+            // Apply 20% commission
+            const finalPrice = Math.round(basePrice * 1.2);
+            
+            // Format price with commas
+            return finalPrice.toLocaleString('en-KE', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+        }
+        
+        // Unit type labels for display
         const unitTypeLabels = {
             studio: "Studio",
             "1br": "1 Bedroom",
@@ -2648,121 +2633,92 @@
             "5br": "5 Bedrooms"
         };
         
-        // ✅ FIXED: Carousel initialization - Images load FIRST, then Swiper
-        async function loadPropertyImagesForCard(propertyId, fallbackImageUrl) {
-            const mainContainer = document.getElementById(`mainSlider-${propertyId}`);
-            const thumbContainer = document.getElementById(`thumbSlider-${propertyId}`);
-
-            if (!mainContainer) {
-                console.log(`Main container not found for property ${propertyId}`);
-                return;
-            }
-
-            // Clear existing content
-            mainContainer.innerHTML = "";
-            if (thumbContainer) thumbContainer.innerHTML = "";
-
-            // Try to get images from storage
-            let images = [];
+        // 🔧 PHASE 2 — Load Property Images Function
+        async function loadPropertyImages(property) {
+            const mainWrapper = document.querySelector(`#main-${property.id} .swiper-wrapper`);
+            const thumbWrapper = document.querySelector(`#thumb-${property.id} .swiper-wrapper`);
             
+            if (!mainWrapper || !thumbWrapper) return;
+            
+            // 1️⃣ Always add primary image first
+            const images = property.image_url ? [property.image_url] : [];
+            
+            // 2️⃣ Load storage images
             try {
-                const { data, error } = await supabase.storage
+                const { data, error } = await supabase
+                    .storage
                     .from("property_images")
-                    .list(`${propertyId}/`, { limit: 20 });
-
-                if (!error && data && data.length > 0) {
-                    // Filter image files and sort
-                    images = data
-                        .filter(f => f.name.match(/\.(jpg|jpeg|png|webp|gif)$/i))
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map(f => 
-                            supabase.storage
-                                .from("property_images")
-                                .getPublicUrl(`${propertyId}/${f.name}`).data.publicUrl
-                        );
-                    
-                    console.log(`Loaded ${images.length} images from storage for property ${propertyId}`);
-                }
-            } catch (err) {
-                console.log(`Storage error for property ${propertyId}:`, err);
-            }
-
-            // Fallback if no images from storage
-            if (images.length === 0 && fallbackImageUrl) {
-                images = [fallbackImageUrl];
-            }
-
-            // Final fallback to placeholder
-            if (images.length === 0) {
-                images = ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'];
-            }
-
-            // Add images to DOM
-            images.forEach((url, index) => {
-                mainContainer.innerHTML += `
-                    <div class="swiper-slide">
-                        <img src="${url}" alt="Property image ${index + 1}" loading="lazy" 
-                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';">
-                    </div>`;
+                    .list(property.id);
                 
-                if (thumbContainer) {
-                    thumbContainer.innerHTML += `
-                        <div class="swiper-slide">
-                            <img src="${url}" alt="Property thumbnail ${index + 1}" loading="lazy"
-                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';">
-                        </div>`;
+                if (!error && data && data.length > 0) {
+                    // Sort images by name
+                    data
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .forEach(file => {
+                            const url = supabase
+                                .storage
+                                .from("property_images")
+                                .getPublicUrl(`${property.id}/${file.name}`).data.publicUrl;
+                            
+                            // Add if not already in array
+                            if (!images.includes(url)) {
+                                images.push(url);
+                            }
+                        });
                 }
+            } catch (error) {
+                console.log(`Error loading storage images for property ${property.id}:`, error);
+            }
+            
+            // 3️⃣ If no images, use placeholder
+            if (images.length === 0) {
+                images.push('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            }
+            
+            // 3️⃣ Render slides
+            images.forEach((url, index) => {
+                mainWrapper.innerHTML += `
+                    <div class="swiper-slide">
+                        <img src="${url}" alt="${property.title || 'Property'} image ${index + 1}" 
+                             onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                `;
+                thumbWrapper.innerHTML += `
+                    <div class="swiper-slide">
+                        <img src="${url}" alt="${property.title || 'Property'} thumbnail ${index + 1}"
+                             onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                `;
             });
-
-            // ✅ IMPORTANT: Initialize Swiper AFTER images are added to DOM
+            
+            // 4️⃣ Init Swipers AFTER DOM update
             setTimeout(() => {
                 try {
-                    let thumbSwiper = null;
-                    
-                    // Initialize thumb swiper if we have multiple images
-                    if (thumbContainer && images.length > 1) {
-                        thumbSwiper = new Swiper(`#thumbSwiper-${propertyId}`, {
-                            spaceBetween: 6,
-                            slidesPerView: Math.min(4, images.length),
-                            freeMode: true,
-                            watchSlidesProgress: true,
-                            slideToClickedSlide: true,
-                            centeredSlides: false
-                        });
-                    } else if (thumbContainer) {
-                        // Hide thumb container if only one image
-                        thumbContainer.style.display = 'none';
-                    }
-
-                    // Initialize main swiper
-                    new Swiper(`#mainSwiper-${propertyId}`, {
-                        spaceBetween: 0,
-                        slidesPerView: 1,
-                        pagination: images.length > 1 ? {
-                            el: `.swiper-pagination`,
-                            clickable: true,
-                        } : false,
-                        navigation: images.length > 1 ? {
-                            nextEl: `.swiper-button-next`,
-                            prevEl: `.swiper-button-preview`,
-                        } : false,
-                        thumbs: thumbSwiper ? {
-                            swiper: thumbSwiper,
-                        } : {},
-                        loop: images.length > 1,
-                        effect: 'slide',
-                        speed: 300
+                    const thumbs = new Swiper(`#thumb-${property.id}`, {
+                        slidesPerView: Math.min(4, images.length),
+                        spaceBetween: 8,
+                        watchSlidesProgress: true,
+                        freeMode: true
                     });
-
-                    console.log(`Swiper initialized for property ${propertyId} with ${images.length} images`);
                     
-                } catch (swiperError) {
-                    console.error(`Swiper initialization error for property ${propertyId}:`, swiperError);
+                    new Swiper(`#main-${property.id}`, {
+                        spaceBetween: 10,
+                        pagination: { 
+                            el: `#main-${property.id} .swiper-pagination`, 
+                            clickable: true 
+                        },
+                        thumbs: { swiper: thumbs },
+                        loop: images.length > 1
+                    });
+                    
+                    console.log(`Swiper initialized for property ${property.id} with ${images.length} images`);
+                } catch (error) {
+                    console.error(`Error initializing Swiper for property ${property.id}:`, error);
                 }
-            }, 50); // Small delay to ensure DOM is updated
+            }, 100);
         }
         
-        // Calendar functionality - FIXED VERSION
+        // Calendar functionality
         let selectedCheckin = null;
         let selectedCheckout = null;
         let currentMonth = new Date().getMonth();
@@ -2773,8 +2729,6 @@
             // Initialize with NO dates selected - user must choose
             selectedCheckin = null;
             selectedCheckout = null;
-            selectedStartDate = null;
-            selectedEndDate = null;
             
             updateDateRangeInput();
         }
@@ -2908,7 +2862,6 @@
 
             if (date < today) return;
 
-            // NEW LOGIC: Simplified date selection
             if (!selectedCheckin) {
                 // First click: set as check-in
                 selectedCheckin = date;
@@ -2952,8 +2905,6 @@
         function clearDates() {
             selectedCheckin = null;
             selectedCheckout = null;
-            selectedStartDate = null;
-            selectedEndDate = null;
             
             updateDateRangeInput();
             generateCalendar();
@@ -2969,10 +2920,6 @@
                 alert("Check-out date must be after check-in date");
                 return;
             }
-            
-            // ✅ Update single source of truth for dates
-            selectedStartDate = formatDate(selectedCheckin);
-            selectedEndDate = formatDate(selectedCheckout);
             
             hideCalendar();
         }
@@ -2998,70 +2945,82 @@
             return `${day}/${month}/${year}`;
         }
         
-        // ✅ FIXED: Calculate price with commission
-        function calculatePropertyPrice(property) {
-            if (!property) return 'N/A';
+        // 🔧 PHASE 3 — View More Description Toggle
+        function toggleDescription(propertyId) {
+            const descElement = document.getElementById(`desc-${propertyId}`);
+            const button = descElement.nextElementSibling;
             
-            const today = new Date();
-            const month = today.getMonth() + 1; // JS months 0-11
-            
-            // Determine base price based on season
-            // Peak season: July-December (months 7-12)
-            // Low season: January-June (months 1-6)
-            let basePrice = (month >= 7 && month <= 12) 
-                ? (property.peak_price || 0) 
-                : (property.low_price || 0);
-            
-            // Apply commission rate (default 20% or 0.2)
-            const commissionRate = property.commission_rate || 0.2;
-            const finalPrice = basePrice * (1 + commissionRate);
-            
-            // Format price with commas
-            return finalPrice ? finalPrice.toLocaleString('en-KE', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }) : 'N/A';
-        }
-        
-        // ✅ FIX 1.2: Apply filters using Supabase query (NOT client-only)
-        async function fetchFilteredProperties(location, unitType, keywords) {
-            try {
-                let query = supabase.from('properties').select('*');
-
-                if (location && location !== '') {
-                    query = query.eq('location', location);
-                }
-
-                if (unitType && unitType !== '') {
-                    // ✅ FIX 3: Use normalized unit_type values directly
-                    query = query.eq('unit_type', unitType);
-                }
-
-                if (keywords && keywords !== '') {
-                    // ✅ FIX 5: Keyword search in title and description
-                    query = query.or(`title.ilike.%${keywords}%,description.ilike.%${keywords}%`);
-                }
-
-                query = query.order('created_at', { ascending: false });
-                
-                const { data, error } = await query;
-                if (error) {
-                    console.error("Supabase query error:", error);
-                    return [];
-                }
-                return data || [];
-            } catch (error) {
-                console.error("Error fetching properties:", error);
-                return [];
+            if (descElement) {
+                descElement.classList.toggle('expanded');
+                button.textContent = descElement.classList.contains('expanded') ? 'View Less' : 'View More';
             }
         }
         
-        // ✅ FIXED: Property search and filtering with better error handling
+        // Create property card function
+        function createPropertyCard(property) {
+            const card = document.createElement('div');
+            card.className = 'property-card';
+            card.id = `property-${property.id}`;
+            
+            // Calculate price
+            const displayPrice = calculateDisplayPrice(property, selectedCheckin);
+            
+            // Get property type display
+            const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
+            
+            // Escape special characters for safety
+            const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
+            
+            card.innerHTML = `
+                <!-- 🔧 PHASE 2 — Updated Carousel HTML -->
+                <div class="property-gallery">
+                    <div class="swiper mainSwiper" id="main-${property.id}">
+                        <div class="swiper-wrapper"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="swiper thumbSwiper" id="thumb-${property.id}">
+                        <div class="swiper-wrapper"></div>
+                    </div>
+                </div>
+                
+                <div class="property-content">
+                    <h3 class="property-title">${property.title || 'Premium Property'}</h3>
+                    <div class="property-meta">
+                        <span class="property-location">
+                            <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
+                        </span>
+                        <span class="property-type">${propertyTypeDisplay}</span>
+                    </div>
+                    
+                    <!-- 🔧 PHASE 3 — View More Description -->
+                    <p class="property-desc" id="desc-${property.id}">
+                        ${property.description || 'Luxury coastal accommodation with premium amenities.'}
+                    </p>
+                    <button class="view-more-btn" onclick="toggleDescription('${property.id}')">
+                        View More
+                    </button>
+                    
+                    <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
+                    
+                    <div class="property-footer">
+                        <span class="property-code">
+                            <i class="fas fa-hashtag"></i> ${property.internal_code || 'PS-' + (property.id ? property.id.substring(0, 8) : '0000')}
+                        </span>
+                        <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
+                            <i class="fas fa-calendar-alt"></i> Check Availability
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // 🔧 PHASE 4 — Search Properties Function
         async function searchProperties() {
-            // ✅ Use single source of truth
-            const location = selectedLocation || document.getElementById('searchLocation').value;
-            const propertyType = selectedUnitType || document.getElementById('propertyType').value;
-            const keywords = selectedKeywords || document.getElementById('searchKeywords').value;
+            const location = document.getElementById('searchLocation').value;
+            const propertyType = document.getElementById('propertyType').value;
+            const keywords = document.getElementById('searchKeywords').value;
             
             // Show search results section
             document.getElementById('searchResults').style.display = 'block';
@@ -3086,40 +3045,76 @@
                 ? `Properties in ${criteriaText.join(' • ')}`
                 : 'All Properties';
             
-            datesCriteria.textContent = (selectedStartDate && selectedEndDate) 
-                ? `Dates: ${selectedStartDate} to ${selectedEndDate}`
+            datesCriteria.textContent = (selectedCheckin && selectedCheckout) 
+                ? `Dates: ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}`
                 : 'Flexible dates';
             
             resultsHeader.style.display = 'block';
             
-            // ✅ Load filtered properties using Supabase query
+            // Load filtered properties
             await loadFilteredProperties(location, propertyType, keywords);
         }
         
-        // ✅ FIXED: Enhanced filter function
+        // Load filtered properties with fuzzy search
         async function loadFilteredProperties(location, propertyType, keywords) {
             const container = document.getElementById('propertyList');
-            
-            // ✅ Clear container before rendering
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
             
             try {
-                // ✅ Use fetchFilteredProperties function
-                const properties = await fetchFilteredProperties(location, propertyType, keywords);
+                let query = supabase
+                    .from("properties")
+                    .select("*")
+                    .eq("is_active", true);
                 
-                console.log("Filtered data received:", properties);
+                // Apply location filter
+                if (location && location !== '') {
+                    query = query.eq('location', location);
+                }
                 
-                if (!properties || properties.length === 0) {
+                // Apply property type filter
+                if (propertyType && propertyType !== '') {
+                    query = query.eq('unit_type', propertyType);
+                }
+                
+                // 🔧 PHASE 4 — Apply keyword search with fuzzy matching
+                if (keywords && keywords !== '') {
+                    const normalizedTerm = normalizeSearch(keywords);
+                    query = query.or(`
+                        title.ilike.%${normalizedTerm}%,
+                        description.ilike.%${normalizedTerm}%,
+                        location.ilike.%${normalizedTerm}%,
+                        unit_type.ilike.%${normalizedTerm}%,
+                        internal_code.ilike.%${normalizedTerm}%
+                    `);
+                }
+                
+                query = query.order('created_at', { ascending: false });
+                
+                const { data, error } = await query;
+                
+                if (error) {
+                    console.error("Search error:", error);
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
                     container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your search.</p><p>Try different filters or browse all properties.</p></div>';
                     return;
                 }
                 
                 // Update results count
-                document.getElementById('resultsCount').textContent = `Found ${properties.length} propert${properties.length === 1 ? 'y' : 'ies'}`;
+                document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
                 
-                // ✅ Clear and re-render
+                // Render properties
                 container.innerHTML = '';
-                renderProperties(properties, container);
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    container.appendChild(card);
+                    
+                    // Load images after card is rendered
+                    setTimeout(() => loadPropertyImages(property), 0);
+                });
                 
             } catch (error) {
                 console.error("Error:", error);
@@ -3129,14 +3124,13 @@
         
         async function loadAllProperties() {
             const container = document.getElementById('propertyList');
-            
-            // ✅ Clear container
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading all properties...</div>';
             
             try {
                 const { data, error } = await supabase
                     .from("properties")
                     .select("*")
+                    .eq("is_active", true)
                     .order("created_at", { ascending: false });
                 
                 if (error) {
@@ -3150,9 +3144,14 @@
                     return;
                 }
                 
-                // ✅ Clear and re-render
                 container.innerHTML = '';
-                renderProperties(data, container);
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    container.appendChild(card);
+                    
+                    // Load images after card is rendered
+                    setTimeout(() => loadPropertyImages(property), 0);
+                });
                 
             } catch (error) {
                 console.error("Error:", error);
@@ -3164,45 +3163,38 @@
             const container = document.getElementById('featuredProperties');
             
             try {
-                // Try different column names for featured status
+                // First try to get featured properties
                 let query = supabase
                     .from("properties")
                     .select("*")
+                    .eq("is_active", true)
+                    .eq("is_featured", true)
                     .order("created_at", { ascending: false })
                     .limit(6);
                 
-                // Try to filter by featured if the column exists
-                try {
-                    query = query.eq("is_featured", true);
-                } catch (e) {
-                    console.log("Featured column not found, showing recent properties");
-                }
-                
                 const { data, error } = await query;
                 
-                if (error) {
-                    console.error("Error loading featured:", error);
-                    container.innerHTML = '<div class="no-properties">Featured properties coming soon!</div>';
-                    return;
-                }
-                
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<div class="no-properties">No featured properties at the moment.</div>';
-                    return;
-                }
-                
-                // ✅ Clear container
-                container.innerHTML = '';
-                data.forEach(property => {
-                    const card = createPropertyCard(property);
-                    container.appendChild(card);
-                    // ✅ Load images for each property
-                    if (property.id) {
-                        setTimeout(() => {
-                            loadPropertyImagesForCard(property.id, property.image_url);
-                        }, 100);
+                if (error || !data || data.length === 0) {
+                    // If no featured properties, get recent ones
+                    query = supabase
+                        .from("properties")
+                        .select("*")
+                        .eq("is_active", true)
+                        .order("created_at", { ascending: false })
+                        .limit(6);
+                    
+                    const { data: recentData, error: recentError } = await query;
+                    
+                    if (recentError || !recentData || recentData.length === 0) {
+                        container.innerHTML = '<div class="no-properties">No featured properties at the moment.</div>';
+                        return;
                     }
-                });
+                    
+                    displayProperties(recentData, container);
+                    return;
+                }
+                
+                displayProperties(data, container);
                 
             } catch (error) {
                 console.error("Error:", error);
@@ -3210,194 +3202,42 @@
             }
         }
         
-        function renderProperties(properties, container) {
-            // ✅ Already cleared in calling function
-            if (!properties || properties.length === 0) {
-                container.innerHTML = '<div class="no-properties"><p>No properties found.</p></div>';
-                return;
-            }
-            
+        function displayProperties(properties, container) {
+            container.innerHTML = '';
             properties.forEach(property => {
                 const card = createPropertyCard(property);
                 container.appendChild(card);
-                // ✅ Load images for each property
-                if (property.id) {
-                    setTimeout(() => {
-                        loadPropertyImagesForCard(property.id, property.image_url);
-                    }, 100);
-                }
+                
+                // Load images after card is rendered
+                setTimeout(() => loadPropertyImages(property), 0);
             });
         }
         
-        // ✅ FIXED: Updated createPropertyCard function with all improvements
-        function createPropertyCard(property) {
-            const card = document.createElement('div');
-            card.className = 'property-card';
-            card.id = `property-${property.id}`;
-            card.setAttribute('data-property-id', property.id);
-            
-            // Calculate price
-            const displayPrice = calculatePropertyPrice(property);
-            
-            // Get amenities
-            const amenities = property.amenities ? 
-                (Array.isArray(property.amenities) ? property.amenities : JSON.parse(property.amenities)) : [];
-            
-            // Create preview text (first 120 characters)
-            const fullDescription = property.description || 'Luxury coastal accommodation with premium amenities.';
-            const previewText = fullDescription.length > 120 
-                ? fullDescription.substring(0, 120) + '...' 
-                : fullDescription;
-            
-            // ✅ FIX 3 & 4: Use normalized unit_type with labels
-            const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Apartment';
-            
-            // Carousel HTML
-            const carouselHTML = `
-                <div class="property-gallery">
-                    <div class="swiper mainSwiper" id="mainSwiper-${property.id}">
-                        <div class="swiper-wrapper" id="mainSlider-${property.id}">
-                            <div class="swiper-slide">
-                                <div style="width: 100%; height: 100%; background: var(--light-gray); display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-pagination"></div>
-                    </div>
-                    <div class="swiper thumbSwiper" id="thumbSwiper-${property.id}">
-                        <div class="swiper-wrapper" id="thumbSlider-${property.id}"></div>
-                    </div>
-                </div>
-            `;
-            
-            // ✅ Escape special characters for title
-            const safeTitle = property.title ? property.title.replace(/'/g, "\\'").replace(/"/g, '&quot;') : 'Property';
-            
-            card.innerHTML = `
-                ${carouselHTML}
-                <div class="property-content">
-                    <h3 class="property-title">${property.title || 'Premium Property'}</h3>
-                    <div class="property-meta">
-                        <span class="property-location">
-                            <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
-                        </span>
-                        <span class="property-type">${propertyTypeDisplay}</span>
-                    </div>
-                    
-                    <!-- ✅ FIX 2: Description with View More -->
-                    <div class="property-description">
-                        ${previewText}
-                        ${fullDescription.length > 120 ? 
-                          `<span class="view-more" onclick="openPropertyModal('${property.id}')">
-                            View more
-                          </span>` : ''}
-                    </div>
-                    
-                    ${amenities.length > 0 ? `
-                    <div class="property-amenities">
-                        ${amenities.slice(0, 3).map(amenity => 
-                          `<span class="amenity-badge">${amenity}</span>`
-                        ).join('')}
-                        ${amenities.length > 3 ? `<span class="amenity-badge">+${amenities.length - 3} more</span>` : ''}
-                    </div>
-                    ` : ''}
-                    
-                    <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
-                    
-                    <div class="property-footer">
-                        <span style="color: var(--gray); font-size: 0.9rem;">
-                            <i class="fas fa-bed"></i> ${property.beds || 1} bed${property.beds !== 1 ? 's' : ''}
-                        </span>
-                        <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
-                            <i class="fas fa-calendar-alt"></i> Check Availability
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            return card;
-        }
-        
-        // ✅ Modal functionality
-        let currentModalPropertyId = null;
-        let currentModalPropertyTitle = null;
-        
-        async function openPropertyModal(propertyId) {
-            try {
-                // Fetch property details from Supabase
-                const { data: property, error } = await supabase
-                    .from("properties")
-                    .select("*")
-                    .eq("id", propertyId)
-                    .single();
-                
-                if (error) {
-                    console.error("Error fetching property details:", error);
-                    return;
-                }
-                
-                currentModalPropertyId = propertyId;
-                currentModalPropertyTitle = property.title || 'Property';
-                
-                // Get amenities
-                const amenities = property.amenities ? 
-                    (Array.isArray(property.amenities) ? property.amenities : JSON.parse(property.amenities)) : [];
-                
-                // Populate modal
-                document.getElementById('modalTitle').textContent = property.title || 'Premium Property';
-                document.getElementById('modalDescription').textContent = property.description || 'Luxury coastal accommodation with premium amenities.';
-                
-                const amenitiesContainer = document.getElementById('modalAmenities');
-                if (amenities.length > 0) {
-                    amenitiesContainer.innerHTML = amenities
-                        .map(amenity => `<span class="modal-amenity">${amenity}</span>`)
-                        .join('');
-                } else {
-                    amenitiesContainer.innerHTML = '<p style="color: var(--gray);">No amenities listed</p>';
-                }
-                
-                // Show modal
-                document.getElementById('propertyModal').style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                
-            } catch (error) {
-                console.error("Error opening modal:", error);
-            }
-        }
-        
-        function closePropertyModal() {
-            document.getElementById('propertyModal').style.display = 'none';
-            document.body.style.overflow = '';
-            currentModalPropertyId = null;
-            currentModalPropertyTitle = null;
-        }
-        
-        function checkAvailabilityFromModal() {
-            if (currentModalPropertyId && currentModalPropertyTitle) {
-                closePropertyModal();
-                checkAvailability(currentModalPropertyId, currentModalPropertyTitle);
-            }
-        }
-        
-        // ✅ FIX 3.1-3.4: WhatsApp function with property-specific link and dates
+        // 🔧 PHASE 6 — WhatsApp Message Function
         function checkAvailability(propertyId, propertyTitle) {
-            // ✅ FIX 3.2: Always link to PROPERTY PAGE (using current page with hash)
-            const currentUrl = window.location.origin + window.location.pathname;
-            const propertyLink = `${currentUrl}#property-${propertyId}`;
+            // Get property details
+            const propertyElement = document.getElementById(`property-${propertyId}`);
+            if (!propertyElement) return;
             
-            // ✅ FIX 3.3: Include filter dates IF they exist
-            let message = `Hello PwaniStays! I am interested in this property:\n\n`;
-            message += `📌 *${propertyTitle}*\n`;
-            message += `🔗 ${propertyLink}\n\n`;
+            const propertyCode = propertyElement.querySelector('.property-code').textContent.replace(' ', '');
+            const priceElement = propertyElement.querySelector('.property-price');
+            const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '') : 'Price on request';
             
-            if (selectedStartDate && selectedEndDate) {
-                message += `📅 *Preferred Dates:* ${selectedStartDate} to ${selectedEndDate}\n`;
-            }
+            // Format dates
+            const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
+            const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
             
-            message += `Is this property available for my dates?`;
+            // Create WhatsApp message
+            const message = `
+Property: ${propertyTitle}
+Ref: ${propertyCode}
+Dates: ${checkinDate} → ${checkoutDate}
+Rate: KES ${price}/night
+
+Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
+            `.trim();
             
-            // ✅ FIX 3.4: Open WhatsApp correctly
+            // Open WhatsApp
             const whatsappNumber = '+254738544784';
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
@@ -3409,15 +3249,6 @@
             document.getElementById('stays').style.display = 'none';
             
             // Clear any filters
-            selectedLocation = '';
-            selectedUnitType = '';
-            selectedKeywords = '';
-            selectedStartDate = null;
-            selectedEndDate = null;
-            selectedCheckin = null;
-            selectedCheckout = null;
-            
-            // Reset UI elements
             document.getElementById('searchLocation').value = '';
             document.getElementById('propertyType').value = '';
             document.getElementById('searchKeywords').value = '';
@@ -3440,23 +3271,12 @@
         }
         
         function filterByLocation(location) {
-            // Update single source of truth
-            selectedLocation = location;
             document.getElementById('searchLocation').value = location;
             searchProperties();
         }
         
         function clearSearch() {
-            // Reset all filter values
-            selectedLocation = '';
-            selectedUnitType = '';
-            selectedKeywords = '';
-            selectedStartDate = null;
-            selectedEndDate = null;
-            selectedCheckin = null;
-            selectedCheckout = null;
-            
-            // Reset UI elements
+            // Reset filters
             document.getElementById('searchLocation').value = '';
             document.getElementById('propertyType').value = '';
             document.getElementById('searchKeywords').value = '';
@@ -3473,7 +3293,7 @@
             loadFeaturedProperties();
         }
         
-        // Testimonials functionality - FIXED
+        // Testimonials functionality
         let currentTestimonial = 0;
         const totalTestimonials = 12;
         
@@ -3656,7 +3476,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // ✅ FIXED: Auto-scroll to property when page loads with hash
+        // Auto-scroll to property when page loads with hash
         window.addEventListener('load', function() {
             const hash = window.location.hash;
             if (hash && hash.startsWith('#property-')) {

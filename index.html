@@ -551,10 +551,32 @@
             border-top: 1px solid var(--light-gray);
         }
         
+        .property-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .property-beds {
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .property-beds i {
+            color: var(--primary);
+            margin-right: 5px;
+        }
+        
         .property-code {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
+        }
+        
+        .property-code i {
+            color: var(--gray);
+            margin-right: 3px;
         }
         
         .no-properties {
@@ -2550,8 +2572,7 @@
                         const searchTerm = this.value.trim();
                         if (searchTerm) {
                             // Use header search for keyword filtering
-                            document.getElementById('searchKeywords').value = searchTerm;
-                            searchProperties();
+                            searchPropertiesWithKeyword(searchTerm);
                             // Close search on mobile
                             if (window.innerWidth <= 768) {
                                 document.getElementById('mobileSearchContainer').classList.remove('show');
@@ -2629,49 +2650,67 @@
             "5br": "5 Bedrooms"
         };
         
-        // 🔧 PHASE 2 — Load Property Images Function
+        // 🔧 FIXED: Load Property Images Function with proper Supabase bucket loading
         async function loadPropertyImages(property) {
             const mainWrapper = document.querySelector(`#main-${property.id} .swiper-wrapper`);
             const thumbWrapper = document.querySelector(`#thumb-${property.id} .swiper-wrapper`);
             
             if (!mainWrapper || !thumbWrapper) return;
             
-            // 1️⃣ Always add primary image first
-            const images = property.image_url ? [property.image_url] : [];
+            let images = [];
             
-            // 2️⃣ Load storage images
+            // Try to load from Supabase storage first
             try {
-                const { data, error } = await supabase
+                console.log(`Loading images for property: ${property.id}`);
+                
+                // List all files in the property's folder
+                const { data: files, error } = await supabase
                     .storage
-                    .from("property_images")
+                    .from('property_images')
                     .list(property.id);
                 
-                if (!error && data && data.length > 0) {
-                    // Sort images by name
-                    data
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .forEach(file => {
-                            const url = supabase
-                                .storage
-                                .from("property_images")
-                                .getPublicUrl(`${property.id}/${file.name}`).data.publicUrl;
-                            
-                            // Add if not already in array
-                            if (!images.includes(url)) {
-                                images.push(url);
-                            }
-                        });
+                if (error) {
+                    console.log(`Error listing files for ${property.id}:`, error.message);
+                } else if (files && files.length > 0) {
+                    // Sort files by name (01.jpeg, 02.jpeg, etc.)
+                    files.sort((a, b) => {
+                        // Extract numbers from filenames for sorting
+                        const numA = parseInt(a.name.match(/\d+/)?.[0]) || 0;
+                        const numB = parseInt(b.name.match(/\d+/)?.[0]) || 0;
+                        return numA - numB;
+                    });
+                    
+                    // Get public URLs for each file
+                    files.forEach(file => {
+                        const { data } = supabase
+                            .storage
+                            .from('property_images')
+                            .getPublicUrl(`${property.id}/${file.name}`);
+                        
+                        if (data && data.publicUrl) {
+                            images.push(data.publicUrl);
+                            console.log(`Added image: ${data.publicUrl}`);
+                        }
+                    });
                 }
             } catch (error) {
                 console.log(`Error loading storage images for property ${property.id}:`, error);
             }
             
-            // 3️⃣ If no images, use placeholder
+            // If no images found in storage, use the primary image or placeholder
             if (images.length === 0) {
-                images.push('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+                if (property.image_url) {
+                    images.push(property.image_url);
+                } else {
+                    images.push('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+                }
             }
             
-            // 3️⃣ Render slides
+            // Clear existing content
+            mainWrapper.innerHTML = '';
+            thumbWrapper.innerHTML = '';
+            
+            // Render slides
             images.forEach((url, index) => {
                 mainWrapper.innerHTML += `
                     <div class="swiper-slide">
@@ -2679,37 +2718,71 @@
                              onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
                     </div>
                 `;
-                thumbWrapper.innerHTML += `
-                    <div class="swiper-slide">
-                        <img src="${url}" alt="${property.title || 'Property'} thumbnail ${index + 1}"
-                             onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-                    </div>
-                `;
+                
+                if (images.length > 1) {
+                    thumbWrapper.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${url}" alt="${property.title || 'Property'} thumbnail ${index + 1}"
+                                 onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                        </div>
+                    `;
+                }
             });
             
-            // 4️⃣ Init Swipers AFTER DOM update
+            // 🔧 FIXED: Initialize Swipers with proper configuration
             setTimeout(() => {
                 try {
-                    const thumbs = new Swiper(`#thumb-${property.id}`, {
-                        slidesPerView: Math.min(4, images.length),
-                        spaceBetween: 8,
-                        watchSlidesProgress: true,
-                        freeMode: true
-                    });
+                    let thumbsSwiper = null;
                     
-                    new Swiper(`#main-${property.id}`, {
+                    // Only create thumb swiper if there are multiple images
+                    if (images.length > 1) {
+                        thumbsSwiper = new Swiper(`#thumb-${property.id}`, {
+                            slidesPerView: Math.min(4, images.length),
+                            spaceBetween: 8,
+                            watchSlidesProgress: true,
+                            freeMode: true,
+                            breakpoints: {
+                                320: {
+                                    slidesPerView: Math.min(3, images.length),
+                                },
+                                768: {
+                                    slidesPerView: Math.min(4, images.length),
+                                }
+                            }
+                        });
+                    }
+                    
+                    const mainSwiper = new Swiper(`#main-${property.id}`, {
                         spaceBetween: 10,
                         pagination: { 
                             el: `#main-${property.id} .swiper-pagination`, 
-                            clickable: true 
+                            clickable: true,
+                            dynamicBullets: true
                         },
-                        thumbs: { swiper: thumbs },
-                        loop: images.length > 1
+                        thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
+                        loop: images.length > 1,
+                        preloadImages: true,
+                        updateOnImagesReady: true,
+                        autoplay: images.length > 1 ? {
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        } : false,
+                        effect: 'slide',
+                        speed: 500
                     });
                     
-                    console.log(`Swiper initialized for property ${property.id} with ${images.length} images`);
+                    console.log(`✅ Swiper initialized for property ${property.id} with ${images.length} images`);
+                    
+                    // Force Swiper to update
+                    setTimeout(() => {
+                        if (mainSwiper) {
+                            mainSwiper.update();
+                            mainSwiper.slideTo(0, 0);
+                        }
+                    }, 100);
+                    
                 } catch (error) {
-                    console.error(`Error initializing Swiper for property ${property.id}:`, error);
+                    console.error(`❌ Error initializing Swiper for property ${property.id}:`, error);
                 }
             }, 100);
         }
@@ -2952,7 +3025,7 @@
             }
         }
         
-        // Create property card function
+        // 🔧 FIXED: Create property card function with beds information
         function createPropertyCard(property) {
             const card = document.createElement('div');
             card.className = 'property-card';
@@ -2964,11 +3037,14 @@
             // Get property type display
             const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
             
+            // Get number of beds display
+            const bedsDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'N/A';
+            
             // Escape special characters for safety
             const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
             
             card.innerHTML = `
-                <!-- 🔧 PHASE 2 — Updated Carousel HTML -->
+                <!-- 🔧 FIXED: Carousel HTML -->
                 <div class="property-gallery">
                     <div class="swiper mainSwiper" id="main-${property.id}">
                         <div class="swiper-wrapper"></div>
@@ -2998,10 +3074,16 @@
                     
                     <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
                     
+                    <!-- 🔧 FIXED: Updated footer with beds information -->
                     <div class="property-footer">
-                        <span class="property-code">
-                            <i class="fas fa-hashtag"></i> ${property.internal_code || 'PS-' + (property.id ? property.id.substring(0, 8) : '0000')}
-                        </span>
+                        <div class="property-info">
+                            <div class="property-beds">
+                                <i class="fas fa-bed"></i> ${bedsDisplay}
+                            </div>
+                            <div class="property-code">
+                                <i class="fas fa-hashtag"></i> ${property.internal_code || 'PS-' + (property.id ? property.id.substring(0, 8) : '0000')}
+                            </div>
+                        </div>
                         <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
                             <i class="fas fa-calendar-alt"></i> Check Availability
                         </button>
@@ -3010,6 +3092,79 @@
             `;
             
             return card;
+        }
+        
+        // 🔧 FIXED: Header search functionality
+        async function searchPropertiesWithKeyword(keyword) {
+            // Show search results section
+            document.getElementById('searchResults').style.display = 'block';
+            document.getElementById('stays').style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+            
+            // Update results header
+            const resultsHeader = document.getElementById('resultsHeader');
+            const searchCriteria = document.getElementById('searchCriteria');
+            const datesCriteria = document.getElementById('datesCriteria');
+            
+            searchCriteria.textContent = `Search results for: "${keyword}"`;
+            datesCriteria.textContent = (selectedCheckin && selectedCheckout) 
+                ? `Dates: ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}`
+                : 'Flexible dates';
+            
+            resultsHeader.style.display = 'block';
+            
+            // Load filtered properties with keyword
+            await loadFilteredPropertiesWithKeyword(keyword);
+        }
+        
+        // Load filtered properties with keyword search
+        async function loadFilteredPropertiesWithKeyword(keyword) {
+            const container = document.getElementById('propertyList');
+            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
+            
+            try {
+                const normalizedKeyword = normalizeSearch(keyword);
+                
+                let query = supabase
+                    .from("properties")
+                    .select("*")
+                    .eq("is_active", true)
+                    .or(`title.ilike.%${normalizedKeyword}%,description.ilike.%${normalizedKeyword}%,location.ilike.%${normalizedKeyword}%,unit_type.ilike.%${normalizedKeyword}%`);
+                
+                query = query.order('created_at', { ascending: false });
+                
+                const { data, error } = await query;
+                
+                if (error) {
+                    console.error("Search error:", error);
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your search.</p><p>Try different keywords or browse all properties.</p></div>';
+                    return;
+                }
+                
+                // Update results count
+                document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'} for "${keyword}"`;
+                
+                // Render properties
+                container.innerHTML = '';
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    container.appendChild(card);
+                    
+                    // Load images after card is rendered
+                    setTimeout(() => loadPropertyImages(property), 100);
+                });
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Unable to search properties. Please check your connection.</p></div>';
+            }
         }
         
         // 🔧 PHASE 4 — Search Properties Function (UPDATED - no keywords parameter)
@@ -3095,7 +3250,7 @@
                     container.appendChild(card);
                     
                     // Load images after card is rendered
-                    setTimeout(() => loadPropertyImages(property), 0);
+                    setTimeout(() => loadPropertyImages(property), 100);
                 });
                 
             } catch (error) {
@@ -3132,7 +3287,7 @@
                     container.appendChild(card);
                     
                     // Load images after card is rendered
-                    setTimeout(() => loadPropertyImages(property), 0);
+                    setTimeout(() => loadPropertyImages(property), 100);
                 });
                 
             } catch (error) {
@@ -3191,7 +3346,7 @@
                 container.appendChild(card);
                     
                 // Load images after card is rendered
-                setTimeout(() => loadPropertyImages(property), 0);
+                setTimeout(() => loadPropertyImages(property), 100);
             });
         }
         

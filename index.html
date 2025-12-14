@@ -20,12 +20,17 @@
     <meta name="theme-color" content="#0d7a5f">
     <meta name="msapplication-TileColor" content="#0d7a5f">
     
+    <!-- ✅ FIX 4.1: Open Graph - Use LOGO instead of property image -->
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pwanistays.com/">
     <meta property="og:title" content="PwaniStays | Your Premium Coastal Stay in Kenya">
     <meta property="og:description" content="Experience luxury beachfront living in Kenya. From Mombasa to Diani, Watamu to Nyali - premium accommodation with airport transfers & local experiences. FAQ: Booking process, amenities, transfers, cancellation.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <!-- CHANGED: Use logo instead of property image -->
+    <meta property="og:image" content="https://pwanistays.com/logo-header.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="PwaniStays Logo - Luxury Coastal Stays">
     <meta property="og:locale" content="en_KE">
     <meta property="og:site_name" content="PwaniStays">
     
@@ -35,7 +40,9 @@
     <meta name="twitter:creator" content="@PwaniStays">
     <meta name="twitter:title" content="PwaniStays | Luxury Coastal Stays in Kenya">
     <meta name="twitter:description" content="Premium beachfront accommodation across the Kenyan coast with seamless transfers & authentic experiences. FAQ included for easy booking.">
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <!-- CHANGED: Use logo instead of property image -->
+    <meta name="twitter:image" content="https://pwanistays.com/logo-header.png">
+    <meta name="twitter:image:alt" content="PwaniStays Logo">
     
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -2444,7 +2451,33 @@
                     hideCalendar();
                 }
             });
+            
+            // ✅ FIX 1.1: Single source of truth for filter values
+            initFilterCapture();
         });
+        
+        // ✅ FIX 1.1: Single source of truth for filter values
+        let selectedLocation = '';
+        let selectedUnitType = '';
+        let selectedStartDate = null;
+        let selectedEndDate = null;
+        
+        function initFilterCapture() {
+            const locationSelect = document.getElementById('searchLocation');
+            const unitTypeSelect = document.getElementById('propertyType');
+            
+            if (locationSelect) {
+                locationSelect.addEventListener('change', e => {
+                    selectedLocation = e.target.value;
+                });
+            }
+            
+            if (unitTypeSelect) {
+                unitTypeSelect.addEventListener('change', e => {
+                    selectedUnitType = e.target.value;
+                });
+            }
+        }
         
         // Supabase Configuration
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
@@ -2454,7 +2487,7 @@
         // Object to store Swiper instances
         const swiperInstances = {};
         
-        // ✅ FIXED: Enhanced image loading - Try multiple approaches
+        // ✅ FIX 2.1-2.3: Enhanced image loading from storage FIRST, then fallback
         async function loadPropertyImages(propertyId, imageUrl) {
             try {
                 // Create unique IDs for this property's carousel
@@ -2465,7 +2498,7 @@
                 
                 let images = [];
                 
-                // First, try to get images from the property_images folder
+                // ✅ FIX 2.1: ALWAYS try Supabase storage FIRST
                 try {
                     const { data: folderData, error: folderError } = await supabase.storage
                         .from("property_images")
@@ -2479,20 +2512,23 @@
                             return numA - numB;
                         });
                         
-                        // Create image URLs
+                        // ✅ FIX 2.2: Build public URLs correctly
                         images = sorted.map(img => ({
                             name: img.name,
                             url: supabase.storage
                                 .from("property_images")
                                 .getPublicUrl(`${propertyId}/${img.name}`).data.publicUrl
                         }));
+                        
+                        console.log(`Loaded ${images.length} images from storage for property ${propertyId}`);
                     }
                 } catch (folderErr) {
-                    console.log("Folder images not found:", folderErr);
+                    console.log("Storage folder not accessible:", folderErr);
                 }
                 
-                // If no images from folder, check if there's a single image_url
+                // ✅ FIX 2.3: Fallback ONLY if folder is empty
                 if (images.length === 0 && imageUrl) {
+                    console.log(`Using image_url for property ${propertyId}`);
                     images = [{ 
                         name: 'main', 
                         url: imageUrl 
@@ -2501,6 +2537,7 @@
                 
                 // If still no images, use placeholder
                 if (images.length === 0) {
+                    console.log(`Using placeholder for property ${propertyId}`);
                     images = [{ 
                         name: 'placeholder', 
                         url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' 
@@ -2516,7 +2553,7 @@
                     return;
                 }
                 
-                // Clear existing content
+                // ✅ FIX 1.3: Clear existing content
                 mainContainer.innerHTML = '';
                 if (thumbContainer) thumbContainer.innerHTML = '';
                 
@@ -2560,7 +2597,7 @@
                     thumbContainer.style.display = 'none';
                 }
                 
-                // Initialize main swiper
+                // ✅ FIX 2.4: Initialize Swiper PER PROPERTY
                 try {
                     const mainSwiper = new Swiper(`#${mainSwiperId}`, {
                         spaceBetween: 0,
@@ -2586,6 +2623,8 @@
                         main: mainSwiper,
                         thumb: thumbSwiper
                     };
+                    
+                    console.log(`Swiper initialized for property ${propertyId} with ${images.length} images`);
                 } catch (mainErr) {
                     console.log("Main swiper error:", mainErr);
                 }
@@ -2606,6 +2645,8 @@
             // Initialize with NO dates selected - user must choose
             selectedCheckin = null;
             selectedCheckout = null;
+            selectedStartDate = null;
+            selectedEndDate = null;
             
             updateDateRangeInput();
         }
@@ -2783,6 +2824,8 @@
         function clearDates() {
             selectedCheckin = null;
             selectedCheckout = null;
+            selectedStartDate = null;
+            selectedEndDate = null;
             
             updateDateRangeInput();
             generateCalendar();
@@ -2798,6 +2841,10 @@
                 alert("Check-out date must be after check-in date");
                 return;
             }
+            
+            // ✅ Update single source of truth for dates
+            selectedStartDate = formatDate(selectedCheckin);
+            selectedEndDate = formatDate(selectedCheckout);
             
             hideCalendar();
         }
@@ -2848,11 +2895,38 @@
             }) : 'N/A';
         }
         
+        // ✅ FIX 1.2: Apply filters using Supabase query (NOT client-only)
+        async function fetchFilteredProperties(location, unitType) {
+            try {
+                let query = supabase.from('properties').select('*');
+
+                if (location && location !== '') {
+                    query = query.eq('location', location);
+                }
+
+                if (unitType && unitType !== '') {
+                    query = query.eq('unit_type', unitType);
+                }
+
+                query = query.order('created_at', { ascending: false });
+                
+                const { data, error } = await query;
+                if (error) {
+                    console.error("Supabase query error:", error);
+                    return [];
+                }
+                return data || [];
+            } catch (error) {
+                console.error("Error fetching properties:", error);
+                return [];
+            }
+        }
+        
         // ✅ FIXED: Property search and filtering with better error handling
         async function searchProperties() {
-            const location = document.getElementById('searchLocation').value;
-            const propertyType = document.getElementById('propertyType').value;
-            const dateRange = document.getElementById('dateRange').value;
+            // ✅ Use single source of truth
+            const location = selectedLocation || document.getElementById('searchLocation').value;
+            const propertyType = selectedUnitType || document.getElementById('propertyType').value;
             
             // Show search results section
             document.getElementById('searchResults').style.display = 'block';
@@ -2884,63 +2958,40 @@
                 ? `Properties in ${criteriaText.join(' • ')}`
                 : 'All Properties';
             
-            datesCriteria.textContent = dateRange 
-                ? `Dates: ${dateRange}`
+            datesCriteria.textContent = (selectedStartDate && selectedEndDate) 
+                ? `Dates: ${selectedStartDate} to ${selectedEndDate}`
                 : 'Flexible dates';
             
             resultsHeader.style.display = 'block';
             
-            // Load filtered properties
+            // ✅ Load filtered properties using Supabase query
             await loadFilteredProperties(location, propertyType);
         }
         
-        // ✅ FIXED: Enhanced filter function with debugging
+        // ✅ FIXED: Enhanced filter function
         async function loadFilteredProperties(location, propertyType) {
             const container = document.getElementById('propertyList');
+            
+            // ✅ FIX 1.3: Clear container before rendering
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
             
             try {
-                let query = supabase.from("properties").select("*");
+                // ✅ Use fetchFilteredProperties function
+                const properties = await fetchFilteredProperties(location, propertyType);
                 
-                // Debug: Log what we're filtering by
-                console.log("Filtering by - Location:", location, "Type:", propertyType);
+                console.log("Filtered data received:", properties);
                 
-                if (location && location !== "") {
-                    query = query.eq("location", location);
-                }
-                
-                if (propertyType && propertyType !== "") {
-                    // Try different column names that might be in your database
-                    try {
-                        query = query.eq("unit_type", propertyType);
-                    } catch (e) {
-                        console.log("Trying alternative column name...");
-                        query = query.eq("type", propertyType);
-                    }
-                }
-                
-                // Add ordering
-                query = query.order("created_at", { ascending: false });
-                
-                const { data, error } = await query;
-                
-                if (error) {
-                    console.error("Search error:", error);
-                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
-                    return;
-                }
-                
-                console.log("Filtered data received:", data);
-                
-                if (!data || data.length === 0) {
+                if (!properties || properties.length === 0) {
                     container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your search.</p><p>Try different filters or browse all properties.</p></div>';
                     return;
                 }
                 
                 // Update results count
-                document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
+                document.getElementById('resultsCount').textContent = `Found ${properties.length} propert${properties.length === 1 ? 'y' : 'ies'}`;
                 
-                renderProperties(data, container);
+                // ✅ Clear and re-render
+                container.innerHTML = '';
+                renderProperties(properties, container);
                 
             } catch (error) {
                 console.error("Error:", error);
@@ -2950,6 +3001,9 @@
         
         async function loadAllProperties() {
             const container = document.getElementById('propertyList');
+            
+            // ✅ Clear container
+            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading all properties...</div>';
             
             try {
                 const { data, error } = await supabase
@@ -2968,6 +3022,8 @@
                     return;
                 }
                 
+                // ✅ Clear and re-render
+                container.innerHTML = '';
                 renderProperties(data, container);
                 
             } catch (error) {
@@ -3007,6 +3063,7 @@
                     return;
                 }
                 
+                // ✅ Clear container
                 container.innerHTML = '';
                 data.forEach(property => {
                     const card = createPropertyCard(property);
@@ -3026,8 +3083,7 @@
         }
         
         function renderProperties(properties, container) {
-            container.innerHTML = '';
-            
+            // ✅ Already cleared in calling function
             if (!properties || properties.length === 0) {
                 container.innerHTML = '<div class="no-properties"><p>No properties found.</p></div>';
                 return;
@@ -3132,23 +3188,24 @@
             return card;
         }
         
-        // ✅ FIXED: WhatsApp function with property-specific link
+        // ✅ FIX 3.1-3.4: WhatsApp function with property-specific link and dates
         function checkAvailability(propertyId, propertyTitle) {
-            // Create a shareable link with hash to this property
-            const currentUrl = window.location.href.split('#')[0]; // Remove existing hash
+            // ✅ FIX 3.2: Always link to PROPERTY PAGE (using current page with hash)
+            const currentUrl = window.location.origin + window.location.pathname;
             const propertyLink = `${currentUrl}#property-${propertyId}`;
             
+            // ✅ FIX 3.3: Include filter dates IF they exist
             let message = `Hello PwaniStays! I am interested in this property:\n\n`;
             message += `📌 *${propertyTitle}*\n`;
             message += `🔗 ${propertyLink}\n\n`;
             
-            // Include dates if user selected via filter
-            if (selectedCheckin && selectedCheckout) {
-                message += `📅 *Preferred Dates:* ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}\n`;
+            if (selectedStartDate && selectedEndDate) {
+                message += `📅 *Preferred Dates:* ${selectedStartDate} to ${selectedEndDate}\n`;
             }
             
             message += `Is this property available for my dates?`;
             
+            // ✅ FIX 3.4: Open WhatsApp correctly
             const whatsappNumber = '+254738544784';
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
@@ -3160,8 +3217,17 @@
             document.getElementById('stays').style.display = 'none';
             
             // Clear any filters
+            selectedLocation = '';
+            selectedUnitType = '';
+            selectedStartDate = null;
+            selectedEndDate = null;
+            selectedCheckin = null;
+            selectedCheckout = null;
+            
+            // Reset UI elements
             document.getElementById('searchLocation').value = '';
             document.getElementById('propertyType').value = '';
+            updateDateRangeInput();
             
             // Update results header
             const resultsHeader = document.getElementById('resultsHeader');
@@ -3180,18 +3246,24 @@
         }
         
         function filterByLocation(location) {
+            // Update single source of truth
+            selectedLocation = location;
             document.getElementById('searchLocation').value = location;
             searchProperties();
         }
         
         function clearSearch() {
-            // Reset search inputs
-            document.getElementById('searchLocation').value = '';
-            document.getElementById('propertyType').value = '';
-            
-            // Reset dates to empty
+            // Reset all filter values
+            selectedLocation = '';
+            selectedUnitType = '';
+            selectedStartDate = null;
+            selectedEndDate = null;
             selectedCheckin = null;
             selectedCheckout = null;
+            
+            // Reset UI elements
+            document.getElementById('searchLocation').value = '';
+            document.getElementById('propertyType').value = '';
             updateDateRangeInput();
             
             // Show featured properties section

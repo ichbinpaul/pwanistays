@@ -256,12 +256,61 @@
             margin-right: auto;
         }
         
-        /* ✅ UPDATED: Simplified Hero Section - Search box removed */
-        .hero-cta {
+        /* ✅ UPDATED: Search Box with 4 inputs (2x2 grid) */
+        .search-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-top: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .btn-hero {
+        .search-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .search-input i {
+            color: var(--primary);
+            min-width: 20px;
+        }
+        
+        .search-input select,
+        .search-input input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            background: transparent;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        
+        .search-input input[readonly] {
+            cursor: pointer;
+            background: transparent;
+        }
+        
+        /* ✅ UPDATED: Button container spans both columns */
+        .search-btn-container {
+            grid-column: span 2;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .search-btn {
             background: var(--primary);
             color: white;
             border: none;
@@ -272,14 +321,22 @@
             transition: var(--transition);
             font-size: 1.1rem;
             min-width: 200px;
-            text-decoration: none;
-            display: inline-block;
         }
         
-        .btn-hero:hover {
+        .search-btn:hover {
             background: var(--primary-light);
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(13, 122, 95, 0.3);
+        }
+        
+        /* Date Range Input */
+        .date-range-input {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .date-range-input input {
+            width: 100%;
         }
         
         /* Section Common Styles */
@@ -1552,6 +1609,24 @@
         
         /* Responsive Design */
         @media (max-width: 992px) {
+            .search-box {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .search-btn-container {
+                grid-column: span 1;
+                margin-top: 5px;
+            }
+            
+            .testimonial-prev {
+                left: 10px;
+            }
+            
+            .testimonial-next {
+                right: 10px;
+            }
+            
             .services-container {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1562,14 +1637,6 @@
             
             .form-row {
                 grid-template-columns: 1fr;
-            }
-            
-            .testimonial-prev {
-                left: 10px;
-            }
-            
-            .testimonial-next {
-                right: 10px;
             }
         }
         
@@ -1632,6 +1699,10 @@
             .hero {
                 margin-top: 70px;
                 padding: 0 15px;
+            }
+            
+            .search-box {
+                padding: 20px;
             }
             
             .contact-form {
@@ -1829,19 +1900,64 @@
         </nav>
     </header>
 
-    <!-- Hero Section - UPDATED: Search box removed -->
+    <!-- Hero Section - UPDATED -->
     <section class="hero" id="home" role="region" aria-label="Hero section">
         <div class="hero-content">
             <h1 class="sr-only">PwaniStays - Luxury Coastal Accommodation in Kenya</h1>
             <h2>Experience Luxury on the Kenyan Coast</h2>
             <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
             
-            <!-- ✅ REMOVED: Search Box -->
-            <div class="hero-cta">
-                <a href="#stays" class="btn-hero">
-                    <i class="fas fa-eye"></i> View Our Properties
-                </a>
+            <!-- ✅ UPDATED: Search Box with 4 inputs (2x2 grid) -->
+            <div class="search-box" role="search">
+                <div class="search-input">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <select id="searchLocation" aria-label="Select destination">
+                        <option value="">Any Location</option>
+                        <option value="Mombasa">Mombasa</option>
+                        <option value="Nyali">Nyali</option>
+                        <option value="Bamburi">Bamburi</option>
+                        <option value="Mtwapa">Mtwapa</option>
+                        <option value="Shanzu">Shanzu</option>
+                        <option value="Diani">Diani</option>
+                        <option value="Watamu">Watamu</option>
+                        <option value="Malindi">Malindi</option>
+                        <option value="Kilifi">Kilifi</option>
+                    </select>
+                </div>
+                <div class="search-input date-range-input" onclick="showCalendar()">
+                    <i class="fas fa-calendar" aria-hidden="true"></i>
+                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly>
+                </div>
+                <div class="search-input">
+                    <i class="fas fa-home" aria-hidden="true"></i>
+                    <!-- ✅ UPDATED: Property type dropdown with normalized values -->
+                    <select id="propertyType" aria-label="Property type">
+                        <option value="">Any Type</option>
+                        <option value="studio">Studio</option>
+                        <option value="1br">1 Bedroom</option>
+                        <option value="2br">2 Bedrooms</option>
+                        <option value="3br">3 Bedrooms</option>
+                        <option value="4br">4 Bedrooms</option>
+                        <option value="5br">5 Bedrooms</option>
+                    </select>
+                </div>
+                <div class="search-input">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <!-- ✅ ADDED: Keyword search input -->
+                    <input type="text" id="searchKeywords" placeholder="Search beachfront, villa, Nyali..." aria-label="Search by keywords">
+                </div>
+                <div class="search-btn-container">
+                    <button class="search-btn" onclick="searchProperties()" aria-label="Search properties">
+                        <i class="fas fa-search" aria-hidden="true"></i> Search Properties
+                    </button>
+                </div>
             </div>
+            
+            <!-- Calendar Backdrop -->
+            <div id="calendarBackdrop" class="calendar-backdrop" onclick="hideCalendar()"></div>
+            
+            <!-- Calendar Container -->
+            <div id="calendarContainer" class="calendar-overlay"></div>
         </div>
     </section>
 
@@ -2372,6 +2488,9 @@
             // Set current year
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
+            // Initialize calendar with NO auto-selection
+            initCalendarDates();
+            
             // Initialize testimonials
             initTestimonials();
             
@@ -2386,6 +2505,16 @@
             
             // Load properties on page load
             loadFeaturedProperties();
+            
+            // Close calendar when clicking backdrop
+            document.getElementById('calendarBackdrop').addEventListener('click', hideCalendar);
+            
+            // Close calendar when pressing Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isCalendarVisible) {
+                    hideCalendar();
+                }
+            });
             
             // 🔧 PHASE 4 — Header Search Toggle
             const searchToggle = document.getElementById('searchToggle');
@@ -2425,7 +2554,8 @@
                         e.preventDefault();
                         const searchTerm = this.value.trim();
                         if (searchTerm) {
-                            searchPropertiesFromHeader(searchTerm);
+                            document.getElementById('searchKeywords').value = searchTerm;
+                            searchProperties();
                             // Close search on mobile
                             if (window.innerWidth <= 768) {
                                 document.getElementById('mobileSearchContainer').classList.remove('show');
@@ -2503,7 +2633,7 @@
             "5br": "5 Bedrooms"
         };
         
-        // 🔧 PHASE 2 — FIXED: Image Carousel Loader with correct bucket name
+        // 🔧 PHASE 2 — Load Property Images Function
         async function loadPropertyImages(property) {
             const mainWrapper = document.querySelector(`#main-${property.id} .swiper-wrapper`);
             const thumbWrapper = document.querySelector(`#thumb-${property.id} .swiper-wrapper`);
@@ -2513,11 +2643,11 @@
             // 1️⃣ Always add primary image first
             const images = property.image_url ? [property.image_url] : [];
             
-            // 2️⃣ Load storage images from CORRECT bucket name: property-images (with hyphen)
+            // 2️⃣ Load storage images
             try {
                 const { data, error } = await supabase
                     .storage
-                    .from("property-images") // ✅ FIXED: Changed from property_images to property-images
+                    .from("property_images")
                     .list(property.id);
                 
                 if (!error && data && data.length > 0) {
@@ -2527,10 +2657,10 @@
                         .forEach(file => {
                             const url = supabase
                                 .storage
-                                .from("property-images") // ✅ FIXED: Same here
+                                .from("property_images")
                                 .getPublicUrl(`${property.id}/${file.name}`).data.publicUrl;
                             
-                            // Add if not already in array (avoid duplicates)
+                            // Add if not already in array
                             if (!images.includes(url)) {
                                 images.push(url);
                             }
@@ -2545,11 +2675,7 @@
                 images.push('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
             }
             
-            // 4️⃣ Clear existing slides
-            mainWrapper.innerHTML = '';
-            thumbWrapper.innerHTML = '';
-            
-            // 5️⃣ Render slides
+            // 3️⃣ Render slides
             images.forEach((url, index) => {
                 mainWrapper.innerHTML += `
                     <div class="swiper-slide">
@@ -2565,8 +2691,8 @@
                 `;
             });
             
-            // 6️⃣ Init Swipers AFTER DOM update using requestAnimationFrame
-            requestAnimationFrame(() => {
+            // 4️⃣ Init Swipers AFTER DOM update
+            setTimeout(() => {
                 try {
                     const thumbs = new Swiper(`#thumb-${property.id}`, {
                         slidesPerView: Math.min(4, images.length),
@@ -2589,7 +2715,234 @@
                 } catch (error) {
                     console.error(`Error initializing Swiper for property ${property.id}:`, error);
                 }
-            });
+            }, 100);
+        }
+        
+        // Calendar functionality
+        let selectedCheckin = null;
+        let selectedCheckout = null;
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let isCalendarVisible = false;
+
+        function initCalendarDates() {
+            // Initialize with NO dates selected - user must choose
+            selectedCheckin = null;
+            selectedCheckout = null;
+            
+            updateDateRangeInput();
+        }
+
+        function updateDateRangeInput() {
+            const dateRangeInput = document.getElementById('dateRange');
+            if (dateRangeInput) {
+                if (selectedCheckin && selectedCheckout) {
+                    dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
+                } else if (selectedCheckin) {
+                    dateRangeInput.value = `${formatDate(selectedCheckin)} → Select checkout`;
+                } else {
+                    dateRangeInput.value = 'Select check-in → Select check-out';
+                }
+            }
+        }
+
+        function showCalendar() {
+            generateCalendar();
+            
+            document.getElementById('calendarContainer').style.display = 'block';
+            document.getElementById('calendarBackdrop').style.display = 'block';
+            isCalendarVisible = true;
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideCalendar() {
+            document.getElementById('calendarContainer').style.display = 'none';
+            document.getElementById('calendarBackdrop').style.display = 'none';
+            isCalendarVisible = false;
+            
+            document.body.style.overflow = '';
+        }
+
+        function generateCalendar() {
+            const calendar = document.getElementById('calendarContainer');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let html = `
+                <div class="calendar-header">
+                    <h4>Select Check-in & Check-out Dates</h4>
+                    <div class="calendar-nav">
+                        <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
+                        <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
+                        <button onclick="changeMonth(1)" aria-label="Next month">›</button>
+                    </div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+            `;
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            // Empty cells before month starts
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="calendar-day disabled"></div>`;
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                date.setHours(0, 0, 0, 0);
+
+                const isToday = isSameDay(date, today);
+                const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
+                const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
+                const isDisabled = date < today;
+                const isBetween =
+                    selectedCheckin &&
+                    selectedCheckout &&
+                    date > selectedCheckin &&
+                    date < selectedCheckout;
+
+                let className = "calendar-day";
+                if (isToday) className += " today";
+                if (isCheckin) className += " selected";
+                if (isCheckout) className += " selected";
+                if (isDisabled) className += " disabled";
+                if (isBetween) className += " between";
+
+                const onClick = isDisabled
+                    ? ""
+                    : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+
+                html += `<div class="${className}" ${onClick}>${day}</div>`;
+            }
+
+            // Fill up to 6 rows (42 cells) to keep calendar compact
+            const totalCells = firstDay + daysInMonth;
+            const remaining = 42 - totalCells;
+
+            for (let i = 0; i < remaining; i++) {
+                html += `<div class="calendar-day disabled"></div>`;
+            }
+
+            html += `
+                </div>
+                <div class="selected-dates-display">
+                    <div>
+                        <strong>Check-in</strong><br>
+                        ${selectedCheckin ? formatDate(selectedCheckin) : "Not selected"}
+                    </div>
+                    <div>
+                        <strong>Check-out</strong><br>
+                        ${selectedCheckout ? formatDate(selectedCheckout) : "Not selected"}
+                    </div>
+                </div>
+                <div class="calendar-actions">
+                    <button class="calendar-clear" onclick="clearDates()">Clear Dates</button>
+                    <button class="calendar-apply" onclick="applyDates()">Apply Dates</button>
+                </div>
+            `;
+
+            calendar.innerHTML = html;
+        }
+
+        function selectDate(day, month, year) {
+            const date = new Date(year, month, day);
+            date.setHours(0, 0, 0, 0);
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (date < today) return;
+
+            if (!selectedCheckin) {
+                // First click: set as check-in
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else if (!selectedCheckout && date > selectedCheckin) {
+                // Second click with valid date: set as check-out
+                selectedCheckout = date;
+            } else if (isSameDay(date, selectedCheckin)) {
+                // Clicking on check-in again: clear both
+                selectedCheckin = null;
+                selectedCheckout = null;
+            } else if (date < selectedCheckin) {
+                // Clicking earlier date: set as new check-in
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else if (selectedCheckin && !selectedCheckout && date <= selectedCheckin) {
+                // Clicking same or earlier date when only check-in is set: set as new check-in
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else {
+                // Otherwise: set as check-out
+                selectedCheckout = date;
+            }
+
+            updateDateRangeInput();
+            generateCalendar();
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar();
+        }
+
+        function clearDates() {
+            selectedCheckin = null;
+            selectedCheckout = null;
+            
+            updateDateRangeInput();
+            generateCalendar();
+        }
+
+        function applyDates() {
+            if (!selectedCheckin || !selectedCheckout) {
+                alert("Please select both check-in and check-out dates");
+                return;
+            }
+            
+            if (selectedCheckin >= selectedCheckout) {
+                alert("Check-out date must be after check-in date");
+                return;
+            }
+            
+            hideCalendar();
+        }
+
+        function isSameDay(date1, date2) {
+            if (!date1 || !date2) return false;
+            return date1.getFullYear() === date2.getFullYear() &&
+                   date1.getMonth() === date2.getMonth() &&
+                   date1.getDate() === date2.getDate();
+        }
+
+        function getMonthName(month) {
+            const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[month];
+        }
+
+        function formatDate(date) {
+            if (!date) return '';
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
         }
         
         // 🔧 PHASE 3 — View More Description Toggle
@@ -2610,7 +2963,7 @@
             card.id = `property-${property.id}`;
             
             // Calculate price
-            const displayPrice = calculateDisplayPrice(property);
+            const displayPrice = calculateDisplayPrice(property, selectedCheckin);
             
             // Get property type display
             const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
@@ -2663,12 +3016,11 @@
             return card;
         }
         
-        // 🔧 PHASE 4 — NEW: Search from header function
-        async function searchPropertiesFromHeader(searchTerm) {
-            if (!searchTerm.trim()) {
-                showAllProperties();
-                return;
-            }
+        // 🔧 PHASE 4 — Search Properties Function
+        async function searchProperties() {
+            const location = document.getElementById('searchLocation').value;
+            const propertyType = document.getElementById('propertyType').value;
+            const keywords = document.getElementById('searchKeywords').value;
             
             // Show search results section
             document.getElementById('searchResults').style.display = 'block';
@@ -2682,12 +3034,25 @@
             const searchCriteria = document.getElementById('searchCriteria');
             const datesCriteria = document.getElementById('datesCriteria');
             
-            searchCriteria.textContent = `Search results for "${searchTerm}"`;
-            datesCriteria.textContent = '';
+            let criteriaText = [];
+            if (location) criteriaText.push(location);
+            if (propertyType) {
+                criteriaText.push(unitTypeLabels[propertyType] || propertyType);
+            }
+            if (keywords) criteriaText.push(`"${keywords}"`);
+            
+            searchCriteria.textContent = criteriaText.length > 0 
+                ? `Properties in ${criteriaText.join(' • ')}`
+                : 'All Properties';
+            
+            datesCriteria.textContent = (selectedCheckin && selectedCheckout) 
+                ? `Dates: ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}`
+                : 'Flexible dates';
+            
             resultsHeader.style.display = 'block';
             
             // Load filtered properties
-            await loadFilteredProperties(null, null, searchTerm);
+            await loadFilteredProperties(location, propertyType, keywords);
         }
         
         // Load filtered properties with fuzzy search
@@ -2848,14 +3213,28 @@
             });
         }
         
-        // 🔧 PHASE 6 — WhatsApp Message Function with UUID only
+        // 🔧 PHASE 6 — WhatsApp Message Function
         function checkAvailability(propertyId, propertyTitle) {
-            // Create WhatsApp message with property ID only
+            // Get property details
+            const propertyElement = document.getElementById(`property-${propertyId}`);
+            if (!propertyElement) return;
+            
+            const propertyCode = propertyElement.querySelector('.property-code').textContent.replace(' ', '');
+            const priceElement = propertyElement.querySelector('.property-price');
+            const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '') : 'Price on request';
+            
+            // Format dates
+            const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
+            const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
+            
+            // Create WhatsApp message
             const message = `
 Property: ${propertyTitle}
-Ref: ${propertyId}
+Ref: ${propertyCode}
+Dates: ${checkinDate} → ${checkoutDate}
+Rate: KES ${price}/night
 
-Hello PwaniStays! I am interested in this property. Could you please check availability and provide more details?
+Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
             `.trim();
             
             // Open WhatsApp
@@ -2868,6 +3247,12 @@ Hello PwaniStays! I am interested in this property. Could you please check avail
             // Show search results section
             document.getElementById('searchResults').style.display = 'block';
             document.getElementById('stays').style.display = 'none';
+            
+            // Clear any filters
+            document.getElementById('searchLocation').value = '';
+            document.getElementById('propertyType').value = '';
+            document.getElementById('searchKeywords').value = '';
+            updateDateRangeInput();
             
             // Update results header
             const resultsHeader = document.getElementById('resultsHeader');
@@ -2886,29 +3271,16 @@ Hello PwaniStays! I am interested in this property. Could you please check avail
         }
         
         function filterByLocation(location) {
-            // Show search results section
-            document.getElementById('searchResults').style.display = 'block';
-            document.getElementById('stays').style.display = 'none';
-            
-            // Scroll to results
-            document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
-            
-            // Update results header
-            const resultsHeader = document.getElementById('resultsHeader');
-            const searchCriteria = document.getElementById('searchCriteria');
-            const datesCriteria = document.getElementById('datesCriteria');
-            
-            searchCriteria.textContent = `Properties in ${location}`;
-            datesCriteria.textContent = '';
-            resultsHeader.style.display = 'block';
-            
-            // Load filtered properties
-            loadFilteredProperties(location, null, null);
+            document.getElementById('searchLocation').value = location;
+            searchProperties();
         }
         
         function clearSearch() {
-            // Reset search
-            document.getElementById('headerSearch').value = '';
+            // Reset filters
+            document.getElementById('searchLocation').value = '';
+            document.getElementById('propertyType').value = '';
+            document.getElementById('searchKeywords').value = '';
+            updateDateRangeInput();
             
             // Show featured properties section
             document.getElementById('searchResults').style.display = 'none';

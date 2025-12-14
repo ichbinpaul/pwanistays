@@ -48,7 +48,6 @@
     <link rel="preconnect" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
-    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" media="(min-width: 768px)">
     
     <!-- STEP 1 — Add Swiper.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
@@ -426,6 +425,7 @@
             margin: 0 auto;
         }
         
+        /* === PART 1: FINAL FIX FOR STRIP ABOVE IMAGE === */
         .property-card {
             background: white;
             border-radius: 15px;
@@ -440,13 +440,27 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         
-        /* === CHANGE 1: FIXED STRIP ABOVE PROPERTY IMAGES === */
+        .property-content {
+            padding: 25px;
+        }
+        
+        /* === UPDATED: FIX FOR STRIP ABOVE IMAGE (ROOT CAUSE) === */
         .property-gallery {
             width: 100%;
             height: 220px;
             position: relative;
             overflow: hidden;
             padding: 0;
+            margin: 0;
+            position: relative;
+            top: 0;
+            display: block;
+            line-height: 0;
+        }
+        
+        .property-card > .property-gallery {
+            display: block;
+            line-height: 0;
         }
         
         .property-gallery .swiper,
@@ -510,10 +524,6 @@
             border: 2px solid white;
         }
         
-        .property-content {
-            padding: 25px;
-        }
-        
         .property-title {
             font-size: 1.3rem;
             margin-bottom: 10px;
@@ -543,20 +553,28 @@
             font-weight: 500;
         }
         
-        /* PHASE 3 — View More Description */
+        /* === PART 2: AMENITIES AS POINTS + AUTO-TRUNCATION === */
         .property-desc {
-            color: var(--gray);
-            margin-bottom: 15px;
-            line-height: 1.6;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
         }
         
-        .property-desc.expanded {
-            -webkit-line-clamp: unset;
-            overflow: visible;
+        .property-desc li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            color: var(--gray);
+        }
+        
+        .property-desc li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            min-width: 10px;
         }
         
         .view-more-btn {
@@ -565,11 +583,11 @@
             color: var(--primary);
             font-weight: 600;
             cursor: pointer;
-            padding: 5px 0;
+            padding: 0;
+            margin-top: 4px;
             font-size: 0.9rem;
             transition: var(--transition);
             display: inline-block;
-            margin-bottom: 15px;
         }
         
         .view-more-btn:hover {
@@ -1991,9 +2009,9 @@
         <div class="hero-carousel">
             <div class="swiper heroSwiper">
                 <div class="swiper-wrapper">
-                    <!-- Slide 1: Ocean-facing balcony / exterior -->
+                    <!-- Slide 1: Ocean-facing balcony / exterior (NEW IMAGE - NO DIVER) -->
                     <div class="swiper-slide">
-                        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
                     </div>
                     <!-- Slide 2: Bright interior with coastal feel -->
                     <div class="swiper-slide">
@@ -2687,13 +2705,50 @@
                 pagination: false
             });
             
-            console.log('Hero carousel initialized with 2 images');
+            console.log('Hero carousel initialized with 2 images (no diver)');
         }
         
         // Supabase Configuration
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // === PART 2: AMENITIES RENDERING + TRUNCATION FUNCTIONS ===
+        function renderAmenities(propertyId, description, expanded = false) {
+            const container = document.getElementById(`desc-${propertyId}`);
+            const toggleBtn = document.getElementById(`toggle-${propertyId}`);
+
+            if (!container || !description) return;
+
+            // Split by newline and filter out empty lines
+            const amenities = description.split('\n').filter(line => line.trim().length > 0);
+            const visible = expanded ? amenities : amenities.slice(0, 4);
+
+            container.innerHTML = visible.map(amenity => `<li>${amenity.trim()}</li>`).join('');
+
+            if (amenities.length > 4) {
+                toggleBtn.style.display = 'inline-block';
+                toggleBtn.textContent = expanded
+                    ? 'View Less'
+                    : `+ ${amenities.length - 4} more amenities`;
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+        }
+
+        function toggleAmenities(propertyId) {
+            const container = document.getElementById(`desc-${propertyId}`);
+            const isExpanded = container.classList.toggle('expanded');
+            
+            // Get the full description from data attribute
+            const fullDescription = container.dataset.full || '';
+            
+            renderAmenities(
+                propertyId,
+                fullDescription,
+                isExpanded
+            );
+        }
         
         // FIXED: Improved search with multiple keywords
         function normalizeSearch(q) {
@@ -2785,7 +2840,7 @@
             "5br": "5 Bedrooms"
         };
         
-        // FIXED: Create property card function with beds information and removed internal_code
+        // UPDATED: Create property card function with amenities list
         function createPropertyCard(property) {
             const card = document.createElement('div');
             card.className = 'property-card';
@@ -2832,12 +2887,10 @@
                         <span class="property-type">${propertyTypeDisplay}</span>
                     </div>
                     
-                    <!-- PHASE 3 — View More Description -->
-                    <p class="property-desc" id="desc-${property.id}">
-                        ${property.description || 'Luxury coastal accommodation with premium amenities.'}
-                    </p>
-                    <button class="view-more-btn" onclick="toggleDescription('${property.id}')">
-                        View More
+                    <!-- === PART 2: AMENITIES AS POINTS === -->
+                    <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}">
+                    </ul>
+                    <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;">
                     </button>
                     
                     <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
@@ -2856,6 +2909,11 @@
                     </div>
                 </div>
             `;
+            
+            // Render amenities after card is created
+            setTimeout(() => {
+                renderAmenities(property.id, property.description, false);
+            }, 0);
             
             return card;
         }
@@ -3261,17 +3319,6 @@
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const year = date.getFullYear();
             return `${day}/${month}/${year}`;
-        }
-        
-        // PHASE 3 — View More Description Toggle
-        function toggleDescription(propertyId) {
-            const descElement = document.getElementById(`desc-${propertyId}`);
-            const button = descElement.nextElementSibling;
-            
-            if (descElement) {
-                descElement.classList.toggle('expanded');
-                button.textContent = descElement.classList.contains('expanded') ? 'View Less' : 'View More';
-            }
         }
         
         // FIXED: Header search functionality with multi-keyword support

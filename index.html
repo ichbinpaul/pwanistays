@@ -2777,13 +2777,28 @@
             return card;
         }
         
-        // FIXED: Load Property Images Function with proper Swiper initialization
+        // FIXED: Load Property Images Function with proper DOM checks and Swiper initialization
         async function loadPropertyImages(property) {
-            const mainWrapper = document.querySelector(`#main-${property.id} .swiper-wrapper`);
-            const thumbWrapper = document.querySelector(`#thumb-${property.id} .swiper-wrapper`);
+            // Wait a bit to ensure DOM is ready
+            await new Promise(resolve => setTimeout(resolve, 100));
             
+            // Check if the card exists in DOM
+            const card = document.querySelector(`#property-${property.id}`);
+            if (!card) {
+                console.log(`Card for property ${property.id} not found in DOM, skipping image load.`);
+                return;
+            }
+            
+            const mainWrapper = card.querySelector(`#main-${property.id} .swiper-wrapper`);
             if (!mainWrapper) {
-                console.error(`Main wrapper not found for property ${property.id}`);
+                console.log(`Main wrapper not found for property ${property.id}`);
+                return;
+            }
+            
+            // Check if Swiper is already initialized
+            const mainSwiperElement = card.querySelector(`#main-${property.id}`);
+            if (mainSwiperElement && mainSwiperElement.swiper) {
+                console.log(`Swiper already initialized for property ${property.id}, skipping.`);
                 return;
             }
             
@@ -2837,6 +2852,8 @@
             
             // Clear existing content
             mainWrapper.innerHTML = '';
+            
+            const thumbWrapper = card.querySelector(`#thumb-${property.id} .swiper-wrapper`);
             if (thumbWrapper) thumbWrapper.innerHTML = '';
             
             // Render slides
@@ -2858,18 +2875,22 @@
                 }
             });
             
-            // FIXED: Initialize Swipers with proper timing
+            // FIXED: Initialize Swipers with proper timing and DOM checks
             setTimeout(() => {
                 try {
-                    const mainSwiperElement = document.querySelector(`#main-${property.id}`);
+                    if (!card.isConnected) {
+                        console.log(`Card for property ${property.id} is no longer in DOM, skipping Swiper init.`);
+                        return;
+                    }
                     
+                    const mainSwiperElement = card.querySelector(`#main-${property.id}`);
                     if (!mainSwiperElement) {
                         console.error(`Main swiper element not found for property ${property.id}`);
                         return;
                     }
                     
                     // Show thumb swiper if there are multiple images
-                    const thumbSwiperElement = document.querySelector(`#thumb-${property.id}`);
+                    const thumbSwiperElement = card.querySelector(`#thumb-${property.id}`);
                     let thumbsSwiper = null;
                     
                     if (images.length > 1 && thumbSwiperElement) {
@@ -2920,8 +2941,10 @@
                     
                     // Force update
                     setTimeout(() => {
-                        mainSwiper.update();
-                        mainSwiper.lazy.load();
+                        if (mainSwiper) {
+                            mainSwiper.update();
+                            mainSwiper.lazy.load();
+                        }
                     }, 300);
                     
                 } catch (error) {
@@ -3193,7 +3216,7 @@
             await loadFilteredPropertiesWithKeyword(keyword);
         }
         
-        // FIXED: Load filtered properties with multi-keyword search
+        // FIXED: Load filtered properties with multi-keyword search and proper DOM rendering
         async function loadFilteredPropertiesWithKeyword(keyword) {
             const container = document.getElementById('propertyList');
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
@@ -3220,15 +3243,31 @@
                 // Update results count
                 document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'} for "${keyword}"`;
                 
-                // Render properties
-                container.innerHTML = '';
+                // FIXED: Clear container by removing child elements instead of innerHTML
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
+                // FIXED: Create document fragment for batch append
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                
+                // First create all cards and append to fragment
                 data.forEach(property => {
                     const card = createPropertyCard(property);
-                    container.appendChild(card);
-                    
-                    // Load images after card is rendered
-                    setTimeout(() => loadPropertyImages(property), 100);
+                    cards.push({ property, card });
+                    fragment.appendChild(card);
                 });
+                
+                // Append all cards at once
+                container.appendChild(fragment);
+                
+                // THEN load images for each property after DOM is ready
+                setTimeout(() => {
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                }, 300);
                 
             } catch (error) {
                 console.error("Error:", error);
@@ -3273,7 +3312,7 @@
             await loadFilteredProperties(location, propertyType);
         }
         
-        // Load filtered properties without keyword search
+        // FIXED: Load filtered properties without keyword search with proper DOM rendering
         async function loadFilteredProperties(location, propertyType) {
             const container = document.getElementById('propertyList');
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
@@ -3312,15 +3351,31 @@
                 // Update results count
                 document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
                 
-                // Render properties
-                container.innerHTML = '';
+                // FIXED: Clear container by removing child elements instead of innerHTML
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
+                // FIXED: Create document fragment for batch append
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                
+                // First create all cards and append to fragment
                 data.forEach(property => {
                     const card = createPropertyCard(property);
-                    container.appendChild(card);
-                    
-                    // Load images after card is rendered
-                    setTimeout(() => loadPropertyImages(property), 100);
+                    cards.push({ property, card });
+                    fragment.appendChild(card);
                 });
+                
+                // Append all cards at once
+                container.appendChild(fragment);
+                
+                // THEN load images for each property after DOM is ready
+                setTimeout(() => {
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                }, 300);
                 
             } catch (error) {
                 console.error("Error:", error);
@@ -3328,6 +3383,7 @@
             }
         }
         
+        // FIXED: Load all properties with proper DOM rendering
         async function loadAllProperties() {
             const container = document.getElementById('propertyList');
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading all properties...</div>';
@@ -3350,14 +3406,31 @@
                     return;
                 }
                 
-                container.innerHTML = '';
+                // FIXED: Clear container by removing child elements instead of innerHTML
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
+                // FIXED: Create document fragment for batch append
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                
+                // First create all cards and append to fragment
                 data.forEach(property => {
                     const card = createPropertyCard(property);
-                    container.appendChild(card);
-                    
-                    // Load images after card is rendered
-                    setTimeout(() => loadPropertyImages(property), 100);
+                    cards.push({ property, card });
+                    fragment.appendChild(card);
                 });
+                
+                // Append all cards at once
+                container.appendChild(fragment);
+                
+                // THEN load images for each property after DOM is ready
+                setTimeout(() => {
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                }, 300);
                 
             } catch (error) {
                 console.error("Error:", error);
@@ -3365,6 +3438,7 @@
             }
         }
         
+        // FIXED: Load featured properties with proper DOM rendering
         async function loadFeaturedProperties() {
             const container = document.getElementById('featuredProperties');
             
@@ -3408,15 +3482,33 @@
             }
         }
         
+        // FIXED: Display properties with proper DOM rendering (no innerHTML overwrites)
         function displayProperties(properties, container) {
-            container.innerHTML = '';
+            // FIXED: Clear container by removing child elements instead of innerHTML
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+            
+            // FIXED: Create document fragment for batch append
+            const fragment = document.createDocumentFragment();
+            const cards = [];
+            
+            // First create all cards and append to fragment
             properties.forEach(property => {
                 const card = createPropertyCard(property);
-                container.appendChild(card);
-                    
-                // Load images after card is rendered
-                setTimeout(() => loadPropertyImages(property), 100);
+                cards.push({ property, card });
+                fragment.appendChild(card);
             });
+            
+            // Append all cards at once
+            container.appendChild(fragment);
+            
+            // THEN load images for each property after DOM is ready
+            setTimeout(() => {
+                cards.forEach(({ property }) => {
+                    loadPropertyImages(property);
+                });
+            }, 300);
         }
         
         // FIXED: WhatsApp Message Function with UUID instead of internal_code

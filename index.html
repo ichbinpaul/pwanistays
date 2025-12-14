@@ -66,6 +66,17 @@
             --transition: all 0.3s ease;
         }
         
+        /* === GLOBAL IMAGE RESET - KILLS ALL STRIPS === */
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            line-height: 0;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -444,7 +455,7 @@
             padding: 25px;
         }
         
-        /* === UPDATED: FIX FOR STRIP ABOVE IMAGE (ROOT CAUSE) === */
+        /* === UPDATED: NUCLEAR FIX FOR STRIP ABOVE IMAGE === */
         .property-gallery {
             width: 100%;
             height: 220px;
@@ -452,38 +463,56 @@
             overflow: hidden;
             padding: 0;
             margin: 0;
+            line-height: 0;
+        }
+        
+        /* NUCLEAR FIX - ABSOLUTE TOP POSITIONING */
+        .property-card > .property-gallery {
             position: relative;
             top: 0;
+            left: 0;
+            right: 0;
             display: block;
             line-height: 0;
+            font-size: 0;
         }
         
-        .property-card > .property-gallery {
-            display: block;
-            line-height: 0;
+        /* KILL ANY PSEUDO-ELEMENTS */
+        .property-gallery::before,
+        .property-gallery::after,
+        .property-gallery .swiper::before,
+        .property-gallery .swiper::after {
+            display: none !important;
+            content: none !important;
         }
         
-        .property-gallery .swiper,
-        .property-gallery .swiper-wrapper,
-        .property-gallery .swiper-slide {
+        /* SWIPER SPECIFIC FIX */
+        .property-gallery .swiper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .property-gallery .swiper-wrapper {
             height: 100%;
         }
         
         .property-gallery .swiper-slide {
             display: flex;
-        }
-        
-        .property-gallery img {
-            width: 100%;
             height: 100%;
-            object-fit: cover;
-            display: block; /* removes inline image gap */
         }
         
-        /* Remove any Swiper top spacing */
-        .property-gallery .swiper-wrapper {
-            margin-top: 0 !important;
-            padding-top: 0 !important;
+        .property-gallery .swiper-slide img {
+            width: 100%;
+            height: 100%; /* Use 100% of parent, not fixed height */
+            object-fit: cover;
+            display: block;
+            margin: 0;
+            padding: 0;
+            line-height: 0;
+            font-size: 0;
         }
         
         .property-gallery .swiper-pagination {
@@ -1923,7 +1952,7 @@
         }
 
         /* ============================= */
-        /* SWIPER FINAL HARD FIX */
+        /* SWIPER FINAL HARD FIX - UPDATED */
         /* ============================= */
 
         .swiper {
@@ -1942,12 +1971,13 @@
           width: 100% !important;
         }
 
-        .swiper-slide img {
+        /* REMOVED: The conflicting fixed height rule */
+        /* .swiper-slide img {
           width: 100%;
-          height: 260px;
+          height: 260px; <- THIS WAS THE PROBLEM
           object-fit: cover;
           display: block;
-        }
+        } */
     </style>
     
     <!-- Defer non-critical CSS -->

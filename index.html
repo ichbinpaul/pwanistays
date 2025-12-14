@@ -256,13 +256,13 @@
             margin-right: auto;
         }
         
-        /* ✅ UPDATED: Search Box with 4 inputs (2x2 grid) */
+        /* ✅ UPDATED: Search Box with 3 inputs */
         .search-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 30px;
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
             gap: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-top: 30px;
@@ -302,9 +302,9 @@
             background: transparent;
         }
         
-        /* ✅ UPDATED: Button container spans both columns */
+        /* ✅ UPDATED: Button container spans all 3 columns */
         .search-btn-container {
-            grid-column: span 2;
+            grid-column: span 3;
             display: flex;
             justify-content: center;
             margin-top: 10px;
@@ -1907,7 +1907,7 @@
             <h2>Experience Luxury on the Kenyan Coast</h2>
             <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
             
-            <!-- ✅ UPDATED: Search Box with 4 inputs (2x2 grid) -->
+            <!-- ✅ UPDATED: Search Box with 3 inputs -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
@@ -1940,11 +1940,6 @@
                         <option value="4br">4 Bedrooms</option>
                         <option value="5br">5 Bedrooms</option>
                     </select>
-                </div>
-                <div class="search-input">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <!-- ✅ ADDED: Keyword search input -->
-                    <input type="text" id="searchKeywords" placeholder="Search beachfront, villa, Nyali..." aria-label="Search by keywords">
                 </div>
                 <div class="search-btn-container">
                     <button class="search-btn" onclick="searchProperties()" aria-label="Search properties">
@@ -2554,6 +2549,7 @@
                         e.preventDefault();
                         const searchTerm = this.value.trim();
                         if (searchTerm) {
+                            // Use header search for keyword filtering
                             document.getElementById('searchKeywords').value = searchTerm;
                             searchProperties();
                             // Close search on mobile
@@ -3016,11 +3012,10 @@
             return card;
         }
         
-        // 🔧 PHASE 4 — Search Properties Function
+        // 🔧 PHASE 4 — Search Properties Function (UPDATED - no keywords parameter)
         async function searchProperties() {
             const location = document.getElementById('searchLocation').value;
             const propertyType = document.getElementById('propertyType').value;
-            const keywords = document.getElementById('searchKeywords').value;
             
             // Show search results section
             document.getElementById('searchResults').style.display = 'block';
@@ -3039,7 +3034,6 @@
             if (propertyType) {
                 criteriaText.push(unitTypeLabels[propertyType] || propertyType);
             }
-            if (keywords) criteriaText.push(`"${keywords}"`);
             
             searchCriteria.textContent = criteriaText.length > 0 
                 ? `Properties in ${criteriaText.join(' • ')}`
@@ -3051,12 +3045,12 @@
             
             resultsHeader.style.display = 'block';
             
-            // Load filtered properties
-            await loadFilteredProperties(location, propertyType, keywords);
+            // Load filtered properties (without keywords parameter)
+            await loadFilteredProperties(location, propertyType);
         }
         
-        // Load filtered properties with fuzzy search
-        async function loadFilteredProperties(location, propertyType, keywords) {
+        // Load filtered properties without keyword search
+        async function loadFilteredProperties(location, propertyType) {
             const container = document.getElementById('propertyList');
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
             
@@ -3074,18 +3068,6 @@
                 // Apply property type filter
                 if (propertyType && propertyType !== '') {
                     query = query.eq('unit_type', propertyType);
-                }
-                
-                // 🔧 PHASE 4 — Apply keyword search with fuzzy matching
-                if (keywords && keywords !== '') {
-                    const normalizedTerm = normalizeSearch(keywords);
-                    query = query.or(`
-                        title.ilike.%${normalizedTerm}%,
-                        description.ilike.%${normalizedTerm}%,
-                        location.ilike.%${normalizedTerm}%,
-                        unit_type.ilike.%${normalizedTerm}%,
-                        internal_code.ilike.%${normalizedTerm}%
-                    `);
                 }
                 
                 query = query.order('created_at', { ascending: false });
@@ -3207,7 +3189,7 @@
             properties.forEach(property => {
                 const card = createPropertyCard(property);
                 container.appendChild(card);
-                
+                    
                 // Load images after card is rendered
                 setTimeout(() => loadPropertyImages(property), 0);
             });
@@ -3251,7 +3233,6 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             // Clear any filters
             document.getElementById('searchLocation').value = '';
             document.getElementById('propertyType').value = '';
-            document.getElementById('searchKeywords').value = '';
             updateDateRangeInput();
             
             // Update results header
@@ -3279,7 +3260,6 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             // Reset filters
             document.getElementById('searchLocation').value = '';
             document.getElementById('propertyType').value = '';
-            document.getElementById('searchKeywords').value = '';
             updateDateRangeInput();
             
             // Show featured properties section

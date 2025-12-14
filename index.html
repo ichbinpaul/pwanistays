@@ -1952,32 +1952,58 @@
         }
 
         /* ============================= */
-        /* SWIPER FINAL HARD FIX - UPDATED */
+        /* SWIPER FINAL HARD FIX - COMPLETE */
         /* ============================= */
 
         .swiper {
           width: 100%;
+          height: 100%;
           overflow: hidden;
+          display: block;
+          margin: 0;
+          padding: 0;
         }
 
         .swiper-wrapper {
           display: flex !important;
           flex-direction: row;
           align-items: stretch;
+          height: 100%;
+          margin: 0;
+          padding: 0;
         }
 
         .swiper-slide {
           flex-shrink: 0 !important;
           width: 100% !important;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+          padding: 0;
+          line-height: 0;
         }
 
-        /* REMOVED: The conflicting fixed height rule */
-        /* .swiper-slide img {
-          width: 100%;
-          height: 260px; <- THIS WAS THE PROBLEM
-          object-fit: cover;
-          display: block;
-        } */
+        /* Property gallery specific - CRITICAL FIX */
+        .property-gallery .swiper,
+        .property-gallery .swiper-wrapper,
+        .property-gallery .swiper-slide {
+          height: 100% !important;
+          line-height: 0 !important;
+          font-size: 0 !important;
+        }
+
+        .property-gallery .swiper-slide img {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          display: block !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          line-height: 0 !important;
+          vertical-align: bottom !important;
+        }
     </style>
     
     <!-- Defer non-critical CSS -->
@@ -2381,7 +2407,7 @@
                     <input type="text" id="feedbackCity" placeholder="e.g., Nairobi, London">
                 </div>
                 
-                <div class="form-group">
+                .form-group {
                     <label for="feedbackCountry">Country</label>
                     <input type="text" id="feedbackCountry" placeholder="e.g., Kenya, USA">
                 </div>

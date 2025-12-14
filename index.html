@@ -50,7 +50,7 @@
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" media="(min-width: 768px)">
     
-    <!-- ✅ STEP 1 — Add Swiper.js CSS -->
+    <!-- STEP 1 — Add Swiper.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     
     <!-- Inline Critical CSS -->
@@ -164,7 +164,7 @@
             background: var(--primary);
         }
         
-        /* 🔧 PHASE 4 — Header Search Icon */
+        /* PHASE 4 — Header Search Icon */
         .header-search-container {
             display: flex;
             align-items: center;
@@ -256,7 +256,7 @@
             margin-right: auto;
         }
         
-        /* ✅ UPDATED: Search Box with 3 inputs */
+        /* UPDATED: Search Box with 3 inputs */
         .search-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
@@ -302,7 +302,7 @@
             background: transparent;
         }
         
-        /* ✅ UPDATED: Button container spans all 3 columns */
+        /* UPDATED: Button container spans all 3 columns */
         .search-btn-container {
             grid-column: span 3;
             display: flex;
@@ -401,7 +401,7 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         
-        /* ✅ UPDATED: Carousel CSS for better Swiper integration */
+        /* UPDATED: Carousel CSS for better Swiper integration */
         .property-gallery {
             width: 100%;
             max-width: 100%;
@@ -502,7 +502,7 @@
             font-weight: 500;
         }
         
-        /* ✅ PHASE 3 — View More Description */
+        /* PHASE 3 — View More Description */
         .property-desc {
             color: var(--gray);
             margin-bottom: 15px;
@@ -557,7 +557,7 @@
             gap: 5px;
         }
         
-        /* ✅ FIXED: Show beds from property.beds */
+        /* FIXED: Show beds from property.beds */
         .property-beds {
             color: var(--dark);
             font-weight: 500;
@@ -569,7 +569,7 @@
             margin-right: 5px;
         }
         
-        /* ✅ REMOVED: property-code section */
+        /* REMOVED: property-code section */
         .property-code {
             display: none; /* Remove entirely as requested */
         }
@@ -1862,6 +1862,33 @@
                 scroll-behavior: auto !important;
             }
         }
+
+        /* ============================= */
+        /* SWIPER FINAL HARD FIX */
+        /* ============================= */
+
+        .swiper {
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .swiper-wrapper {
+          display: flex !important;
+          flex-direction: row;
+          align-items: stretch;
+        }
+
+        .swiper-slide {
+          flex-shrink: 0 !important;
+          width: 100% !important;
+        }
+
+        .swiper-slide img {
+          width: 100%;
+          height: 260px;
+          object-fit: cover;
+          display: block;
+        }
     </style>
     
     <!-- Defer non-critical CSS -->
@@ -1905,7 +1932,7 @@
                 <li role="none"><a href="#about" role="menuitem">About</a></li>
                 <li role="none"><a href="#testimonials" role="menuitem">Reviews</a></li>
                 <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
-                <!-- 🔧 PHASE 4 — Header Search Icon -->
+                <!-- PHASE 4 — Header Search Icon -->
                 <li role="none" class="header-search-container" id="mobileSearchContainer">
                     <button id="searchToggle" aria-label="Toggle search">
                         <i class="fas fa-search"></i>
@@ -1924,7 +1951,7 @@
             <h2>Experience Luxury on the Kenyan Coast</h2>
             <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
             
-            <!-- ✅ UPDATED: Search Box with 3 inputs -->
+            <!-- UPDATED: Search Box with 3 inputs -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
@@ -1947,7 +1974,7 @@
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>
-                    <!-- ✅ UPDATED: Property type dropdown with normalized values -->
+                    <!-- UPDATED: Property type dropdown with normalized values -->
                     <select id="propertyType" aria-label="Property type">
                         <option value="">Any Type</option>
                         <option value="studio">Studio</option>
@@ -2473,7 +2500,7 @@
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- ✅ STEP 1 — Swiper JS -->
+    <!-- STEP 1 — Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
@@ -2528,7 +2555,7 @@
                 }
             });
             
-            // 🔧 PHASE 4 — Header Search Toggle
+            // PHASE 4 — Header Search Toggle
             const searchToggle = document.getElementById('searchToggle');
             const headerSearch = document.getElementById('headerSearch');
             
@@ -2585,7 +2612,7 @@
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // 🔧 FIXED: Improved search with multiple keywords
+        // FIXED: Improved search with multiple keywords
         function normalizeSearch(q) {
             if (!q) return '';
             return q
@@ -2597,7 +2624,7 @@
                 .replace(/\s+/g, " ");
         }
         
-        // 🔧 FIXED: Multi-keyword search function
+        // FIXED: Multi-keyword search function
         function buildSearchQuery(keyword) {
             const normalizedKeyword = normalizeSearch(keyword);
             const keywords = normalizedKeyword.split(' ').filter(k => k.length > 0);
@@ -2627,7 +2654,7 @@
             return query;
         }
         
-        // 🔧 PHASE 5 — Season Pricing Logic
+        // PHASE 5 — Season Pricing Logic
         function isPeakSeason(date) {
             if (!date) {
                 date = new Date();
@@ -2675,12 +2702,90 @@
             "5br": "5 Bedrooms"
         };
         
-        // 🔧 FIXED: Load Property Images Function with proper Swiper initialization
+        // FIXED: Create property card function with beds information and removed internal_code
+        function createPropertyCard(property) {
+            const card = document.createElement('div');
+            card.className = 'property-card';
+            card.id = `property-${property.id}`;
+            
+            // Calculate price
+            const displayPrice = calculateDisplayPrice(property, selectedCheckin);
+            
+            // Get property type display
+            const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
+            
+            // FIXED: Show beds from property.beds instead of bedrooms
+            const bedsCount = property.beds || 1;
+            const bedsDisplay = `${bedsCount} ${bedsCount === 1 ? 'Bed' : 'Beds'}`;
+            
+            // Escape special characters for safety
+            const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
+            
+            card.innerHTML = `
+                <!-- FIXED: Carousel HTML with proper structure -->
+                <div class="property-gallery">
+                    <div class="swiper mainSwiper" id="main-${property.id}">
+                        <div class="swiper-wrapper">
+                            <!-- Images will be loaded here -->
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                     alt="${property.title || 'Property'} placeholder image"
+                                     onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="swiper thumbSwiper" id="thumb-${property.id}" style="display: none;">
+                        <div class="swiper-wrapper"></div>
+                    </div>
+                </div>
+                
+                <div class="property-content">
+                    <h3 class="property-title">${property.title || 'Premium Property'}</h3>
+                    <div class="property-meta">
+                        <span class="property-location">
+                            <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
+                        </span>
+                        <span class="property-type">${propertyTypeDisplay}</span>
+                    </div>
+                    
+                    <!-- PHASE 3 — View More Description -->
+                    <p class="property-desc" id="desc-${property.id}">
+                        ${property.description || 'Luxury coastal accommodation with premium amenities.'}
+                    </p>
+                    <button class="view-more-btn" onclick="toggleDescription('${property.id}')">
+                        View More
+                    </button>
+                    
+                    <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
+                    
+                    <!-- FIXED: Updated footer with beds information and removed internal_code -->
+                    <div class="property-footer">
+                        <div class="property-info">
+                            <div class="property-beds">
+                                <i class="fas fa-bed"></i> ${bedsDisplay}
+                            </div>
+                            <!-- REMOVED: property-code div entirely -->
+                        </div>
+                        <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
+                            <i class="fas fa-calendar-alt"></i> Check Availability
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // FIXED: Load Property Images Function with proper Swiper initialization
         async function loadPropertyImages(property) {
             const mainWrapper = document.querySelector(`#main-${property.id} .swiper-wrapper`);
             const thumbWrapper = document.querySelector(`#thumb-${property.id} .swiper-wrapper`);
             
-            if (!mainWrapper) return;
+            if (!mainWrapper) {
+                console.error(`Main wrapper not found for property ${property.id}`);
+                return;
+            }
             
             let images = [];
             
@@ -2753,64 +2858,76 @@
                 }
             });
             
-            // 🔧 FIXED: Initialize Swipers with proper error handling
+            // FIXED: Initialize Swipers with proper timing
             setTimeout(() => {
                 try {
-                    let thumbsSwiper = null;
                     const mainSwiperElement = document.querySelector(`#main-${property.id}`);
                     
-                    if (!mainSwiperElement) return;
+                    if (!mainSwiperElement) {
+                        console.error(`Main swiper element not found for property ${property.id}`);
+                        return;
+                    }
                     
-                    // Only create thumb swiper if there are multiple images and thumb wrapper exists
+                    // Show thumb swiper if there are multiple images
                     const thumbSwiperElement = document.querySelector(`#thumb-${property.id}`);
+                    let thumbsSwiper = null;
+                    
                     if (images.length > 1 && thumbSwiperElement) {
+                        thumbSwiperElement.style.display = 'block';
+                        
                         thumbsSwiper = new Swiper(thumbSwiperElement, {
-                            slidesPerView: Math.min(4, images.length),
                             spaceBetween: 8,
-                            watchSlidesProgress: true,
+                            slidesPerView: Math.min(4, images.length),
                             freeMode: true,
+                            watchSlidesProgress: true,
                             breakpoints: {
-                                320: {
-                                    slidesPerView: Math.min(3, images.length),
-                                },
-                                768: {
-                                    slidesPerView: Math.min(4, images.length),
-                                }
+                                320: { slidesPerView: Math.min(3, images.length) },
+                                768: { slidesPerView: Math.min(4, images.length) }
                             }
                         });
                     }
                     
+                    // Initialize main swiper
                     const mainSwiper = new Swiper(mainSwiperElement, {
                         spaceBetween: 10,
-                        pagination: { 
-                            el: mainSwiperElement.querySelector('.swiper-pagination'), 
+                        loop: images.length > 1,
+                        pagination: {
+                            el: mainSwiperElement.querySelector('.swiper-pagination'),
                             clickable: true,
                             dynamicBullets: true
                         },
+                        navigation: false,
                         thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
-                        loop: images.length > 1,
-                        preloadImages: true,
-                        updateOnImagesReady: true,
                         autoplay: images.length > 1 ? {
                             delay: 3000,
                             disableOnInteraction: false,
                         } : false,
                         effect: 'slide',
-                        speed: 500
+                        speed: 500,
+                        preloadImages: false,
+                        lazy: {
+                            loadPrevNext: true,
+                        },
+                        on: {
+                            init: function() {
+                                console.log(`Swiper initialized for property ${property.id} with ${images.length} images`);
+                            },
+                            error: function(error) {
+                                console.error(`Swiper error for property ${property.id}:`, error);
+                            }
+                        }
                     });
                     
-                    // Force Swiper to update
+                    // Force update
                     setTimeout(() => {
-                        if (mainSwiper) {
-                            mainSwiper.update();
-                            mainSwiper.slideTo(0, 0);
-                        }
-                    }, 100);
+                        mainSwiper.update();
+                        mainSwiper.lazy.load();
+                    }, 300);
                     
                 } catch (error) {
-                    console.error(`❌ Error initializing Swiper for property ${property.id}:`, error);
+                    console.error(`Error initializing Swiper for property ${property.id}:`, error);
                 }
-            }, 100);
+            }, 200);
         }
         
         // Calendar functionality
@@ -3040,7 +3157,7 @@
             return `${day}/${month}/${year}`;
         }
         
-        // 🔧 PHASE 3 — View More Description Toggle
+        // PHASE 3 — View More Description Toggle
         function toggleDescription(propertyId) {
             const descElement = document.getElementById(`desc-${propertyId}`);
             const button = descElement.nextElementSibling;
@@ -3051,75 +3168,7 @@
             }
         }
         
-        // 🔧 FIXED: Create property card function with beds information and removed internal_code
-        function createPropertyCard(property) {
-            const card = document.createElement('div');
-            card.className = 'property-card';
-            card.id = `property-${property.id}`;
-            
-            // Calculate price
-            const displayPrice = calculateDisplayPrice(property, selectedCheckin);
-            
-            // Get property type display
-            const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
-            
-            // ✅ FIXED: Show beds from property.beds instead of bedrooms
-            const bedsCount = property.beds || 1;
-            const bedsDisplay = `${bedsCount} ${bedsCount === 1 ? 'Bed' : 'Beds'}`;
-            
-            // Escape special characters for safety
-            const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
-            
-            card.innerHTML = `
-                <!-- 🔧 FIXED: Carousel HTML -->
-                <div class="property-gallery">
-                    <div class="swiper mainSwiper" id="main-${property.id}">
-                        <div class="swiper-wrapper"></div>
-                        <div class="swiper-pagination"></div>
-                    </div>
-                    <div class="swiper thumbSwiper" id="thumb-${property.id}">
-                        <div class="swiper-wrapper"></div>
-                    </div>
-                </div>
-                
-                <div class="property-content">
-                    <h3 class="property-title">${property.title || 'Premium Property'}</h3>
-                    <div class="property-meta">
-                        <span class="property-location">
-                            <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
-                        </span>
-                        <span class="property-type">${propertyTypeDisplay}</span>
-                    </div>
-                    
-                    <!-- 🔧 PHASE 3 — View More Description -->
-                    <p class="property-desc" id="desc-${property.id}">
-                        ${property.description || 'Luxury coastal accommodation with premium amenities.'}
-                    </p>
-                    <button class="view-more-btn" onclick="toggleDescription('${property.id}')">
-                        View More
-                    </button>
-                    
-                    <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
-                    
-                    <!-- ✅ FIXED: Updated footer with beds information and removed internal_code -->
-                    <div class="property-footer">
-                        <div class="property-info">
-                            <div class="property-beds">
-                                <i class="fas fa-bed"></i> ${bedsDisplay}
-                            </div>
-                            <!-- ✅ REMOVED: property-code div entirely -->
-                        </div>
-                        <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
-                            <i class="fas fa-calendar-alt"></i> Check Availability
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            return card;
-        }
-        
-        // 🔧 FIXED: Header search functionality with multi-keyword support
+        // FIXED: Header search functionality with multi-keyword support
         async function searchPropertiesWithKeyword(keyword) {
             // Show search results section
             document.getElementById('searchResults').style.display = 'block';
@@ -3144,7 +3193,7 @@
             await loadFilteredPropertiesWithKeyword(keyword);
         }
         
-        // 🔧 FIXED: Load filtered properties with multi-keyword search
+        // FIXED: Load filtered properties with multi-keyword search
         async function loadFilteredPropertiesWithKeyword(keyword) {
             const container = document.getElementById('propertyList');
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
@@ -3187,7 +3236,7 @@
             }
         }
         
-        // 🔧 PHASE 4 — Search Properties Function (UPDATED - no keywords parameter)
+        // PHASE 4 — Search Properties Function (UPDATED - no keywords parameter)
         async function searchProperties() {
             const location = document.getElementById('searchLocation').value;
             const propertyType = document.getElementById('propertyType').value;
@@ -3370,13 +3419,13 @@
             });
         }
         
-        // 🔧 FIXED: WhatsApp Message Function with UUID instead of internal_code
+        // FIXED: WhatsApp Message Function with UUID instead of internal_code
         function checkAvailability(propertyId, propertyTitle) {
             // Get property details
             const propertyElement = document.getElementById(`property-${propertyId}`);
             if (!propertyElement) return;
             
-            // ✅ FIXED: Use property.id (UUID) instead of internal_code
+            // FIXED: Use property.id (UUID) instead of internal_code
             const propertyUUID = propertyId;
             const priceElement = propertyElement.querySelector('.property-price');
             const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '') : 'Price on request';
@@ -3389,7 +3438,7 @@
             const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
             const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
             
-            // ✅ FIXED: Create WhatsApp message with UUID
+            // FIXED: Create WhatsApp message with UUID
             const message = `
 Property: ${propertyTitle}
 UUID: ${propertyUUID}

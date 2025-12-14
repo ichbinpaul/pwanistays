@@ -23,24 +23,24 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pwanistays.com/">
-    <meta property="og:title" content="PwaniStays | Your Premium Coastal Stay in Kenya">
-    <meta property="og:description" content="Experience luxury beachfront living in Kenya. From Mombasa to Diani, Watamu to Nyali - premium accommodation with airport transfers & local experiences. FAQ: Booking process, amenities, transfers, cancellation.">
-    <!-- CHANGED: Use logo instead of property image -->
-    <meta property="og:image" content="https://pwanistays.com/logo-header.png">
+    <meta property="og:title" content="PwaniStays – Verified Coastal Apartments">
+    <meta property="og:description" content="Trusted apartments across Mombasa & the Kenyan Coast. Book via WhatsApp.">
+    <!-- CHANGED: Use logo-mobile.png instead of logo-header.png -->
+    <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="PwaniStays Logo - Luxury Coastal Stays">
     <meta property="og:locale" content="en_KE">
     <meta property="og:site_name" content="PwaniStays">
     
-    <!-- Twitter -->
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@PwaniStays">
     <meta name="twitter:creator" content="@PwaniStays">
-    <meta name="twitter:title" content="PwaniStays | Luxury Coastal Stays in Kenya">
-    <meta name="twitter:description" content="Premium beachfront accommodation across the Kenyan coast with seamless transfers & authentic experiences. FAQ included for easy booking.">
-    <!-- CHANGED: Use logo instead of property image -->
-    <meta name="twitter:image" content="https://pwanistays.com/logo-header.png">
+    <meta name="twitter:title" content="PwaniStays – Verified Coastal Apartments">
+    <meta name="twitter:description" content="Trusted apartments across Mombasa & the Kenyan Coast. Book via WhatsApp.">
+    <!-- CHANGED: Use logo-mobile.png instead of logo-header.png -->
+    <meta name="twitter:image" content="https://pwanistays.com/logo-mobile.png">
     <meta name="twitter:image:alt" content="PwaniStays Logo">
     
     <!-- Preload critical resources -->
@@ -224,21 +224,60 @@
             color: var(--dark);
         }
         
-        /* Hero Section - UPDATED */
+        /* === CHANGE 3: HERO SECTION - 2-IMAGE CAROUSEL === */
         .hero {
             height: 100vh;
             min-height: 600px;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                        url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
+            margin-top: 80px;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .hero-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .hero-carousel .swiper {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .hero-carousel .swiper-slide {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        
+        .hero-slide {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
             text-align: center;
             color: white;
-            margin-top: 80px;
-            padding: 0 20px;
+            padding-top: 100px;
         }
         
         .hero-content h2 {
@@ -401,34 +440,36 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         
-        /* UPDATED: Carousel CSS for better Swiper integration */
+        /* === CHANGE 1: FIXED STRIP ABOVE PROPERTY IMAGES === */
         .property-gallery {
             width: 100%;
-            max-width: 100%;
             height: 220px;
             position: relative;
             overflow: hidden;
+            padding: 0;
         }
         
-        .property-gallery .swiper {
-            width: 100%;
+        .property-gallery .swiper,
+        .property-gallery .swiper-wrapper,
+        .property-gallery .swiper-slide {
             height: 100%;
         }
         
         .property-gallery .swiper-slide {
-            text-align: center;
-            font-size: 18px;
-            background: var(--light-gray);
             display: flex;
-            justify-content: center;
-            align-items: center;
         }
         
-        .property-gallery .swiper-slide img {
-            display: block;
+        .property-gallery img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block; /* removes inline image gap */
+        }
+        
+        /* Remove any Swiper top spacing */
+        .property-gallery .swiper-wrapper {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
         }
         
         .property-gallery .swiper-pagination {
@@ -1944,8 +1985,24 @@
         </nav>
     </header>
 
-    <!-- Hero Section - UPDATED -->
+    <!-- CHANGE 3: Hero Section - NOW A 2-IMAGE CAROUSEL -->
     <section class="hero" id="home" role="region" aria-label="Hero section">
+        <!-- Hero Carousel -->
+        <div class="hero-carousel">
+            <div class="swiper heroSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1: Ocean-facing balcony / exterior -->
+                    <div class="swiper-slide">
+                        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                    </div>
+                    <!-- Slide 2: Bright interior with coastal feel -->
+                    <div class="swiper-slide">
+                        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="hero-content">
             <h1 class="sr-only">PwaniStays - Luxury Coastal Accommodation in Kenya</h1>
             <h2>Experience Luxury on the Kenyan Coast</h2>
@@ -2605,7 +2662,33 @@
                     }
                 });
             }
+            
+            // CHANGE 3: Initialize Hero Carousel
+            initHeroCarousel();
         });
+        
+        // CHANGE 3: Initialize Hero Carousel Function
+        function initHeroCarousel() {
+            const heroSwiper = new Swiper('.heroSwiper', {
+                spaceBetween: 0,
+                slidesPerView: 1,
+                loop: true,
+                autoplay: {
+                    delay: 7000, // 7 seconds
+                    disableOnInteraction: false,
+                },
+                speed: 1000,
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                // No navigation or pagination
+                navigation: false,
+                pagination: false
+            });
+            
+            console.log('Hero carousel initialized with 2 images');
+        }
         
         // Supabase Configuration
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";

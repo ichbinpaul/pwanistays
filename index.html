@@ -557,6 +557,7 @@
             gap: 5px;
         }
         
+        /* ✅ FIXED: Show beds from property.beds */
         .property-beds {
             color: var(--dark);
             font-weight: 500;
@@ -568,15 +569,9 @@
             margin-right: 5px;
         }
         
+        /* ✅ REMOVED: property-code section */
         .property-code {
-            color: var(--gray);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        .property-code i {
-            color: var(--gray);
-            margin-right: 3px;
+            display: none; /* Remove entirely as requested */
         }
         
         .no-properties {
@@ -2590,16 +2585,46 @@
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // 🔧 PHASE 4 — Normalize search input
+        // 🔧 FIXED: Improved search with multiple keywords
         function normalizeSearch(q) {
             if (!q) return '';
             return q
                 .toLowerCase()
-                .replace(/bedrooms?|br/g, "br")
+                .replace(/bedrooms?|br|beds?/g, "bed")
                 .replace(/three|3/gi, "3")
                 .replace(/two|2/gi, "2")
                 .replace(/one|1/gi, "1")
                 .replace(/\s+/g, " ");
+        }
+        
+        // 🔧 FIXED: Multi-keyword search function
+        function buildSearchQuery(keyword) {
+            const normalizedKeyword = normalizeSearch(keyword);
+            const keywords = normalizedKeyword.split(' ').filter(k => k.length > 0);
+            
+            let query = supabase
+                .from("properties")
+                .select("*")
+                .eq("is_active", true);
+            
+            if (keywords.length === 0) return query;
+            
+            // Build OR conditions for each keyword
+            let conditions = [];
+            keywords.forEach(word => {
+                if (word.length > 0) {
+                    conditions.push(`title.ilike.%${word}%`);
+                    conditions.push(`description.ilike.%${word}%`);
+                    conditions.push(`location.ilike.%${word}%`);
+                    conditions.push(`unit_type.ilike.%${word}%`);
+                }
+            });
+            
+            if (conditions.length > 0) {
+                query = query.or(conditions.join(','));
+            }
+            
+            return query;
         }
         
         // 🔧 PHASE 5 — Season Pricing Logic
@@ -2650,12 +2675,12 @@
             "5br": "5 Bedrooms"
         };
         
-        // 🔧 FIXED: Load Property Images Function with proper Supabase bucket loading
+        // 🔧 FIXED: Load Property Images Function with proper Swiper initialization
         async function loadPropertyImages(property) {
             const mainWrapper = document.querySelector(`#main-${property.id} .swiper-wrapper`);
             const thumbWrapper = document.querySelector(`#thumb-${property.id} .swiper-wrapper`);
             
-            if (!mainWrapper || !thumbWrapper) return;
+            if (!mainWrapper) return;
             
             let images = [];
             
@@ -2689,7 +2714,6 @@
                         
                         if (data && data.publicUrl) {
                             images.push(data.publicUrl);
-                            console.log(`Added image: ${data.publicUrl}`);
                         }
                     });
                 }
@@ -2708,7 +2732,7 @@
             
             // Clear existing content
             mainWrapper.innerHTML = '';
-            thumbWrapper.innerHTML = '';
+            if (thumbWrapper) thumbWrapper.innerHTML = '';
             
             // Render slides
             images.forEach((url, index) => {
@@ -2719,7 +2743,7 @@
                     </div>
                 `;
                 
-                if (images.length > 1) {
+                if (thumbWrapper && images.length > 1) {
                     thumbWrapper.innerHTML += `
                         <div class="swiper-slide">
                             <img src="${url}" alt="${property.title || 'Property'} thumbnail ${index + 1}"
@@ -2729,14 +2753,18 @@
                 }
             });
             
-            // 🔧 FIXED: Initialize Swipers with proper configuration
+            // 🔧 FIXED: Initialize Swipers with proper error handling
             setTimeout(() => {
                 try {
                     let thumbsSwiper = null;
+                    const mainSwiperElement = document.querySelector(`#main-${property.id}`);
                     
-                    // Only create thumb swiper if there are multiple images
-                    if (images.length > 1) {
-                        thumbsSwiper = new Swiper(`#thumb-${property.id}`, {
+                    if (!mainSwiperElement) return;
+                    
+                    // Only create thumb swiper if there are multiple images and thumb wrapper exists
+                    const thumbSwiperElement = document.querySelector(`#thumb-${property.id}`);
+                    if (images.length > 1 && thumbSwiperElement) {
+                        thumbsSwiper = new Swiper(thumbSwiperElement, {
                             slidesPerView: Math.min(4, images.length),
                             spaceBetween: 8,
                             watchSlidesProgress: true,
@@ -2752,10 +2780,10 @@
                         });
                     }
                     
-                    const mainSwiper = new Swiper(`#main-${property.id}`, {
+                    const mainSwiper = new Swiper(mainSwiperElement, {
                         spaceBetween: 10,
                         pagination: { 
-                            el: `#main-${property.id} .swiper-pagination`, 
+                            el: mainSwiperElement.querySelector('.swiper-pagination'), 
                             clickable: true,
                             dynamicBullets: true
                         },
@@ -2770,8 +2798,6 @@
                         effect: 'slide',
                         speed: 500
                     });
-                    
-                    console.log(`✅ Swiper initialized for property ${property.id} with ${images.length} images`);
                     
                     // Force Swiper to update
                     setTimeout(() => {
@@ -3025,7 +3051,7 @@
             }
         }
         
-        // 🔧 FIXED: Create property card function with beds information
+        // 🔧 FIXED: Create property card function with beds information and removed internal_code
         function createPropertyCard(property) {
             const card = document.createElement('div');
             card.className = 'property-card';
@@ -3037,8 +3063,9 @@
             // Get property type display
             const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
             
-            // Get number of beds display
-            const bedsDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'N/A';
+            // ✅ FIXED: Show beds from property.beds instead of bedrooms
+            const bedsCount = property.beds || 1;
+            const bedsDisplay = `${bedsCount} ${bedsCount === 1 ? 'Bed' : 'Beds'}`;
             
             // Escape special characters for safety
             const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
@@ -3074,15 +3101,13 @@
                     
                     <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
                     
-                    <!-- 🔧 FIXED: Updated footer with beds information -->
+                    <!-- ✅ FIXED: Updated footer with beds information and removed internal_code -->
                     <div class="property-footer">
                         <div class="property-info">
                             <div class="property-beds">
                                 <i class="fas fa-bed"></i> ${bedsDisplay}
                             </div>
-                            <div class="property-code">
-                                <i class="fas fa-hashtag"></i> ${property.internal_code || 'PS-' + (property.id ? property.id.substring(0, 8) : '0000')}
-                            </div>
+                            <!-- ✅ REMOVED: property-code div entirely -->
                         </div>
                         <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
                             <i class="fas fa-calendar-alt"></i> Check Availability
@@ -3094,7 +3119,7 @@
             return card;
         }
         
-        // 🔧 FIXED: Header search functionality
+        // 🔧 FIXED: Header search functionality with multi-keyword support
         async function searchPropertiesWithKeyword(keyword) {
             // Show search results section
             document.getElementById('searchResults').style.display = 'block';
@@ -3119,19 +3144,14 @@
             await loadFilteredPropertiesWithKeyword(keyword);
         }
         
-        // Load filtered properties with keyword search
+        // 🔧 FIXED: Load filtered properties with multi-keyword search
         async function loadFilteredPropertiesWithKeyword(keyword) {
             const container = document.getElementById('propertyList');
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
             
             try {
-                const normalizedKeyword = normalizeSearch(keyword);
-                
-                let query = supabase
-                    .from("properties")
-                    .select("*")
-                    .eq("is_active", true)
-                    .or(`title.ilike.%${normalizedKeyword}%,description.ilike.%${normalizedKeyword}%,location.ilike.%${normalizedKeyword}%,unit_type.ilike.%${normalizedKeyword}%`);
+                // Build query with multiple keyword support
+                let query = buildSearchQuery(keyword);
                 
                 query = query.order('created_at', { ascending: false });
                 
@@ -3350,24 +3370,30 @@
             });
         }
         
-        // 🔧 PHASE 6 — WhatsApp Message Function
+        // 🔧 FIXED: WhatsApp Message Function with UUID instead of internal_code
         function checkAvailability(propertyId, propertyTitle) {
             // Get property details
             const propertyElement = document.getElementById(`property-${propertyId}`);
             if (!propertyElement) return;
             
-            const propertyCode = propertyElement.querySelector('.property-code').textContent.replace(' ', '');
+            // ✅ FIXED: Use property.id (UUID) instead of internal_code
+            const propertyUUID = propertyId;
             const priceElement = propertyElement.querySelector('.property-price');
             const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '') : 'Price on request';
+            
+            // Get beds information
+            const bedsElement = propertyElement.querySelector('.property-beds');
+            const bedsInfo = bedsElement ? bedsElement.textContent.trim() : '';
             
             // Format dates
             const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
             const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
             
-            // Create WhatsApp message
+            // ✅ FIXED: Create WhatsApp message with UUID
             const message = `
 Property: ${propertyTitle}
-Ref: ${propertyCode}
+UUID: ${propertyUUID}
+${bedsInfo}
 Dates: ${checkinDate} → ${checkoutDate}
 Rate: KES ${price}/night
 

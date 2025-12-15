@@ -2697,6 +2697,9 @@
             
             // CHANGE 3: Initialize Hero Carousel
             initHeroCarousel();
+            
+            // NEW: Check for hash on initial page load
+            checkAndScrollToHash();
         });
         
         // CHANGE 3: Initialize Hero Carousel Function
@@ -2720,6 +2723,125 @@
             });
             
             console.log('Hero carousel initialized with 2 images (no diver)');
+        }
+        
+        // NEW: Function to check hash and scroll to property
+        function checkAndScrollToHash() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#property-')) {
+                // Extract the short UUID from the hash
+                const shortId = hash.replace('#property-', '');
+                
+                // Show search results section
+                document.getElementById('searchResults').style.display = 'block';
+                document.getElementById('stays').style.display = 'none';
+                
+                // Scroll to search results
+                document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+                
+                // Load all properties and then scroll to the specific one
+                loadAllPropertiesAndScroll(shortId);
+            }
+        }
+        
+        // NEW: Modified loadAllProperties to accept scroll callback
+        async function loadAllPropertiesAndScroll(targetShortId) {
+            const container = document.getElementById('propertyList');
+            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading property...</div>';
+            
+            try {
+                const { data, error } = await supabase
+                    .from("properties")
+                    .select("*")
+                    .eq("is_active", true)
+                    .order("created_at", { ascending: false });
+                
+                if (error) {
+                    console.error("Error loading properties:", error);
+                    container.innerHTML = '<div class="no-properties"><p>Unable to load properties. Please try again later.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties"><p>No properties available at the moment. Check back soon!</p></div>';
+                    return;
+                }
+                
+                // FIXED: Clear container by removing child elements
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
+                // Create document fragment for batch append
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                
+                // Create all cards
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    cards.push({ property, card });
+                    fragment.appendChild(card);
+                });
+                
+                // Append all cards at once
+                container.appendChild(fragment);
+                
+                // Load images for each property
+                setTimeout(() => {
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                    
+                    // AFTER properties are loaded, try to find and scroll to the target
+                    setTimeout(() => {
+                        scrollToProperty(targetShortId);
+                    }, 500);
+                    
+                    // Debug after loading
+                    setTimeout(debugSwipers, 1000);
+                }, 300);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties"><p>Error loading properties. Please refresh the page.</p></div>';
+            }
+        }
+        
+        // NEW: Function to scroll to specific property
+        function scrollToProperty(shortId) {
+            // Try to find the element
+            const targetElement = document.getElementById(`property-${shortId}`);
+            
+            if (targetElement) {
+                // Scroll to the property
+                targetElement.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center'
+                });
+                
+                // Add highlight effect
+                targetElement.style.boxShadow = '0 0 0 3px var(--primary), 0 10px 25px rgba(0, 0, 0, 0.2)';
+                targetElement.style.transition = 'box-shadow 0.3s ease';
+                
+                // Remove highlight after 3 seconds
+                setTimeout(() => {
+                    targetElement.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
+                }, 3000);
+                
+                console.log(`Scrolled to property-${shortId}`);
+            } else {
+                console.log(`Could not find element with ID: property-${shortId}`);
+                
+                // Try alternative: look for any element with the short ID in its ID
+                const alternativeElement = document.querySelector(`[id*="${shortId}"]`);
+                if (alternativeElement) {
+                    alternativeElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center'
+                    });
+                    console.log(`Found alternative element: ${alternativeElement.id}`);
+                }
+            }
         }
         
         // Supabase Configuration
@@ -2968,8 +3090,9 @@
         function createPropertyCard(property) {
             const card = document.createElement('div');
             card.className = 'property-card';
-            // UPDATE: Use shortUUID for the id
-            card.id = `property-${shortUUID(property.id)}`;
+            // UPDATE: Use shortUUID for the id - THIS IS CRITICAL
+            const shortId = shortUUID(property.id);
+            card.id = `property-${shortId}`;
             
             // Calculate price
             const displayPrice = calculateDisplayPrice(property, selectedCheckin);
@@ -2983,10 +3106,6 @@
             
             // Escape special characters for safety
             const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
-            
-            // Format dates for button
-            const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
-            const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
             
             card.innerHTML = `
                 <div class="property-gallery">
@@ -3051,10 +3170,11 @@
             // Wait a bit to ensure DOM is ready
             await new Promise(resolve => setTimeout(resolve, 100));
             
-            // Check if the card exists in DOM
-            const card = document.querySelector(`#property-${shortUUID(property.id)}`);
+            // Check if the card exists in DOM - using short UUID
+            const shortId = shortUUID(property.id);
+            const card = document.querySelector(`#property-${shortId}`);
             if (!card) {
-                console.log(`Card for property ${property.id} not found in DOM, skipping image load.`);
+                console.log(`Card for property ${property.id} (short: ${shortId}) not found in DOM, skipping image load.`);
                 return;
             }
             
@@ -3566,7 +3686,7 @@
             }
         }
         
-        // FIXED: Load all properties with proper DOM rendering
+        // ORIGINAL: Load all properties with proper DOM rendering
         async function loadAllProperties() {
             const container = document.getElementById('propertyList');
             container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading all properties...</div>';
@@ -3723,12 +3843,16 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
         
         // UPDATED: Check Availability function that uses openWhatsApp
         function checkAvailability(propertyId, propertyTitle) {
-            // Get property element
+            // Get property element - try both with full ID and short UUID
             let propertyElement = document.getElementById(`property-${propertyId}`);
             if (!propertyElement) {
                 // Try with short UUID
-                propertyElement = document.getElementById(`property-${shortUUID(propertyId)}`);
-                if (!propertyElement) return;
+                const shortId = shortUUID(propertyId);
+                propertyElement = document.getElementById(`property-${shortId}`);
+                if (!propertyElement) {
+                    console.log(`Could not find property element for ID: ${propertyId}`);
+                    return;
+                }
             }
             
             // Get price
@@ -3980,14 +4104,17 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // Add smooth scrolling for anchor links
-        window.addEventListener("load", () => {
-            if (window.location.hash) {
-                const target = document.querySelector(window.location.hash);
-                if (target) {
-                    setTimeout(() => {
-                        target.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }, 100);
+        // NEW: Add smooth scrolling for anchor links when clicking on page
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[href^="#"]')) {
+                e.preventDefault();
+                const href = e.target.getAttribute('href');
+                if (href.startsWith('#property-')) {
+                    const shortId = href.replace('#property-', '');
+                    // Show search results and load properties
+                    document.getElementById('searchResults').style.display = 'block';
+                    document.getElementById('stays').style.display = 'none';
+                    loadAllPropertiesAndScroll(shortId);
                 }
             }
         });

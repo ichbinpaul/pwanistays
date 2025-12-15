@@ -455,14 +455,22 @@
             padding: 25px;
         }
         
+<<<<<<< HEAD
         /* === CLEAN SWIPER CSS (after JS fix) === */
+=======
+        /* === UPDATED: NUCLEAR FIX FOR STRIP ABOVE IMAGE === */
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
         .property-gallery {
             width: 100%;
             height: 220px;
             position: relative;
             overflow: hidden;
+            padding: 0;
+            margin: 0;
+            line-height: 0;
         }
         
+<<<<<<< HEAD
         .property-gallery .swiper {
             height: 100%;
         }
@@ -472,6 +480,55 @@
             height: 100%;
             object-fit: cover;
             display: block;
+=======
+        /* NUCLEAR FIX - ABSOLUTE TOP POSITIONING */
+        .property-card > .property-gallery {
+            position: relative;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: block;
+            line-height: 0;
+            font-size: 0;
+        }
+        
+        /* KILL ANY PSEUDO-ELEMENTS */
+        .property-gallery::before,
+        .property-gallery::after,
+        .property-gallery .swiper::before,
+        .property-gallery .swiper::after {
+            display: none !important;
+            content: none !important;
+        }
+        
+        /* SWIPER SPECIFIC FIX */
+        .property-gallery .swiper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .property-gallery .swiper-wrapper {
+            height: 100%;
+        }
+        
+        .property-gallery .swiper-slide {
+            display: flex;
+            height: 100%;
+        }
+        
+        .property-gallery .swiper-slide img {
+            width: 100%;
+            height: 100%; /* Use 100% of parent, not fixed height */
+            object-fit: cover;
+            display: block;
+            margin: 0;
+            padding: 0;
+            line-height: 0;
+            font-size: 0;
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
         }
         
         .property-gallery .swiper-pagination {
@@ -1910,6 +1967,7 @@
             }
         }
 
+<<<<<<< HEAD
         /* === CLEAN SWIPER CSS (after JS fix) === */
         .swiper {
             width: 100%;
@@ -1931,6 +1989,60 @@
             display: flex;
             align-items: center;
             justify-content: center;
+=======
+        /* ============================= */
+        /* SWIPER FINAL HARD FIX - COMPLETE */
+        /* ============================= */
+
+        .swiper {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          display: block;
+          margin: 0;
+          padding: 0;
+        }
+
+        .swiper-wrapper {
+          display: flex !important;
+          flex-direction: row;
+          align-items: stretch;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        .swiper-slide {
+          flex-shrink: 0 !important;
+          width: 100% !important;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+          padding: 0;
+          line-height: 0;
+        }
+
+        /* Property gallery specific - CRITICAL FIX */
+        .property-gallery .swiper,
+        .property-gallery .swiper-wrapper,
+        .property-gallery .swiper-slide {
+          height: 100% !important;
+          line-height: 0 !important;
+          font-size: 0 !important;
+        }
+
+        .property-gallery .swiper-slide img {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          display: block !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          line-height: 0 !important;
+          vertical-align: bottom !important;
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
         }
     </style>
     
@@ -2335,7 +2447,7 @@
                     <input type="text" id="feedbackCity" placeholder="e.g., Nairobi, London">
                 </div>
                 
-                <div class="form-group">
+                .form-group {
                     <label for="feedbackCountry">Country</label>
                     <input type="text" id="feedbackCountry" placeholder="e.g., Kenya, USA">
                 </div>
@@ -2697,6 +2809,7 @@
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
+<<<<<<< HEAD
         // === FIXED: SWIPER INITIALIZATION WITH DESTROY ===
         function initializePropertySwiper(propertyId, images) {
             const mainSwiperElement = document.querySelector(`#main-${propertyId}`);
@@ -2705,6 +2818,28 @@
             if (!mainSwiperElement) {
                 console.log(`Main swiper element not found for property ${propertyId}`);
                 return null;
+=======
+        // === PART 2: AMENITIES RENDERING + TRUNCATION FUNCTIONS ===
+        function renderAmenities(propertyId, description, expanded = false) {
+            const container = document.getElementById(`desc-${propertyId}`);
+            const toggleBtn = document.getElementById(`toggle-${propertyId}`);
+
+            if (!container || !description) return;
+
+            // Split by newline and filter out empty lines
+            const amenities = description.split('\n').filter(line => line.trim().length > 0);
+            const visible = expanded ? amenities : amenities.slice(0, 4);
+
+            container.innerHTML = visible.map(amenity => `<li>${amenity.trim()}</li>`).join('');
+
+            if (amenities.length > 4) {
+                toggleBtn.style.display = 'inline-block';
+                toggleBtn.textContent = expanded
+                    ? 'View Less'
+                    : `+ ${amenities.length - 4} more amenities`;
+            } else {
+                toggleBtn.style.display = 'none';
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
             }
             
             // 🔥 CRITICAL FIX 1: Destroy existing Swiper instances
@@ -2770,7 +2905,22 @@
             
             return mainSwiper;
         }
+
+        function toggleAmenities(propertyId) {
+            const container = document.getElementById(`desc-${propertyId}`);
+            const isExpanded = container.classList.toggle('expanded');
+            
+            // Get the full description from data attribute
+            const fullDescription = container.dataset.full || '';
+            
+            renderAmenities(
+                propertyId,
+                fullDescription,
+                isExpanded
+            );
+        }
         
+<<<<<<< HEAD
         // === DEBUG FUNCTION ===
         function debugSwipers() {
             console.log('=== SWIPER DEBUG ===');
@@ -2822,6 +2972,8 @@
             );
         }
         
+=======
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
         // FIXED: Improved search with multiple keywords
         function normalizeSearch(q) {
             if (!q) return '';
@@ -2990,7 +3142,11 @@
             return card;
         }
         
+<<<<<<< HEAD
         // FIXED: Load Property Images Function with Swiper destroy fix
+=======
+        // FIXED: Load Property Images Function with proper DOM checks and Swiper initialization
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
         async function loadPropertyImages(property) {
             // Wait a bit to ensure DOM is ready
             await new Promise(resolve => setTimeout(resolve, 100));
@@ -3008,6 +3164,16 @@
                 return;
             }
             
+<<<<<<< HEAD
+=======
+            // Check if Swiper is already initialized
+            const mainSwiperElement = card.querySelector(`#main-${property.id}`);
+            if (mainSwiperElement && mainSwiperElement.swiper) {
+                console.log(`Swiper already initialized for property ${property.id}, skipping.`);
+                return;
+            }
+            
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
             let images = [];
             
             // Try to load from Supabase storage first
@@ -3081,9 +3247,87 @@
                 }
             });
             
+<<<<<<< HEAD
             // 🔥 CRITICAL: Initialize Swiper with destroy fix
             setTimeout(() => {
                 initializePropertySwiper(property.id, images);
+=======
+            // FIXED: Initialize Swipers with proper timing and DOM checks
+            setTimeout(() => {
+                try {
+                    if (!card.isConnected) {
+                        console.log(`Card for property ${property.id} is no longer in DOM, skipping Swiper init.`);
+                        return;
+                    }
+                    
+                    const mainSwiperElement = card.querySelector(`#main-${property.id}`);
+                    if (!mainSwiperElement) {
+                        console.error(`Main swiper element not found for property ${property.id}`);
+                        return;
+                    }
+                    
+                    // Show thumb swiper if there are multiple images
+                    const thumbSwiperElement = card.querySelector(`#thumb-${property.id}`);
+                    let thumbsSwiper = null;
+                    
+                    if (images.length > 1 && thumbSwiperElement) {
+                        thumbSwiperElement.style.display = 'block';
+                        
+                        thumbsSwiper = new Swiper(thumbSwiperElement, {
+                            spaceBetween: 8,
+                            slidesPerView: Math.min(4, images.length),
+                            freeMode: true,
+                            watchSlidesProgress: true,
+                            breakpoints: {
+                                320: { slidesPerView: Math.min(3, images.length) },
+                                768: { slidesPerView: Math.min(4, images.length) }
+                            }
+                        });
+                    }
+                    
+                    // Initialize main swiper
+                    const mainSwiper = new Swiper(mainSwiperElement, {
+                        spaceBetween: 10,
+                        loop: images.length > 1,
+                        pagination: {
+                            el: mainSwiperElement.querySelector('.swiper-pagination'),
+                            clickable: true,
+                            dynamicBullets: true
+                        },
+                        navigation: false,
+                        thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
+                        autoplay: images.length > 1 ? {
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        } : false,
+                        effect: 'slide',
+                        speed: 500,
+                        preloadImages: false,
+                        lazy: {
+                            loadPrevNext: true,
+                        },
+                        on: {
+                            init: function() {
+                                console.log(`Swiper initialized for property ${property.id} with ${images.length} images`);
+                            },
+                            error: function(error) {
+                                console.error(`Swiper error for property ${property.id}:`, error);
+                            }
+                        }
+                    });
+                    
+                    // Force update
+                    setTimeout(() => {
+                        if (mainSwiper) {
+                            mainSwiper.update();
+                            mainSwiper.lazy.load();
+                        }
+                    }, 300);
+                    
+                } catch (error) {
+                    console.error(`Error initializing Swiper for property ${property.id}:`, error);
+                }
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
             }, 200);
         }
         
@@ -3390,8 +3634,11 @@
                     cards.forEach(({ property }) => {
                         loadPropertyImages(property);
                     });
+<<<<<<< HEAD
                     // Debug after loading
                     setTimeout(debugSwipers, 500);
+=======
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
                 }, 300);
                 
             } catch (error) {
@@ -3500,8 +3747,11 @@
                     cards.forEach(({ property }) => {
                         loadPropertyImages(property);
                     });
+<<<<<<< HEAD
                     // Debug after loading
                     setTimeout(debugSwipers, 500);
+=======
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
                 }, 300);
                 
             } catch (error) {
@@ -3557,8 +3807,11 @@
                     cards.forEach(({ property }) => {
                         loadPropertyImages(property);
                     });
+<<<<<<< HEAD
                     // Debug after loading
                     setTimeout(debugSwipers, 500);
+=======
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
                 }, 300);
                 
             } catch (error) {
@@ -3637,8 +3890,11 @@
                 cards.forEach(({ property }) => {
                     loadPropertyImages(property);
                 });
+<<<<<<< HEAD
                 // Debug after loading
                 setTimeout(debugSwipers, 500);
+=======
+>>>>>>> 1b0bcea2957ed9c50b0ad741b2b2f17eb87110d7
             }, 300);
         }
         

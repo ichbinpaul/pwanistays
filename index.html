@@ -1928,6 +1928,35 @@
             width: 100%;
             height: 100%;
         }
+
+        /* ===== MOBILE SEARCH BAR FIX ===== */
+        @media (max-width: 768px) {
+            .header-search-container {
+                display: flex !important;
+                position: static;
+                background: transparent;
+                padding: 10px 0;
+                box-shadow: none;
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            #headerSearch {
+                display: block !important;
+                width: 100%;
+                font-size: 16px;
+            }
+            
+            #searchToggle {
+                display: none;
+            }
+            
+            header .search-container,
+            header .search-wrapper {
+                display: block !important;
+                width: 100%;
+            }
+        }
     </style>
     
     <!-- Defer non-critical CSS -->
@@ -2559,6 +2588,11 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
+        // Add shortUUID function at the beginning
+        function shortUUID(uuid) {
+            return uuid.split("-")[0]; // first 8 characters
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile menu
             const menuToggle = document.querySelector('.menu-toggle');
@@ -2819,19 +2853,31 @@
             );
         }
         
-        // FIXED: Improved search with multiple keywords
+        // UPDATED: Improved search with exact phrase matching and plural/singular handling
         function normalizeSearch(q) {
             if (!q) return '';
-            return q
-                .toLowerCase()
-                .replace(/bedrooms?|br|beds?/g, "bed")
-                .replace(/three|3/gi, "3")
-                .replace(/two|2/gi, "2")
-                .replace(/one|1/gi, "1")
-                .replace(/\s+/g, " ");
+            
+            // Convert to lowercase
+            let normalized = q.toLowerCase();
+            
+            // Handle bedroom plural/singular variations
+            normalized = normalized
+                .replace(/bedrooms?/gi, "bedroom")  // Convert "bedrooms" or "bedroom" to "bedroom"
+                .replace(/1\s*bedroom/gi, "1br")    // Convert "1 bedroom" to "1br"
+                .replace(/2\s*bedrooms?/gi, "2br")  // Convert "2 bedroom" or "2 bedrooms" to "2br"
+                .replace(/3\s*bedrooms?/gi, "3br")  // Convert "3 bedroom" or "3 bedrooms" to "3br"
+                .replace(/4\s*bedrooms?/gi, "4br")  // Convert "4 bedroom" or "4 bedrooms" to "4br"
+                .replace(/5\s*bedrooms?/gi, "5br")  // Convert "5 bedroom" or "5 bedrooms" to "5br"
+                .replace(/one\s*bedroom/gi, "1br")  // Convert "one bedroom" to "1br"
+                .replace(/two\s*bedrooms?/gi, "2br") // Convert "two bedroom(s)" to "2br"
+                .replace(/three\s*bedrooms?/gi, "3br") // Convert "three bedroom(s)" to "3br"
+                .replace(/four\s*bedrooms?/gi, "4br") // Convert "four bedroom(s)" to "4br"
+                .replace(/five\s*bedrooms?/gi, "5br"); // Convert "five bedroom(s)" to "5br"
+            
+            return normalized;
         }
         
-        // FIXED: Multi-keyword search function
+        // UPDATED: Multi-keyword search function with exact phrase matching
         function buildSearchQuery(keyword) {
             const normalizedKeyword = normalizeSearch(keyword);
             const keywords = normalizedKeyword.split(' ').filter(k => k.length > 0);
@@ -2847,12 +2893,21 @@
             let conditions = [];
             keywords.forEach(word => {
                 if (word.length > 0) {
+                    // Search in multiple fields
                     conditions.push(`title.ilike.%${word}%`);
                     conditions.push(`description.ilike.%${word}%`);
                     conditions.push(`location.ilike.%${word}%`);
                     conditions.push(`unit_type.ilike.%${word}%`);
+                    
+                    // Also search for the original word (without normalization) for better matching
+                    conditions.push(`title.ilike.%${word.replace(/br$/, ' bedroom')}%`);
+                    conditions.push(`description.ilike.%${word.replace(/br$/, ' bedroom')}%`);
                 }
             });
+            
+            // Also add exact phrase search
+            conditions.push(`title.ilike.%${normalizedKeyword}%`);
+            conditions.push(`description.ilike.%${normalizedKeyword}%`);
             
             if (conditions.length > 0) {
                 query = query.or(conditions.join(','));
@@ -2909,11 +2964,12 @@
             "5br": "5 Bedrooms"
         };
         
-        // UPDATED: Create property card function with proper Swiper class names
+        // UPDATED: Create property card function with proper Swiper class names and short UUID
         function createPropertyCard(property) {
             const card = document.createElement('div');
             card.className = 'property-card';
-            card.id = `property-${property.id}`;
+            // UPDATE: Use shortUUID for the id
+            card.id = `property-${shortUUID(property.id)}`;
             
             // Calculate price
             const displayPrice = calculateDisplayPrice(property, selectedCheckin);
@@ -2927,6 +2983,10 @@
             
             // Escape special characters for safety
             const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
+            
+            // Format dates for button
+            const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
+            const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
             
             card.innerHTML = `
                 <div class="property-gallery">
@@ -2992,7 +3052,7 @@
             await new Promise(resolve => setTimeout(resolve, 100));
             
             // Check if the card exists in DOM
-            const card = document.querySelector(`#property-${property.id}`);
+            const card = document.querySelector(`#property-${shortUUID(property.id)}`);
             if (!card) {
                 console.log(`Card for property ${property.id} not found in DOM, skipping image load.`);
                 return;
@@ -3638,40 +3698,55 @@
             }, 300);
         }
         
-        // FIXED: WhatsApp Message Function with UUID instead of internal_code
+        // UPDATED: WhatsApp Message Function with short UUID anchor link
+        function openWhatsApp(property, checkin, checkout, rate) {
+            const anchorId = shortUUID(property.id);
+            const propertyLink = `https://pwanistays.com/#property-${anchorId}`;
+
+            const message = `
+Property: ${property.title}
+Link: ${propertyLink}
+Dates: ${checkin} → ${checkout}
+Rate: KES ${rate}/night
+
+Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
+`.trim();
+
+            const whatsappNumber = "254738544784";
+            const encodedMessage = encodeURIComponent(message);
+
+            window.open(
+                `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+                "_blank"
+            );
+        }
+        
+        // UPDATED: Check Availability function that uses openWhatsApp
         function checkAvailability(propertyId, propertyTitle) {
-            // Get property details
-            const propertyElement = document.getElementById(`property-${propertyId}`);
-            if (!propertyElement) return;
+            // Get property element
+            let propertyElement = document.getElementById(`property-${propertyId}`);
+            if (!propertyElement) {
+                // Try with short UUID
+                propertyElement = document.getElementById(`property-${shortUUID(propertyId)}`);
+                if (!propertyElement) return;
+            }
             
-            // FIXED: Use property.id (UUID) instead of internal_code
-            const propertyUUID = propertyId;
+            // Get price
             const priceElement = propertyElement.querySelector('.property-price');
             const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '') : 'Price on request';
             
-            // Get beds information
-            const bedsElement = propertyElement.querySelector('.property-beds');
-            const bedsInfo = bedsElement ? bedsElement.textContent.trim() : '';
-            
-            // Format dates
+            // Get dates
             const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
             const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
             
-            // FIXED: Create WhatsApp message with UUID
-            const message = `
-Property: ${propertyTitle}
-UUID: ${propertyUUID}
-${bedsInfo}
-Dates: ${checkinDate} → ${checkoutDate}
-Rate: KES ${price}/night
-
-Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
-            `.trim();
+            // Create property object with needed data
+            const property = {
+                id: propertyId,
+                title: propertyTitle
+            };
             
-            // Open WhatsApp
-            const whatsappNumber = '+254738544784';
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+            // Call the new openWhatsApp function
+            openWhatsApp(property, checkinDate, checkoutDate, price);
         }
         
         function showAllProperties() {
@@ -3905,29 +3980,14 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // Auto-scroll to property when page loads with hash
-        window.addEventListener('load', function() {
-            const hash = window.location.hash;
-            if (hash && hash.startsWith('#property-')) {
-                const propertyId = hash.replace('#property-', '');
-                const propertyElement = document.getElementById(`property-${propertyId}`);
-                if (propertyElement) {
-                    // Show search results section if it's hidden
-                    document.getElementById('searchResults').style.display = 'block';
-                    document.getElementById('stays').style.display = 'none';
-                    
-                    // Load all properties and scroll to this one
-                    loadAllProperties();
-                    
-                    // Scroll to property after a short delay
+        // Add smooth scrolling for anchor links
+        window.addEventListener("load", () => {
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
                     setTimeout(() => {
-                        propertyElement.scrollIntoView({ behavior: 'smooth' });
-                        // Add highlight effect
-                        propertyElement.style.boxShadow = '0 0 0 3px var(--primary)';
-                        setTimeout(() => {
-                            propertyElement.style.boxShadow = '';
-                        }, 2000);
-                    }, 1000);
+                        target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 100);
                 }
             }
         });

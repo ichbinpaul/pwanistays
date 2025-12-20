@@ -2633,7 +2633,21 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        // ========== FIX 1: Move calendar functions to the TOP ==========
+        // FIX: SUPABASE INITIALIZATION
+        // Initialize Supabase client once globally
+        const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
+        
+        if (!window.supabaseClient) {
+            window.supabaseClient = window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+        }
+        
+        const supabase = window.supabaseClient;
+        
+        // FIX 1: Move calendar functions to the TOP
         // Calendar variables
         let selectedCheckin = null;
         let selectedCheckout = null;
@@ -2851,21 +2865,12 @@
             return `${day}/${month}/${year}`;
         }
 
-        // ========== FIX 2: Define shortUUID function early ==========
+        // FIX 2: Define shortUUID function early
         function shortUUID(uuid) {
             return uuid ? uuid.split("-")[0] : '';
         }
 
-        // ========== FIX 3: Remove duplicate supabase declaration ==========
-        // Define supabase as a variable (not const) so it can be initialized later
-        let supabase = null;
-
         document.addEventListener('DOMContentLoaded', function() {
-            // ========== FIX 4: Initialize Supabase ONCE ==========
-            const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
-            const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-            
             // Mobile menu
             const menuToggle = document.querySelector('.menu-toggle');
             const navLinks = document.querySelector('.nav-links');
@@ -3162,7 +3167,7 @@
             }
         }
         
-        // === FIXED: SWIPER INITIALIZATION WITH DESTROY + PROPER SIZING ===
+        // FIXED: SWIPER INITIALIZATION WITH DESTROY + PROPER SIZING
         function initializePropertySwiper(propertyId, images) {
             const mainSwiperElement = document.querySelector(`#main-${propertyId}`);
             const thumbSwiperElement = document.querySelector(`#thumb-${propertyId}`);
@@ -3172,7 +3177,7 @@
                 return null;
             }
             
-            // 🔥 CRITICAL: Destroy existing Swiper instances
+            // CRITICAL: Destroy existing Swiper instances
             if (mainSwiperElement.swiper) {
                 console.log(`Destroying existing Swiper for property ${propertyId}`);
                 mainSwiperElement.swiper.destroy(true, true);
@@ -3224,12 +3229,12 @@
                 },
                 on: {
                     init: function() {
-                        console.log(`✅ Swiper initialized for property ${propertyId} with ${images.length} images`);
+                        console.log(`Swiper initialized for property ${propertyId} with ${images.length} images`);
                         // Force update after init
                         this.update();
                     },
                     error: function(error) {
-                        console.error(`❌ Swiper error for property ${propertyId}:`, error);
+                        console.error(`Swiper error for property ${propertyId}:`, error);
                     }
                 }
             });
@@ -3237,21 +3242,21 @@
             return mainSwiper;
         }
         
-        // === DEBUG FUNCTION ===
+        // DEBUG FUNCTION
         function debugSwipers() {
             console.log('=== SWIPER DEBUG ===');
             const swipers = document.querySelectorAll('.swiper');
             console.log(`Total Swiper elements: ${swipers.length}`);
             
             swipers.forEach((el, i) => {
-                const hasSwiper = el.swiper ? '✅ ACTIVE' : '❌ NO INSTANCE';
+                const hasSwiper = el.swiper ? 'ACTIVE' : 'NO INSTANCE';
                 const slideCount = el.querySelectorAll('.swiper-slide').length;
                 const duplicateCount = el.querySelectorAll('.swiper-slide-duplicate').length;
                 console.log(`Swiper ${i}: ${hasSwiper}, Slides: ${slideCount}, Duplicates: ${duplicateCount}`);
             });
         }
         
-        // === PART 2: AMENITIES RENDERING + TRUNCATION FUNCTIONS ===
+        // PART 2: AMENITIES RENDERING + TRUNCATION FUNCTIONS
         function renderAmenities(propertyId, description, expanded = false) {
             const container = document.getElementById(`desc-${propertyId}`);
             const toggleBtn = document.getElementById(`toggle-${propertyId}`);
@@ -3448,7 +3453,7 @@
                         <span class="property-type">${propertyTypeDisplay}</span>
                     </div>
                     
-                    <!-- === PART 2: AMENITIES AS POINTS === -->
+                    <!-- PART 2: AMENITIES AS POINTS -->
                     <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}">
                     </ul>
                     <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;">
@@ -3570,7 +3575,7 @@
                 }
             });
             
-            // 🔥 CRITICAL: Initialize Swiper with destroy fix and proper sizing
+            // CRITICAL: Initialize Swiper with destroy fix and proper sizing
             setTimeout(() => {
                 initializePropertySwiper(property.id, images);
             }, 200);

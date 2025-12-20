@@ -174,11 +174,16 @@
             background: var(--primary);
         }
         
-        /* PHASE 4 — Header Search Icon */
+        /* PHASE 4 — Header Search Icon - UPDATED */
         .header-search-container {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+        
+        .header-search-container.active #headerSearch {
+            display: block;
         }
         
         #headerSearch {
@@ -189,10 +194,6 @@
             font-size: 0.9rem;
             transition: var(--transition);
             display: none;
-        }
-        
-        #headerSearch.show {
-            display: block;
         }
         
         #searchToggle {
@@ -1762,23 +1763,25 @@
                 left: 0;
             }
             
+            /* Mobile search should be always visible */
             .header-search-container {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                padding: 15px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                display: none;
-            }
-            
-            .header-search-container.show {
-                display: block;
+                position: static;
+                background: transparent;
+                padding: 0;
+                box-shadow: none;
+                display: flex !important;
+                width: 100%;
             }
             
             #headerSearch {
+                display: block !important;
                 width: 100%;
+                position: static;
+                margin-top: 10px;
+            }
+            
+            #searchToggle {
+                display: none;
             }
             
             .testimonial-slider {
@@ -1961,32 +1964,24 @@
             height: 100%;
         }
 
-        /* ===== MOBILE SEARCH BAR FIX ===== */
-        @media (max-width: 768px) {
+        /* ===== DESKTOP HEADER SEARCH FIX ===== */
+        @media (min-width: 769px) {
             .header-search-container {
-                display: flex !important;
-                position: static;
-                background: transparent;
-                padding: 10px 0;
-                box-shadow: none;
-                width: 100%;
-                margin-top: 10px;
+                position: relative;
             }
             
             #headerSearch {
-                display: block !important;
-                width: 100%;
-                font-size: 16px;
-            }
-            
-            #searchToggle {
-                display: none;
-            }
-            
-            header .search-container,
-            header .search-wrapper {
-                display: block !important;
-                width: 100%;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 260px;
+                padding: 8px 10px;
+                border: 1px solid var(--primary);
+                background: #fff;
+                z-index: 1000;
+                border-radius: 20px;
+                margin-top: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
         }
     </style>
@@ -2032,7 +2027,7 @@
                 <li role="none"><a href="#about" role="menuitem">About</a></li>
                 <li role="none"><a href="#testimonials" role="menuitem">Reviews</a></li>
                 <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
-                <!-- PHASE 4 — Header Search Icon -->
+                <!-- PHASE 4 — Header Search Icon - UPDATED -->
                 <li role="none" class="header-search-container" id="mobileSearchContainer">
                     <button id="searchToggle" aria-label="Toggle search">
                         <i class="fas fa-search"></i>
@@ -2829,6 +2824,137 @@
                     
                 }, 1500);
             };
+
+            // ==========================
+            // HEADER SEARCH FIX - ADDED
+            // ==========================
+            const headerSearchContainer = document.querySelector(".header-search-container");
+            const headerSearchToggle = document.getElementById("searchToggle");
+            const headerSearchInput = document.getElementById("headerSearch");
+
+            if (headerSearchToggle && headerSearchContainer && headerSearchInput) {
+                // Toggle open / close on desktop
+                headerSearchToggle.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    headerSearchContainer.classList.toggle("active");
+                    
+                    if (headerSearchContainer.classList.contains("active")) {
+                        setTimeout(() => headerSearchInput.focus(), 50);
+                    }
+                });
+
+                // Trigger search on Enter
+                headerSearchInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        // Use header search value to filter properties
+                        const searchTerm = headerSearchInput.value.trim();
+                        if (searchTerm) {
+                            // Trigger a keyword search
+                            performKeywordSearch(searchTerm);
+                        }
+                    }
+                });
+
+                // Close when clicking outside (desktop only)
+                if (window.innerWidth > 768) {
+                    document.addEventListener("click", (e) => {
+                        if (!headerSearchContainer.contains(e.target) && 
+                            e.target !== headerSearchToggle && 
+                            e.target !== headerSearchInput) {
+                            headerSearchContainer.classList.remove("active");
+                        }
+                    });
+                }
+            }
+
+            // New function for keyword search from header
+            async function performKeywordSearch(keyword) {
+                // Show search results section
+                document.getElementById('searchResults').style.display = 'block';
+                document.getElementById('stays').style.display = 'none';
+                
+                // Scroll to results
+                document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+                
+                // Update results header
+                const resultsHeader = document.getElementById('resultsHeader');
+                const searchCriteria = document.getElementById('searchCriteria');
+                const datesCriteria = document.getElementById('datesCriteria');
+                
+                searchCriteria.textContent = `Search results for: "${keyword}"`;
+                datesCriteria.textContent = '';
+                resultsHeader.style.display = 'block';
+                
+                // Hide header search input on mobile after search
+                if (window.innerWidth <= 768) {
+                    headerSearchInput.value = '';
+                }
+                
+                // Perform search
+                await searchByKeyword(keyword);
+            }
+
+            async function searchByKeyword(keyword) {
+                const container = document.getElementById('propertyList');
+                container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
+                
+                try {
+                    let query = supabase
+                        .from("properties")
+                        .select("*")
+                        .eq("is_active", true)
+                        .or(`title.ilike.%${keyword}%,location.ilike.%${keyword}%,description.ilike.%${keyword}%`)
+                        .order('created_at', { ascending: false });
+                    
+                    const { data, error } = await query;
+                    
+                    if (error) {
+                        console.error("Search error:", error);
+                        container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
+                        return;
+                    }
+                    
+                    if (!data || data.length === 0) {
+                        container.innerHTML = `<div class="no-properties"><i class="fas fa-search"></i><p>No properties found for "${keyword}".</p><p>Try different keywords or browse all properties.</p></div>`;
+                        return;
+                    }
+                    
+                    // Update results count
+                    document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'} for "${keyword}"`;
+                    
+                    // Clear container
+                    while (container.firstChild) {
+                        container.removeChild(container.firstChild);
+                    }
+                    
+                    // Create document fragment for batch append
+                    const fragment = document.createDocumentFragment();
+                    const cards = [];
+                    
+                    // First create all cards and append to fragment
+                    data.forEach(property => {
+                        const card = createPropertyCard(property);
+                        cards.push({ property, card });
+                        fragment.appendChild(card);
+                    });
+                    
+                    // Append all cards at once
+                    container.appendChild(fragment);
+                    
+                    // THEN load images for each property after DOM is ready
+                    setTimeout(() => {
+                        cards.forEach(({ property }) => {
+                            loadPropertyImages(property);
+                        });
+                    }, 300);
+                    
+                } catch (error) {
+                    console.error("Error:", error);
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Unable to search properties. Please check your connection.</p></div>';
+                }
+            }
 
             // ==========================
             // Calendar Helper Functions

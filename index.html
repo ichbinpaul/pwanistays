@@ -8,18 +8,10 @@
     <meta name="author" content="PwaniStays - Kenyan Coastal Experts">
     <title>PwaniStays | Luxury Coastal Accommodation Kenya | Beach Villas & Resorts</title>
     
-    <!-- ===== FIX: FAVICON IMPROVEMENTS FOR BETTER INDEXING ===== -->
-    <!-- Add manifest for Android -->
-    <link rel="manifest" href="/site.webmanifest">
-    
-    <!-- Add MS Tile color for Windows -->
-    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-    <meta name="msapplication-config" content="/browserconfig.xml">
-    
-    <!-- Enhanced Favicon Package -->
+    <!-- Favicon Package for PwaniStays -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
@@ -28,16 +20,12 @@
     <meta name="theme-color" content="#0d7a5f">
     <meta name="msapplication-TileColor" content="#0d7a5f">
     
-    <!-- ===== FIX: ADD SITEMAP AND ROBOTS META TAGS ===== -->
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="googlebot" content="index, follow">
-    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pwanistays.com/">
     <meta property="og:title" content="PwaniStays – Verified Coastal Apartments">
     <meta property="og:description" content="Trusted apartments across Mombasa & the Kenyan Coast. Book via WhatsApp.">
+    <!-- CHANGED: Use logo-mobile.png instead of logo-header.png -->
     <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -51,6 +39,7 @@
     <meta name="twitter:creator" content="@PwaniStays">
     <meta name="twitter:title" content="PwaniStays – Verified Coastal Apartments">
     <meta name="twitter:description" content="Trusted apartments across Mombasa & the Kenyan Coast. Book via WhatsApp.">
+    <!-- CHANGED: Use logo-mobile.png instead of logo-header.png -->
     <meta name="twitter:image" content="https://pwanistays.com/logo-mobile.png">
     <meta name="twitter:image:alt" content="PwaniStays Logo">
     
@@ -106,7 +95,7 @@
             background: #fff;
         }
         
-        /* ===== FIX: MOBILE MENU IMPROVEMENTS ===== */
+        /* Header */
         header {
             position: fixed;
             top: 0;
@@ -141,6 +130,17 @@
         
         .logo-mobile {
             display: none;
+        }
+        
+        /* On mobile screens, hide desktop and show mobile logo */
+        @media (max-width: 768px) {
+            .logo-desktop {
+                display: none;
+            }
+            
+            .logo-mobile {
+                display: inline-block;
+            }
         }
         
         /* Navigation */
@@ -225,7 +225,6 @@
             transform: translateY(-2px);
         }
         
-        /* ===== FIX: MOBILE MENU TOGGLE STYLING ===== */
         .menu-toggle {
             display: none;
             font-size: 1.5rem;
@@ -233,11 +232,9 @@
             border: none;
             cursor: pointer;
             color: var(--dark);
-            z-index: 1002;
-            padding: 5px;
         }
         
-        /* Hero Section */
+        /* === CHANGE 3: HERO SECTION - 2-IMAGE CAROUSEL === */
         .hero {
             height: 100vh;
             min-height: 600px;
@@ -354,6 +351,7 @@
             background: transparent;
         }
         
+        /* UPDATED: Button container spans all 3 columns */
         .search-btn-container {
             grid-column: span 3;
             display: flex;
@@ -438,6 +436,7 @@
             margin: 0 auto;
         }
         
+        /* === PART 1: FINAL FIX FOR STRIP ABOVE IMAGE === */
         .property-card {
             background: white;
             border-radius: 15px;
@@ -456,11 +455,13 @@
             padding: 25px;
         }
         
+        /* ✅ FIX 4 — ENSURE GALLERY CONTAINER DOES NOT COLLAPSE */
         .property-gallery {
             width: 100%;
             position: relative;
         }
         
+        /* ✅ FIX 2 — FORCE MAIN IMAGE HEIGHT (CRITICAL) */
         .mainSwiper {
             width: 100%;
             height: 260px;
@@ -489,6 +490,7 @@
             opacity: 1;
         }
         
+        /* ✅ FIX 3 — THUMBNAIL STRIP (PREVENT COLLISION) */
         .thumbSwiper {
             margin-top: 8px;
             height: 70px;
@@ -540,6 +542,7 @@
             font-weight: 500;
         }
         
+        /* === PART 2: AMENITIES AS POINTS + AUTO-TRUNCATION === */
         .property-desc {
             list-style: none;
             padding: 0;
@@ -602,6 +605,7 @@
             gap: 5px;
         }
         
+        /* FIXED: Show beds from property.beds */
         .property-beds {
             color: var(--dark);
             font-weight: 500;
@@ -613,6 +617,7 @@
             margin-right: 5px;
         }
         
+        /* REMOVED: property-code section */
         .property-code {
             display: none;
         }
@@ -672,7 +677,7 @@
             border-bottom-color: var(--primary-light);
         }
         
-        /* ===== FIX: FEATURED PROPERTIES MOBILE DISPLAY ===== */
+        /* Featured Stays - UPDATED with View All button */
         .featured-stays {
             background: white;
         }
@@ -823,7 +828,7 @@
             color: white;
         }
         
-        /* Services Section */
+        /* UPDATED: Services Section with WhatsApp CTAs */
         .services {
             background: var(--light);
         }
@@ -877,6 +882,7 @@
             flex-grow: 1;
         }
         
+        /* NEW: WhatsApp button for services */
         .service-whatsapp-btn {
             display: inline-block;
             background: #25D366;
@@ -932,7 +938,7 @@
             font-size: 1.2rem;
         }
         
-        /* Testimonials */
+        /* Testimonials - FIXED with proper display */
         .testimonials {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
@@ -1081,7 +1087,7 @@
             transform: scale(1.2);
         }
         
-        /* Leave Feedback Section */
+        /* NEW: Leave Feedback Section */
         .leave-feedback {
             background: white;
             padding: 80px 5%;
@@ -1485,7 +1491,7 @@
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
         }
         
-        /* Calendar Styles */
+        /* Calendar Styles - FIXED: Made more compact and fixed selection issues */
         .calendar-overlay {
             display: none;
             position: fixed;
@@ -1698,7 +1704,7 @@
             font-size: 0.8rem;
         }
         
-        /* ===== FIX: MOBILE RESPONSIVE DESIGN ===== */
+        /* Responsive Design */
         @media (max-width: 992px) {
             .search-box {
                 grid-template-columns: 1fr;
@@ -1732,89 +1738,55 @@
         }
         
         @media (max-width: 768px) {
-            /* ===== FIX: MOBILE MENU TOGGLE VISIBLE ===== */
             .menu-toggle {
                 display: block;
-                position: relative;
-                z-index: 1002;
             }
             
-            /* ===== FIX: MOBILE NAVIGATION MENU ===== */
             .nav-links {
                 position: fixed;
-                top: 0;
+                top: 80px;
                 left: -100%;
-                width: 80%;
-                height: 100vh;
+                width: 100%;
+                height: calc(100vh - 80px);
                 background: white;
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
                 justify-content: flex-start;
-                padding: 100px 30px 30px;
-                gap: 20px;
+                padding-top: 50px;
+                gap: 30px;
                 transition: var(--transition);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-                z-index: 1001;
-                overflow-y: auto;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             }
             
             .nav-links.active {
                 left: 0;
             }
             
-            /* ===== FIX: MOBILE SEARCH CONTAINER ===== */
             .header-search-container {
-                position: static;
-                background: transparent;
-                padding: 0;
-                box-shadow: none;
-                width: 100%;
-                order: 3;
-                grid-column: 1 / -1;
-                margin-top: 15px;
-            }
-            
-            #headerSearch {
-                display: block !important;
-                width: 100%;
-                font-size: 16px;
-                padding: 12px 15px;
-            }
-            
-            #searchToggle {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 15px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
                 display: none;
             }
             
-            /* ===== FIX: NAVBAR LAYOUT FOR MOBILE ===== */
-            .navbar {
-                flex-wrap: wrap;
-                padding: 15px 20px;
+            .header-search-container.show {
+                display: block;
             }
             
-            .nav-links {
+            #headerSearch {
                 width: 100%;
-                left: -100%;
-                top: 80px;
-                height: calc(100vh - 80px);
-            }
-            
-            .nav-links.active {
-                left: 0;
-            }
-            
-            /* ===== FIX: FEATURED PROPERTIES MOBILE GRID ===== */
-            .stays-container {
-                grid-template-columns: 1fr;
-                gap: 20px;
             }
             
             .testimonial-slider {
-                height: auto;
-                min-height: 400px;
+                height: 400px;
             }
             
             section {
-                padding: 60px 20px;
+                padding: 80px 5%;
             }
             
             .section-title h2 {
@@ -1824,18 +1796,10 @@
             .hero {
                 margin-top: 70px;
                 padding: 0 15px;
-                min-height: 500px;
-                height: auto;
-                padding-bottom: 50px;
-            }
-            
-            .hero-content {
-                padding-top: 50px;
             }
             
             .search-box {
                 padding: 20px;
-                margin-top: 20px;
             }
             
             .contact-form {
@@ -1856,12 +1820,10 @@
             
             .services-container {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
             
             .properties-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
             
             .calendar-overlay {
@@ -1887,29 +1849,13 @@
                 display: none;
             }
             
-            /* ===== FIX: MOBILE PROPERTY GALLERY ===== */
+            /* ✅ FIX 5 — MOBILE SAFETY (IMPORTANT) */
             .thumbSwiper {
                 display: none;
             }
 
             .mainSwiper {
                 height: 220px;
-            }
-            
-            /* ===== FIX: MOBILE MENU BACKDROP ===== */
-            .menu-backdrop {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 1000;
-            }
-            
-            .menu-backdrop.active {
-                display: block;
             }
         }
         
@@ -1924,7 +1870,6 @@
             
             .testimonial-content p {
                 font-size: 1rem;
-                padding: 0 10px;
             }
             
             .footer-logo {
@@ -1968,45 +1913,6 @@
             .mainSwiper {
                 height: 200px;
             }
-            
-            /* ===== FIX: MOBILE NAVIGATION LINKS ===== */
-            .nav-links {
-                width: 100%;
-                padding: 100px 20px 30px;
-            }
-            
-            .nav-links li {
-                width: 100%;
-            }
-            
-            .nav-links a {
-                display: block;
-                padding: 10px 0;
-                font-size: 1.1rem;
-                border-bottom: 1px solid var(--light-gray);
-            }
-            
-            .btn-book {
-                width: 100%;
-                text-align: center;
-                margin-top: 10px;
-            }
-        }
-        
-        /* ===== FIX: SWIPER CORE CSS ===== */
-        .swiper {
-            width: 100%;
-            height: 100%;
-        }
-
-        .swiper-wrapper {
-            display: flex;
-        }
-
-        .swiper-slide {
-            flex-shrink: 0;
-            width: 100%;
-            height: 100%;
         }
         
         /* Accessibility */
@@ -2035,6 +1941,52 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
+            }
+        }
+
+        /* ✅ FIX 1 — ADD THESE REQUIRED SWIPER CSS RULES */
+        /* ===== SWIPER CORE FIX ===== */
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-wrapper {
+            display: flex;
+        }
+
+        .swiper-slide {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== MOBILE SEARCH BAR FIX ===== */
+        @media (max-width: 768px) {
+            .header-search-container {
+                display: flex !important;
+                position: static;
+                background: transparent;
+                padding: 10px 0;
+                box-shadow: none;
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            #headerSearch {
+                display: block !important;
+                width: 100%;
+                font-size: 16px;
+            }
+            
+            #searchToggle {
+                display: none;
+            }
+            
+            header .search-container,
+            header .search-wrapper {
+                display: block !important;
+                width: 100%;
             }
         }
     </style>
@@ -2073,10 +2025,6 @@
             <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
-            
-            <!-- ===== FIX: ADDED MENU BACKDROP FOR MOBILE ===== -->
-            <div class="menu-backdrop" id="menuBackdrop"></div>
-            
             <ul class="nav-links" role="menubar">
                 <li role="none"><a href="#home" class="active" role="menuitem">Home</a></li>
                 <li role="none"><a href="#stays" role="menuitem">Featured</a></li>
@@ -2097,17 +2045,17 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- CHANGE 3: Hero Section - NOW A 2-IMAGE CAROUSEL -->
     <section class="hero" id="home" role="region" aria-label="Hero section">
         <!-- Hero Carousel -->
         <div class="hero-carousel">
             <div class="swiper heroSwiper">
                 <div class="swiper-wrapper">
-                    <!-- Slide 1 -->
+                    <!-- Slide 1: Ocean-facing balcony / exterior (NEW IMAGE - NO DIVER) -->
                     <div class="swiper-slide">
                         <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
                     </div>
-                    <!-- Slide 2 -->
+                    <!-- Slide 2: Bright interior with coastal feel -->
                     <div class="swiper-slide">
                         <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
                     </div>
@@ -2120,7 +2068,7 @@
             <h2>Experience Luxury on the Kenyan Coast</h2>
             <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
             
-            <!-- Search Box -->
+            <!-- UPDATED: Search Box with 3 inputs - ADDED VILLA OPTION -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
@@ -2143,6 +2091,7 @@
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>
+                    <!-- UPDATED: Property type dropdown with normalized values - ADDED VILLA -->
                     <select id="propertyType" aria-label="Property type">
                         <option value="">Any Type</option>
                         <option value="studio">Studio</option>
@@ -2187,7 +2136,7 @@
         </div>
     </section>
 
-    <!-- Featured Stays -->
+    <!-- Featured Stays - UPDATED with View All button -->
     <section class="featured-stays" id="stays">
         <div class="section-title">
             <h2>Featured Properties</h2>
@@ -2205,7 +2154,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- UPDATED: Services Section with WhatsApp CTAs -->
     <section class="services" id="services" role="region" aria-label="Our services">
         <div class="section-title">
             <h2>Complete Coastal Experience</h2>
@@ -2275,7 +2224,7 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
+    <!-- Testimonials - FIXED with proper display -->
     <section class="testimonials" id="testimonials" role="region" aria-label="Client testimonials">
         <div class="section-title">
             <h2>What Our Guests Say</h2>
@@ -2283,7 +2232,7 @@
         </div>
         <div class="testimonials-container">
             <div class="testimonial-slider">
-                <!-- Testimonial slides remain the same -->
+                <!-- Testimonial 1 -->
                 <div class="testimonial-slide active">
                     <div class="testimonial-content">
                         <p>"Absolutely stunning villa in Nyali! The PwaniStays team made our family vacation seamless from airport pickup to checkout. The kids loved the private pool!"</p>
@@ -2294,7 +2243,138 @@
                         </div>
                     </div>
                 </div>
-                <!-- ... other testimonials ... -->
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"As a local from Nairobi looking for a coastal getaway, PwaniStays provided excellent service. The Bamburi beach apartment was perfect and the rates were very competitive."</p>
+                        <div class="testimonial-author">
+                            <h4>David Mwangi</h4>
+                            <p>From Nairobi, Kenya</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Our honeymoon in Diani was magical thanks to PwaniStays. They arranged everything from the villa to a romantic dhow cruise. Highly recommended!"</p>
+                        <div class="testimonial-author">
+                            <h4>Maria & Thomas</h4>
+                            <p>From Berlin, Germany</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 4 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The service was exceptional! From the moment we landed in Mombasa until we left, everything was perfectly organized. The villa in Watamu was breathtaking."</p>
+                        <div class="testimonial-author">
+                            <h4>James Omondi</h4>
+                            <p>From Kampala, Uganda</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 5 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"I've used PwaniStays three times now for business retreats. Their corporate packages are excellent and the team is very professional."</p>
+                        <div class="testimonial-author">
+                            <h4>Fatima Ali</h4>
+                            <p>From Dubai, UAE</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 6 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The Shanzu apartment was exactly as pictured. Clean, modern, and perfectly located. The local host was incredibly helpful with restaurant recommendations."</p>
+                        <div class="testimonial-author">
+                            <h4>Robert Chen</h4>
+                            <p>From Shanghai, China</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 7 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Perfect for our large family reunion. The 6-bedroom villa in Diani accommodated all 12 of us comfortably. The chef prepared amazing Swahili dishes!"</p>
+                        <div class="testimonial-author">
+                            <h4>The Patel Family</h4>
+                            <p>From Mumbai, India</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 8 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"As a solo female traveler, I felt completely safe and well taken care of. The PwaniStays team checked in regularly and were always available."</p>
+                        <div class="testimonial-author">
+                            <h4>Sophie Martin</h4>
+                            <p>From Paris, France</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 9 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"We booked last minute and were amazed by how quickly they arranged everything. The transfer was waiting at the airport as promised."</p>
+                        <div class="testimonial-author">
+                            <h4>Michael & Grace</h4>
+                            <p>From Johannesburg, South Africa</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 10 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The marine experiences they arranged were unforgettable. Snorkeling in Watamu Marine Park was the highlight of our trip."</p>
+                        <div class="testimonial-author">
+                            <h4>Carlos Rodriguez</h4>
+                            <p>From Barcelona, Spain</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 11 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Excellent value for money. The Nyali villa was luxurious but affordable, especially with the direct booking discount they offered."</p>
+                        <div class="testimonial-author">
+                            <h4>Linda Wang</h4>
+                            <p>From Singapore</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 12 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"We've been coming to the Kenyan coast for years, but this was our first time using PwaniStays. It was by far our best experience yet!"</p>
+                        <div class="testimonial-author">
+                            <h4>The Smith Family</h4>
+                            <p>From Sydney, Australia</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <button class="testimonial-prev" aria-label="Previous testimonial">‹</button>
             <button class="testimonial-next" aria-label="Next testimonial">›</button>
@@ -2302,7 +2382,7 @@
         </div>
     </section>
 
-    <!-- Leave Feedback Section -->
+    <!-- NEW: Leave Feedback Section -->
     <section class="leave-feedback" id="leave-feedback">
         <div class="section-title">
             <h2>Share Your Experience</h2>
@@ -2361,7 +2441,43 @@
             <p>From historic Mombasa to pristine Diani</p>
         </div>
         <div class="destinations-container">
-            <!-- Destination cards remain the same -->
+            <div class="destination-card">
+                <!-- UPDATED: Added proper Mombasa thumbnail image -->
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    <h3>Mombasa</h3>
+                </div>
+                <div class="destination-content">
+                    <p>Historic Old Town, Fort Jesus, and vibrant markets. Perfect for culture enthusiasts.</p>
+                    <a href="#" onclick="filterByLocation('Mombasa')" class="btn-small">View Properties</a>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    <h3>Diani</h3>
+                </div>
+                <div class="destination-content">
+                    <p>White sandy beaches, luxury resorts, and water sports. Ideal for beach lovers.</p>
+                    <a href="#" onclick="filterByLocation('Diani')" class="btn-small">View Properties</a>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    <h3>Watamu</h3>
+                </div>
+                <div class="destination-content">
+                    <p>Marine National Park, snorkeling, and turtle watching. Great for marine adventures.</p>
+                    <a href="#" onclick="filterByLocation('Watamu')" class="btn-small">View Properties</a>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                    <h3>Nyali & Bamburi</h3>
+                </div>
+                <div class="destination-content">
+                    <p>Family-friendly beaches, restaurants, and entertainment. Perfect for family vacations.</p>
+                    <a href="#" onclick="filterByLocation('Nyali')" class="btn-small">View Properties</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -2437,10 +2553,11 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- UPDATED: Footer with working navigation links -->
     <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
+                <!-- UPDATED FOOTER LOGO -->
                 <div class="footer-logo">
                     <img src="/logo-footer.png" 
                          alt="PwaniStays - Luxury Coastal Stays" 
@@ -2453,6 +2570,7 @@
                 </div>
                 <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
                 <div class="social-links">
+                    <!-- UPDATED: Removed TripAdvisor and X, updated Instagram username -->
                     <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
@@ -2467,6 +2585,7 @@
             <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul>
+                    <!-- UPDATED: Working navigation links -->
                     <li><a href="#home">Home</a></li>
                     <li><a href="#stays">Featured Properties</a></li>
                     <li><a href="#services">Our Services</a></li>
@@ -2478,6 +2597,7 @@
             <div class="footer-col">
                 <h3>Coastal Destinations</h3>
                 <ul>
+                    <!-- UPDATED: Working location filter links -->
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Mombasa')">Mombasa</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Nyali')">Nyali</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Bamburi')">Bamburi</a></li>
@@ -2509,64 +2629,43 @@
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- Swiper JS -->
+    <!-- STEP 1 — Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        // ===== FIX: ENHANCED MOBILE MENU FUNCTIONALITY =====
+        // Add shortUUID function at the beginning
+        function shortUUID(uuid) {
+            return uuid.split("-")[0];
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile menu
             const menuToggle = document.querySelector('.menu-toggle');
             const navLinks = document.querySelector('.nav-links');
-            const menuBackdrop = document.getElementById('menuBackdrop');
             
             if (menuToggle) {
-                menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
+                menuToggle.addEventListener('click', function() {
                     navLinks.classList.toggle('active');
-                    menuBackdrop.classList.toggle('active');
                     const isExpanded = this.getAttribute('aria-expanded') === 'true';
                     this.setAttribute('aria-expanded', !isExpanded);
-                    this.innerHTML = isExpanded ? 
-                        '<i class="fas fa-bars" aria-hidden="true"></i>' : 
-                        '<i class="fas fa-times" aria-hidden="true"></i>';
                 });
                 
-                // Close menu when clicking backdrop
-                menuBackdrop.addEventListener('click', function() {
-                    navLinks.classList.remove('active');
-                    this.classList.remove('active');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                    menuToggle.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
-                });
-                
-                // Close menu when clicking any link
+                // UPDATED: Close mobile menu when clicking any link
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', (e) => {
-                        if (window.innerWidth <= 768) {
+                        // Only close if it's a hash link (internal navigation)
+                        if (link.getAttribute('href').startsWith('#')) {
                             navLinks.classList.remove('active');
-                            menuBackdrop.classList.remove('active');
                             menuToggle.setAttribute('aria-expanded', 'false');
-                            menuToggle.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
                         }
                     });
-                });
-                
-                // Close menu when pressing Escape key
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        menuBackdrop.classList.remove('active');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        menuToggle.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
-                    }
                 });
             }
             
             // Set current year
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
-            // Initialize calendar
+            // Initialize calendar with NO auto-selection
             initCalendarDates();
             
             // Initialize testimonials
@@ -2594,7 +2693,7 @@
                 }
             });
             
-            // Header Search Toggle
+            // PHASE 4 — Header Search Toggle
             const searchToggle = document.getElementById('searchToggle');
             const headerSearch = document.getElementById('headerSearch');
             
@@ -2632,6 +2731,7 @@
                         e.preventDefault();
                         const searchTerm = this.value.trim();
                         if (searchTerm) {
+                            // Use header search for keyword filtering
                             searchPropertiesWithKeyword(searchTerm);
                             // Close search on mobile
                             if (window.innerWidth <= 768) {
@@ -2644,13 +2744,13 @@
                 });
             }
             
-            // Initialize Hero Carousel
+            // CHANGE 3: Initialize Hero Carousel
             initHeroCarousel();
             
-            // Check for hash on initial page load
+            // NEW: Check for hash on initial page load
             checkAndScrollToHash();
             
-            // Add smooth scrolling for all internal links
+            // UPDATED: Add smooth scrolling for all internal links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const href = this.getAttribute('href');
@@ -2681,29 +2781,19 @@
             });
         });
         
-        // ===== FIX: FAVICON INDEXING TIPS =====
-        // After deploying these changes, here's what you should do:
-        // 1. Create a robots.txt file at https://pwanistays.com/robots.txt with:
-        /*
-           User-agent: *
-           Allow: /
-           Sitemap: https://pwanistays.com/sitemap.xml
-        */
+        // NEW: Function for service enquiries via WhatsApp
+        function serviceEnquiry(serviceName) {
+            const message = `Hello PwaniStays! I would like more information about your ${serviceName} services. Please provide details about availability, pricing, and what's included.`;
+            const whatsappNumber = "254738544784";
+            const encodedMessage = encodeURIComponent(message);
+            
+            window.open(
+                `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+                "_blank"
+            );
+        }
         
-        // 2. Create a sitemap.xml file at https://pwanistays.com/sitemap.xml
-        // 3. Submit your sitemap to Google Search Console
-        // 4. Create a site.webmanifest file for Android
-        // 5. Ensure all favicon files exist on your server
-        
-        // The rest of your JavaScript code remains the same...
-        // (All your existing JavaScript functions remain unchanged)
-        
-        // Supabase Configuration
-        const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        // Initialize Hero Carousel
+        // CHANGE 3: Initialize Hero Carousel Function
         function initHeroCarousel() {
             const heroSwiper = new Swiper('.heroSwiper', {
                 spaceBetween: 0,
@@ -2718,13 +2808,1417 @@
                 fadeEffect: {
                     crossFade: true
                 },
+                // No navigation or pagination
                 navigation: false,
                 pagination: false
             });
+            
+            console.log('Hero carousel initialized with 2 images (no diver)');
         }
         
-        // ... rest of your JavaScript code ...
+        // NEW: Function to check hash and scroll to property
+        function checkAndScrollToHash() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#property-')) {
+                // Extract the short UUID from the hash
+                const shortId = hash.replace('#property-', '');
+                
+                // Show search results section
+                document.getElementById('searchResults').style.display = 'block';
+                document.getElementById('stays').style.display = 'none';
+                
+                // Scroll to search results
+                document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+                
+                // Load all properties and then scroll to the specific one
+                loadAllPropertiesAndScroll(shortId);
+            }
+        }
         
+        // NEW: Modified loadAllProperties to accept scroll callback
+        async function loadAllPropertiesAndScroll(targetShortId) {
+            const container = document.getElementById('propertyList');
+            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading property...</div>';
+            
+            try {
+                const { data, error } = await supabase
+                    .from("properties")
+                    .select("*")
+                    .eq("is_active", true)
+                    .order("created_at", { ascending: false });
+                
+                if (error) {
+                    console.error("Error loading properties:", error);
+                    container.innerHTML = '<div class="no-properties"><p>Unable to load properties. Please try again later.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties"><p>No properties available at the moment. Check back soon!</p></div>';
+                    return;
+                }
+                
+                // FIXED: Clear container by removing child elements
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
+                // Create document fragment for batch append
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                
+                // Create all cards
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    cards.push({ property, card });
+                    fragment.appendChild(card);
+                });
+                
+                // Append all cards at once
+                container.appendChild(fragment);
+                
+                // Load images for each property
+                setTimeout(() => {
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                    
+                    // AFTER properties are loaded, try to find and scroll to the target
+                    setTimeout(() => {
+                        scrollToProperty(targetShortId);
+                    }, 500);
+                    
+                    // Debug after loading
+                    setTimeout(debugSwipers, 1000);
+                }, 300);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties"><p>Error loading properties. Please refresh the page.</p></div>';
+            }
+        }
+        
+        // NEW: Function to scroll to specific property
+        function scrollToProperty(shortId) {
+            // Try to find the element
+            const targetElement = document.getElementById(`property-${shortId}`);
+            
+            if (targetElement) {
+                // Scroll to the property
+                targetElement.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center'
+                });
+                
+                // Add highlight effect
+                targetElement.style.boxShadow = '0 0 0 3px var(--primary), 0 10px 25px rgba(0, 0, 0, 0.2)';
+                targetElement.style.transition = 'box-shadow 0.3s ease';
+                
+                // Remove highlight after 3 seconds
+                setTimeout(() => {
+                    targetElement.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
+                }, 3000);
+                
+                console.log(`Scrolled to property-${shortId}`);
+            } else {
+                console.log(`Could not find element with ID: property-${shortId}`);
+                
+                // Try alternative: look for any element with the short ID in its ID
+                const alternativeElement = document.querySelector(`[id*="${shortId}"]`);
+                if (alternativeElement) {
+                    alternativeElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center'
+                    });
+                    console.log(`Found alternative element: ${alternativeElement.id}`);
+                }
+            }
+        }
+        
+        // Supabase Configuration
+        const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // === FIXED: SWIPER INITIALIZATION WITH DESTROY + PROPER SIZING ===
+        function initializePropertySwiper(propertyId, images) {
+            const mainSwiperElement = document.querySelector(`#main-${propertyId}`);
+            const thumbSwiperElement = document.querySelector(`#thumb-${propertyId}`);
+            
+            if (!mainSwiperElement) {
+                console.log(`Main swiper element not found for property ${propertyId}`);
+                return null;
+            }
+            
+            // 🔥 CRITICAL: Destroy existing Swiper instances
+            if (mainSwiperElement.swiper) {
+                console.log(`Destroying existing Swiper for property ${propertyId}`);
+                mainSwiperElement.swiper.destroy(true, true);
+            }
+            
+            if (thumbSwiperElement && thumbSwiperElement.swiper) {
+                thumbSwiperElement.swiper.destroy(true, true);
+            }
+            
+            // Initialize thumbnail swiper if needed
+            let thumbsSwiper = null;
+            if (images.length > 1 && thumbSwiperElement) {
+                thumbSwiperElement.style.display = 'block';
+                
+                thumbsSwiper = new Swiper(thumbSwiperElement, {
+                    spaceBetween: 8,
+                    slidesPerView: Math.min(4, images.length),
+                    freeMode: true,
+                    watchSlidesProgress: true,
+                    breakpoints: {
+                        320: { slidesPerView: Math.min(3, images.length) },
+                        768: { slidesPerView: Math.min(4, images.length) }
+                    }
+                });
+            } else if (thumbSwiperElement) {
+                thumbSwiperElement.style.display = 'none';
+            }
+            
+            // Initialize main swiper with proper settings
+            const mainSwiper = new Swiper(mainSwiperElement, {
+                spaceBetween: 0,
+                loop: images.length > 1,
+                pagination: {
+                    el: mainSwiperElement.querySelector('.swiper-pagination'),
+                    clickable: true,
+                    dynamicBullets: true
+                },
+                navigation: false,
+                thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
+                autoplay: images.length > 1 ? {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                } : false,
+                effect: 'slide',
+                speed: 500,
+                preloadImages: false,
+                lazy: {
+                    loadPrevNext: true,
+                },
+                on: {
+                    init: function() {
+                        console.log(`✅ Swiper initialized for property ${propertyId} with ${images.length} images`);
+                        // Force update after init
+                        this.update();
+                    },
+                    error: function(error) {
+                        console.error(`❌ Swiper error for property ${propertyId}:`, error);
+                    }
+                }
+            });
+            
+            return mainSwiper;
+        }
+        
+        // === DEBUG FUNCTION ===
+        function debugSwipers() {
+            console.log('=== SWIPER DEBUG ===');
+            const swipers = document.querySelectorAll('.swiper');
+            console.log(`Total Swiper elements: ${swipers.length}`);
+            
+            swipers.forEach((el, i) => {
+                const hasSwiper = el.swiper ? '✅ ACTIVE' : '❌ NO INSTANCE';
+                const slideCount = el.querySelectorAll('.swiper-slide').length;
+                const duplicateCount = el.querySelectorAll('.swiper-slide-duplicate').length;
+                console.log(`Swiper ${i}: ${hasSwiper}, Slides: ${slideCount}, Duplicates: ${duplicateCount}`);
+            });
+        }
+        
+        // === PART 2: AMENITIES RENDERING + TRUNCATION FUNCTIONS ===
+        function renderAmenities(propertyId, description, expanded = false) {
+            const container = document.getElementById(`desc-${propertyId}`);
+            const toggleBtn = document.getElementById(`toggle-${propertyId}`);
+
+            if (!container || !description) return;
+
+            // Split by newline and filter out empty lines
+            const amenities = description.split('\n').filter(line => line.trim().length > 0);
+            const visible = expanded ? amenities : amenities.slice(0, 4);
+
+            container.innerHTML = visible.map(amenity => `<li>${amenity.trim()}</li>`).join('');
+
+            if (amenities.length > 4) {
+                toggleBtn.style.display = 'inline-block';
+                toggleBtn.textContent = expanded
+                    ? 'View Less'
+                    : `+ ${amenities.length - 4} more amenities`;
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+        }
+
+        function toggleAmenities(propertyId) {
+            const container = document.getElementById(`desc-${propertyId}`);
+            const isExpanded = container.classList.toggle('expanded');
+            
+            // Get the full description from data attribute
+            const fullDescription = container.dataset.full || '';
+            
+            renderAmenities(
+                propertyId,
+                fullDescription,
+                isExpanded
+            );
+        }
+        
+        // UPDATED: Improved search with exact phrase matching and plural/singular handling
+        function normalizeSearch(q) {
+            if (!q) return '';
+            
+            // Convert to lowercase
+            let normalized = q.toLowerCase();
+            
+            // Handle bedroom plural/singular variations
+            normalized = normalized
+                .replace(/bedrooms?/gi, "bedroom")
+                .replace(/1\s*bedroom/gi, "1br")
+                .replace(/2\s*bedrooms?/gi, "2br")
+                .replace(/3\s*bedrooms?/gi, "3br")
+                .replace(/4\s*bedrooms?/gi, "4br")
+                .replace(/5\s*bedrooms?/gi, "5br")
+                .replace(/one\s*bedroom/gi, "1br")
+                .replace(/two\s*bedrooms?/gi, "2br")
+                .replace(/three\s*bedrooms?/gi, "3br")
+                .replace(/four\s*bedrooms?/gi, "4br")
+                .replace(/five\s*bedrooms?/gi, "5br");
+            
+            return normalized;
+        }
+        
+        // UPDATED: Multi-keyword search function with exact phrase matching
+        function buildSearchQuery(keyword) {
+            const normalizedKeyword = normalizeSearch(keyword);
+            const keywords = normalizedKeyword.split(' ').filter(k => k.length > 0);
+            
+            let query = supabase
+                .from("properties")
+                .select("*")
+                .eq("is_active", true);
+            
+            if (keywords.length === 0) return query;
+            
+            // Build OR conditions for each keyword
+            let conditions = [];
+            keywords.forEach(word => {
+                if (word.length > 0) {
+                    // Search in multiple fields
+                    conditions.push(`title.ilike.%${word}%`);
+                    conditions.push(`description.ilike.%${word}%`);
+                    conditions.push(`location.ilike.%${word}%`);
+                    conditions.push(`unit_type.ilike.%${word}%`);
+                    
+                    // Also search for the original word (without normalization) for better matching
+                    conditions.push(`title.ilike.%${word.replace(/br$/, ' bedroom')}%`);
+                    conditions.push(`description.ilike.%${word.replace(/br$/, ' bedroom')}%`);
+                }
+            });
+            
+            // Also add exact phrase search
+            conditions.push(`title.ilike.%${normalizedKeyword}%`);
+            conditions.push(`description.ilike.%${normalizedKeyword}%`);
+            
+            if (conditions.length > 0) {
+                query = query.or(conditions.join(','));
+            }
+            
+            return query;
+        }
+        
+        // PHASE 5 — Season Pricing Logic
+        function isPeakSeason(date) {
+            if (!date) {
+                date = new Date();
+            }
+            const m = date.getMonth() + 1;
+            const d = date.getDate();
+            
+            // Peak season logic:
+            // 1. Jan 1-10
+            // 2. July, August, November, December
+            if (m === 1 && d <= 10) return true;
+            if ([7, 8, 11, 12].includes(m)) return true;
+            return false;
+        }
+        
+        // Calculate display price with commission
+        function calculateDisplayPrice(property, checkinDate = null) {
+            if (!property) return 'N/A';
+            
+            // Use provided checkin date or current date
+            const date = checkinDate || new Date();
+            
+            // Determine base price based on season
+            const basePrice = isPeakSeason(date) 
+                ? (property.peak_price || 0) 
+                : (property.low_price || 0);
+            
+            // Apply 20% commission
+            const finalPrice = Math.round(basePrice * 1.2);
+            
+            // Format price with commas
+            return finalPrice.toLocaleString('en-KE', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+        }
+        
+        // UPDATED: Unit type labels for display - ADDED VILLA
+        const unitTypeLabels = {
+            studio: "Studio",
+            "1br": "1 Bedroom",
+            "2br": "2 Bedrooms",
+            "3br": "3 Bedrooms",
+            "4br": "4 Bedrooms",
+            "5br": "5 Bedrooms",
+            "villa": "Villa"
+        };
+        
+        // UPDATED: Create property card function with proper Swiper class names and short UUID
+        function createPropertyCard(property) {
+            const card = document.createElement('div');
+            card.className = 'property-card';
+            // UPDATE: Use shortUUID for the id - THIS IS CRITICAL
+            const shortId = shortUUID(property.id);
+            card.id = `property-${shortId}`;
+            
+            // Calculate price
+            const displayPrice = calculateDisplayPrice(property, selectedCheckin);
+            
+            // Get property type display
+            const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
+            
+            // FIXED: Show beds from property.beds instead of bedrooms
+            const bedsCount = property.beds || 1;
+            const bedsDisplay = `${bedsCount} ${bedsCount === 1 ? 'Bed' : 'Beds'}`;
+            
+            // Escape special characters for safety
+            const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
+            
+            card.innerHTML = `
+                <div class="property-gallery">
+                    <div class="swiper mainSwiper" id="main-${property.id}">
+                        <div class="swiper-wrapper">
+                            <!-- Images will be loaded here -->
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                     alt="${property.title || 'Property'} placeholder image"
+                                     onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="swiper thumbSwiper" id="thumb-${property.id}" style="display: none;">
+                        <div class="swiper-wrapper"></div>
+                    </div>
+                </div>
+                
+                <div class="property-content">
+                    <h3 class="property-title">${property.title || 'Premium Property'}</h3>
+                    <div class="property-meta">
+                        <span class="property-location">
+                            <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
+                        </span>
+                        <span class="property-type">${propertyTypeDisplay}</span>
+                    </div>
+                    
+                    <!-- === PART 2: AMENITIES AS POINTS === -->
+                    <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}">
+                    </ul>
+                    <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;">
+                    </button>
+                    
+                    <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
+                    
+                    <!-- FIXED: Updated footer with beds information and removed internal_code -->
+                    <div class="property-footer">
+                        <div class="property-info">
+                            <div class="property-beds">
+                                <i class="fas fa-bed"></i> ${bedsDisplay}
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
+                            <i class="fas fa-calendar-alt"></i> Check Availability
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Render amenities after card is created
+            setTimeout(() => {
+                renderAmenities(property.id, property.description, false);
+            }, 0);
+            
+            return card;
+        }
+        
+        // FIXED: Load Property Images Function with proper Swiper initialization
+        async function loadPropertyImages(property) {
+            // Wait a bit to ensure DOM is ready
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            // Check if the card exists in DOM - using short UUID
+            const shortId = shortUUID(property.id);
+            const card = document.querySelector(`#property-${shortId}`);
+            if (!card) {
+                console.log(`Card for property ${property.id} (short: ${shortId}) not found in DOM, skipping image load.`);
+                return;
+            }
+            
+            const mainWrapper = card.querySelector(`#main-${property.id} .swiper-wrapper`);
+            if (!mainWrapper) {
+                console.log(`Main wrapper not found for property ${property.id}`);
+                return;
+            }
+            
+            let images = [];
+            
+            // Try to load from Supabase storage first
+            try {
+                console.log(`Loading images for property: ${property.id}`);
+                
+                // List all files in the property's folder
+                const { data: files, error } = await supabase
+                    .storage
+                    .from('property_images')
+                    .list(property.id);
+                
+                if (error) {
+                    console.log(`Error listing files for ${property.id}:`, error.message);
+                } else if (files && files.length > 0) {
+                    // Sort files by name (01.jpeg, 02.jpeg, etc.)
+                    files.sort((a, b) => {
+                        // Extract numbers from filenames for sorting
+                        const numA = parseInt(a.name.match(/\d+/)?.[0]) || 0;
+                        const numB = parseInt(b.name.match(/\d+/)?.[0]) || 0;
+                        return numA - numB;
+                    });
+                    
+                    // Get public URLs for each file
+                    files.forEach(file => {
+                        const { data } = supabase
+                            .storage
+                            .from('property_images')
+                            .getPublicUrl(`${property.id}/${file.name}`);
+                        
+                        if (data && data.publicUrl) {
+                            images.push(data.publicUrl);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.log(`Error loading storage images for property ${property.id}:`, error);
+            }
+            
+            // If no images found in storage, use the primary image or placeholder
+            if (images.length === 0) {
+                if (property.image_url) {
+                    images.push(property.image_url);
+                } else {
+                    images.push('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+                }
+            }
+            
+            // Clear existing content
+            mainWrapper.innerHTML = '';
+            
+            const thumbWrapper = card.querySelector(`#thumb-${property.id} .swiper-wrapper`);
+            if (thumbWrapper) thumbWrapper.innerHTML = '';
+            
+            // Render slides
+            images.forEach((url, index) => {
+                mainWrapper.innerHTML += `
+                    <div class="swiper-slide">
+                        <img src="${url}" alt="${property.title || 'Property'} image ${index + 1}" 
+                             onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                `;
+                
+                if (thumbWrapper && images.length > 1) {
+                    thumbWrapper.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${url}" alt="${property.title || 'Property'} thumbnail ${index + 1}"
+                                 onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                        </div>
+                    `;
+                }
+            });
+            
+            // 🔥 CRITICAL: Initialize Swiper with destroy fix and proper sizing
+            setTimeout(() => {
+                initializePropertySwiper(property.id, images);
+            }, 200);
+        }
+        
+        // Calendar functionality
+        let selectedCheckin = null;
+        let selectedCheckout = null;
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let isCalendarVisible = false;
+
+        function initCalendarDates() {
+            // Initialize with NO dates selected - user must choose
+            selectedCheckin = null;
+            selectedCheckout = null;
+            
+            updateDateRangeInput();
+        }
+
+        function updateDateRangeInput() {
+            const dateRangeInput = document.getElementById('dateRange');
+            if (dateRangeInput) {
+                if (selectedCheckin && selectedCheckout) {
+                    dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
+                } else if (selectedCheckin) {
+                    dateRangeInput.value = `${formatDate(selectedCheckin)} → Select checkout`;
+                } else {
+                    dateRangeInput.value = 'Select check-in → Select check-out';
+                }
+            }
+        }
+
+        function showCalendar() {
+            generateCalendar();
+            
+            document.getElementById('calendarContainer').style.display = 'block';
+            document.getElementById('calendarBackdrop').style.display = 'block';
+            isCalendarVisible = true;
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideCalendar() {
+            document.getElementById('calendarContainer').style.display = 'none';
+            document.getElementById('calendarBackdrop').style.display = 'none';
+            isCalendarVisible = false;
+            
+            document.body.style.overflow = '';
+        }
+
+        function generateCalendar() {
+            const calendar = document.getElementById('calendarContainer');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let html = `
+                <div class="calendar-header">
+                    <h4>Select Check-in & Check-out Dates</h4>
+                    <div class="calendar-nav">
+                        <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
+                        <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
+                        <button onclick="changeMonth(1)" aria-label="Next month">›</button>
+                    </div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+            `;
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            // Empty cells before month starts
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="calendar-day disabled"></div>`;
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                date.setHours(0, 0, 0, 0);
+
+                const isToday = isSameDay(date, today);
+                const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
+                const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
+                const isDisabled = date < today;
+                const isBetween =
+                    selectedCheckin &&
+                    selectedCheckout &&
+                    date > selectedCheckin &&
+                    date < selectedCheckout;
+
+                let className = "calendar-day";
+                if (isToday) className += " today";
+                if (isCheckin) className += " selected";
+                if (isCheckout) className += " selected";
+                if (isDisabled) className += " disabled";
+                if (isBetween) className += " between";
+
+                const onClick = isDisabled
+                    ? ""
+                    : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+
+                html += `<div class="${className}" ${onClick}>${day}</div>`;
+            }
+
+            // Fill up to 6 rows (42 cells) to keep calendar compact
+            const totalCells = firstDay + daysInMonth;
+            const remaining = 42 - totalCells;
+
+            for (let i = 0; i < remaining; i++) {
+                html += `<div class="calendar-day disabled"></div>`;
+            }
+
+            html += `
+                </div>
+                <div class="selected-dates-display">
+                    <div>
+                        <strong>Check-in</strong><br>
+                        ${selectedCheckin ? formatDate(selectedCheckin) : "Not selected"}
+                    </div>
+                    <div>
+                        <strong>Check-out</strong><br>
+                        ${selectedCheckout ? formatDate(selectedCheckout) : "Not selected"}
+                    </div>
+                </div>
+                <div class="calendar-actions">
+                    <button class="calendar-clear" onclick="clearDates()">Clear Dates</button>
+                    <button class="calendar-apply" onclick="applyDates()">Apply Dates</button>
+                </div>
+            `;
+
+            calendar.innerHTML = html;
+        }
+
+        function selectDate(day, month, year) {
+            const date = new Date(year, month, day);
+            date.setHours(0, 0, 0, 0);
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (date < today) return;
+
+            if (!selectedCheckin) {
+                // First click: set as check-in
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else if (!selectedCheckout && date > selectedCheckin) {
+                // Second click with valid date: set as check-out
+                selectedCheckout = date;
+            } else if (isSameDay(date, selectedCheckin)) {
+                // Clicking on check-in again: clear both
+                selectedCheckin = null;
+                selectedCheckout = null;
+            } else if (date < selectedCheckin) {
+                // Clicking earlier date: set as new check-in
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else if (selectedCheckin && !selectedCheckout && date <= selectedCheckin) {
+                // Clicking same or earlier date when only check-in is set: set as new check-in
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else {
+                // Otherwise: set as check-out
+                selectedCheckout = date;
+            }
+
+            updateDateRangeInput();
+            generateCalendar();
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar();
+        }
+
+        function clearDates() {
+            selectedCheckin = null;
+            selectedCheckout = null;
+            
+            updateDateRangeInput();
+            generateCalendar();
+        }
+
+        function applyDates() {
+            if (!selectedCheckin || !selectedCheckout) {
+                alert("Please select both check-in and check-out dates");
+                return;
+            }
+            
+            if (selectedCheckin >= selectedCheckout) {
+                alert("Check-out date must be after check-in date");
+                return;
+            }
+            
+            hideCalendar();
+        }
+
+        function isSameDay(date1, date2) {
+            if (!date1 || !date2) return false;
+            return date1.getFullYear() === date2.getFullYear() &&
+                   date1.getMonth() === date2.getMonth() &&
+                   date1.getDate() === date2.getDate();
+        }
+
+        function getMonthName(month) {
+            const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[month];
+        }
+
+        function formatDate(date) {
+            if (!date) return '';
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+        
+        // FIXED: Header search functionality with multi-keyword support
+        async function searchPropertiesWithKeyword(keyword) {
+            // Show search results section
+            document.getElementById('searchResults').style.display = 'block';
+            document.getElementById('stays').style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+            
+            // Update results header
+            const resultsHeader = document.getElementById('resultsHeader');
+            const searchCriteria = document.getElementById('searchCriteria');
+            const datesCriteria = document.getElementById('datesCriteria');
+            
+            searchCriteria.textContent = `Search results for: "${keyword}"`;
+            datesCriteria.textContent = (selectedCheckin && selectedCheckout) 
+                ? `Dates: ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}`
+                : 'Flexible dates';
+            
+            resultsHeader.style.display = 'block';
+            
+            // Load filtered properties with keyword
+            await loadFilteredPropertiesWithKeyword(keyword);
+        }
+        
+        // FIXED: Load filtered properties with multi-keyword search and proper DOM rendering
+        async function loadFilteredPropertiesWithKeyword(keyword) {
+            const container = document.getElementById('propertyList');
+            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
+            
+            try {
+                // Build query with multiple keyword support
+                let query = buildSearchQuery(keyword);
+                
+                query = query.order('created_at', { ascending: false });
+                
+                const { data, error } = await query;
+                
+                if (error) {
+                    console.error("Search error:", error);
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your search.</p><p>Try different keywords or browse all properties.</p></div>';
+                    return;
+                }
+                
+                // Update results count
+                document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'} for "${keyword}"`;
+                
+                // FIXED: Clear container by removing child elements instead of innerHTML
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
+                // FIXED: Create document fragment for batch append
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                
+                // First create all cards and append to fragment
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    cards.push({ property, card });
+                    fragment.appendChild(card);
+                });
+                
+                // Append all cards at once
+                container.appendChild(fragment);
+                
+                // THEN load images for each property after DOM is ready
+                setTimeout(() => {
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                    // Debug after loading
+                    setTimeout(debugSwipers, 500);
+                }, 300);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Unable to search properties. Please check your connection.</p></div>';
+            }
+        }
+        
+        // PHASE 4 — Search Properties Function (UPDATED - no keywords parameter)
+        async function searchProperties() {
+            const location = document.getElementById('searchLocation').value;
+            const propertyType = document.getElementById('propertyType').value;
+            
+            // Show search results section
+            document.getElementById('searchResults').style.display = 'block';
+            document.getElementById('stays').style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+            
+            // Update results header
+            const resultsHeader = document.getElementById('resultsHeader');
+            const searchCriteria = document.getElementById('searchCriteria');
+            const datesCriteria = document.getElementById('datesCriteria');
+            
+            let criteriaText = [];
+            if (location) criteriaText.push(location);
+            if (propertyType) {
+                criteriaText.push(unitTypeLabels[propertyType] || propertyType);
+            }
+            
+            searchCriteria.textContent = criteriaText.length > 0 
+                ? `Properties in ${criteriaText.join(' • ')}`
+                : 'All Properties';
+            
+            datesCriteria.textContent = (selectedCheckin && selectedCheckout) 
+                ? `Dates: ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}`
+                : 'Flexible dates';
+            
+            resultsHeader.style.display = 'block';
+            
+            // Load filtered properties (without keywords parameter)
+            await loadFilteredProperties(location, propertyType);
+        }
+        
+        // FIXED: Load filtered properties without keyword search with proper DOM rendering
+        async function loadFilteredProperties(location, propertyType) {
+            const container = document.getElementById('propertyList');
+            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
+            
+            try {
+                let query = supabase
+                    .from("properties")
+                    .select("*")
+                    .eq("is_active", true);
+                
+                // Apply location filter
+                if (location && location !== '') {
+                    query = query.eq('location', location);
+                }
+                
+                // Apply property type filter
+                if (propertyType && propertyType !== '') {
+                    query = query.eq('unit_type', propertyType);
+                }
+                
+                query = query.order('created_at', { ascending: false });
+                
+                const { data, error } = await query;
+                
+                if (error) {
+                    console.error("Search error:", error);
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your search.</p><p>Try different filters or browse all properties.</p></div>';
+                    return;
+                }
+                
+                // Update results count
+                document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
+                
+                // FIXED: Clear container by removing child elements instead of innerHTML
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
+                // FIXED: Create document fragment for batch append
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                
+                // First create all cards and append to fragment
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    cards.push({ property, card });
+                    fragment.appendChild(card);
+                });
+                
+                // Append all cards at once
+                container.appendChild(fragment);
+                
+                // THEN load images for each property after DOM is ready
+                setTimeout(() => {
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                    // Debug after loading
+                    setTimeout(debugSwipers, 500);
+                }, 300);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Unable to search properties. Please check your connection.</p></div>';
+            }
+        }
+        
+        // ORIGINAL: Load all properties with proper DOM rendering
+        async function loadAllProperties() {
+            const container = document.getElementById('propertyList');
+            container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading all properties...</div>';
+            
+            try {
+                const { data, error } = await supabase
+                    .from("properties")
+                    .select("*")
+                    .eq("is_active", true)
+                    .order("created_at", { ascending: false });
+                
+                if (error) {
+                    console.error("Error loading properties:", error);
+                    container.innerHTML = '<div class="no-properties"><p>Unable to load properties. Please try again later.</p></div>';
+                    return;
+                }
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-properties"><p>No properties available at the moment. Check back soon!</p></div>';
+                    return;
+                }
+                
+                // FIXED: Clear container by removing child elements instead of innerHTML
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
+                // FIXED: Create document fragment for batch append
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                
+                // First create all cards and append to fragment
+                data.forEach(property => {
+                    const card = createPropertyCard(property);
+                    cards.push({ property, card });
+                    fragment.appendChild(card);
+                });
+                
+                // Append all cards at once
+                container.appendChild(fragment);
+                
+                // THEN load images for each property after DOM is ready
+                setTimeout(() => {
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                    // Debug after loading
+                    setTimeout(debugSwipers, 500);
+                }, 300);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties"><p>Error loading properties. Please refresh the page.</p></div>';
+            }
+        }
+        
+        // FIXED: Load featured properties with proper DOM rendering
+        async function loadFeaturedProperties() {
+            const container = document.getElementById('featuredProperties');
+            
+            try {
+                // First try to get featured properties
+                let query = supabase
+                    .from("properties")
+                    .select("*")
+                    .eq("is_active", true)
+                    .eq("is_featured", true)
+                    .order("created_at", { ascending: false })
+                    .limit(6);
+                
+                const { data, error } = await query;
+                
+                if (error || !data || data.length === 0) {
+                    // If no featured properties, get recent ones
+                    query = supabase
+                        .from("properties")
+                        .select("*")
+                        .eq("is_active", true)
+                        .order("created_at", { ascending: false })
+                        .limit(6);
+                    
+                    const { data: recentData, error: recentError } = await query;
+                    
+                    if (recentError || !recentData || recentData.length === 0) {
+                        container.innerHTML = '<div class="no-properties">No featured properties at the moment.</div>';
+                        return;
+                    }
+                    
+                    displayProperties(recentData, container);
+                    return;
+                }
+                
+                displayProperties(data, container);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<div class="no-properties">Unable to load featured properties.</div>';
+            }
+        }
+        
+        // FIXED: Display properties with proper DOM rendering (no innerHTML overwrites)
+        function displayProperties(properties, container) {
+            // FIXED: Clear container by removing child elements instead of innerHTML
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+            
+            // FIXED: Create document fragment for batch append
+            const fragment = document.createDocumentFragment();
+            const cards = [];
+            
+            // First create all cards and append to fragment
+            properties.forEach(property => {
+                const card = createPropertyCard(property);
+                cards.push({ property, card });
+                fragment.appendChild(card);
+            });
+            
+            // Append all cards at once
+            container.appendChild(fragment);
+            
+            // THEN load images for each property after DOM is ready
+            setTimeout(() => {
+                cards.forEach(({ property }) => {
+                    loadPropertyImages(property);
+                });
+                // Debug after loading
+                setTimeout(debugSwipers, 500);
+            }, 300);
+        }
+        
+        // UPDATED: WhatsApp Message Function with short UUID anchor link
+        function openWhatsApp(property, checkin, checkout, rate) {
+            const anchorId = shortUUID(property.id);
+            const propertyLink = `https://pwanistays.com/#property-${anchorId}`;
+
+            const message = `
+Property: ${property.title}
+Link: ${propertyLink}
+Dates: ${checkin} → ${checkout}
+Rate: KES ${rate}/night
+
+Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
+`.trim();
+
+            const whatsappNumber = "254738544784";
+            const encodedMessage = encodeURIComponent(message);
+
+            window.open(
+                `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+                "_blank"
+            );
+        }
+        
+        // UPDATED: Check Availability function that uses openWhatsApp
+        function checkAvailability(propertyId, propertyTitle) {
+            // Get property element - try both with full ID and short UUID
+            let propertyElement = document.getElementById(`property-${propertyId}`);
+            if (!propertyElement) {
+                // Try with short UUID
+                const shortId = shortUUID(propertyId);
+                propertyElement = document.getElementById(`property-${shortId}`);
+                if (!propertyElement) {
+                    console.log(`Could not find property element for ID: ${propertyId}`);
+                    return;
+                }
+            }
+            
+            // Get price
+            const priceElement = propertyElement.querySelector('.property-price');
+            const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '') : 'Price on request';
+            
+            // Get dates
+            const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
+            const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
+            
+            // Create property object with needed data
+            const property = {
+                id: propertyId,
+                title: propertyTitle
+            };
+            
+            // Call the new openWhatsApp function
+            openWhatsApp(property, checkinDate, checkoutDate, price);
+        }
+        
+        function showAllProperties() {
+            // Show search results section
+            document.getElementById('searchResults').style.display = 'block';
+            document.getElementById('stays').style.display = 'none';
+            
+            // Clear any filters
+            document.getElementById('searchLocation').value = '';
+            document.getElementById('propertyType').value = '';
+            updateDateRangeInput();
+            
+            // Update results header
+            const resultsHeader = document.getElementById('resultsHeader');
+            const searchCriteria = document.getElementById('searchCriteria');
+            const datesCriteria = document.getElementById('datesCriteria');
+            
+            searchCriteria.textContent = 'All Properties';
+            datesCriteria.textContent = '';
+            resultsHeader.style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+            
+            // Load all properties
+            loadAllProperties();
+        }
+        
+        function filterByLocation(location) {
+            document.getElementById('searchLocation').value = location;
+            searchProperties();
+        }
+        
+        function clearSearch() {
+            // Reset filters
+            document.getElementById('searchLocation').value = '';
+            document.getElementById('propertyType').value = '';
+            updateDateRangeInput();
+            
+            // Show featured properties section
+            document.getElementById('searchResults').style.display = 'none';
+            document.getElementById('stays').style.display = 'block';
+            
+            // Scroll to featured properties
+            document.getElementById('stays').scrollIntoView({ behavior: 'smooth' });
+            
+            // Reload featured properties
+            loadFeaturedProperties();
+        }
+        
+        // Testimonials functionality
+        let currentTestimonial = 0;
+        const totalTestimonials = 12;
+        
+        function initTestimonials() {
+            const dotsContainer = document.querySelector('.testimonial-dots');
+            if (!dotsContainer) return;
+            
+            // Create dots
+            for (let i = 0; i < totalTestimonials; i++) {
+                const dot = document.createElement('button');
+                dot.className = `testimonial-dot ${i === 0 ? 'active' : ''}`;
+                dot.setAttribute('aria-label', `View testimonial ${i + 1}`);
+                dot.addEventListener('click', () => showTestimonial(i));
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Navigation buttons
+            const prevBtn = document.querySelector('.testimonial-prev');
+            const nextBtn = document.querySelector('.testimonial-next');
+            
+            if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
+            if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
+            
+            // Auto-rotate
+            setInterval(nextTestimonial, 5000);
+        }
+        
+        function showTestimonial(index) {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const dots = document.querySelectorAll('.testimonial-dot');
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            if (slides[index]) slides[index].classList.add('active');
+            if (dots[index]) dots[index].classList.add('active');
+            currentTestimonial = index;
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
+            showTestimonial(currentTestimonial);
+        }
+        
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+            showTestimonial(currentTestimonial);
+        }
+        
+        // Star Rating functionality
+        let selectedRating = 0;
+        
+        function initStarRating() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    setRating(rating);
+                });
+                
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    highlightStars(rating);
+                });
+            });
+            
+            // Reset stars when mouse leaves rating container
+            document.querySelector('.star-rating').addEventListener('mouseleave', function() {
+                highlightStars(selectedRating);
+            });
+        }
+        
+        function setRating(rating) {
+            selectedRating = rating;
+            highlightStars(rating);
+            
+            // Update rating text
+            const ratingText = document.getElementById('ratingText');
+            const ratingMessages = [
+                "Click to rate your experience",
+                "Poor - We'll do better",
+                "Fair - Room for improvement",
+                "Good - Satisfied with our service",
+                "Very Good - Had a great experience",
+                "Excellent - Absolutely loved it!"
+            ];
+            ratingText.textContent = ratingMessages[rating];
+        }
+        
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                const starRating = parseInt(star.getAttribute('data-rating'));
+                if (starRating <= rating) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+        
+        // Submit feedback
+        function submitFeedback() {
+            const name = document.getElementById('feedbackName').value.trim();
+            const city = document.getElementById('feedbackCity').value.trim();
+            const country = document.getElementById('feedbackCountry').value.trim();
+            const comment = document.getElementById('feedbackComment').value.trim();
+            
+            // Validation
+            if (!name) {
+                showFeedbackMessage('Please enter your name', 'error');
+                return;
+            }
+            
+            if (selectedRating === 0) {
+                showFeedbackMessage('Please select a rating', 'error');
+                return;
+            }
+            
+            if (!comment) {
+                showFeedbackMessage('Please enter your review', 'error');
+                return;
+            }
+            
+            // Disable submit button
+            const submitBtn = document.getElementById('submitFeedbackBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            
+            // Simulate submission (in real app, you would send to your backend)
+            setTimeout(() => {
+                // Show success message
+                showFeedbackMessage('Thank you for your feedback! Your review has been submitted successfully.', 'success');
+                
+                // Reset form
+                document.getElementById('feedbackName').value = '';
+                document.getElementById('feedbackCity').value = '';
+                document.getElementById('feedbackCountry').value = '';
+                document.getElementById('feedbackComment').value = '';
+                setRating(0);
+                
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit Your Review';
+                
+            }, 1500);
+        }
+        
+        function showFeedbackMessage(message, type) {
+            const messageDiv = document.getElementById('feedbackMessage');
+            messageDiv.textContent = message;
+            messageDiv.style.color = type === 'error' ? '#dc3545' : '#28a745';
+            messageDiv.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Form submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value.trim()
+            };
+            
+            if (!formData.name || !formData.email || !formData.phone || !formData.service || !formData.message) {
+                alert('Please fill all required fields marked with *');
+                return;
+            }
+            
+            alert(`Thank you ${formData.name}! Our coastal experts will contact you within 30 minutes.`);
+            e.target.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // UPDATED: Smooth scrolling for all anchor links
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[href^="#"]')) {
+                e.preventDefault();
+                const href = e.target.getAttribute('href');
+                if (href.startsWith('#property-')) {
+                    const shortId = href.replace('#property-', '');
+                    // Show search results and load properties
+                    document.getElementById('searchResults').style.display = 'block';
+                    document.getElementById('stays').style.display = 'none';
+                    loadAllPropertiesAndScroll(shortId);
+                } else {
+                    // Regular anchor link (like #home, #stays, etc.)
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>

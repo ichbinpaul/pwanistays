@@ -311,7 +311,7 @@
             border-radius: 15px;
             padding: 30px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
             gap: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-top: 30px;
@@ -464,7 +464,7 @@
         /* ✅ FIX 2 — FORCE MAIN IMAGE HEIGHT (CRITICAL) */
         .mainSwiper {
             width: 100%;
-            height: 260px;
+            height: 260px;   /* adjust if needed */
             border-radius: 14px;
             overflow: hidden;
         }
@@ -619,7 +619,7 @@
         
         /* REMOVED: property-code section */
         .property-code {
-            display: none;
+            display: none; /* Remove entirely as requested */
         }
         
         .no-properties {
@@ -828,7 +828,7 @@
             color: white;
         }
         
-        /* UPDATED: Services Section with WhatsApp CTAs */
+        /* Services Section */
         .services {
             background: var(--light);
         }
@@ -848,9 +848,6 @@
             text-align: center;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
         }
         
         .service-card:hover {
@@ -878,35 +875,6 @@
         
         .service-card p {
             color: var(--gray);
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-        
-        /* NEW: WhatsApp button for services */
-        .service-whatsapp-btn {
-            display: inline-block;
-            background: #25D366;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: var(--transition);
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-            margin-top: auto;
-            width: 100%;
-        }
-        
-        .service-whatsapp-btn:hover {
-            background: #128C7E;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-        }
-        
-        .service-whatsapp-btn i {
-            margin-right: 8px;
         }
         
         /* Why Choose Us */
@@ -952,7 +920,7 @@
         .testimonial-slider {
             position: relative;
             overflow: hidden;
-            height: 350px;
+            height: 350px; /* Increased height */
             margin-bottom: 50px;
         }
         
@@ -1503,10 +1471,10 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             z-index: 2000;
             padding: 15px;
-            width: 380px;
+            width: 380px; /* Reduced width */
             max-width: 90vw;
-            max-height: 500px;
-            overflow-y: hidden;
+            max-height: 500px; /* Fixed maximum height */
+            overflow-y: hidden; /* No scrolling needed */
             border: 2px solid var(--primary);
             animation: fadeIn 0.3s ease;
         }
@@ -1520,21 +1488,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 10px; /* Reduced margin */
             padding-bottom: 10px;
             border-bottom: 2px solid var(--light-gray);
         }
         
         .calendar-header h4 {
             color: var(--dark);
-            font-size: 1rem;
+            font-size: 1rem; /* Smaller font */
             margin: 0;
             font-weight: 600;
         }
         
         .calendar-nav {
             display: flex;
-            gap: 10px;
+            gap: 10px; /* Reduced gap */
             align-items: center;
         }
         
@@ -1542,7 +1510,7 @@
             background: var(--primary);
             color: white;
             border: none;
-            width: 32px;
+            width: 32px; /* Smaller buttons */
             height: 32px;
             border-radius: 50%;
             cursor: pointer;
@@ -1561,7 +1529,7 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 3px;
+            gap: 3px; /* Reduced gap */
             margin-bottom: 10px;
         }
         
@@ -1570,10 +1538,10 @@
             text-align: center;
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.75rem;
+            font-size: 0.75rem; /* Smaller font */
             background: #f8f9fa;
             border-radius: 4px;
-            height: 32px;
+            height: 32px; /* Fixed height */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1589,8 +1557,8 @@
             border: 2px solid transparent;
             color: var(--dark);
             background: white;
-            font-size: 0.8rem;
-            height: 32px;
+            font-size: 0.8rem; /* Smaller font */
+            height: 32px; /* Fixed height */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1636,7 +1604,7 @@
         .calendar-actions {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
+            gap: 10px; /* Reduced gap */
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid var(--light-gray);
@@ -1644,13 +1612,13 @@
         
         .calendar-actions button {
             flex: 1;
-            padding: 10px;
+            padding: 10px; /* Reduced padding */
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 0.9rem;
+            font-size: 0.9rem; /* Smaller font */
         }
         
         .calendar-clear {
@@ -1690,7 +1658,7 @@
             border-radius: 8px;
             display: flex;
             justify-content: space-around;
-            font-size: 0.85rem;
+            font-size: 0.85rem; /* Smaller font */
         }
         
         .selected-dates-display div {
@@ -1827,7 +1795,7 @@
             }
             
             .calendar-overlay {
-                width: 340px;
+                width: 340px; /* Even smaller on mobile */
                 padding: 12px;
             }
             
@@ -2039,8 +2007,7 @@
                     </button>
                     <input type="text" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
                 </li>
-                <!-- UPDATED: Book Now button now scrolls to contact section -->
-                <li role="none"><a href="#contact" class="btn-book" role="menuitem">Book Now</a></li>
+                <li role="none"><a href="#book-now" class="btn-book" role="menuitem">Book Now</a></li>
             </ul>
         </nav>
     </header>
@@ -2068,7 +2035,7 @@
             <h2>Experience Luxury on the Kenyan Coast</h2>
             <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
             
-            <!-- UPDATED: Search Box with 3 inputs - ADDED VILLA OPTION -->
+            <!-- UPDATED: Search Box with 3 inputs -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
@@ -2091,7 +2058,7 @@
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>
-                    <!-- UPDATED: Property type dropdown with normalized values - ADDED VILLA -->
+                    <!-- UPDATED: Property type dropdown with normalized values -->
                     <select id="propertyType" aria-label="Property type">
                         <option value="">Any Type</option>
                         <option value="studio">Studio</option>
@@ -2100,7 +2067,6 @@
                         <option value="3br">3 Bedrooms</option>
                         <option value="4br">4 Bedrooms</option>
                         <option value="5br">5 Bedrooms</option>
-                        <option value="villa">Villa</option>
                     </select>
                 </div>
                 <div class="search-btn-container">
@@ -2154,7 +2120,7 @@
         </div>
     </section>
 
-    <!-- UPDATED: Services Section with WhatsApp CTAs -->
+    <!-- Services Section -->
     <section class="services" id="services" role="region" aria-label="Our services">
         <div class="section-title">
             <h2>Complete Coastal Experience</h2>
@@ -2166,30 +2132,21 @@
                     <i class="fas fa-umbrella-beach" aria-hidden="true"></i>
                 </div>
                 <h3>Coastal Accommodation</h3>
-                <p>Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations. From budget-friendly options to luxurious 5-bedroom villas with private pools, we have the perfect stay for every traveler.</p>
-                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Coastal Accommodation')">
-                    <i class="fab fa-whatsapp"></i> Enquire About Stays
-                </button>
+                <p>Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations.</p>
             </div>
             <div class="service-card" role="article">
                 <div class="service-icon">
                     <i class="fas fa-plane-arrival" aria-hidden="true"></i>
                 </div>
                 <h3>Seamless Transfers</h3>
-                <p>Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service. Our professional drivers ensure safe, comfortable transfers in air-conditioned vehicles with complimentary bottled water.</p>
-                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Airport Transfers')">
-                    <i class="fab fa-whatsapp"></i> Book Transfers
-                </button>
+                <p>Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service.</p>
             </div>
             <div class="service-card" role="article">
                 <div class="service-icon">
                     <i class="fas fa-ship" aria-hidden="true"></i>
                 </div>
                 <h3>Marine Experiences</h3>
-                <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides. We arrange all equipment, permits, and transportation for unforgettable coastal adventures.</p>
-                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Marine Experiences')">
-                    <i class="fab fa-whatsapp"></i> Plan Marine Tours
-                </button>
+                <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides.</p>
             </div>
         </div>
     </section>
@@ -2553,7 +2510,7 @@
         </div>
     </section>
 
-    <!-- UPDATED: Footer with working navigation links -->
+    <!-- Footer -->
     <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
@@ -2585,7 +2542,6 @@
             <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul>
-                    <!-- UPDATED: Working navigation links -->
                     <li><a href="#home">Home</a></li>
                     <li><a href="#stays">Featured Properties</a></li>
                     <li><a href="#services">Our Services</a></li>
@@ -2597,7 +2553,6 @@
             <div class="footer-col">
                 <h3>Coastal Destinations</h3>
                 <ul>
-                    <!-- UPDATED: Working location filter links -->
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Mombasa')">Mombasa</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Nyali')">Nyali</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Bamburi')">Bamburi</a></li>
@@ -2635,7 +2590,7 @@
     <script>
         // Add shortUUID function at the beginning
         function shortUUID(uuid) {
-            return uuid.split("-")[0];
+            return uuid.split("-")[0]; // first 8 characters
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -2650,14 +2605,10 @@
                     this.setAttribute('aria-expanded', !isExpanded);
                 });
                 
-                // UPDATED: Close mobile menu when clicking any link
                 document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        // Only close if it's a hash link (internal navigation)
-                        if (link.getAttribute('href').startsWith('#')) {
-                            navLinks.classList.remove('active');
-                            menuToggle.setAttribute('aria-expanded', 'false');
-                        }
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
                     });
                 });
             }
@@ -2749,49 +2700,7 @@
             
             // NEW: Check for hash on initial page load
             checkAndScrollToHash();
-            
-            // UPDATED: Add smooth scrolling for all internal links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    
-                    // Skip if it's a javascript link or external link
-                    if (href === '#' || href.startsWith('javascript:')) {
-                        return;
-                    }
-                    
-                    // Don't prevent default for hash-only links
-                    if (href !== '#') {
-                        e.preventDefault();
-                        
-                        const targetId = href.substring(1);
-                        const targetElement = document.getElementById(targetId);
-                        
-                        if (targetElement) {
-                            window.scrollTo({
-                                top: targetElement.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                            
-                            // Update URL without page reload
-                            history.pushState(null, null, href);
-                        }
-                    }
-                });
-            });
         });
-        
-        // NEW: Function for service enquiries via WhatsApp
-        function serviceEnquiry(serviceName) {
-            const message = `Hello PwaniStays! I would like more information about your ${serviceName} services. Please provide details about availability, pricing, and what's included.`;
-            const whatsappNumber = "254738544784";
-            const encodedMessage = encodeURIComponent(message);
-            
-            window.open(
-                `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
-                "_blank"
-            );
-        }
         
         // CHANGE 3: Initialize Hero Carousel Function
         function initHeroCarousel() {
@@ -2800,7 +2709,7 @@
                 slidesPerView: 1,
                 loop: true,
                 autoplay: {
-                    delay: 7000,
+                    delay: 7000, // 7 seconds
                     disableOnInteraction: false,
                 },
                 speed: 1000,
@@ -3075,17 +2984,17 @@
             
             // Handle bedroom plural/singular variations
             normalized = normalized
-                .replace(/bedrooms?/gi, "bedroom")
-                .replace(/1\s*bedroom/gi, "1br")
-                .replace(/2\s*bedrooms?/gi, "2br")
-                .replace(/3\s*bedrooms?/gi, "3br")
-                .replace(/4\s*bedrooms?/gi, "4br")
-                .replace(/5\s*bedrooms?/gi, "5br")
-                .replace(/one\s*bedroom/gi, "1br")
-                .replace(/two\s*bedrooms?/gi, "2br")
-                .replace(/three\s*bedrooms?/gi, "3br")
-                .replace(/four\s*bedrooms?/gi, "4br")
-                .replace(/five\s*bedrooms?/gi, "5br");
+                .replace(/bedrooms?/gi, "bedroom")  // Convert "bedrooms" or "bedroom" to "bedroom"
+                .replace(/1\s*bedroom/gi, "1br")    // Convert "1 bedroom" to "1br"
+                .replace(/2\s*bedrooms?/gi, "2br")  // Convert "2 bedroom" or "2 bedrooms" to "2br"
+                .replace(/3\s*bedrooms?/gi, "3br")  // Convert "3 bedroom" or "3 bedrooms" to "3br"
+                .replace(/4\s*bedrooms?/gi, "4br")  // Convert "4 bedroom" or "4 bedrooms" to "4br"
+                .replace(/5\s*bedrooms?/gi, "5br")  // Convert "5 bedroom" or "5 bedrooms" to "5br"
+                .replace(/one\s*bedroom/gi, "1br")  // Convert "one bedroom" to "1br"
+                .replace(/two\s*bedrooms?/gi, "2br") // Convert "two bedroom(s)" to "2br"
+                .replace(/three\s*bedrooms?/gi, "3br") // Convert "three bedroom(s)" to "3br"
+                .replace(/four\s*bedrooms?/gi, "4br") // Convert "four bedroom(s)" to "4br"
+                .replace(/five\s*bedrooms?/gi, "5br"); // Convert "five bedroom(s)" to "5br"
             
             return normalized;
         }
@@ -3134,7 +3043,7 @@
             if (!date) {
                 date = new Date();
             }
-            const m = date.getMonth() + 1;
+            const m = date.getMonth() + 1; // JavaScript months are 0-11
             const d = date.getDate();
             
             // Peak season logic:
@@ -3167,15 +3076,14 @@
             });
         }
         
-        // UPDATED: Unit type labels for display - ADDED VILLA
+        // Unit type labels for display
         const unitTypeLabels = {
             studio: "Studio",
             "1br": "1 Bedroom",
             "2br": "2 Bedrooms",
             "3br": "3 Bedrooms",
             "4br": "4 Bedrooms",
-            "5br": "5 Bedrooms",
-            "villa": "Villa"
+            "5br": "5 Bedrooms"
         };
         
         // UPDATED: Create property card function with proper Swiper class names and short UUID
@@ -3240,6 +3148,7 @@
                             <div class="property-beds">
                                 <i class="fas fa-bed"></i> ${bedsDisplay}
                             </div>
+                            <!-- REMOVED: property-code div entirely -->
                         </div>
                         <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
                             <i class="fas fa-calendar-alt"></i> Check Availability
@@ -4195,7 +4104,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // UPDATED: Smooth scrolling for all anchor links
+        // NEW: Add smooth scrolling for anchor links when clicking on page
         document.addEventListener('click', function(e) {
             if (e.target.matches('a[href^="#"]')) {
                 e.preventDefault();
@@ -4206,16 +4115,6 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                     document.getElementById('searchResults').style.display = 'block';
                     document.getElementById('stays').style.display = 'none';
                     loadAllPropertiesAndScroll(shortId);
-                } else {
-                    // Regular anchor link (like #home, #stays, etc.)
-                    const targetId = href.substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
                 }
             }
         });

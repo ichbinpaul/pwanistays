@@ -2629,16 +2629,243 @@
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- STEP 1 — Swiper JS -->
+    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        // Add shortUUID function at the beginning
-        function shortUUID(uuid) {
-            return uuid.split("-")[0];
+        // ========== FIX 1: Move calendar functions to the TOP ==========
+        // Calendar variables
+        let selectedCheckin = null;
+        let selectedCheckout = null;
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let isCalendarVisible = false;
+
+        // Define showCalendar FIRST so it's available when HTML onclick runs
+        function showCalendar() {
+            generateCalendar();
+            
+            document.getElementById('calendarContainer').style.display = 'block';
+            document.getElementById('calendarBackdrop').style.display = 'block';
+            isCalendarVisible = true;
+            
+            document.body.style.overflow = 'hidden';
         }
 
+        function hideCalendar() {
+            document.getElementById('calendarContainer').style.display = 'none';
+            document.getElementById('calendarBackdrop').style.display = 'none';
+            isCalendarVisible = false;
+            
+            document.body.style.overflow = '';
+        }
+
+        function initCalendarDates() {
+            selectedCheckin = null;
+            selectedCheckout = null;
+            updateDateRangeInput();
+        }
+
+        function updateDateRangeInput() {
+            const dateRangeInput = document.getElementById('dateRange');
+            if (dateRangeInput) {
+                if (selectedCheckin && selectedCheckout) {
+                    dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
+                } else if (selectedCheckin) {
+                    dateRangeInput.value = `${formatDate(selectedCheckin)} → Select checkout`;
+                } else {
+                    dateRangeInput.value = 'Select check-in → Select check-out';
+                }
+            }
+        }
+
+        function generateCalendar() {
+            const calendar = document.getElementById('calendarContainer');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let html = `
+                <div class="calendar-header">
+                    <h4>Select Check-in & Check-out Dates</h4>
+                    <div class="calendar-nav">
+                        <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
+                        <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
+                        <button onclick="changeMonth(1)" aria-label="Next month">›</button>
+                    </div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+            `;
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="calendar-day disabled"></div>`;
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                date.setHours(0, 0, 0, 0);
+
+                const isToday = isSameDay(date, today);
+                const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
+                const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
+                const isDisabled = date < today;
+                const isBetween =
+                    selectedCheckin &&
+                    selectedCheckout &&
+                    date > selectedCheckin &&
+                    date < selectedCheckout;
+
+                let className = "calendar-day";
+                if (isToday) className += " today";
+                if (isCheckin) className += " selected";
+                if (isCheckout) className += " selected";
+                if (isDisabled) className += " disabled";
+                if (isBetween) className += " between";
+
+                const onClick = isDisabled
+                    ? ""
+                    : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+
+                html += `<div class="${className}" ${onClick}>${day}</div>`;
+            }
+
+            const totalCells = firstDay + daysInMonth;
+            const remaining = 42 - totalCells;
+
+            for (let i = 0; i < remaining; i++) {
+                html += `<div class="calendar-day disabled"></div>`;
+            }
+
+            html += `
+                </div>
+                <div class="selected-dates-display">
+                    <div>
+                        <strong>Check-in</strong><br>
+                        ${selectedCheckin ? formatDate(selectedCheckin) : "Not selected"}
+                    </div>
+                    <div>
+                        <strong>Check-out</strong><br>
+                        ${selectedCheckout ? formatDate(selectedCheckout) : "Not selected"}
+                    </div>
+                </div>
+                <div class="calendar-actions">
+                    <button class="calendar-clear" onclick="clearDates()">Clear Dates</button>
+                    <button class="calendar-apply" onclick="applyDates()">Apply Dates</button>
+                </div>
+            `;
+
+            calendar.innerHTML = html;
+        }
+
+        function selectDate(day, month, year) {
+            const date = new Date(year, month, day);
+            date.setHours(0, 0, 0, 0);
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (date < today) return;
+
+            if (!selectedCheckin) {
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else if (!selectedCheckout && date > selectedCheckin) {
+                selectedCheckout = date;
+            } else if (isSameDay(date, selectedCheckin)) {
+                selectedCheckin = null;
+                selectedCheckout = null;
+            } else if (date < selectedCheckin) {
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else if (selectedCheckin && !selectedCheckout && date <= selectedCheckin) {
+                selectedCheckin = date;
+                selectedCheckout = null;
+            } else {
+                selectedCheckout = date;
+            }
+
+            updateDateRangeInput();
+            generateCalendar();
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar();
+        }
+
+        function clearDates() {
+            selectedCheckin = null;
+            selectedCheckout = null;
+            updateDateRangeInput();
+            generateCalendar();
+        }
+
+        function applyDates() {
+            if (!selectedCheckin || !selectedCheckout) {
+                alert("Please select both check-in and check-out dates");
+                return;
+            }
+            
+            if (selectedCheckin >= selectedCheckout) {
+                alert("Check-out date must be after check-in date");
+                return;
+            }
+            
+            hideCalendar();
+        }
+
+        function isSameDay(date1, date2) {
+            if (!date1 || !date2) return false;
+            return date1.getFullYear() === date2.getFullYear() &&
+                   date1.getMonth() === date2.getMonth() &&
+                   date1.getDate() === date2.getDate();
+        }
+
+        function getMonthName(month) {
+            const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[month];
+        }
+
+        function formatDate(date) {
+            if (!date) return '';
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        // ========== FIX 2: Define shortUUID function early ==========
+        function shortUUID(uuid) {
+            return uuid ? uuid.split("-")[0] : '';
+        }
+
+        // ========== FIX 3: Remove duplicate supabase declaration ==========
+        // Define supabase as a variable (not const) so it can be initialized later
+        let supabase = null;
+
         document.addEventListener('DOMContentLoaded', function() {
+            // ========== FIX 4: Initialize Supabase ONCE ==========
+            const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
+            const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            
             // Mobile menu
             const menuToggle = document.querySelector('.menu-toggle');
             const navLinks = document.querySelector('.nav-links');
@@ -2934,11 +3161,6 @@
                 }
             }
         }
-        
-        // Supabase Configuration
-        const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
         // === FIXED: SWIPER INITIALIZATION WITH DESTROY + PROPER SIZING ===
         function initializePropertySwiper(propertyId, images) {
@@ -3352,233 +3574,6 @@
             setTimeout(() => {
                 initializePropertySwiper(property.id, images);
             }, 200);
-        }
-        
-        // Calendar functionality
-        let selectedCheckin = null;
-        let selectedCheckout = null;
-        let currentMonth = new Date().getMonth();
-        let currentYear = new Date().getFullYear();
-        let isCalendarVisible = false;
-
-        function initCalendarDates() {
-            // Initialize with NO dates selected - user must choose
-            selectedCheckin = null;
-            selectedCheckout = null;
-            
-            updateDateRangeInput();
-        }
-
-        function updateDateRangeInput() {
-            const dateRangeInput = document.getElementById('dateRange');
-            if (dateRangeInput) {
-                if (selectedCheckin && selectedCheckout) {
-                    dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
-                } else if (selectedCheckin) {
-                    dateRangeInput.value = `${formatDate(selectedCheckin)} → Select checkout`;
-                } else {
-                    dateRangeInput.value = 'Select check-in → Select check-out';
-                }
-            }
-        }
-
-        function showCalendar() {
-            generateCalendar();
-            
-            document.getElementById('calendarContainer').style.display = 'block';
-            document.getElementById('calendarBackdrop').style.display = 'block';
-            isCalendarVisible = true;
-            
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hideCalendar() {
-            document.getElementById('calendarContainer').style.display = 'none';
-            document.getElementById('calendarBackdrop').style.display = 'none';
-            isCalendarVisible = false;
-            
-            document.body.style.overflow = '';
-        }
-
-        function generateCalendar() {
-            const calendar = document.getElementById('calendarContainer');
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            let html = `
-                <div class="calendar-header">
-                    <h4>Select Check-in & Check-out Dates</h4>
-                    <div class="calendar-nav">
-                        <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
-                        <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
-                        <button onclick="changeMonth(1)" aria-label="Next month">›</button>
-                    </div>
-                </div>
-                <div class="calendar-grid">
-                    <div class="calendar-day-header">Sun</div>
-                    <div class="calendar-day-header">Mon</div>
-                    <div class="calendar-day-header">Tue</div>
-                    <div class="calendar-day-header">Wed</div>
-                    <div class="calendar-day-header">Thu</div>
-                    <div class="calendar-day-header">Fri</div>
-                    <div class="calendar-day-header">Sat</div>
-            `;
-
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-            // Empty cells before month starts
-            for (let i = 0; i < firstDay; i++) {
-                html += `<div class="calendar-day disabled"></div>`;
-            }
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const date = new Date(currentYear, currentMonth, day);
-                date.setHours(0, 0, 0, 0);
-
-                const isToday = isSameDay(date, today);
-                const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
-                const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
-                const isDisabled = date < today;
-                const isBetween =
-                    selectedCheckin &&
-                    selectedCheckout &&
-                    date > selectedCheckin &&
-                    date < selectedCheckout;
-
-                let className = "calendar-day";
-                if (isToday) className += " today";
-                if (isCheckin) className += " selected";
-                if (isCheckout) className += " selected";
-                if (isDisabled) className += " disabled";
-                if (isBetween) className += " between";
-
-                const onClick = isDisabled
-                    ? ""
-                    : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
-
-                html += `<div class="${className}" ${onClick}>${day}</div>`;
-            }
-
-            // Fill up to 6 rows (42 cells) to keep calendar compact
-            const totalCells = firstDay + daysInMonth;
-            const remaining = 42 - totalCells;
-
-            for (let i = 0; i < remaining; i++) {
-                html += `<div class="calendar-day disabled"></div>`;
-            }
-
-            html += `
-                </div>
-                <div class="selected-dates-display">
-                    <div>
-                        <strong>Check-in</strong><br>
-                        ${selectedCheckin ? formatDate(selectedCheckin) : "Not selected"}
-                    </div>
-                    <div>
-                        <strong>Check-out</strong><br>
-                        ${selectedCheckout ? formatDate(selectedCheckout) : "Not selected"}
-                    </div>
-                </div>
-                <div class="calendar-actions">
-                    <button class="calendar-clear" onclick="clearDates()">Clear Dates</button>
-                    <button class="calendar-apply" onclick="applyDates()">Apply Dates</button>
-                </div>
-            `;
-
-            calendar.innerHTML = html;
-        }
-
-        function selectDate(day, month, year) {
-            const date = new Date(year, month, day);
-            date.setHours(0, 0, 0, 0);
-
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            if (date < today) return;
-
-            if (!selectedCheckin) {
-                // First click: set as check-in
-                selectedCheckin = date;
-                selectedCheckout = null;
-            } else if (!selectedCheckout && date > selectedCheckin) {
-                // Second click with valid date: set as check-out
-                selectedCheckout = date;
-            } else if (isSameDay(date, selectedCheckin)) {
-                // Clicking on check-in again: clear both
-                selectedCheckin = null;
-                selectedCheckout = null;
-            } else if (date < selectedCheckin) {
-                // Clicking earlier date: set as new check-in
-                selectedCheckin = date;
-                selectedCheckout = null;
-            } else if (selectedCheckin && !selectedCheckout && date <= selectedCheckin) {
-                // Clicking same or earlier date when only check-in is set: set as new check-in
-                selectedCheckin = date;
-                selectedCheckout = null;
-            } else {
-                // Otherwise: set as check-out
-                selectedCheckout = date;
-            }
-
-            updateDateRangeInput();
-            generateCalendar();
-        }
-
-        function changeMonth(delta) {
-            currentMonth += delta;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            } else if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            generateCalendar();
-        }
-
-        function clearDates() {
-            selectedCheckin = null;
-            selectedCheckout = null;
-            
-            updateDateRangeInput();
-            generateCalendar();
-        }
-
-        function applyDates() {
-            if (!selectedCheckin || !selectedCheckout) {
-                alert("Please select both check-in and check-out dates");
-                return;
-            }
-            
-            if (selectedCheckin >= selectedCheckout) {
-                alert("Check-out date must be after check-in date");
-                return;
-            }
-            
-            hideCalendar();
-        }
-
-        function isSameDay(date1, date2) {
-            if (!date1 || !date2) return false;
-            return date1.getFullYear() === date2.getFullYear() &&
-                   date1.getMonth() === date2.getMonth() &&
-                   date1.getDate() === date2.getDate();
-        }
-
-        function getMonthName(month) {
-            const months = ['January', 'February', 'March', 'April', 'May', 'June',
-                          'July', 'August', 'September', 'October', 'November', 'December'];
-            return months[month];
-        }
-
-        function formatDate(date) {
-            if (!date) return '';
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
         }
         
         // FIXED: Header search functionality with multi-keyword support

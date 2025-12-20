@@ -311,7 +311,7 @@
             border-radius: 15px;
             padding: 30px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-top: 30px;
@@ -464,7 +464,7 @@
         /* ✅ FIX 2 — FORCE MAIN IMAGE HEIGHT (CRITICAL) */
         .mainSwiper {
             width: 100%;
-            height: 260px;   /* adjust if needed */
+            height: 260px;
             border-radius: 14px;
             overflow: hidden;
         }
@@ -619,7 +619,7 @@
         
         /* REMOVED: property-code section */
         .property-code {
-            display: none; /* Remove entirely as requested */
+            display: none;
         }
         
         .no-properties {
@@ -828,7 +828,7 @@
             color: white;
         }
         
-        /* Services Section */
+        /* UPDATED: Services Section with WhatsApp CTAs */
         .services {
             background: var(--light);
         }
@@ -848,6 +848,9 @@
             text-align: center;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         .service-card:hover {
@@ -875,6 +878,35 @@
         
         .service-card p {
             color: var(--gray);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        /* NEW: WhatsApp button for services */
+        .service-whatsapp-btn {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-top: auto;
+            width: 100%;
+        }
+        
+        .service-whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .service-whatsapp-btn i {
+            margin-right: 8px;
         }
         
         /* Why Choose Us */
@@ -920,7 +952,7 @@
         .testimonial-slider {
             position: relative;
             overflow: hidden;
-            height: 350px; /* Increased height */
+            height: 350px;
             margin-bottom: 50px;
         }
         
@@ -1471,10 +1503,10 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             z-index: 2000;
             padding: 15px;
-            width: 380px; /* Reduced width */
+            width: 380px;
             max-width: 90vw;
-            max-height: 500px; /* Fixed maximum height */
-            overflow-y: hidden; /* No scrolling needed */
+            max-height: 500px;
+            overflow-y: hidden;
             border: 2px solid var(--primary);
             animation: fadeIn 0.3s ease;
         }
@@ -1488,21 +1520,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px; /* Reduced margin */
+            margin-bottom: 10px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--light-gray);
         }
         
         .calendar-header h4 {
             color: var(--dark);
-            font-size: 1rem; /* Smaller font */
+            font-size: 1rem;
             margin: 0;
             font-weight: 600;
         }
         
         .calendar-nav {
             display: flex;
-            gap: 10px; /* Reduced gap */
+            gap: 10px;
             align-items: center;
         }
         
@@ -1510,7 +1542,7 @@
             background: var(--primary);
             color: white;
             border: none;
-            width: 32px; /* Smaller buttons */
+            width: 32px;
             height: 32px;
             border-radius: 50%;
             cursor: pointer;
@@ -1529,7 +1561,7 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 3px; /* Reduced gap */
+            gap: 3px;
             margin-bottom: 10px;
         }
         
@@ -1538,10 +1570,10 @@
             text-align: center;
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.75rem; /* Smaller font */
+            font-size: 0.75rem;
             background: #f8f9fa;
             border-radius: 4px;
-            height: 32px; /* Fixed height */
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1557,8 +1589,8 @@
             border: 2px solid transparent;
             color: var(--dark);
             background: white;
-            font-size: 0.8rem; /* Smaller font */
-            height: 32px; /* Fixed height */
+            font-size: 0.8rem;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1604,7 +1636,7 @@
         .calendar-actions {
             display: flex;
             justify-content: space-between;
-            gap: 10px; /* Reduced gap */
+            gap: 10px;
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid var(--light-gray);
@@ -1612,13 +1644,13 @@
         
         .calendar-actions button {
             flex: 1;
-            padding: 10px; /* Reduced padding */
+            padding: 10px;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 0.9rem; /* Smaller font */
+            font-size: 0.9rem;
         }
         
         .calendar-clear {
@@ -1658,7 +1690,7 @@
             border-radius: 8px;
             display: flex;
             justify-content: space-around;
-            font-size: 0.85rem; /* Smaller font */
+            font-size: 0.85rem;
         }
         
         .selected-dates-display div {
@@ -1705,48 +1737,104 @@
             }
         }
         
+        /* ===== MOBILE NAVIGATION FIX ===== */
         @media (max-width: 768px) {
+            /* Hide the existing menu toggle if you have one */
             .menu-toggle {
                 display: block;
+                z-index: 1001;
+                position: relative;
             }
             
             .nav-links {
                 position: fixed;
-                top: 80px;
-                left: -100%;
+                top: 0;
+                left: -100%;  /* Start off-screen */
                 width: 100%;
-                height: calc(100vh - 80px);
+                height: 100vh;
                 background: white;
                 flex-direction: column;
+                justify-content: center;
                 align-items: center;
-                justify-content: flex-start;
-                padding-top: 50px;
-                gap: 30px;
-                transition: var(--transition);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                transition: left 0.3s ease;
+                z-index: 1000;
+                gap: 25px;
+                margin: 0;
             }
             
             .nav-links.active {
-                left: 0;
+                left: 0;  /* Slide in when active */
             }
             
-            .header-search-container {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                padding: 15px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                display: none;
+            .navbar {
+                padding: 10px 5%;
             }
             
-            .header-search-container.show {
+            /* Close menu button styling */
+            .menu-toggle i {
+                font-size: 1.5rem;
+                transition: transform 0.3s ease;
+            }
+            
+            .menu-toggle[aria-expanded="true"] i {
+                transform: rotate(90deg);
+            }
+            
+            /* Make sure menu items are visible */
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-links a {
                 display: block;
+                padding: 12px 0;
+                font-size: 1.1rem;
+                border-bottom: 1px solid #f0f0f0;
+                width: 100%;
+            }
+            
+            .nav-links .btn-book {
+                margin-top: 10px;
+                padding: 12px 30px;
+                border-radius: 25px;
+                border: none;
+                font-size: 1rem;
+            }
+            
+            /* Ensure header stays above */
+            header {
+                z-index: 1002;
+            }
+            
+            /* Mobile search fix */
+            .header-search-container {
+                display: flex !important;
+                position: static;
+                background: transparent;
+                padding: 10px 0;
+                box-shadow: none;
+                width: 100%;
+                margin-top: 10px;
+                order: 3; /* Move to bottom in mobile */
             }
             
             #headerSearch {
+                display: block !important;
                 width: 100%;
+                font-size: 16px; /* Prevents zoom on iOS */
+                border: 1px solid var(--light-gray);
+                border-radius: 20px;
+            }
+            
+            #searchToggle {
+                display: none;
+            }
+            
+            /* Fix for the search container */
+            .nav-links {
+                flex-wrap: wrap;
             }
             
             .testimonial-slider {
@@ -1795,7 +1883,7 @@
             }
             
             .calendar-overlay {
-                width: 340px; /* Even smaller on mobile */
+                width: 340px;
                 padding: 12px;
             }
             
@@ -1928,35 +2016,6 @@
             width: 100%;
             height: 100%;
         }
-
-        /* ===== MOBILE SEARCH BAR FIX ===== */
-        @media (max-width: 768px) {
-            .header-search-container {
-                display: flex !important;
-                position: static;
-                background: transparent;
-                padding: 10px 0;
-                box-shadow: none;
-                width: 100%;
-                margin-top: 10px;
-            }
-            
-            #headerSearch {
-                display: block !important;
-                width: 100%;
-                font-size: 16px;
-            }
-            
-            #searchToggle {
-                display: none;
-            }
-            
-            header .search-container,
-            header .search-wrapper {
-                display: block !important;
-                width: 100%;
-            }
-        }
     </style>
     
     <!-- Defer non-critical CSS -->
@@ -1990,10 +2049,14 @@
                      class="logo-mobile"
                      style="height: 50px; width: auto;">
             </a>
-            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+            
+            <!-- UPDATED: Added id="menuToggle" -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
-            <ul class="nav-links" role="menubar">
+            
+            <!-- UPDATED: Added id="navLinks" -->
+            <ul class="nav-links" id="navLinks" role="menubar">
                 <li role="none"><a href="#home" class="active" role="menuitem">Home</a></li>
                 <li role="none"><a href="#stays" role="menuitem">Featured</a></li>
                 <li role="none"><a href="#services" role="menuitem">Services</a></li>
@@ -2007,7 +2070,8 @@
                     </button>
                     <input type="text" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
                 </li>
-                <li role="none"><a href="#book-now" class="btn-book" role="menuitem">Book Now</a></li>
+                <!-- UPDATED: Book Now button now scrolls to contact section -->
+                <li role="none"><a href="#contact" class="btn-book" role="menuitem">Book Now</a></li>
             </ul>
         </nav>
     </header>
@@ -2035,7 +2099,7 @@
             <h2>Experience Luxury on the Kenyan Coast</h2>
             <p>Premium beachfront villas, luxury apartments, and exclusive resorts across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu with seamless airport transfers</p>
             
-            <!-- UPDATED: Search Box with 3 inputs -->
+            <!-- UPDATED: Search Box with 3 inputs - ADDED VILLA OPTION -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
@@ -2058,7 +2122,7 @@
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>
-                    <!-- UPDATED: Property type dropdown with normalized values -->
+                    <!-- UPDATED: Property type dropdown with normalized values - ADDED VILLA -->
                     <select id="propertyType" aria-label="Property type">
                         <option value="">Any Type</option>
                         <option value="studio">Studio</option>
@@ -2067,6 +2131,7 @@
                         <option value="3br">3 Bedrooms</option>
                         <option value="4br">4 Bedrooms</option>
                         <option value="5br">5 Bedrooms</option>
+                        <option value="villa">Villa</option>
                     </select>
                 </div>
                 <div class="search-btn-container">
@@ -2120,7 +2185,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- UPDATED: Services Section with WhatsApp CTAs -->
     <section class="services" id="services" role="region" aria-label="Our services">
         <div class="section-title">
             <h2>Complete Coastal Experience</h2>
@@ -2132,21 +2197,30 @@
                     <i class="fas fa-umbrella-beach" aria-hidden="true"></i>
                 </div>
                 <h3>Coastal Accommodation</h3>
-                <p>Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations.</p>
+                <p>Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations. From budget-friendly options to luxurious 5-bedroom villas with private pools, we have the perfect stay for every traveler.</p>
+                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Coastal Accommodation')">
+                    <i class="fab fa-whatsapp"></i> Enquire About Stays
+                </button>
             </div>
             <div class="service-card" role="article">
                 <div class="service-icon">
                     <i class="fas fa-plane-arrival" aria-hidden="true"></i>
                 </div>
                 <h3>Seamless Transfers</h3>
-                <p>Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service.</p>
+                <p>Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service. Our professional drivers ensure safe, comfortable transfers in air-conditioned vehicles with complimentary bottled water.</p>
+                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Airport Transfers')">
+                    <i class="fab fa-whatsapp"></i> Book Transfers
+                </button>
             </div>
             <div class="service-card" role="article">
                 <div class="service-icon">
                     <i class="fas fa-ship" aria-hidden="true"></i>
                 </div>
                 <h3>Marine Experiences</h3>
-                <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides.</p>
+                <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides. We arrange all equipment, permits, and transportation for unforgettable coastal adventures.</p>
+                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Marine Experiences')">
+                    <i class="fab fa-whatsapp"></i> Plan Marine Tours
+                </button>
             </div>
         </div>
     </section>
@@ -2510,7 +2584,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- UPDATED: Footer with working navigation links -->
     <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
@@ -2542,6 +2616,7 @@
             <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul>
+                    <!-- UPDATED: Working navigation links -->
                     <li><a href="#home">Home</a></li>
                     <li><a href="#stays">Featured Properties</a></li>
                     <li><a href="#services">Our Services</a></li>
@@ -2553,6 +2628,7 @@
             <div class="footer-col">
                 <h3>Coastal Destinations</h3>
                 <ul>
+                    <!-- UPDATED: Working location filter links -->
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Mombasa')">Mombasa</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Nyali')">Nyali</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Bamburi')">Bamburi</a></li>
@@ -2590,27 +2666,59 @@
     <script>
         // Add shortUUID function at the beginning
         function shortUUID(uuid) {
-            return uuid.split("-")[0]; // first 8 characters
+            return uuid.split("-")[0];
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            
-            if (menuToggle) {
-                menuToggle.addEventListener('click', function() {
+            // Mobile menu fix - NEW FIXED VERSION
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            // First, let's check if the elements exist
+            console.log('Menu toggle:', menuToggle);
+            console.log('Nav links:', navLinks);
+
+            if (menuToggle && navLinks) {
+                console.log('Setting up mobile menu');
+                
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    console.log('Menu toggle clicked');
                     navLinks.classList.toggle('active');
-                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                    this.setAttribute('aria-expanded', !isExpanded);
+                    
+                    // Change icon
+                    const icon = this.querySelector('i');
+                    if (navLinks.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                        menuToggle.setAttribute('aria-expanded', 'true');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    }
                 });
                 
-                document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.addEventListener('click', () => {
+                // Close menu when clicking links
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        console.log('Link clicked, closing menu');
                         navLinks.classList.remove('active');
+                        menuToggle.querySelector('i').className = 'fas fa-bars';
                         menuToggle.setAttribute('aria-expanded', 'false');
                     });
                 });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        menuToggle.querySelector('i').className = 'fas fa-bars';
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            } else {
+                console.error('Menu elements not found');
             }
             
             // Set current year
@@ -2700,7 +2808,49 @@
             
             // NEW: Check for hash on initial page load
             checkAndScrollToHash();
+            
+            // UPDATED: Add smooth scrolling for all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    // Skip if it's a javascript link or external link
+                    if (href === '#' || href.startsWith('javascript:')) {
+                        return;
+                    }
+                    
+                    // Don't prevent default for hash-only links
+                    if (href !== '#') {
+                        e.preventDefault();
+                        
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Update URL without page reload
+                            history.pushState(null, null, href);
+                        }
+                    }
+                });
+            });
         });
+        
+        // NEW: Function for service enquiries via WhatsApp
+        function serviceEnquiry(serviceName) {
+            const message = `Hello PwaniStays! I would like more information about your ${serviceName} services. Please provide details about availability, pricing, and what's included.`;
+            const whatsappNumber = "254738544784";
+            const encodedMessage = encodeURIComponent(message);
+            
+            window.open(
+                `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+                "_blank"
+            );
+        }
         
         // CHANGE 3: Initialize Hero Carousel Function
         function initHeroCarousel() {
@@ -2709,7 +2859,7 @@
                 slidesPerView: 1,
                 loop: true,
                 autoplay: {
-                    delay: 7000, // 7 seconds
+                    delay: 7000,
                     disableOnInteraction: false,
                 },
                 speed: 1000,
@@ -2984,17 +3134,17 @@
             
             // Handle bedroom plural/singular variations
             normalized = normalized
-                .replace(/bedrooms?/gi, "bedroom")  // Convert "bedrooms" or "bedroom" to "bedroom"
-                .replace(/1\s*bedroom/gi, "1br")    // Convert "1 bedroom" to "1br"
-                .replace(/2\s*bedrooms?/gi, "2br")  // Convert "2 bedroom" or "2 bedrooms" to "2br"
-                .replace(/3\s*bedrooms?/gi, "3br")  // Convert "3 bedroom" or "3 bedrooms" to "3br"
-                .replace(/4\s*bedrooms?/gi, "4br")  // Convert "4 bedroom" or "4 bedrooms" to "4br"
-                .replace(/5\s*bedrooms?/gi, "5br")  // Convert "5 bedroom" or "5 bedrooms" to "5br"
-                .replace(/one\s*bedroom/gi, "1br")  // Convert "one bedroom" to "1br"
-                .replace(/two\s*bedrooms?/gi, "2br") // Convert "two bedroom(s)" to "2br"
-                .replace(/three\s*bedrooms?/gi, "3br") // Convert "three bedroom(s)" to "3br"
-                .replace(/four\s*bedrooms?/gi, "4br") // Convert "four bedroom(s)" to "4br"
-                .replace(/five\s*bedrooms?/gi, "5br"); // Convert "five bedroom(s)" to "5br"
+                .replace(/bedrooms?/gi, "bedroom")
+                .replace(/1\s*bedroom/gi, "1br")
+                .replace(/2\s*bedrooms?/gi, "2br")
+                .replace(/3\s*bedrooms?/gi, "3br")
+                .replace(/4\s*bedrooms?/gi, "4br")
+                .replace(/5\s*bedrooms?/gi, "5br")
+                .replace(/one\s*bedroom/gi, "1br")
+                .replace(/two\s*bedrooms?/gi, "2br")
+                .replace(/three\s*bedrooms?/gi, "3br")
+                .replace(/four\s*bedrooms?/gi, "4br")
+                .replace(/five\s*bedrooms?/gi, "5br");
             
             return normalized;
         }
@@ -3043,7 +3193,7 @@
             if (!date) {
                 date = new Date();
             }
-            const m = date.getMonth() + 1; // JavaScript months are 0-11
+            const m = date.getMonth() + 1;
             const d = date.getDate();
             
             // Peak season logic:
@@ -3076,14 +3226,15 @@
             });
         }
         
-        // Unit type labels for display
+        // UPDATED: Unit type labels for display - ADDED VILLA
         const unitTypeLabels = {
             studio: "Studio",
             "1br": "1 Bedroom",
             "2br": "2 Bedrooms",
             "3br": "3 Bedrooms",
             "4br": "4 Bedrooms",
-            "5br": "5 Bedrooms"
+            "5br": "5 Bedrooms",
+            "villa": "Villa"
         };
         
         // UPDATED: Create property card function with proper Swiper class names and short UUID
@@ -3148,7 +3299,6 @@
                             <div class="property-beds">
                                 <i class="fas fa-bed"></i> ${bedsDisplay}
                             </div>
-                            <!-- REMOVED: property-code div entirely -->
                         </div>
                         <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
                             <i class="fas fa-calendar-alt"></i> Check Availability
@@ -4104,7 +4254,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // NEW: Add smooth scrolling for anchor links when clicking on page
+        // UPDATED: Smooth scrolling for all anchor links
         document.addEventListener('click', function(e) {
             if (e.target.matches('a[href^="#"]')) {
                 e.preventDefault();
@@ -4115,6 +4265,16 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                     document.getElementById('searchResults').style.display = 'block';
                     document.getElementById('stays').style.display = 'none';
                     loadAllPropertiesAndScroll(shortId);
+                } else {
+                    // Regular anchor link (like #home, #stays, etc.)
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
             }
         });

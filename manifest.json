@@ -1,7 +1,6 @@
 {
   "name": "PwaniStays",
   "short_name": "PwaniStays",
-  "description": "Luxury Coastal Accommodation in Kenya",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -16,6 +15,5 @@
   ],
   "theme_color": "#0d7a5f",
   "background_color": "#ffffff",
-  "display": "standalone",
-  "start_url": "/"
+  "display": "standalone"
 }

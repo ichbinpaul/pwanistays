@@ -1737,104 +1737,48 @@
             }
         }
         
-        /* ===== MOBILE NAVIGATION FIX ===== */
         @media (max-width: 768px) {
-            /* Hide the existing menu toggle if you have one */
             .menu-toggle {
                 display: block;
-                z-index: 1001;
-                position: relative;
             }
             
             .nav-links {
                 position: fixed;
-                top: 0;
-                left: -100%;  /* Start off-screen */
+                top: 80px;
+                left: -100%;
                 width: 100%;
-                height: 100vh;
+                height: calc(100vh - 80px);
                 background: white;
                 flex-direction: column;
-                justify-content: center;
                 align-items: center;
-                padding: 20px;
-                transition: left 0.3s ease;
-                z-index: 1000;
-                gap: 25px;
-                margin: 0;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             }
             
             .nav-links.active {
-                left: 0;  /* Slide in when active */
+                left: 0;
             }
             
-            .navbar {
-                padding: 10px 5%;
-            }
-            
-            /* Close menu button styling */
-            .menu-toggle i {
-                font-size: 1.5rem;
-                transition: transform 0.3s ease;
-            }
-            
-            .menu-toggle[aria-expanded="true"] i {
-                transform: rotate(90deg);
-            }
-            
-            /* Make sure menu items are visible */
-            .nav-links li {
-                width: 100%;
-                text-align: center;
-            }
-            
-            .nav-links a {
-                display: block;
-                padding: 12px 0;
-                font-size: 1.1rem;
-                border-bottom: 1px solid #f0f0f0;
-                width: 100%;
-            }
-            
-            .nav-links .btn-book {
-                margin-top: 10px;
-                padding: 12px 30px;
-                border-radius: 25px;
-                border: none;
-                font-size: 1rem;
-            }
-            
-            /* Ensure header stays above */
-            header {
-                z-index: 1002;
-            }
-            
-            /* Mobile search fix */
             .header-search-container {
-                display: flex !important;
-                position: static;
-                background: transparent;
-                padding: 10px 0;
-                box-shadow: none;
-                width: 100%;
-                margin-top: 10px;
-                order: 3; /* Move to bottom in mobile */
-            }
-            
-            #headerSearch {
-                display: block !important;
-                width: 100%;
-                font-size: 16px; /* Prevents zoom on iOS */
-                border: 1px solid var(--light-gray);
-                border-radius: 20px;
-            }
-            
-            #searchToggle {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 15px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
                 display: none;
             }
             
-            /* Fix for the search container */
-            .nav-links {
-                flex-wrap: wrap;
+            .header-search-container.show {
+                display: block;
+            }
+            
+            #headerSearch {
+                width: 100%;
             }
             
             .testimonial-slider {
@@ -2016,6 +1960,35 @@
             width: 100%;
             height: 100%;
         }
+
+        /* ===== MOBILE SEARCH BAR FIX ===== */
+        @media (max-width: 768px) {
+            .header-search-container {
+                display: flex !important;
+                position: static;
+                background: transparent;
+                padding: 10px 0;
+                box-shadow: none;
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            #headerSearch {
+                display: block !important;
+                width: 100%;
+                font-size: 16px;
+            }
+            
+            #searchToggle {
+                display: none;
+            }
+            
+            header .search-container,
+            header .search-wrapper {
+                display: block !important;
+                width: 100%;
+            }
+        }
     </style>
     
     <!-- Defer non-critical CSS -->
@@ -2049,14 +2022,10 @@
                      class="logo-mobile"
                      style="height: 50px; width: auto;">
             </a>
-            
-            <!-- UPDATED: Added id="menuToggle" -->
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
-            
-            <!-- UPDATED: Added id="navLinks" -->
-            <ul class="nav-links" id="navLinks" role="menubar">
+            <ul class="nav-links" role="menubar">
                 <li role="none"><a href="#home" class="active" role="menuitem">Home</a></li>
                 <li role="none"><a href="#stays" role="menuitem">Featured</a></li>
                 <li role="none"><a href="#services" role="menuitem">Services</a></li>
@@ -2670,55 +2639,27 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu fix - NEW FIXED VERSION
-            const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.getElementById('navLinks');
-
-            // First, let's check if the elements exist
-            console.log('Menu toggle:', menuToggle);
-            console.log('Nav links:', navLinks);
-
-            if (menuToggle && navLinks) {
-                console.log('Setting up mobile menu');
-                
-                menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    console.log('Menu toggle clicked');
+            // Mobile menu
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
                     navLinks.classList.toggle('active');
-                    
-                    // Change icon
-                    const icon = this.querySelector('i');
-                    if (navLinks.classList.contains('active')) {
-                        icon.classList.remove('fa-bars');
-                        icon.classList.add('fa-times');
-                        menuToggle.setAttribute('aria-expanded', 'true');
-                    } else {
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                    }
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
                 });
                 
-                // Close menu when clicking links
-                navLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', function() {
-                        console.log('Link clicked, closing menu');
-                        navLinks.classList.remove('active');
-                        menuToggle.querySelector('i').className = 'fas fa-bars';
-                        menuToggle.setAttribute('aria-expanded', 'false');
+                // UPDATED: Close mobile menu when clicking any link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        // Only close if it's a hash link (internal navigation)
+                        if (link.getAttribute('href').startsWith('#')) {
+                            navLinks.classList.remove('active');
+                            menuToggle.setAttribute('aria-expanded', 'false');
+                        }
                     });
                 });
-                
-                // Close menu when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                        menuToggle.querySelector('i').className = 'fas fa-bars';
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            } else {
-                console.error('Menu elements not found');
             }
             
             // Set current year

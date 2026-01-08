@@ -592,18 +592,7 @@
             margin-bottom: 20px;
         }
         
-        /* NEW: Season indicator badge */
-        .season-badge {
-            display: inline-block;
-            background: var(--secondary);
-            color: var(--dark);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
+        /* REMOVED: Season indicator badge */
         
         .property-footer {
             display: flex;
@@ -2653,7 +2642,7 @@
 
     <script>
         // ==========================================
-        // NEW SEASON PRICING HELPER FUNCTIONS
+        // SEASON PRICING HELPER FUNCTIONS
         // ==========================================
         
         // Function to determine season based on date
@@ -2683,23 +2672,17 @@
             return "low_season";
         }
 
-        // Function to get display name for season
-        function getSeasonDisplayName(seasonKey) {
-            const seasonNames = {
-                "april_august": "April – August Season",
-                "early_december": "Early December (1–19 Dec)",
-                "festive_peak": "Festive / Peak Season (20 Dec – 10 Jan)",
-                "low_season": "Low Season"
-            };
-            return seasonNames[seasonKey] || "Standard Season";
-        }
-
-        // Function to get nightly price based on season
+        // Function to get nightly price based on season WITH 20% COMMISSION
         function getNightlyPrice(property, checkInDate) {
             const seasonKey = getSeasonForDate(checkInDate);
             
-            // Return the price for the season, fallback to low_season if not found
-            return property[seasonKey] || property.low_season || 0;
+            // Get the base price for the season
+            const basePrice = property[seasonKey] || property.low_season || 0;
+            
+            // Apply 20% commission multiplier
+            const finalPrice = Math.round(basePrice * 1.2);
+            
+            return finalPrice;
         }
 
         // Wrap ALL logic in DOMContentLoaded
@@ -3220,11 +3203,11 @@
                 return uuid ? uuid.split("-")[0] : '';
             }
 
-            // UPDATED: Calculate display price with seasonal pricing
+            // UPDATED: Calculate display price with seasonal pricing and 20% commission
             function calculateDisplayPrice(property, checkinDate = null) {
                 const date = checkinDate || new Date();
                 
-                // Get the season-based price
+                // Get the season-based price with 20% commission
                 const price = getNightlyPrice(property, date);
                 
                 // Format the price
@@ -3232,12 +3215,6 @@
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0
                 });
-            }
-
-            // Get season display name for a date
-            function getSeasonForDateDisplay(date) {
-                const seasonKey = getSeasonForDate(date);
-                return getSeasonDisplayName(seasonKey);
             }
 
             async function loadFeaturedProperties() {
@@ -3416,7 +3393,6 @@
                 // Calculate price based on selected check-in date or current date
                 const checkinDate = selectedCheckin || new Date();
                 const displayPrice = calculateDisplayPrice(property, checkinDate);
-                const seasonDisplay = getSeasonForDateDisplay(checkinDate);
                 
                 // Get property type display
                 const unitTypeLabels = {
@@ -3437,6 +3413,7 @@
                 // Escape special characters for safety
                 const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
                 
+                // REMOVED: Season badge from the property card
                 card.innerHTML = `
                     <div class="property-gallery">
                         <div class="swiper mainSwiper" id="main-${property.id}">
@@ -3470,7 +3447,6 @@
                         
                         <div class="property-price">
                             Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span>
-                            <span class="season-badge" title="${seasonDisplay}">${seasonDisplay.split(' ')[0]}</span>
                         </div>
                         
                         <div class="property-footer">
@@ -3509,10 +3485,6 @@
                 const priceElement = propertyElement.querySelector('.property-price');
                 const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '').split(' ')[0] : 'Price on request';
                 
-                // Get season badge
-                const seasonBadge = propertyElement.querySelector('.season-badge');
-                const season = seasonBadge ? seasonBadge.title : 'Standard Season';
-                
                 // Get dates
                 const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
                 const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
@@ -3524,21 +3496,20 @@
                 };
                 
                 // Open WhatsApp
-                openWhatsApp(property, checkinDate, checkoutDate, price, season);
+                openWhatsApp(property, checkinDate, checkoutDate, price);
             };
 
-            window.openWhatsApp = function(property, checkin, checkout, rate, season) {
+            window.openWhatsApp = function(property, checkin, checkout, rate) {
                 const anchorId = shortUUID(property.id);
                 const propertyLink = `https://pwanistays.com/#property-${anchorId}`;
 
                 const message = `
 Property: ${property.title}
 Link: ${propertyLink}
-Season: ${season}
 Dates: ${checkin} → ${checkout}
 Rate: KES ${rate}/night
 
-Hello PwaniStays! I am interested in this property for the ${season}. Is it available for the selected dates?
+Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
 `.trim();
 
                 const whatsappNumber = "254738544784";

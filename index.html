@@ -592,6 +592,19 @@
             margin-bottom: 20px;
         }
         
+        /* NEW: Season indicator badge */
+        .season-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
         .property-footer {
             display: flex;
             justify-content: space-between;
@@ -2639,6 +2652,56 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
+        // ==========================================
+        // NEW SEASON PRICING HELPER FUNCTIONS
+        // ==========================================
+        
+        // Function to determine season based on date
+        function getSeasonForDate(date) {
+            const month = date.getMonth() + 1; // 1–12
+            const day = date.getDate();
+
+            // Festive Peak: 20 Dec – 10 Jan
+            if (
+                (month === 12 && day >= 20) ||
+                (month === 1 && day <= 10)
+            ) {
+                return "festive_peak";
+            }
+
+            // Early December: 1 Dec – 19 Dec
+            if (month === 12 && day >= 1 && day <= 19) {
+                return "early_december";
+            }
+
+            // April – August
+            if (month >= 4 && month <= 8) {
+                return "april_august";
+            }
+
+            // Everything else (Low Season)
+            return "low_season";
+        }
+
+        // Function to get display name for season
+        function getSeasonDisplayName(seasonKey) {
+            const seasonNames = {
+                "april_august": "April – August Season",
+                "early_december": "Early December (1–19 Dec)",
+                "festive_peak": "Festive / Peak Season (20 Dec – 10 Jan)",
+                "low_season": "Low Season"
+            };
+            return seasonNames[seasonKey] || "Standard Season";
+        }
+
+        // Function to get nightly price based on season
+        function getNightlyPrice(property, checkInDate) {
+            const seasonKey = getSeasonForDate(checkInDate);
+            
+            // Return the price for the season, fallback to low_season if not found
+            return property[seasonKey] || property.low_season || 0;
+        }
+
         // Wrap ALL logic in DOMContentLoaded
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -3157,6 +3220,26 @@
                 return uuid ? uuid.split("-")[0] : '';
             }
 
+            // UPDATED: Calculate display price with seasonal pricing
+            function calculateDisplayPrice(property, checkinDate = null) {
+                const date = checkinDate || new Date();
+                
+                // Get the season-based price
+                const price = getNightlyPrice(property, date);
+                
+                // Format the price
+                return price.toLocaleString('en-KE', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+            }
+
+            // Get season display name for a date
+            function getSeasonForDateDisplay(date) {
+                const seasonKey = getSeasonForDate(date);
+                return getSeasonDisplayName(seasonKey);
+            }
+
             async function loadFeaturedProperties() {
                 const container = document.getElementById('featuredProperties');
                 
@@ -3330,8 +3413,10 @@
                 const shortId = shortUUID(property.id);
                 card.id = `property-${shortId}`;
                 
-                // Calculate price
-                const displayPrice = calculateDisplayPrice(property, selectedCheckin);
+                // Calculate price based on selected check-in date or current date
+                const checkinDate = selectedCheckin || new Date();
+                const displayPrice = calculateDisplayPrice(property, checkinDate);
+                const seasonDisplay = getSeasonForDateDisplay(checkinDate);
                 
                 // Get property type display
                 const unitTypeLabels = {
@@ -3383,7 +3468,10 @@
                         <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;">
                         </button>
                         
-                        <div class="property-price">Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span></div>
+                        <div class="property-price">
+                            Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span>
+                            <span class="season-badge" title="${seasonDisplay}">${seasonDisplay.split(' ')[0]}</span>
+                        </div>
                         
                         <div class="property-footer">
                             <div class="property-info">
@@ -3419,7 +3507,11 @@
                 
                 // Get price
                 const priceElement = propertyElement.querySelector('.property-price');
-                const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '') : 'Price on request';
+                const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '').split(' ')[0] : 'Price on request';
+                
+                // Get season badge
+                const seasonBadge = propertyElement.querySelector('.season-badge');
+                const season = seasonBadge ? seasonBadge.title : 'Standard Season';
                 
                 // Get dates
                 const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
@@ -3432,20 +3524,21 @@
                 };
                 
                 // Open WhatsApp
-                openWhatsApp(property, checkinDate, checkoutDate, price);
+                openWhatsApp(property, checkinDate, checkoutDate, price, season);
             };
 
-            window.openWhatsApp = function(property, checkin, checkout, rate) {
+            window.openWhatsApp = function(property, checkin, checkout, rate, season) {
                 const anchorId = shortUUID(property.id);
                 const propertyLink = `https://pwanistays.com/#property-${anchorId}`;
 
                 const message = `
 Property: ${property.title}
 Link: ${propertyLink}
+Season: ${season}
 Dates: ${checkin} → ${checkout}
 Rate: KES ${rate}/night
 
-Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
+Hello PwaniStays! I am interested in this property for the ${season}. Is it available for the selected dates?
 `.trim();
 
                 const whatsappNumber = "254738544784";
@@ -3456,38 +3549,6 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                     "_blank"
                 );
             };
-
-            // ==========================
-            // Helper Functions
-            // ==========================
-            function calculateDisplayPrice(property, checkinDate = null) {
-                if (!property) return 'N/A';
-                
-                const date = checkinDate || new Date();
-                const isPeak = isPeakSeason(date);
-                const basePrice = isPeak 
-                    ? (property.peak_price || 0) 
-                    : (property.low_price || 0);
-                
-                const finalPrice = Math.round(basePrice * 1.2);
-                
-                return finalPrice.toLocaleString('en-KE', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                });
-            }
-
-            function isPeakSeason(date) {
-                if (!date) {
-                    date = new Date();
-                }
-                const m = date.getMonth() + 1;
-                const d = date.getDate();
-                
-                if (m === 1 && d <= 10) return true;
-                if ([7, 8, 11, 12].includes(m)) return true;
-                return false;
-            }
 
             // ==========================
             // Testimonials

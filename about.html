@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Learn about PwaniStays - Our story, founders, and commitment to providing trusted coastal stays and experiences in Kenya. Contact paul@pwanistays.com or thor@pwanistays.com">
+    <meta name="keywords" content="about PwaniStays, our team, coastal travel experts, Kenya tourism, founders, Paul Wainaina, Thor Kronborg, contact email">
+    <meta name="author" content="PwaniStays">
+    
+    <title>About PwaniStays | Trusted Coastal Stays & Experiences in Kenya</title>
+    
+    <!-- Favicon Package -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+    
+    <meta name="theme-color" content="#0d7a5f">
+    <meta name="msapplication-TileColor" content="#0d7a5f">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pwanistays.com/about">
+    <meta property="og:title" content="About PwaniStays | Curated Coastal Stays & Experiences">
+    <meta property="og:description" content="Meet the team behind PwaniStays - Combining local Kenyan expertise with international travel standards for unforgettable coastal experiences.">
+    <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="PwaniStays Team">
+    <meta property="og:locale" content="en_KE">
+    <meta property="og:site_name" content="PwaniStays">
+    
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@PwaniStays">
+    <meta name="twitter:creator" content="@PwaniStays">
+    <meta name="twitter:title" content="About PwaniStays | Curated Coastal Stays & Experiences">
+    <meta name="twitter:description" content="Meet the team behind PwaniStays - Combining local Kenyan expertise with international travel standards for unforgettable coastal experiences.">
+    <meta name="twitter:image" content="https://pwanistays.com/logo-mobile.png">
+    <meta name="twitter:image:alt" content="PwaniStays Team">
+    
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- About Page Specific CSS -->
+    <style>
+        :root {
+            --primary: #0d7a5f;
+            --primary-light: #0f9b7a;
+            --secondary: #f8b400;
+            --dark: #1a2b3c;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+            background: #fff;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            line-height: 1;
+        }
+        
+        .logo-desktop {
+            display: inline-block;
+        }
+        
+        .logo-mobile {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-desktop {
+                display: none;
+            }
+            
+            .logo-mobile {
+                display: inline-block;
+            }
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .btn-book {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-book:hover {
+            background: #e09c00;
+            transform: translateY(-2px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Hero Section for About Page */
+        .about-hero {
+            height: 60vh;
+            min-height: 500px;
+            margin-top: 80px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        /* Main Content Sections */
+        section {
+            padding: 100px 5%;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Founders Section */
+        .founders {
+            background: var(--light);
+        }
+        
+        .founder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+        
+        .founder-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .founder-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .founder-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 30px;
+            border: 5px solid var(--primary);
+        }
+        
+        .founder-card h2 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.8rem;
+        }
+        
+        .founder-card h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .founder-card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .founder-email {
+            display: inline-block;
+            background: var(--light);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 15px;
+            transition: var(--transition);
+        }
+        
+        .founder-email:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Mission Section */
+        .mission {
+            background: white;
+        }
+        
+        .mission-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .mission-content p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        /* Values Section */
+        .values {
+            background: var(--light);
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .value-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+        
+        .value-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Story Section */
+        .story {
+            background: white;
+        }
+        
+        .story-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .story-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        /* Team Contact Section */
+        .team-contact {
+            background: var(--light);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .contact-item {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-item i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .contact-item h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .contact-item p {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .contact-email {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .contact-email:hover {
+            text-decoration: underline;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            color: white;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-col ul li a {
+            transition: var(--transition);
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .footer-logo {
+            display: inline-block;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+        
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .founder-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            section {
+                padding: 80px 5%;
+            }
+            
+            .about-hero {
+                height: 50vh;
+                min-height: 400px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .founder-card {
+                padding: 30px 20px;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .founder-card {
+                padding: 25px 15px;
+            }
+            
+            .founder-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        :focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20have%20a%20question%20about%20your%20services" 
+       class="whatsapp-float" 
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <!-- Header -->
+    <header role="banner">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="/" class="logo-link">
+                <img src="/logo-header.png" 
+                     alt="PwaniStays - Curated Coastal Stays" 
+                     class="logo-desktop"
+                     style="height: 50px; width: auto;">
+                <img src="/logo-mobile.png" 
+                     alt="PwaniStays" 
+                     class="logo-mobile"
+                     style="height: 50px; width: auto;">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="/" role="menuitem">Home</a></li>
+                <li role="none"><a href="/about" class="active" role="menuitem">About Us</a></li>
+                <li role="none"><a href="#founders" role="menuitem">Our Team</a></li>
+                <li role="none"><a href="#values" role="menuitem">Our Values</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                <li role="none"><a href="/#contact" class="btn-book" role="menuitem">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="hero-content">
+            <h1>About PwaniStays</h1>
+            <p>Discover the story behind Kenya's premier coastal hospitality company. Learn about our founders, our mission, and our commitment to authentic Kenyan coastal experiences.</p>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section class="story">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Story</h2>
+                <p>From a simple idea to Kenya's trusted coastal hospitality partner</p>
+            </div>
+            <div class="story-content">
+                <p>PwaniStays was founded on the belief that coastal travel should be seamless, authentic, and memorable. Born from a partnership between local Kenyan expertise and international travel experience, we set out to bridge the gap between travelers and the authentic beauty of Kenya's coastline.</p>
+                
+                <p>Our journey began with recognizing that many travelers miss out on genuine coastal experiences due to lack of local knowledge or unreliable services. We saw an opportunity to create a platform that not only offers quality accommodation but also provides the local insights and support that make travel truly special.</p>
+                
+                <p>Today, PwaniStays has grown into a comprehensive coastal hospitality service, offering curated stays, seamless transfers, and authentic experiences across Mombasa, Diani, Watamu, and beyond. Every property we list is personally verified, every service provider is vetted, and every guest receives the attention and care that has become our hallmark.</p>
+                
+                <p>We believe that great travel isn't just about where you stay, but how you experience a destination. That's why we focus on creating journeys that are not just trips, but memories that last a lifetime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founders Section -->
+    <section class="founders" id="founders">
+        <div class="container">
+            <div class="section-title">
+                <h2>Meet Our Founders</h2>
+                <p>The team behind PwaniStays' commitment to excellence</p>
+            </div>
+            <div class="founder-grid">
+                <!-- Founder 1: Paul -->
+                <div class="founder-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Paul Wainaina" 
+                         class="founder-image">
+                    <h2>Paul Wainaina</h2>
+                    <h3>Founder & CEO</h3>
+                    <p>Paul is the driving force behind PwaniStays, combining his software development skills with deep knowledge of Kenya's coastal region. Based in Mombasa, he has firsthand experience with every property and service we offer.</p>
+                    <p>His technical background ensures our platform runs smoothly, while his local expertise guarantees authentic experiences. Paul personally inspects every property and builds relationships with local service providers to ensure quality and reliability.</p>
+                    <p>Outside of work, Paul is passionate about fitness and outdoor activities. He's an avid swimmer and cyclist, often exploring Kenya's coastal trails and waters. This active lifestyle reflects in his approach to business - always moving forward, always improving.</p>
+                    <a href="mailto:paul@pwanistays.com" class="founder-email">
+                        <i class="fas fa-envelope"></i> paul@pwanistays.com
+                    </a>
+                </div>
+
+                <!-- Founder 2: Thor -->
+                <div class="founder-card">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="Thor Kronborg" 
+                         class="founder-image">
+                    <h2>Thor Kronborg</h2>
+                    <h3>Co-Founder</h3>
+                    <p>Thor brings extensive African travel experience and international perspective to PwaniStays. Based in Denmark, he has traveled extensively across Africa and developed a deep understanding of what international travelers seek in coastal experiences.</p>
+                    <p>His focus is on ensuring that our services meet international standards while maintaining authentic Kenyan hospitality. Thor's experience helps bridge cultural gaps and ensures clear communication between local providers and international guests.</p>
+                    <p>With a background in cross-cultural communication and a passion for sustainable tourism, Thor ensures that PwaniStays operates with both guest satisfaction and local community benefit in mind. His travels have taken him across East Africa, giving him unique insights into regional tourism dynamics.</p>
+                    <a href="mailto:thor@pwanistays.com" class="founder-email">
+                        <i class="fas fa-envelope"></i> thor@pwanistays.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Mission</h2>
+                <p>What drives everything we do at PwaniStays</p>
+            </div>
+            <div class="mission-content">
+                <p>At PwaniStays, our mission is simple: to connect travelers with authentic, memorable, and seamless coastal experiences in Kenya.</p>
+                <p>We believe that travel should be transformative, not transactional. That's why we go beyond just booking accommodation. We create journeys that immerse you in the beauty, culture, and spirit of Kenya's coast while ensuring every logistical detail is handled with care.</p>
+                <p>Our commitment extends to both our guests and our partners. We work closely with local property owners and service providers to maintain high standards while supporting sustainable tourism practices that benefit coastal communities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values" id="values">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Values</h2>
+                <p>The principles that guide every decision we make</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Trust & Safety</h3>
+                    <p>Every property is personally verified. Every service provider is vetted. Your safety and comfort are our top priorities.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Authenticity</h3>
+                    <p>We connect you with genuine Kenyan coastal experiences, not tourist traps. Real places, real people, real moments.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>From booking to checkout, we're here for you. Local support means real-time solutions, not call centers.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Sustainability</h3>
+                    <p>We promote responsible tourism that benefits local communities and preserves Kenya's coastal beauty for generations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Contact Section -->
+    <section class="team-contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Our Team</h2>
+                <p>Reach out directly to our founders for any inquiries</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <i class="fas fa-user"></i>
+                    <h3>Paul Wainaina</h3>
+                    <p>Founder & CEO</p>
+                    <p>Based in Mombasa, Kenya</p>
+                    <a href="mailto:paul@pwanistays.com" class="contact-email">paul@pwanistays.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-user"></i>
+                    <h3>Thor Kronborg</h3>
+                    <p>Co-Founder</p>
+                    <p>Based in Aalborg, Denmark</p>
+                    <a href="mailto:thor@pwanistays.com" class="contact-email">thor@pwanistays.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <h3>General Inquiries</h3>
+                    <p>For bookings and general questions</p>
+                    <p>Our team responds within 1 hour</p>
+                    <a href="mailto:bookings@pwanistays.com" class="contact-email">bookings@pwanistays.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>WhatsApp Support</h3>
+                    <p>24/7 Instant Support</p>
+                    <p>Quick answers to your questions</p>
+                    <a href="https://wa.me/254738544784" class="contact-email">+254 738 544 784</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Experience Kenya's Coast?</h2>
+            <p>Let us help you plan your perfect coastal getaway. Whether it's a relaxing beach holiday, an adventure-filled safari, or a cultural exploration, we've got you covered.</p>
+            <a href="/#contact" class="btn-primary">Start Planning Your Trip</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="/logo-footer.png" 
+                         alt="PwaniStays - Curated Coastal Stays" 
+                         class="logo-desktop"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                    <img src="/logo-mobile.png" 
+                         alt="PwaniStays" 
+                         class="logo-mobile"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                </div>
+                <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/pwanistayscom" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@pwanistays.com" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/#stays">Featured Properties</a></li>
+                    <li><a href="/#services">Our Services</a></li>
+                    <li><a href="/#testimonials">Guest Reviews</a></li>
+                    <li><a href="/#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Coastal Destinations</h3>
+                <ul>
+                    <li><a href="/#destinations">Mombasa</a></li>
+                    <li><a href="/#destinations">Nyali</a></li>
+                    <li><a href="/#destinations">Bamburi</a></li>
+                    <li><a href="/#destinations">Diani</a></li>
+                    <li><a href="/#destinations">Watamu</a></li>
+                    <li><a href="/#destinations">Kilifi</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact & Support</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></li>
+                    <li><i class="fas fa-clock"></i> 24/7 Customer Support</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> PwaniStays — Curated Coastal Stays & Experiences. All rights reserved. | 
+               <a href="/privacy">Privacy Policy</a> | 
+               <a href="/terms">Terms of Service</a> | 
+               <a href="/cancellation">Cancellation Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+            });
+            
+            // Close mobile menu when clicking any link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                if (href === '#' || href.startsWith('javascript:')) {
+                    return;
+                }
+                
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        history.pushState(null, null, href);
+                    }
+                }
+            });
+        });
+        
+        // Highlight current page in navigation
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            const linkPage = link.getAttribute('href');
+            if (linkPage === currentPage || (currentPage === '' && linkPage === '/') || 
+                (currentPage === 'about.html' && linkPage === '/about')) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

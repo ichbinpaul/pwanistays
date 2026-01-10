@@ -152,7 +152,7 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 25px;
             align-items: center;
         }
         
@@ -162,6 +162,7 @@
             position: relative;
             text-decoration: none;
             color: var(--dark);
+            white-space: nowrap;
         }
         
         .nav-links a:hover,
@@ -177,6 +178,57 @@
             width: 100%;
             height: 2px;
             background: var(--primary);
+        }
+        
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 10px 0;
+            z-index: 1001;
+            list-style: none;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-menu li {
+            margin: 0;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            font-size: 0.95rem;
+        }
+        
+        .dropdown-menu a:hover {
+            background: #f8f9fa;
+            color: var(--primary);
+            border-left-color: var(--primary);
+            padding-left: 25px;
+        }
+        
+        .dropdown-menu a:before {
+            content: "– ";
+            color: var(--primary);
+            font-weight: bold;
         }
         
         /* PHASE 4 — Header Search Icon - UPDATED */
@@ -891,10 +943,10 @@
             flex-grow: 1;
         }
         
-        /* NEW: WhatsApp button for services */
-        .service-whatsapp-btn {
+        /* UPDATED: Service buttons with different CTAs */
+        .service-btn {
             display: inline-block;
-            background: #25D366;
+            background: var(--primary);
             color: white;
             padding: 12px 20px;
             border-radius: 25px;
@@ -908,14 +960,23 @@
             width: 100%;
         }
         
-        .service-whatsapp-btn:hover {
-            background: #128C7E;
+        .service-btn:hover {
+            background: var(--primary-light);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            box-shadow: 0 5px 15px rgba(13, 122, 95, 0.3);
         }
         
-        .service-whatsapp-btn i {
+        .service-btn i {
             margin-right: 8px;
+        }
+        
+        .service-whatsapp-btn {
+            background: #25D366;
+        }
+        
+        .service-whatsapp-btn:hover {
+            background: #128C7E;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
         }
         
         /* Why Choose Us */
@@ -1714,6 +1775,12 @@
         }
         
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .nav-links {
+                gap: 20px;
+            }
+        }
+        
         @media (max-width: 992px) {
             .search-box {
                 grid-template-columns: 1fr;
@@ -1744,6 +1811,18 @@
             .form-row {
                 grid-template-columns: 1fr;
             }
+            
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                display: none;
+                margin-top: 0;
+                padding-left: 20px;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1762,13 +1841,33 @@
                 align-items: center;
                 justify-content: flex-start;
                 padding-top: 50px;
-                gap: 30px;
+                gap: 25px;
                 transition: var(--transition);
                 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
             }
             
             .nav-links.active {
                 left: 0;
+            }
+            
+            .dropdown {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                background: #f8f9fa;
+                border-radius: 10px;
+                margin-top: 10px;
+                padding: 10px;
+                display: none;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
             }
             
             /* Mobile search should be always visible */
@@ -2030,11 +2129,22 @@
             </button>
             <ul class="nav-links" role="menubar">
                 <li role="none"><a href="#home" class="active" role="menuitem">Home</a></li>
-                <li role="none"><a href="#stays" role="menuitem">Featured</a></li>
-                <li role="none"><a href="#services" role="menuitem">Services</a></li>
-                <li role="none"><a href="#about" role="menuitem">About</a></li>
-                <li role="none"><a href="#testimonials" role="menuitem">Reviews</a></li>
+                <li role="none"><a href="about.html" role="menuitem">About Us</a></li>
+                <li role="none"><a href="accommodation.html" role="menuitem">Accommodation</a></li>
+                
+                <!-- Experiences Dropdown -->
+                <li role="none" class="dropdown">
+                    <a href="experiences.html" role="menuitem">Experiences ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="nairobi.html">Nairobi & Inland</a></li>
+                        <li><a href="safari.html">Safari</a></li>
+                        <li><a href="coastal-cultural.html">Coastal & Cultural</a></li>
+                    </ul>
+                </li>
+                
+                <li role="none"><a href="how-it-works.html" role="menuitem">How It Works</a></li>
                 <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                
                 <!-- PHASE 4 — Header Search Icon - UPDATED -->
                 <li role="none" class="header-search-container" id="mobileSearchContainer">
                     <button id="searchToggle" aria-label="Toggle search">
@@ -2042,6 +2152,7 @@
                     </button>
                     <input type="text" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
                 </li>
+                
                 <!-- UPDATED: Book Now button now scrolls to contact section -->
                 <li role="none"><a href="#contact" class="btn-book" role="menuitem">Book Now</a></li>
             </ul>
@@ -2158,7 +2269,7 @@
         </div>
     </section>
 
-    <!-- UPDATED: Services Section with WhatsApp CTAs -->
+    <!-- UPDATED: Services Section with proper CTA links -->
     <section class="services" id="services" role="region" aria-label="Our services">
         <div class="section-title">
             <h2>Complete Coastal Experience</h2>
@@ -2171,9 +2282,9 @@
                 </div>
                 <h3>Coastal Accommodation</h3>
                 <p>Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations. From budget-friendly options to luxurious 5-bedroom villas with private pools, we have the perfect stay for every traveler.</p>
-                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Coastal Accommodation')">
-                    <i class="fab fa-whatsapp"></i> Enquire About Stays
-                </button>
+                <a href="accommodation.html" class="service-btn">
+                    <i class="fas fa-search"></i> Browse Accommodation
+                </a>
             </div>
             <div class="service-card" role="article">
                 <div class="service-icon">
@@ -2181,7 +2292,7 @@
                 </div>
                 <h3>Seamless Transfers</h3>
                 <p>Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service. Our professional drivers ensure safe, comfortable transfers in air-conditioned vehicles with complimentary bottled water.</p>
-                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Airport Transfers')">
+                <button class="service-btn service-whatsapp-btn" onclick="serviceEnquiry('Airport Transfers')">
                     <i class="fab fa-whatsapp"></i> Book Transfers
                 </button>
             </div>
@@ -2191,14 +2302,14 @@
                 </div>
                 <h3>Marine Experiences</h3>
                 <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides. We arrange all equipment, permits, and transportation for unforgettable coastal adventures.</p>
-                <button class="service-whatsapp-btn" onclick="serviceEnquiry('Marine Experiences')">
-                    <i class="fab fa-whatsapp"></i> Plan Marine Tours
-                </button>
+                <a href="coastal-cultural.html" class="service-btn">
+                    <i class="fas fa-compass"></i> Explore Experiences
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Why Choose Us -->
+    <!-- Why Choose Us - UPDATED with European Guest Specialists -->
     <section class="why-us" id="about" role="region" aria-label="Why choose us">
         <div class="section-title">
             <h2>Why Choose PwaniStays?</h2>
@@ -2221,9 +2332,9 @@
                 <p>We work directly with property owners to offer you the best rates without middlemen fees.</p>
             </div>
             <div class="feature" role="article">
-                <i class="fas fa-headset" aria-hidden="true"></i>
-                <h3>Multi-lingual Support</h3>
-                <p>Customer service in English, Swahili, French, German, and Italian for international guests.</p>
+                <i class="fas fa-globe-europe" aria-hidden="true"></i>
+                <h3>European Guest Specialists</h3>
+                <p>Expertise in catering to European travelers with understanding of preferences, travel standards, and seamless communication.</p>
             </div>
         </div>
     </section>
@@ -2438,7 +2549,7 @@
         </div>
     </section>
 
-    <!-- Coastal Destinations -->
+    <!-- Coastal Destinations - UPDATED with different Diani image -->
     <section class="destinations" id="destinations" role="region" aria-label="Coastal destinations">
         <div class="section-title">
             <h2>Explore Kenyan Coast Destinations</h2>
@@ -2456,7 +2567,7 @@
                 </div>
             </div>
             <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
+                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1534008897995-27a23e859048?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
                     <h3>Diani</h3>
                 </div>
                 <div class="destination-content">
@@ -3639,9 +3750,10 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             // Other Initialization
             // ==========================
             
-            // Mobile menu
+            // Mobile menu and dropdown toggle
             const menuToggle = document.querySelector('.menu-toggle');
             const navLinks = document.querySelector('.nav-links');
+            const dropdowns = document.querySelectorAll('.dropdown > a');
             
             if (menuToggle) {
                 menuToggle.addEventListener('click', function() {
@@ -3651,7 +3763,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 });
                 
                 // Close mobile menu when clicking any link
-                document.querySelectorAll('.nav-links a').forEach(link => {
+                document.querySelectorAll('.nav-links a:not(.dropdown > a)').forEach(link => {
                     link.addEventListener('click', (e) => {
                         if (link.getAttribute('href').startsWith('#')) {
                             navLinks.classList.remove('active');
@@ -3659,7 +3771,38 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                         }
                     });
                 });
+                
+                // Dropdown toggle for mobile
+                dropdowns.forEach(dropdownToggle => {
+                    dropdownToggle.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 992) {
+                            e.preventDefault();
+                            const parent = this.parentElement;
+                            parent.classList.toggle('active');
+                            
+                            // Close other dropdowns
+                            dropdowns.forEach(otherToggle => {
+                                const otherParent = otherToggle.parentElement;
+                                if (otherParent !== parent && otherParent.classList.contains('active')) {
+                                    otherParent.classList.remove('active');
+                                }
+                            });
+                        }
+                    });
+                });
             }
+            
+            // Close dropdowns when clicking outside (desktop)
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth > 992) {
+                    const dropdowns = document.querySelectorAll('.dropdown');
+                    dropdowns.forEach(dropdown => {
+                        if (!dropdown.contains(e.target)) {
+                            dropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
             
             // Set current year
             document.getElementById('currentYear').textContent = new Date().getFullYear();

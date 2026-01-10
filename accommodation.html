@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Learn about PwaniStays - Our story, founders, and commitment to providing trusted coastal stays and experiences in Kenya. Contact paul@pwanistays.com or thor@pwanistays.com">
-    <meta name="keywords" content="about PwaniStays, our team, coastal travel experts, Kenya tourism, founders, Paul Wainaina, Thor Kronborg, contact email">
+    <meta name="description" content="Discover carefully selected apartments, villas, and resorts along the Kenyan coast. Trusted accommodation curated by PwaniStays for comfort, safety, and location.">
+    <meta name="keywords" content="kenya coastal accommodation, mombasa apartments, diani beach villas, watamu resorts, nyali vacation rentals, bamboo beach houses, shanzu hotels, kenya beachfront properties, curated stays, verified accommodation">
     <meta name="author" content="PwaniStays">
     
-    <title>About PwaniStays | Trusted Coastal Stays & Experiences in Kenya</title>
+    <title>Accommodation | Curated Coastal Stays in Kenya – PwaniStays</title>
     
     <!-- Favicon Package -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -23,13 +23,13 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://pwanistays.com/about">
-    <meta property="og:title" content="About PwaniStays | Curated Coastal Stays & Experiences">
-    <meta property="og:description" content="Meet the team behind PwaniStays - Combining local Kenyan expertise with international travel standards for unforgettable coastal experiences.">
+    <meta property="og:url" content="https://pwanistays.com/accommodation">
+    <meta property="og:title" content="Accommodation | Curated Coastal Stays in Kenya – PwaniStays">
+    <meta property="og:description" content="Carefully selected apartments, villas, and resorts along Kenya's coast. Trusted accommodation curated for comfort, safety, and location.">
     <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="PwaniStays Team">
+    <meta property="og:image:alt" content="PwaniStays Accommodation">
     <meta property="og:locale" content="en_KE">
     <meta property="og:site_name" content="PwaniStays">
     
@@ -37,18 +37,15 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@PwaniStays">
     <meta name="twitter:creator" content="@PwaniStays">
-    <meta name="twitter:title" content="About PwaniStays | Curated Coastal Stays & Experiences">
-    <meta name="twitter:description" content="Meet the team behind PwaniStays - Combining local Kenyan expertise with international travel standards for unforgettable coastal experiences.">
+    <meta name="twitter:title" content="Accommodation | Curated Coastal Stays in Kenya – PwaniStays">
+    <meta name="twitter:description" content="Carefully selected apartments, villas, and resorts along Kenya's coast. Trusted accommodation curated for comfort, safety, and location.">
     <meta name="twitter:image" content="https://pwanistays.com/logo-mobile.png">
-    <meta name="twitter:image:alt" content="PwaniStays Team">
-    
-    <!-- Swiper.js CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <meta name="twitter:image:alt" content="PwaniStays Accommodation">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- About Page Specific CSS -->
+    <!-- Accommodation Page Specific CSS -->
     <style>
         :root {
             --primary: #0d7a5f;
@@ -180,15 +177,16 @@
             color: var(--dark);
         }
         
-        /* Hero Section for About Page */
-        .about-hero {
-            height: 60vh;
+        /* Hero Section for Accommodation Page */
+        .accommodation-hero {
+            height: 70vh;
             min-height: 500px;
             margin-top: 80px;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                        url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -208,7 +206,7 @@
         }
         
         .hero-content p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
             margin-bottom: 30px;
         }
@@ -251,288 +249,263 @@
             color: var(--gray);
             max-width: 600px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
         
-        /* Updated: Mission & Vision Section - Stylish Cards */
-        .mission-vision {
-            background: var(--light);
+        /* Content Sections */
+        .content-section {
+            padding: 100px 5%;
         }
         
-        .mission-vision-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-        
-        .mission-card, .vision-card {
-            background: white;
-            border-radius: 15px;
-            padding: 50px 40px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-top: 5px solid var(--primary);
-        }
-        
-        .mission-card:hover, .vision-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .mission-card::before, .vision-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-        }
-        
-        .mission-icon, .vision-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            font-size: 2.5rem;
-            box-shadow: 0 10px 20px rgba(13, 122, 95, 0.2);
-        }
-        
-        .mission-card h3, .vision-card h3 {
+        .content-section h2 {
             color: var(--primary);
             margin-bottom: 20px;
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2.2rem;
         }
         
-        .mission-card p, .vision-card p {
+        .content-section p {
             color: var(--gray);
             line-height: 1.8;
+            margin-bottom: 25px;
             font-size: 1.1rem;
-            margin-bottom: 0;
         }
         
-        /* Updated: Our Story Section - Clean and Simple */
-        .story {
-            background: white;
-        }
-        
-        .story-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 60px;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            background: var(--light);
-            box-shadow: var(--shadow);
-        }
-        
-        .story-paragraphs {
-            text-align: left;
-        }
-        
-        .story-content p {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: var(--dark);
-            margin-bottom: 30px;
-            text-align: justify;
-        }
-        
-        /* Founders Section */
-        .founders {
+        .alt-bg {
             background: var(--light);
         }
         
-        .founder-grid {
+        /* Modern Card Grid for Key Sections */
+        .key-features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
             margin-top: 50px;
         }
         
-        .founder-card {
+        .feature-card {
             background: white;
             border-radius: 15px;
-            padding: 40px;
+            padding: 40px 30px;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            text-align: center;
+            border-top: 4px solid var(--primary);
         }
         
-        .founder-card:hover {
+        .feature-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
         
-        .founder-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 30px;
-            border: 5px solid var(--primary);
-        }
-        
-        .founder-card h2 {
+        .feature-card h3 {
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-card h3 i {
             font-size: 1.8rem;
         }
         
-        .founder-card h3 {
-            color: var(--secondary);
-            margin-bottom: 20px;
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--gray);
+            line-height: 1.6;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
             font-size: 1.2rem;
         }
         
-        .founder-card p {
+        /* Property Types Grid */
+        .property-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .property-type-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .property-type-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .property-type-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .property-type-content {
+            padding: 30px;
+        }
+        
+        .property-type-content h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .property-type-content p {
             color: var(--gray);
-            margin-bottom: 15px;
-            line-height: 1.7;
-        }
-        
-        .founder-email {
-            display: inline-block;
-            background: var(--light);
-            color: var(--primary);
-            padding: 8px 15px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 500;
-            margin-top: 15px;
-            transition: var(--transition);
-        }
-        
-        .founder-email:hover {
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* Values Section */
-        .values {
-            background: var(--light);
-        }
-        
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .value-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        
-        .value-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .value-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
-        }
-        
-        .value-card h3 {
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        /* Team Contact Section */
-        .team-contact {
-            background: var(--light);
-        }
-        
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .contact-item {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-        
-        .contact-item i {
-            font-size: 2.5rem;
-            color: var(--primary);
+            line-height: 1.6;
             margin-bottom: 20px;
         }
         
-        .contact-item h3 {
-            margin-bottom: 15px;
-            color: var(--dark);
+        /* Destination Cards Grid - 4 in a row */
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 50px;
         }
         
-        .contact-item p {
-            color: var(--gray);
-            margin-bottom: 10px;
+        .destination-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
         }
         
-        .contact-email {
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .destination-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .destination-card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .destination-card h3 {
             color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-block;
-            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
         }
         
-        .contact-email:hover {
-            text-decoration: underline;
+        .destination-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+        
+        .btn-explore {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .btn-explore:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        /* Experience Bridge Section */
+        .experience-bridge {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            padding: 120px 5%;
+        }
+        
+        .experience-bridge h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .experience-bridge p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            opacity: 0.9;
+            line-height: 1.8;
         }
         
         /* CTA Section */
-        .cta {
+        .cta-section {
+            text-align: center;
+            padding: 100px 5%;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            text-align: center;
         }
         
-        .cta h2 {
+        .cta-section h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
         
-        .cta p {
+        .cta-section p {
             font-size: 1.2rem;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             opacity: 0.9;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
         
-        .btn-primary {
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary, .btn-secondary {
             display: inline-block;
-            background: white;
-            color: var(--primary);
             padding: 15px 40px;
             border-radius: 30px;
             font-weight: 600;
@@ -541,11 +514,29 @@
             font-size: 1.1rem;
             border: none;
             cursor: pointer;
+            min-width: 200px;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--dark);
         }
         
         .btn-primary:hover {
-            background: var(--secondary);
-            color: var(--dark);
+            background: #e09c00;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
@@ -673,23 +664,13 @@
         }
         
         /* Responsive Design */
-        @media (max-width: 992px) {
-            .founder-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .values-grid {
+        @media (max-width: 1200px) {
+            .key-features-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .mission-vision-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .story-content {
-                padding: 40px 30px;
+            .destination-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
@@ -722,9 +703,10 @@
                 padding: 80px 5%;
             }
             
-            .about-hero {
-                height: 50vh;
+            .accommodation-hero {
+                height: 60vh;
                 min-height: 400px;
+                background-attachment: scroll;
             }
             
             .hero-content h1 {
@@ -735,25 +717,35 @@
                 font-size: 2rem;
             }
             
-            .founder-card {
-                padding: 30px 20px;
+            .content-section h2 {
+                font-size: 1.8rem;
             }
             
-            .values-grid {
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .key-features-grid {
                 grid-template-columns: 1fr;
             }
             
-            .mission-card, .vision-card {
-                padding: 40px 25px;
+            .destination-grid {
+                grid-template-columns: 1fr;
             }
             
-            .story-content {
-                padding: 30px 20px;
+            .property-types {
+                grid-template-columns: 1fr;
             }
             
-            .story-content p {
-                font-size: 1.1rem;
-                line-height: 1.7;
+            .experience-bridge {
+                background-attachment: scroll;
+                padding: 80px 5%;
             }
             
             .whatsapp-float {
@@ -771,31 +763,23 @@
             }
             
             .section-title h2 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             
-            .founder-card {
-                padding: 25px 15px;
+            .content-section h2 {
+                font-size: 1.5rem;
             }
             
-            .founder-image {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .story-content {
-                padding: 25px 15px;
-            }
-            
-            .story-content p {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-            
-            .mission-icon, .vision-icon {
-                width: 70px;
-                height: 70px;
+            .cta-section h2 {
                 font-size: 2rem;
+            }
+            
+            .experience-bridge h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-card {
+                padding: 30px 20px;
             }
         }
         
@@ -831,7 +815,7 @@
 </head>
 <body>
     <!-- WhatsApp Float -->
-    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20have%20a%20question%20about%20your%20services" 
+    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20have%20questions%20about%20your%20accommodation" 
        class="whatsapp-float" 
        target="_blank"
        rel="noopener noreferrer"
@@ -857,206 +841,203 @@
             </button>
             <ul class="nav-links" role="menubar">
                 <li role="none"><a href="/" role="menuitem">Home</a></li>
-                <li role="none"><a href="/about" class="active" role="menuitem">About Us</a></li>
-                <li role="none"><a href="#founders" role="menuitem">Our Team</a></li>
-                <li role="none"><a href="#values" role="menuitem">Our Values</a></li>
-                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                <li role="none"><a href="/about.html" role="menuitem">About Us</a></li>
+                <li role="none"><a href="accommodation.html" class="active" role="menuitem">Accommodation</a></li>
+                <li role="none"><a href="#property-types" role="menuitem">Property Types</a></li>
+                <li role="none"><a href="#destinations" role="menuitem">Destinations</a></li>
                 <li role="none"><a href="/#contact" class="btn-book" role="menuitem">Book Now</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="about-hero">
+    <section class="accommodation-hero">
         <div class="hero-content">
-            <h1>About PwaniStays</h1>
-            <p>Discover the story behind Kenya's premier coastal hospitality company. Learn about our founders, our mission, and our commitment to authentic Kenyan coastal experiences.</p>
+            <h1>Curated Coastal Stays</h1>
+            <p>Experience the Kenyan coast through our handpicked selection of premium accommodation. Each property is chosen for its location, comfort, and authentic coastal charm.</p>
         </div>
     </section>
 
-    <!-- Our Story Section -->
-    <section class="story">
+    <!-- Key Features Grid Section -->
+    <section class="content-section">
         <div class="container">
             <div class="section-title">
-                <h2>Our Story</h2>
-                <p>From a simple idea to Kenya's trusted coastal hospitality partner</p>
+                <h2>Our Commitment to Excellence</h2>
+                <p>Discover what sets PwaniStays apart in coastal hospitality</p>
             </div>
-            <div class="story-content">
-                <div class="story-paragraphs">
-                    <p>PwaniStays was founded on the belief that coastal travel should be seamless, authentic, and memorable. Born from a partnership between local Kenyan expertise and international travel experience, we set out to bridge the gap between travelers and the authentic beauty of Kenya's coastline.</p>
-                    
-                    <p>Our journey began with recognizing that many travelers miss out on genuine coastal experiences due to lack of local knowledge or unreliable services. We saw an opportunity to create a platform that not only offers quality accommodation but also provides the local insights and support that make travel truly special.</p>
-                    
-                    <p>Today, PwaniStays has grown into a comprehensive coastal hospitality service, offering curated stays, seamless transfers, and authentic experiences across Mombasa, Diani, Watamu, and beyond. Every property we list is personally verified, every service provider is vetted, and every guest receives the attention and care that has become our hallmark.</p>
-                    
-                    <p>We believe that great travel isn't just about where you stay, but how you experience a destination. That's why we focus on creating journeys that are not just trips, but memories that last a lifetime.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEW: Mission & Vision Section -->
-    <section class="mission-vision" id="mission-vision">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Mission & Vision</h2>
-                <p>The guiding principles that drive everything we do at PwaniStays</p>
-            </div>
-            <div class="mission-vision-grid">
-                <!-- Mission Card -->
-                <div class="mission-card">
-                    <div class="mission-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3>Our Mission</h3>
-                    <p>To provide <strong>safe, comfortable, and authentic travel experiences</strong> in Kenya by combining quality accommodation, trusted logistics, local cultural insight, and continuous guest support throughout every stage of the journey.</p>
+            
+            <div class="key-features-grid">
+                <!-- Card 1: Curated Coastal Stays -->
+                <div class="feature-card">
+                    <h3><i class="fas fa-star"></i> Curated Coastal Stays</h3>
+                    <ul class="feature-list">
+                        <li>Fully furnished apartments and serviced apartments</li>
+                        <li>Beachfront and near-beach properties with ocean views</li>
+                        <li>Private villas with pools and dedicated staff</li>
+                        <li>Selected boutique hotels and resorts</li>
+                    </ul>
                 </div>
                 
-                <!-- Vision Card -->
-                <div class="vision-card">
-                    <div class="vision-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>Our Vision</h3>
-                    <p>To become a <strong>trusted coastal hospitality and experience brand</strong> for international and local travelers, known for safety, reliability, cultural depth, and personalized service across the Kenyan coast and beyond.</p>
+                <!-- Card 2: How We Select Accommodation -->
+                <div class="feature-card">
+                    <h3><i class="fas fa-check-circle"></i> Our Selection Process</h3>
+                    <ul class="feature-list">
+                        <li>Verified property ownership and management</li>
+                        <li>Clean, well-maintained interiors and facilities</li>
+                        <li>Reliable water, electricity, and security</li>
+                        <li>Good access to beaches and essential services</li>
+                        <li>Clear communication and support during stay</li>
+                        <li>Regular quality checks and guest feedback</li>
+                    </ul>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Founders Section -->
-    <section class="founders" id="founders">
-        <div class="container">
-            <div class="section-title">
-                <h2>Meet Our Founders</h2>
-                <p>The team behind PwaniStays' commitment to excellence</p>
-            </div>
-            <div class="founder-grid">
-                <!-- Founder 1: Paul -->
-                <div class="founder-card">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                         alt="Paul Wainaina" 
-                         class="founder-image">
-                    <h2>Paul Wainaina</h2>
-                    <h3>Founder & CEO</h3>
-                    <p>Paul is the driving force behind PwaniStays, combining his software development skills with deep knowledge of Kenya's coastal region. Based in Mombasa, he has firsthand experience with every property and service we offer.</p>
-                    <p>His technical background ensures our platform runs smoothly, while his local expertise guarantees authentic experiences. Paul personally inspects every property and builds relationships with local service providers to ensure quality and reliability.</p>
-                    <p>Outside of work, Paul is passionate about fitness and outdoor activities. He's an avid swimmer and cyclist, often exploring Kenya's coastal trails and waters. This active lifestyle reflects in his approach to business - always moving forward, always improving.</p>
-                    <a href="mailto:paul@pwanistays.com" class="founder-email">
-                        <i class="fas fa-envelope"></i> paul@pwanistays.com
-                    </a>
-                </div>
-
-                <!-- Founder 2: Thor -->
-                <div class="founder-card">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                         alt="Thor Kronborg" 
-                         class="founder-image">
-                    <h2>Thor Kronborg</h2>
-                    <h3>Co-Founder</h3>
-                    <p>Thor brings extensive African travel experience and international perspective to PwaniStays. Based in Denmark, he has traveled extensively across Africa and developed a deep understanding of what international travelers seek in coastal experiences.</p>
-                    <p>His focus is on ensuring that our services meet international standards while maintaining authentic Kenyan hospitality. Thor's experience helps bridge cultural gaps and ensures clear communication between local providers and international guests.</p>
-                    <p>With a background in cross-cultural communication and a passion for sustainable tourism, Thor ensures that PwaniStays operates with both guest satisfaction and local community benefit in mind. His travels have taken him across East Africa, giving him unique insights into regional tourism dynamics.</p>
-                    <a href="mailto:thor@pwanistays.com" class="founder-email">
-                        <i class="fas fa-envelope"></i> thor@pwanistays.com
-                    </a>
+                
+                <!-- Card 3: Why Book With Us -->
+                <div class="feature-card">
+                    <h3><i class="fas fa-handshake"></i> Why Choose PwaniStays</h3>
+                    <ul class="feature-list">
+                        <li>Locally based 24/7 support in Mombasa</li>
+                        <li>Clear communication throughout your stay</li>
+                        <li>Honest advice on neighborhoods and properties</li>
+                        <li>Flexible planning for short or long stays</li>
+                        <li>Assistance with transfers and local experiences</li>
+                        <li>Direct owner rates without middleman fees</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Values Section -->
-    <section class="values" id="values">
+    <!-- Property Types Section -->
+    <section class="content-section alt-bg" id="property-types">
         <div class="container">
             <div class="section-title">
-                <h2>Our Values</h2>
-                <p>The principles that guide every decision we make</p>
+                <h2>Our Property Types</h2>
+                <p>Choose from our diverse selection of accommodation types to find your perfect coastal retreat</p>
             </div>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-shield-alt"></i>
+            
+            <div class="property-types">
+                <div class="property-type-card">
+                    <img src="https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Private villa with pool">
+                    <div class="property-type-content">
+                        <h3>Private Villas</h3>
+                        <p>Luxurious villas with private pools, gardens, and dedicated staff for an exclusive coastal experience.</p>
+                        <a href="/?propertyType=villa" class="btn-explore">
+                            <i class="fas fa-search"></i> Explore Villas
+                        </a>
                     </div>
-                    <h3>Trust & Safety</h3>
-                    <p>Every property is personally verified. Every service provider is vetted. Your safety and comfort are our top priorities.</p>
                 </div>
                 
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-handshake"></i>
+                <div class="property-type-card">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Modern apartment living room">
+                    <div class="property-type-content">
+                        <h3>Apartments</h3>
+                        <p>Modern, fully-equipped apartments with kitchen facilities, perfect for independent travelers and families.</p>
+                        <a href="/?propertyType=2br" class="btn-explore">
+                            <i class="fas fa-search"></i> Explore Apartments
+                        </a>
                     </div>
-                    <h3>Authenticity</h3>
-                    <p>We connect you with genuine Kenyan coastal experiences, not tourist traps. Real places, real people, real moments.</p>
                 </div>
                 
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-headset"></i>
+                <div class="property-type-card">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Beachfront property balcony">
+                    <div class="property-type-content">
+                        <h3>Beachfront Properties</h3>
+                        <p>Properties located directly on the beach with stunning ocean views and immediate beach access.</p>
+                        <a href="/?propertyType=beachfront" class="btn-explore">
+                            <i class="fas fa-search"></i> Explore Beachfront
+                        </a>
                     </div>
-                    <h3>24/7 Support</h3>
-                    <p>From booking to checkout, we're here for you. Local support means real-time solutions, not call centers.</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h3>Sustainability</h3>
-                    <p>We promote responsible tourism that benefits local communities and preserves Kenya's coastal beauty for generations.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Team Contact Section -->
-    <section class="team-contact" id="contact">
+    <!-- Explore Kenyan Coast Destinations -->
+    <section class="content-section" id="destinations">
         <div class="container">
             <div class="section-title">
-                <h2>Contact Our Team</h2>
-                <p>Reach out directly to our founders for any inquiries</p>
+                <h2>Explore Kenyan Coast Destinations</h2>
+                <p>Discover the unique character of each coastal destination through our curated accommodation</p>
             </div>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <i class="fas fa-user"></i>
-                    <h3>Paul Wainaina</h3>
-                    <p>Founder & CEO</p>
-                    <p>Based in Mombasa, Kenya</p>
-                    <a href="mailto:paul@pwanistays.com" class="contact-email">paul@pwanistays.com</a>
+
+            <div class="destination-grid">
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Mombasa Old Town">
+                    <div class="destination-card-content">
+                        <h3>Mombasa</h3>
+                        <p>Historic coastal city with beaches, culture, and easy transport access. Perfect for first-time visitors wanting authentic Kenyan coastal life.</p>
+                        <a href="/?location=Mombasa" class="btn-explore">
+                            <i class="fas fa-map-marker-alt"></i> Explore Mombasa Properties
+                        </a>
+                    </div>
                 </div>
                 
-                <div class="contact-item">
-                    <i class="fas fa-user"></i>
-                    <h3>Thor Kronborg</h3>
-                    <p>Co-Founder</p>
-                    <p>Based in Aalborg, Denmark</p>
-                    <a href="mailto:thor@pwanistays.com" class="contact-email">thor@pwanistays.com</a>
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1573843989-c9d9a2a211c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Diani Beach white sands and palm trees">
+                    <div class="destination-card-content">
+                        <h3>Diani</h3>
+                        <p>White-sand beaches, resorts, and water activities. Ideal for beach-focused holidays and water sports enthusiasts.</p>
+                        <a href="/?location=Diani" class="btn-explore">
+                            <i class="fas fa-map-marker-alt"></i> Explore Diani Properties
+                        </a>
+                    </div>
                 </div>
                 
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <h3>General Inquiries</h3>
-                    <p>For bookings and general questions</p>
-                    <p>Our team responds within 1 hour</p>
-                    <a href="mailto:bookings@pwanistays.com" class="contact-email">bookings@pwanistays.com</a>
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Watamu Marine Park">
+                    <div class="destination-card-content">
+                        <h3>Watamu</h3>
+                        <p>Marine parks, calm beaches, and a laid-back atmosphere. Perfect for nature lovers and marine enthusiasts.</p>
+                        <a href="/?location=Watamu" class="btn-explore">
+                            <i class="fas fa-map-marker-alt"></i> Explore Watamu Properties
+                        </a>
+                    </div>
                 </div>
                 
-                <div class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <h3>WhatsApp Support</h3>
-                    <p>24/7 Instant Support</p>
-                    <p>Quick answers to your questions</p>
-                    <a href="https://wa.me/254738544784" class="contact-email">+254 738 544 784</a>
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Nyali Beach">
+                    <div class="destination-card-content">
+                        <h3>Nyali & Bamburi</h3>
+                        <p>Central, modern areas close to beaches, malls, and restaurants. Ideal for families and those who want convenience.</p>
+                        <a href="/?location=Nyali" class="btn-explore">
+                            <i class="fas fa-map-marker-alt"></i> Explore Nyali Properties
+                        </a>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Experience Bridge Section -->
+    <section class="experience-bridge">
+        <div class="container">
+            <h2>More Than a Place to Stay</h2>
+            <p>Where you stay shapes your entire coastal experience. That's why we focus not only on the property itself, but also on its surroundings, accessibility, and connection to the experiences you want to enjoy.</p>
+            <p>Each of our properties is chosen to serve as the perfect base for your Kenyan coastal adventure.</p>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="cta">
+    <section class="cta-section">
         <div class="container">
-            <h2>Ready to Experience Kenya's Coast?</h2>
-            <p>Let us help you plan your perfect coastal getaway. Whether it's a relaxing beach holiday, an adventure-filled safari, or a cultural exploration, we've got you covered.</p>
-            <a href="/#contact" class="btn-primary">Start Planning Your Trip</a>
+            <h2>Find Your Perfect Coastal Retreat</h2>
+            <p>Browse our featured properties or tell us about your trip, and we will help you choose accommodation that fits your needs and dreams.</p>
+
+            <div class="cta-buttons">
+                <a href="/#stays" class="btn-secondary">
+                    <i class="fas fa-eye"></i> View Featured Properties
+                </a>
+                <a href="/#contact" class="btn-primary">
+                    <i class="fas fa-calendar-alt"></i> Plan Your Trip
+                </a>
+            </div>
         </div>
     </section>
 
@@ -1091,8 +1072,8 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/#stays">Featured Properties</a></li>
+                    <li><a href="/about.html">About Us</a></li>
+                    <li><a href="accommodation.html">Accommodation</a></li>
                     <li><a href="/#services">Our Services</a></li>
                     <li><a href="/#testimonials">Guest Reviews</a></li>
                     <li><a href="/#contact">Contact Us</a></li>
@@ -1101,12 +1082,12 @@
             <div class="footer-col">
                 <h3>Coastal Destinations</h3>
                 <ul>
-                    <li><a href="/#destinations">Mombasa</a></li>
-                    <li><a href="/#destinations">Nyali</a></li>
-                    <li><a href="/#destinations">Bamburi</a></li>
-                    <li><a href="/#destinations">Diani</a></li>
-                    <li><a href="/#destinations">Watamu</a></li>
-                    <li><a href="/#destinations">Kilifi</a></li>
+                    <li><a href="/?location=Mombasa">Mombasa</a></li>
+                    <li><a href="/?location=Nyali">Nyali</a></li>
+                    <li><a href="/?location=Bamburi">Bamburi</a></li>
+                    <li><a href="/?location=Shanzu">Shanzu</a></li>
+                    <li><a href="/?location=Diani">Diani</a></li>
+                    <li><a href="/?location=Watamu">Watamu</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -1187,13 +1168,33 @@
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         document.querySelectorAll('.nav-links a').forEach(link => {
             const linkPage = link.getAttribute('href');
-            if (linkPage === currentPage || (currentPage === '' && linkPage === '/') || 
-                (currentPage === 'about.html' && linkPage === '/about')) {
+            if (linkPage === currentPage || 
+                (currentPage === '' && linkPage === '/') || 
+                (currentPage === 'accommodation.html' && (linkPage === 'accommodation.html' || linkPage === './accommodation.html'))) {
                 link.classList.add('active');
             } else {
                 link.classList.remove('active');
             }
         });
+
+        // Function to handle query parameters when navigating from accommodation page
+        function handleQueryParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const locationParam = urlParams.get('location');
+            const propertyTypeParam = urlParams.get('propertyType');
+            
+            // If we're on the main page and have query params, we could trigger filtering
+            // This would require the main page to have this function
+            if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+                // This function should be defined in index.html
+                if (window.parent && window.parent.filterByLocation && locationParam) {
+                    window.parent.filterByLocation(locationParam);
+                }
+            }
+        }
+        
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', handleQueryParams);
     </script>
 </body>
 </html>

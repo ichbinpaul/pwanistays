@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="PwaniStays Nairobi & Inland Experiences: Discover urban adventures, cultural immersion, and nature escapes in Kenya's capital and surrounding regions.">
+    <meta name="keywords" content="nairobi city tours, giraffe centre nairobi, david sheldrick wildlife trust, karen blixen museum, bomas of kenya, kibera tour, karura forest, nairobi national park, mount kenya, lake naivasha, tea plantation tours, kenyan cultural experiences">
+    <meta name="author" content="PwaniStays - Nairobi & Inland Experts">
+    
+    <title>Nairobi & Inland Experiences | PwaniStays - Urban Adventures & Nature Escapes</title>
+    
+    <!-- Favicon Package -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pwanistays.com/experiences/nairobi-inland.html">
+    <meta property="og:title" content="Nairobi & Inland Experiences | PwaniStays - Urban Adventures & Nature Escapes">
+    <meta property="og:description" content="Discover urban adventures, cultural immersion, and nature escapes in Kenya's capital and surrounding regions.">
+    <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
+    
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nairobi & Inland Experiences | PwaniStays - Urban Adventures & Nature Escapes">
+    <meta name="twitter:description" content="Urban adventures, cultural immersion, and nature escapes in Kenya's capital.">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0d7a5f;
+            --primary-light: #0f9b7a;
+            --secondary: #f8b400;
+            --dark: #1a2b3c;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            line-height: 1;
+        }
+        
+        .logo-desktop {
+            display: inline-block;
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo-mobile {
+            display: none;
+            height: 50px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .btn-book {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-book:hover {
+            background: #e09c00;
+            transform: translateY(-2px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Nairobi Hero */
+        .nairobi-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 180px 5% 100px;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+        }
+        
+        .nairobi-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nairobi-hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .nairobi-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(13, 122, 95, 0.8);
+            border-radius: 15px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background: var(--light);
+            padding: 15px 5%;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 50px;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 100px 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Experience Categories */
+        .experience-categories {
+            background: var(--light);
+            padding: 60px 5%;
+        }
+        
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-light);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+        
+        /* Experiences Grid */
+        .experiences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .experience-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .experience-image {
+            height: 250px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .experience-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .cultural-badge {
+            background: #9c27b0;
+        }
+        
+        .wildlife-badge {
+            background: #4caf50;
+        }
+        
+        .adventure-badge {
+            background: #ff9800;
+        }
+        
+        .urban-badge {
+            background: #2196f3;
+        }
+        
+        .nature-badge {
+            background: var(--primary);
+        }
+        
+        .experience-content {
+            padding: 30px;
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .experience-title {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            flex: 1;
+        }
+        
+        .experience-location {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .experience-type {
+            background: #f0f8f4;
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .experience-duration {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .experience-overview {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .experience-highlights {
+            margin-bottom: 20px;
+        }
+        
+        .experience-highlights h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .experience-highlights ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .experience-highlights li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .experience-highlights li:before {
+            content: "⭐";
+            min-width: 20px;
+        }
+        
+        .experience-inclusions {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .experience-inclusions h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .experience-inclusions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .experience-inclusions li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .experience-inclusions li:before {
+            content: "✔";
+            color: var(--primary);
+            font-weight: bold;
+            min-width: 15px;
+        }
+        
+        .experience-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .feature-tag {
+            background: #e8f4f1;
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .experience-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .experience-price {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .price-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .price-person {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(13, 122, 95, 0.3);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        /* Best For Section */
+        .experience-best-for {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff9e6;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .experience-best-for p {
+            color: var(--dark);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Nairobi City Guide */
+        .nairobi-guide {
+            background: linear-gradient(135deg, #0d7a5f 0%, #0f9b7a 100%);
+            color: white;
+            padding: 80px 5%;
+            text-align: center;
+        }
+        
+        .nairobi-guide h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .nairobi-guide p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .guide-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+        
+        .guide-feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .guide-feature i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: 2px solid white;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Day Trips Section */
+        .day-trips {
+            background: var(--light);
+            padding: 80px 5%;
+        }
+        
+        .trips-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .trip-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .trip-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .trip-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            color: white;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-col ul li a {
+            transition: var(--transition);
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .footer-logo {
+            display: inline-block;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .experiences-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .nairobi-stats {
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .logo-desktop {
+                display: none;
+            }
+            
+            .logo-mobile {
+                display: inline-block;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .nairobi-hero {
+                padding: 150px 5% 80px;
+            }
+            
+            .experience-footer {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+            }
+            
+            .nairobi-guide h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .experiences-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nairobi-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nairobi-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .nairobi-guide h2 {
+                font-size: 1.8rem;
+            }
+            
+            .trip-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I'm%20interested%20in%20your%20Nairobi%20&%20Inland%20Experiences" 
+       class="whatsapp-float" 
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <!-- Header -->
+    <header role="banner">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="/index.html" class="logo-link">
+                <img src="/logo-header.png" 
+                     alt="PwaniStays - Curated Coastal Stays" 
+                     class="logo-desktop">
+                <img src="/logo-mobile.png" 
+                     alt="PwaniStays" 
+                     class="logo-mobile">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="/index.html" role="menuitem">Home</a></li>
+                <li role="none"><a href="/accommodations.html" role="menuitem">Accommodation</a></li>
+                <li role="none"><a href="/experiences.html" role="menuitem">Experiences</a></li>
+                <li role="none"><a href="/experiences/coastal-cultural.html" role="menuitem">Coastal & Cultural</a></li>
+                <li role="none"><a href="/experiences/safari.html" role="menuitem">Safari</a></li>
+                <li role="none"><a href="/experiences/nairobi-inland.html" class="active" role="menuitem">Nairobi & Inland</a></li>
+                <li role="none"><a href="/about.html" role="menuitem">About Us</a></li>
+                <li role="none"><a href="/contact.html" role="menuitem">Contact</a></li>
+                <li role="none"><a href="https://wa.me/254738544784" class="btn-book" role="menuitem" target="_blank">Book Experience</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Nairobi Hero -->
+    <section class="nairobi-hero">
+        <h1>Nairobi & Inland Experiences</h1>
+        <p>Discover the vibrant heart of Kenya - from urban adventures in Africa's most dynamic city to serene escapes in the surrounding highlands and lakes. Experience culture, wildlife, and nature in one unforgettable journey.</p>
+        <a href="#inland-packages" class="btn-primary">
+            <i class="fas fa-compass"></i> Explore Experiences
+        </a>
+        
+        <div class="nairobi-stats">
+            <div class="stat-item">
+                <span class="stat-number">4.7M</span>
+                <span class="stat-label">City Population</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">1,795m</span>
+                <span class="stat-label">Elevation</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">25°C</span>
+                <span class="stat-label">Average Temperature</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Attractions</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <span><a href="/index.html">Home</a> &gt; 
+              <a href="/experiences.html">Experiences</a> &gt; 
+              Nairobi & Inland Experiences</span>
+    </div>
+
+    <!-- Experience Categories -->
+    <section class="experience-categories">
+        <div class="section-title">
+            <h2>Experience Categories</h2>
+            <p>Choose your adventure in Nairobi and beyond</p>
+        </div>
+        <div class="categories-container">
+            <div class="category-card" onclick="filterExperience('cultural')">
+                <div class="category-icon">
+                    <i class="fas fa-landmark"></i>
+                </div>
+                <h3>Cultural & Heritage</h3>
+                <p>Museums, historical sites, and traditional experiences</p>
+                <small>From Ksh 3,500</small>
+            </div>
+            <div class="category-card" onclick="filterExperience('wildlife')">
+                <div class="category-icon">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <h3>Wildlife Encounters</h3>
+                <p>Animal sanctuaries, orphanages, and urban wildlife</p>
+                <small>From Ksh 4,200</small>
+            </div>
+            <div class="category-card" onclick="filterExperience('adventure')">
+                <div class="category-icon">
+                    <i class="fas fa-hiking"></i>
+                </div>
+                <h3>Adventure & Nature</h3>
+                <p>Hiking, forests, waterfalls, and outdoor activities</p>
+                <small>From Ksh 5,800</small>
+            </div>
+            <div class="category-card" onclick="filterExperience('urban')">
+                <div class="category-icon">
+                    <i class="fas fa-city"></i>
+                </div>
+                <h3>Urban Exploration</h3>
+                <p>City tours, markets, food experiences, and nightlife</p>
+                <small>From Ksh 6,500</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inland Packages -->
+    <section id="inland-packages">
+        <div class="section-title">
+            <h2>Nairobi & Inland Experiences</h2>
+            <p>Curated experiences showcasing the best of Nairobi and surrounding regions</p>
+        </div>
+
+        <div class="experiences-grid">
+            <!-- Package 1: Nairobi Wildlife Conservation Experience -->
+            <div class="experience-card" data-category="wildlife cultural">
+                <div class="experience-image" style="background-image: url('https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="experience-badge wildlife-badge">Wildlife</div>
+                </div>
+                <div class="experience-content">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Nairobi Wildlife Conservation Experience</h3>
+                        <span class="experience-type">Full Day</span>
+                    </div>
+                    
+                    <div class="experience-location">
+                        <i class="fas fa-map-marker-alt"></i> Nairobi National Park & Animal Orphanages
+                    </div>
+                    
+                    <div class="experience-duration">
+                        <i class="fas fa-clock"></i> 7-8 hours (Best: Morning visits)
+                    </div>
+                    
+                    <p class="experience-overview">A comprehensive wildlife day combining Nairobi National Park with visits to world-renowned animal conservation centers.</p>
+                    
+                    <div class="experience-highlights">
+                        <h4><i class="fas fa-star"></i> Experience Highlights</h4>
+                        <ul>
+                            <li>Game drive in Nairobi National Park (the world's only wildlife capital)</li>
+                            <li>Visit David Sheldrick Elephant Orphanage (11am feeding time)</li>
+                            <li>Giraffe Centre experience - feed Rothschild giraffes</li>
+                            <li>Animal Orphanage visit with rescued animals</li>
+                            <li>Learn about Kenya's conservation efforts</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-features">
+                        <span class="feature-tag"><i class="fas fa-elephant"></i> Elephants</span>
+                        <span class="feature-tag"><i class="fas fa-giraffe"></i> Giraffes</span>
+                        <span class="feature-tag"><i class="fas fa-lion"></i> Lions</span>
+                        <span class="feature-tag"><i class="fas fa-leaf"></i> Conservation</span>
+                    </div>
+                    
+                    <div class="experience-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>All park and conservation center entry fees</li>
+                            <li>Professional wildlife guide</li>
+                            <li>Transport in comfortable vehicle</li>
+                            <li>Bottled water throughout</li>
+                            <li>Lunch at a selected restaurant</li>
+                            <li>Giraffe feeding pellets</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Families, animal lovers, conservation enthusiasts, first-time visitors</p>
+                    </div>
+                    
+                    <div class="experience-footer">
+                        <div class="experience-price">
+                            <span class="price-amount">Ksh 12,500</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireExperience(1)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 2: Karen Blixen & Cultural Heritage Tour -->
+            <div class="experience-card" data-category="cultural historical">
+                <div class="experience-image" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="experience-badge cultural-badge">Cultural</div>
+                </div>
+                <div class="experience-content">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Karen Blixen & Cultural Heritage Tour</h3>
+                        <span class="experience-type">Full Day</span>
+                    </div>
+                    
+                    <div class="experience-location">
+                        <i class="fas fa-map-marker-alt"></i> Karen, Nairobi
+                    </div>
+                    
+                    <div class="experience-duration">
+                        <i class="fas fa-clock"></i> 6-7 hours
+                    </div>
+                    
+                    <p class="experience-overview">Step into colonial Kenya's history and experience traditional Kenyan culture at its most authentic.</p>
+                    
+                    <div class="experience-highlights">
+                        <h4><i class="fas fa-star"></i> Experience Highlights</h4>
+                        <ul>
+                            <li>Visit Karen Blixen Museum (Out of Africa author's home)</li>
+                            <li>Explore Nairobi Railway Museum</li>
+                            <li>Bomas of Kenya cultural show and traditional villages</li>
+                            <li>Lunch at historical restaurant</li>
+                            <li>Visit Kazuri Beads women's cooperative</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-features">
+                        <span class="feature-tag"><i class="fas fa-history"></i> History</span>
+                        <span class="feature-tag"><i class="fas fa-music"></i> Cultural Dance</span>
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Local Cuisine</span>
+                        <span class="feature-tag"><i class="fas fa-hands-helping"></i> Community</span>
+                    </div>
+                    
+                    <div class="experience-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>All museum and cultural center entry fees</li>
+                            <li>Professional cultural guide</li>
+                            <li>Traditional dance performance</li>
+                            <li>Lunch at selected restaurant</li>
+                            <li>Transport between sites</li>
+                            <li>Bottled water</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> History buffs, cultural explorers, literature enthusiasts</p>
+                    </div>
+                    
+                    <div class="experience-footer">
+                        <div class="experience-price">
+                            <span class="price-amount">Ksh 8,900</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireExperience(2)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 3: Karura Forest Adventure & City Views -->
+            <div class="experience-card" data-category="adventure nature">
+                <div class="experience-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="experience-badge adventure-badge">Adventure</div>
+                </div>
+                <div class="experience-content">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Karura Forest Adventure & City Views</h3>
+                        <span class="experience-type">Half Day</span>
+                    </div>
+                    
+                    <div class="experience-location">
+                        <i class="fas fa-map-marker-alt"></i> Karura Forest & Nairobi Viewpoints
+                    </div>
+                    
+                    <div class="experience-duration">
+                        <i class="fas fa-clock"></i> 4-5 hours (Best: Morning or Afternoon)
+                    </div>
+                    
+                    <p class="experience-overview">An active day combining forest adventures with panoramic city views and urban exploration.</p>
+                    
+                    <div class="experience-highlights">
+                        <h4><i class="fas fa-star"></i> Experience Highlights</h4>
+                        <ul>
+                            <li>Cycling or walking through Karura Forest (35km trails)</li>
+                            <li>Visit waterfalls and caves within the forest</li>
+                            <li>Picnic lunch at scenic forest spot</li>
+                            <li>Panoramic city views from KICC Helipad or similar</li>
+                            <li>Optional forest zip-lining (extra cost)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-features">
+                        <span class="feature-tag"><i class="fas fa-bicycle"></i> Cycling</span>
+                        <span class="feature-tag"><i class="fas fa-hiking"></i> Hiking</span>
+                        <span class="feature-tag"><i class="fas fa-water"></i> Waterfalls</span>
+                        <span class="feature-tag"><i class="fas fa-mountain"></i> City Views</span>
+                    </div>
+                    
+                    <div class="experience-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Forest entry fees</li>
+                            <li>Bicycle rental (or walking guide)</li>
+                            <li>Picnic lunch with refreshments</li>
+                            <li>Professional adventure guide</li>
+                            <li>Transport to/from forest</li>
+                            <li>Safety equipment</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Active travelers, nature lovers, families, fitness enthusiasts</p>
+                    </div>
+                    
+                    <div class="experience-footer">
+                        <div class="experience-price">
+                            <span class="price-amount">Ksh 6,500</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireExperience(3)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 4: Nairobi Food & Market Exploration -->
+            <div class="experience-card" data-category="urban cultural">
+                <div class="experience-image" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="experience-badge urban-badge">Urban</div>
+                </div>
+                <div class="experience-content">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Nairobi Food & Market Exploration</h3>
+                        <span class="experience-type">Full Day</span>
+                    </div>
+                    
+                    <div class="experience-location">
+                        <i class="fas fa-map-marker-alt"></i> Various Nairobi Locations
+                    </div>
+                    
+                    <div class="experience-duration">
+                        <i class="fas fa-clock"></i> 8-9 hours (Food-focused day)
+                    </div>
+                    
+                    <p class="experience-overview">A culinary journey through Nairobi's diverse food scene, from street markets to fine dining with local experiences.</p>
+                    
+                    <div class="experience-highlights">
+                        <h4><i class="fas fa-star"></i> Experience Highlights</h4>
+                        <ul>
+                            <li>Explore City Market and Maasai Market for crafts</li>
+                            <li>Street food tour in downtown Nairobi</li>
+                            <li>Cooking class with local chef (prepare traditional dishes)</li>
+                            <li>Visit a coffee roastery or tea factory</li>
+                            <li>Fine dining experience at top Nairobi restaurant</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-features">
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Street Food</span>
+                        <span class="feature-tag"><i class="fas fa-mortar-pestle"></i> Cooking Class</span>
+                        <span class="feature-tag"><i class="fas fa-coffee"></i> Coffee Tasting</span>
+                        <span class="feature-tag"><i class="fas fa-shopping-bag"></i> Market Shopping</span>
+                    </div>
+                    
+                    <div class="experience-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>All food tastings and meals</li>
+                            <li>Cooking class with ingredients</li>
+                            <li>Market visits and shopping guidance</li>
+                            <li>Foodie guide with local knowledge</li>
+                            <li>Transport between locations</li>
+                            <li>Recipe cards to take home</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Food lovers, culinary enthusiasts, cultural explorers</p>
+                    </div>
+                    
+                    <div class="experience-footer">
+                        <div class="experience-price">
+                            <span class="price-amount">Ksh 11,800</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireExperience(4)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 5: Lake Naivasha & Crescent Island -->
+            <div class="experience-card" data-category="nature wildlife">
+                <div class="experience-image" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="experience-badge nature-badge">Nature</div>
+                </div>
+                <div class="experience-content">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Lake Naivasha & Crescent Island</h3>
+                        <span class="experience-type">Full Day</span>
+                    </div>
+                    
+                    <div class="experience-location">
+                        <i class="fas fa-map-marker-alt"></i> Lake Naivasha (2 hours from Nairobi)
+                    </div>
+                    
+                    <div class="experience-duration">
+                        <i class="fas fa-clock"></i> 10-12 hours (Day trip from Nairobi)
+                    </div>
+                    
+                    <p class="experience-overview">A scenic escape to one of Kenya's most beautiful lakes, offering walking safaris among wildlife and boat rides.</p>
+                    
+                    <div class="experience-highlights">
+                        <h4><i class="fas fa-star"></i> Experience Highlights</h4>
+                        <ul>
+                            <li>Boat ride on Lake Naivasha with hippo viewing</li>
+                            <li>Walking safari on Crescent Island among wildlife</li>
+                            <li>Bird watching (450+ species)</li>
+                            <li>Visit Hell's Gate National Park (optional cycling)</li>
+                            <li>Lunch at lakeside resort with views</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-features">
+                        <span class="feature-tag"><i class="fas fa-ship"></i> Boat Ride</span>
+                        <span class="feature-tag"><i class="fas fa-walking"></i> Walking Safari</span>
+                        <span class="feature-tag"><i class="fas fa-hippo"></i> Hippos</span>
+                        <span class="feature-tag"><i class="fas fa-dove"></i> Bird Watching</span>
+                    </div>
+                    
+                    <div class="experience-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Return transport from Nairobi</li>
+                            <li>Boat ride with guide</li>
+                            <li>Crescent Island walking safari</li>
+                            <li>All park and conservation fees</li>
+                            <li>Lunch at lakeside resort</li>
+                            <li>Professional nature guide</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Nature lovers, photographers, day trippers, bird watchers</p>
+                    </div>
+                    
+                    <div class="experience-footer">
+                        <div class="experience-price">
+                            <span class="price-amount">Ksh 15,200</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireExperience(5)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 6: Ngong Hills & Kibera Cultural Insight -->
+            <div class="experience-card" data-category="adventure cultural">
+                <div class="experience-image" style="background-image: url('https://images.unsplash.com/photo-1511994717241-8e4e484dfa8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="experience-badge adventure-badge">Adventure</div>
+                </div>
+                <div class="experience-content">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Ngong Hills & Kibera Cultural Insight</h3>
+                        <span class="experience-type">Full Day</span>
+                    </div>
+                    
+                    <div class="experience-location">
+                        <i class="fas fa-map-marker-alt"></i> Ngong Hills & Kibera, Nairobi
+                    </div>
+                    
+                    <div class="experience-duration">
+                        <i class="fas fa-clock"></i> 8-9 hours
+                    </div>
+                    
+                    <p class="experience-overview">A day of contrasts - hike the scenic Ngong Hills followed by a respectful, insightful tour of Africa's largest informal settlement.</p>
+                    
+                    <div class="experience-highlights">
+                        <h4><i class="fas fa-star"></i> Experience Highlights</h4>
+                        <ul>
+                            <li>Hike Ngong Hills with panoramic views (7 hills)</li>
+                            <li>Guided respectful tour of Kibera with local guide</li>
+                            <li>Visit community projects and social enterprises</li>
+                            <li>Lunch at community-run restaurant</li>
+                            <li>Learn about urban challenges and innovations</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-features">
+                        <span class="feature-tag"><i class="fas fa-hiking"></i> Hiking</span>
+                        <span class="feature-tag"><i class="fas fa-hands-helping"></i> Community</span>
+                        <span class="feature-tag"><i class="fas fa-eye"></i> Cultural Insight</span>
+                        <span class="feature-tag"><i class="fas fa-mountain"></i> Scenic Views</span>
+                    </div>
+                    
+                    <div class="experience-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Ngong Hills hiking permit and guide</li>
+                            <li>Kibera tour with local community guide</li>
+                            <li>Transport between locations</li>
+                            <li>Lunch at community project</li>
+                            <li>Donation to community projects</li>
+                            <li>Bottled water and snacks</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Adventurous travelers, socially conscious visitors, photographers</p>
+                    </div>
+                    
+                    <div class="experience-footer">
+                        <div class="experience-price">
+                            <span class="price-amount">Ksh 9,500</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireExperience(6)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 7: Tea Plantation Experience & Limuru Escapes -->
+            <div class="experience-card" data-category="nature cultural">
+                <div class="experience-image" style="background-image: url('https://images.unsplash.com/photo-1568649929103-28ffbefaca1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="experience-badge nature-badge">Nature</div>
+                </div>
+                <div class="experience-content">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Tea Plantation Experience & Limuru Escapes</h3>
+                        <span class="experience-type">Full Day</span>
+                    </div>
+                    
+                    <div class="experience-location">
+                        <i class="fas fa-map-marker-alt"></i> Limuru Highlands (1 hour from Nairobi)
+                    </div>
+                    
+                    <div class="experience-duration">
+                        <i class="fas fa-clock"></i> 8-9 hours
+                    </div>
+                    
+                    <p class="experience-overview">Experience Kenya's famous tea culture in the cool highlands with scenic views and traditional tea tasting.</p>
+                    
+                    <div class="experience-highlights">
+                        <h4><i class="fas fa-star"></i> Experience Highlights</h4>
+                        <ul>
+                            <li>Tour of working tea plantation</li>
+                            <li>Tea plucking experience (seasonal)</li>
+                            <li>Tea factory tour and tasting session</li>
+                            <li>Visit Limuru's colonial architecture</li>
+                            <li>Scenic drive through tea-growing region</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-features">
+                        <span class="feature-tag"><i class="fas fa-leaf"></i> Tea Tour</span>
+                        <span class="feature-tag"><i class="fas fa-industry"></i> Factory Visit</span>
+                        <span class="feature-tag"><i class="fas fa-mug-hot"></i> Tea Tasting</span>
+                        <span class="feature-tag"><i class="fas fa-mountain"></i> Highlands</span>
+                    </div>
+                    
+                    <div class="experience-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Tea plantation and factory tour</li>
+                            <li>Tea tasting session</li>
+                            <li>Lunch at plantation restaurant</li>
+                            <li>Transport from Nairobi</li>
+                            <li>Professional guide</li>
+                            <li>Tea samples to take home</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Tea lovers, cultural explorers, photography enthusiasts</p>
+                    </div>
+                    
+                    <div class="experience-footer">
+                        <div class="experience-price">
+                            <span class="price-amount">Ksh 10,800</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireExperience(7)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 8: Nairobi By Night - Entertainment & Culture -->
+            <div class="experience-card" data-category="urban cultural">
+                <div class="experience-image" style="background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="experience-badge urban-badge">Urban</div>
+                </div>
+                <div class="experience-content">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Nairobi By Night - Entertainment & Culture</h3>
+                        <span class="experience-type">Evening Experience</span>
+                    </div>
+                    
+                    <div class="experience-location">
+                        <i class="fas fa-map-marker-alt"></i> Various Nairobi Nightlife Spots
+                    </div>
+                    
+                    <div class="experience-duration">
+                        <i class="fas fa-clock"></i> 5-6 hours (Evening)
+                    </div>
+                    
+                    <p class="experience-overview">Experience Nairobi's vibrant nightlife, from cultural performances to modern entertainment venues.</p>
+                    
+                    <div class="experience-highlights">
+                        <h4><i class="fas fa-star"></i> Experience Highlights</h4>
+                        <ul>
+                            <li>Traditional music and dance performance</li>
+                            <li>Visit to popular Nairobi rooftop bar with city views</li>
+                            <li>Live jazz or Afro-fusion music experience</li>
+                            <li>Gourmet dinner at selected restaurant</li>
+                            <li>Night market or cultural event (depending on day)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-features">
+                        <span class="feature-tag"><i class="fas fa-music"></i> Live Music</span>
+                        <span class="feature-tag"><i class="fas fa-cocktail"></i> Rooftop Bars</span>
+                        <span class="feature-tag"><i class="fas fa-utensils"></i> Gourmet Dining</span>
+                        <span class="feature-tag"><i class="fas fa-theater-masks"></i> Cultural Shows</span>
+                    </div>
+                    
+                    <div class="experience-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>All entertainment entry fees</li>
+                            <li>Three-course gourmet dinner</li>
+                            <li>Two drinks at selected venues</li>
+                            <li>Transport between venues</li>
+                            <li>Local entertainment guide</li>
+                            <li>Performance tickets</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Nightlife enthusiasts, music lovers, couples, groups</p>
+                    </div>
+                    
+                    <div class="experience-footer">
+                        <div class="experience-price">
+                            <span class="price-amount">Ksh 13,500</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireExperience(8)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day Trips Section -->
+    <section class="day-trips">
+        <div class="section-title">
+            <h2>Popular Day Trips from Nairobi</h2>
+            <p>Explore beyond the city with these recommended day excursions</p>
+        </div>
+        <div class="trips-container">
+            <div class="trip-cards">
+                <div class="trip-card">
+                    <h4>Mount Longonot Hike</h4>
+                    <p>Hike the volcanic crater (2 hours from Nairobi)</p>
+                    <small>From Ksh 8,500</small>
+                </div>
+                <div class="trip-card">
+                    <h4>Lake Elementaita</h4>
+                    <p>Bird watching and hot springs experience</p>
+                    <small>From Ksh 14,200</small>
+                </div>
+                <div class="trip-card">
+                    <h4>Olorgesailie Prehistoric Site</h4>
+                    <p>Archaeological site with early human tools</p>
+                    <small>From Ksh 9,800</small>
+                </div>
+                <div class="trip-card">
+                    <h4>Thika Falls & Chania</h4>
+                    <p>Waterfalls and scenic drives</p>
+                    <small>From Ksh 7,500</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nairobi City Guide -->
+    <section class="nairobi-guide">
+        <h2>Nairobi City Guide & Custom Experiences</h2>
+        <p>Create your perfect Nairobi itinerary with our local experts. We tailor experiences to your interests, schedule, and budget.</p>
+        
+        <div class="guide-features">
+            <div class="guide-feature">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Custom Itineraries</h3>
+                <p>Tailored daily plans based on your interests</p>
+            </div>
+            <div class="guide-feature">
+                <i class="fas fa-user-tie"></i>
+                <h3>Private Guides</h3>
+                <p>Dedicated guides with deep local knowledge</p>
+            </div>
+            <div class="guide-feature">
+                <i class="fas fa-car-alt"></i>
+                <h3>Flexible Transport</h3>
+                <p>Private vehicles with professional drivers</p>
+            </div>
+        </div>
+        
+        <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20discuss%20a%20custom%20Nairobi%20itinerary%20and%20inland%20experiences." 
+           class="btn-secondary" target="_blank">
+           <i class="fas fa-calendar-alt"></i> Plan Custom Itinerary
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="/logo-footer.png" 
+                         alt="PwaniStays - Nairobi & Inland Experts" 
+                         class="logo-desktop"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                    <img src="/logo-mobile.png" 
+                         alt="PwaniStays" 
+                         class="logo-mobile"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                </div>
+                <p>Your trusted partner for Nairobi and inland experiences. We specialize in authentic urban adventures, cultural immersion, and nature escapes in Kenya's capital and surrounding regions.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/pwanistayscom" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@pwanistays.com" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Nairobi Experiences</h3>
+                <ul>
+                    <li><a href="#wildlife">Wildlife Conservation</a></li>
+                    <li><a href="#cultural">Cultural Heritage</a></li>
+                    <li><a href="#adventure">Adventure & Nature</a></li>
+                    <li><a href="#food">Food Experiences</a></li>
+                    <li><a href="#urban">Urban Exploration</a></li>
+                    <li><a href="#nightlife">Nightlife & Entertainment</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Day Trips</h3>
+                <ul>
+                    <li><a href="#naivasha">Lake Naivasha</a></li>
+                    <li><a href="#ngong">Ngong Hills</a></li>
+                    <li><a href="#limuru">Tea Plantations</a></li>
+                    <li><a href="#longonot">Mount Longonot</a></li>
+                    <li><a href="#elementaita">Lake Elementaita</a></li>
+                    <li><a href="#olorgesailie">Prehistoric Sites</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Nairobi Support</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Nairobi Chat</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:nairobi@pwanistays.com">nairobi@pwanistays.com</a></li>
+                    <li><i class="fas fa-clock"></i> 7am-10pm Daily Support</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> PwaniStays — Nairobi & Inland Experiences. All rights reserved. | 
+               <a href="/privacy">Privacy Policy</a> | 
+               <a href="/terms">Terms of Service</a> | 
+               <a href="/cancellation">Cancellation Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Experience data for filtering and enquiries
+        const experienceData = {
+            1: {
+                title: "Nairobi Wildlife Conservation Experience",
+                price: "Ksh 12,500",
+                category: "wildlife"
+            },
+            2: {
+                title: "Karen Blixen & Cultural Heritage Tour",
+                price: "Ksh 8,900",
+                category: "cultural"
+            },
+            3: {
+                title: "Karura Forest Adventure & City Views",
+                price: "Ksh 6,500",
+                category: "adventure"
+            },
+            4: {
+                title: "Nairobi Food & Market Exploration",
+                price: "Ksh 11,800",
+                category: "urban"
+            },
+            5: {
+                title: "Lake Naivasha & Crescent Island",
+                price: "Ksh 15,200",
+                category: "nature"
+            },
+            6: {
+                title: "Ngong Hills & Kibera Cultural Insight",
+                price: "Ksh 9,500",
+                category: "adventure"
+            },
+            7: {
+                title: "Tea Plantation Experience & Limuru Escapes",
+                price: "Ksh 10,800",
+                category: "nature"
+            },
+            8: {
+                title: "Nairobi By Night - Entertainment & Culture",
+                price: "Ksh 13,500",
+                category: "urban"
+            }
+        };
+
+        // Experience enquiry function
+        function enquireExperience(experienceId) {
+            const experienceInfo = experienceData[experienceId];
+            const message = `Hello PwaniStays Nairobi Team! I'm interested in the "${experienceInfo.title}" experience. \nPrice: ${experienceInfo.price} per person\n\nPlease provide more information about availability, scheduling, and booking details.`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            window.open(
+                `https://wa.me/254738544784?text=${encodedMessage}`,
+                "_blank"
+            );
+        }
+
+        // Filter experiences by category
+        function filterExperience(category) {
+            const cards = document.querySelectorAll('.experience-card');
+            
+            // Update active states on category cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.border = 'none';
+                if (card.querySelector('h3').textContent.toLowerCase().includes(category)) {
+                    card.style.border = '2px solid var(--primary)';
+                }
+            });
+            
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    const categories = card.getAttribute('data-category');
+                    if (categories && categories.includes(category)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+                
+                // Add fade animation
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                }, 100);
+            });
+            
+            // Scroll to packages
+            document.getElementById('inland-packages').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close mobile menu when clicking any link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href === '#' || href.startsWith('javascript:')) {
+                        return;
+                    }
+                    
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Initialize with all experiences showing
+            filterExperience('all');
+        });
+    </script>
+</body>
+</html>

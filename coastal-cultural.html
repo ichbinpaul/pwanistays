@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="PwaniStays Coastal & Cultural Experiences: Curated day trips and excursions along Kenya's coast - marine adventures, cultural immersion, wildlife encounters, and nature experiences.">
+    <meta name="keywords" content="coastal experiences kenya, cultural tours mombasa, marine adventures, diani beach activities, watamu excursions, safari coastal packages, cultural immersion, swahili cuisine, mombasa old town, tsavo east safari">
+    <meta name="author" content="PwaniStays - Kenyan Coastal Experts">
+    
+    <title>Coastal & Cultural Experiences | PwaniStays</title>
+    
+    <!-- Favicon Package -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pwanistays.com/experiences/coastal-cultural">
+    <meta property="og:title" content="Coastal & Cultural Experiences | PwaniStays">
+    <meta property="og:description" content="Curated coastal and cultural day trips along Kenya's coast - marine adventures, wildlife encounters, cultural immersion, and nature experiences.">
+    <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
+    
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Coastal & Cultural Experiences | PwaniStays">
+    <meta name="twitter:description" content="Curated coastal and cultural experiences along Kenya's coast.">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0d7a5f;
+            --primary-light: #0f9b7a;
+            --secondary: #f8b400;
+            --dark: #1a2b3c;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+        }
+        
+        /* Header Styles - Same as main site */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            line-height: 1;
+        }
+        
+        .logo-desktop {
+            display: inline-block;
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo-mobile {
+            display: none;
+            height: 50px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .btn-book {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-book:hover {
+            background: #e09c00;
+            transform: translateY(-2px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Page Hero */
+        .page-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 180px 5% 100px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .page-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .page-hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background: var(--light);
+            padding: 15px 5%;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 50px;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 100px 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Package Categories */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 1000px;
+            margin: 0 auto 50px;
+        }
+        
+        .category-btn {
+            background: white;
+            border: 2px solid var(--light-gray);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--dark);
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Packages Grid */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .package-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .package-image {
+            height: 250px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .package-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .package-content {
+            padding: 30px;
+        }
+        
+        .package-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .package-title {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            flex: 1;
+        }
+        
+        .package-location {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .package-type {
+            background: #f0f8f4;
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .package-duration {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .package-overview {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .package-highlights {
+            margin-bottom: 20px;
+        }
+        
+        .package-highlights h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .package-highlights ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .package-highlights li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .package-highlights li:before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+            min-width: 15px;
+        }
+        
+        .package-inclusions {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .package-inclusions h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .package-inclusions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .package-inclusions li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .package-inclusions li:before {
+            content: "✔";
+            color: var(--primary);
+            font-weight: bold;
+            min-width: 15px;
+        }
+        
+        .package-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .package-price {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .price-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .price-person {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(13, 122, 95, 0.3);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        /* Best For Section */
+        .package-best-for {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff9e6;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .package-best-for p {
+            color: var(--dark);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Custom Package Section */
+        .custom-package {
+            background: linear-gradient(135deg, #0d7a5f 0%, #0f9b7a 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .custom-package h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .custom-package p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: 2px solid white;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Footer - Same as main site */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            color: white;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-col ul li a {
+            transition: var(--transition);
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .footer-logo {
+            display: inline-block;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .packages-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .logo-desktop {
+                display: none;
+            }
+            
+            .logo-mobile {
+                display: inline-block;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .page-hero {
+                padding: 150px 5% 80px;
+            }
+            
+            .package-footer {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+            }
+            
+            .custom-package {
+                padding: 30px 20px;
+            }
+            
+            .custom-package h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .category-btn {
+                text-align: center;
+            }
+            
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .custom-package h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I'm%20interested%20in%20your%20Coastal%20&%20Cultural%20Experiences" 
+       class="whatsapp-float" 
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <!-- Header -->
+    <header role="banner">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="/index.html" class="logo-link">
+                <img src="/logo-header.png" 
+                     alt="PwaniStays - Curated Coastal Stays" 
+                     class="logo-desktop">
+                <img src="/logo-mobile.png" 
+                     alt="PwaniStays" 
+                     class="logo-mobile">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="/index.html" role="menuitem">Home</a></li>
+                <li role="none"><a href="/accommodations.html" role="menuitem">Accommodation</a></li>
+                <li role="none"><a href="/experiences.html" role="menuitem">Experiences</a></li>
+                <li role="none"><a href="/experiences/coastal-cultural.html" class="active" role="menuitem">Coastal & Cultural</a></li>
+                <li role="none"><a href="/about.html" role="menuitem">About Us</a></li>
+                <li role="none"><a href="/contact.html" role="menuitem">Contact</a></li>
+                <li role="none"><a href="https://wa.me/254738544784" class="btn-book" role="menuitem" target="_blank">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <h1>Coastal & Cultural Experiences</h1>
+        <p>Immerse yourself in Kenya's coastal beauty, rich heritage, and vibrant marine life with our curated day trips and excursions. From cultural walks in Mombasa's Old Town to marine adventures in Diani, we offer authentic experiences for every traveler.</p>
+        <a href="#all-packages" class="btn-primary">
+            <i class="fas fa-binoculars"></i> Explore All Packages
+        </a>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <span><a href="/index.html">Home</a> &gt; 
+              <a href="/experiences.html">Experiences</a> &gt; 
+              Coastal & Cultural Packages</span>
+    </div>
+
+    <!-- Package Categories Filter -->
+    <section>
+        <div class="category-filter">
+            <button class="category-btn active" onclick="filterPackages('all')">All Experiences</button>
+            <button class="category-btn" onclick="filterPackages('wildlife')">Wildlife & Nature</button>
+            <button class="category-btn" onclick="filterPackages('marine')">Marine & Beach</button>
+            <button class="category-btn" onclick="filterPackages('cultural')">Cultural & History</button>
+            <button class="category-btn" onclick="filterPackages('adventure')">Adventure</button>
+            <button class="category-btn" onclick="filterPackages('safari')">Safari</button>
+        </div>
+    </section>
+
+    <!-- All Packages Section -->
+    <section id="all-packages">
+        <div class="section-title">
+            <h2>Curated Coastal Experiences</h2>
+            <p>Hand-picked day trips and excursions along the Kenyan coast</p>
+        </div>
+
+        <div class="packages-grid">
+            <!-- Package 1: Nguuni Nature Sanctuary & Haller Park -->
+            <div class="package-card" data-category="wildlife">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Wildlife & Conservation</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Nguuni Nature Sanctuary & Haller Park Day Expedition</h3>
+                        <span class="package-type">Full Day</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Mombasa – Bamburi – Klembeni
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 8-9 hours
+                    </div>
+                    
+                    <p class="package-overview">Explore two of the coast's best wildlife sanctuaries without leaving the Mombasa area. Perfect for families and eco-tourists.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Nature walk at Nguuni Nature Sanctuary with giraffes, waterbuck & 250+ bird species</li>
+                            <li>Picnic lunch & sundowner viewpoints above sanctuary plains</li>
+                            <li>Visit Haller Park ecological rehabilitation project</li>
+                            <li>Conservation storytelling and guided walks</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Pick-up from Mombasa accommodation</li>
+                            <li>Transport to both sanctuaries</li>
+                            <li>All entrance fees</li>
+                            <li>Professional guide and refreshments</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Families, eco-tourists, animal lovers, school groups</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 8,500</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(1)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 2: Mamba Village + Mombasa Marine Park -->
+            <div class="package-card" data-category="marine wildlife">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Marine & Wildlife</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Mamba Village + Mombasa Marine Park Adventure</h3>
+                        <span class="package-type">Full Day</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Nyali – Mombasa Marine National Park
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 7-8 hours
+                    </div>
+                    
+                    <p class="package-overview">A land-and-sea experience for adventurous visitors combining crocodile farm visits with marine park exploration.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Mamba Village Crocodile Farm - East Africa's largest</li>
+                            <li>Crocodile feeding displays & optional camel/horse riding</li>
+                            <li>Mombasa Marine National Park snorkeling & boat rides</li>
+                            <li>Beachside lunch & relaxation along Nyali or Bamburi</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Transport from your location</li>
+                            <li>Entrance to Mamba Village</li>
+                            <li>Boat & snorkel access at Marine Park</li>
+                            <li>Guide and lunch stop</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Adventure seekers, kids & families</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 9,200</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(2)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 3: Mombasa Old Town & Cultural Day -->
+            <div class="package-card" data-category="cultural">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Cultural Immersion</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Mombasa Old Town & Cultural Day</h3>
+                        <span class="package-type">Full Day</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Mombasa Island
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 6-7 hours
+                    </div>
+                    
+                    <p class="package-overview">Cultural immersion into the historic heart of the coast, exploring centuries of Swahili heritage.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Explore Mombasa Old Town on foot - narrow streets & spice markets</li>
+                            <li>Visit Fort Jesus - UNESCO 16th-century fort and museum</li>
+                            <li>Lunch at a local café with coastal Swahili cuisine</li>
+                            <li>Optional visit to Bombolulu Workshops or Mama Ngina Waterfront</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Round-trip transport</li>
+                            <li>Guided historical tour</li>
+                            <li>Fort Jesus museum entrance</li>
+                            <li>Local lunch experience</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Culture lovers, history buffs, photographers</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 7,800</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(3)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 4: Diani Beach & Leisure Day -->
+            <div class="package-card" data-category="marine">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Beach Relaxation</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Diani Beach & Leisure Day</h3>
+                        <span class="package-type">Full Day</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Diani Beach (Kwale)
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 8-10 hours
+                    </div>
+                    
+                    <p class="package-overview">A full day of sun, sand and ocean escapades on one of Kenya's premier beaches.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Scenic coastal transfer to Diani Beach</li>
+                            <li>Free time for swimming, sunbathing, water sports</li>
+                            <li>Optional snorkeling/paddleboarding</li>
+                            <li>Lunch at a beachfront café/resort</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Comfortable transport to/from Diani</li>
+                            <li>Beach access and facilities</li>
+                            <li>Guide/assistant throughout the day</li>
+                            <li>Beach equipment (umbrella, chairs)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Couples, honeymooners, leisure travelers, beach lovers</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 6,500</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(4)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 5: Kisite–Wasini Marine Safari -->
+            <div class="package-card" data-category="marine wildlife">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Marine Safari</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Kisite–Wasini Marine Safari</h3>
+                        <span class="package-type">Full Day</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Shimoni – Kisite Marine Park – Wasini Island
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 9-10 hours
+                    </div>
+                    
+                    <p class="package-overview">An all-day marine adventure with snorkeling, wildlife, local food and scenic boat routes.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Boat to Kisite Mpunguti Marine Park - coral reef snorkeling</li>
+                            <li>Spot dolphins, turtles, and reef fish</li>
+                            <li>Wasini Island visit with local seafood lunch</li>
+                            <li>Village walk and natural tidal pools exploration</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Pickup & return from accommodation</li>
+                            <li>Boat fees & marine guide</li>
+                            <li>Snorkeling equipment</li>
+                            <li>Seafood lunch on Wasini Island</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Nature lovers, marine enthusiasts, food explorers</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 12,500</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(5)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 6: Shimba Hills Nature & Waterfall Experience -->
+            <div class="package-card" data-category="wildlife adventure">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Nature & Hiking</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Shimba Hills Nature & Waterfall Experience</h3>
+                        <span class="package-type">Full Day</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Shimba Hills National Reserve
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 8-9 hours
+                    </div>
+                    
+                    <p class="package-overview">Explore lush coastal forest and wildlife in a relaxed inland setting with hiking and waterfall views.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Forest cruiser through Shimba Hills</li>
+                            <li>Visit Sheldrick Falls overlook</li>
+                            <li>Wildlife viewing (rare sable antelope, elephants, birds)</li>
+                            <li>Picnic lunch in scenic location</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Transport from lodge/house</li>
+                            <li>Park & reserve fees</li>
+                            <li>Guided nature walk</li>
+                            <li>Picnic lunch with refreshments</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Nature lovers, photographers, hikers</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 9,800</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(6)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 7: Coastal Outdoor & Active Experience -->
+            <div class="package-card" data-category="adventure">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1511994717241-8e4e484dfa8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Adventure Activities</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Coastal Outdoor & Active Experience</h3>
+                        <span class="package-type">Full Day</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Diani / Bamburi / Nyali
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 7-8 hours
+                    </div>
+                    
+                    <p class="package-overview">An active day combining outdoor thrills with coastal sightseeing and water sports.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Mountain biking trails near beach forests</li>
+                            <li>Kayaking through mangroves (optional)</li>
+                            <li>Stand-up paddleboarding</li>
+                            <li>Guided natural trails and coastal exploration</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>All gear & equipment rental</li>
+                            <li>Professional instructor/guide</li>
+                            <li>Transport between activities</li>
+                            <li>Snacks and refreshments</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Active travelers, young adventurers, fitness enthusiasts</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 11,200</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(7)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 8: Tsavo East Game Safari with Train-to-Voi + Overnight -->
+            <div class="package-card" data-category="safari wildlife">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Big Safari Experience</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Tsavo East Game Safari with Train-to-Voi + Overnight</h3>
+                        <span class="package-type">2 Days / 1 Night</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Mombasa → Voi → Tsavo East National Park
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 2 Days
+                    </div>
+                    
+                    <p class="package-overview">A premium safari experience combining scenic train travel with wildlife viewing in Kenya's largest national park.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Scenic train ride to Voi on coastal railway</li>
+                            <li>Game drives in Tsavo East NP - elephants, lions, giraffes</li>
+                            <li>Visit Aruba Dam and Kanderi Swamp wildlife points</li>
+                            <li>Overnight stay in Voi (lodge or safari tent)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Train tickets Mombasa-Voi return</li>
+                            <li>All park fees and game drives</li>
+                            <li>Overnight accommodation</li>
+                            <li>Meals (lunch, dinner, breakfast)</li>
+                            <li>Professional safari guide</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Safari enthusiasts, international travelers, multi-day planners</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 35,000</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(8)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 9: Cultural & Community Immersion -->
+            <div class="package-card" data-category="cultural">
+                <div class="package-image" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-badge">Community & Education</div>
+                </div>
+                <div class="package-content">
+                    <div class="package-header">
+                        <h3 class="package-title">Cultural & Community Immersion</h3>
+                        <span class="package-type">Full Day</span>
+                    </div>
+                    
+                    <div class="package-location">
+                        <i class="fas fa-map-marker-alt"></i> Ukunda / Kaya Forests / Local Villages
+                    </div>
+                    
+                    <div class="package-duration">
+                        <i class="fas fa-clock"></i> 7-8 hours
+                    </div>
+                    
+                    <p class="package-overview">A day connecting with local heritage and community conservation initiatives along the coast.</p>
+                    
+                    <div class="package-highlights">
+                        <h4><i class="fas fa-star"></i> Highlights</h4>
+                        <ul>
+                            <li>Guided walk in Kaya Forests - sacred Digo heritage site</li>
+                            <li>Visit Colobus Conservation Centre</li>
+                            <li>Lunch with local family/community business</li>
+                            <li>Craft shopping & cultural storytelling</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Transport to all sites</li>
+                            <li>Local community guide</li>
+                            <li>Conservation center entrance</li>
+                            <li>Authentic local lunch</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Responsible travelers, culture lovers, educational groups</p>
+                    </div>
+                    
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="price-amount">Ksh 8,900</span>
+                            <span class="price-person">per person</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquirePackage(9)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Package Section -->
+    <section class="custom-package">
+        <h2>Custom & Private Tailored Experience</h2>
+        <p>Build your own day based on your interests: wildlife, beaches, food, culture or adventure. Perfect for private groups, special occasions, and VIP clients.</p>
+        <div style="max-width: 600px; margin: 30px auto; background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px;">
+            <h3 style="margin-bottom: 15px; color: white;">Includes:</h3>
+            <ul style="list-style: none; text-align: left; color: white;">
+                <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check" style="color: var(--secondary);"></i> Dedicated guide & private vehicle
+                </li>
+                <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check" style="color: var(--secondary);"></i> Fully customized itinerary
+                </li>
+                <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check" style="color: var(--secondary);"></i> Meal choices & special dietary arrangements
+                </li>
+                <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check" style="color: var(--secondary);"></i> Flexible locations across the coast
+                </li>
+            </ul>
+        </div>
+        <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20discuss%20a%20custom%20tailored%20experience%20package." 
+           class="btn-secondary" target="_blank">
+           <i class="fas fa-crown"></i> Discuss Custom Package
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="/logo-footer.png" 
+                         alt="PwaniStays - Curated Coastal Stays" 
+                         class="logo-desktop"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                    <img src="/logo-mobile.png" 
+                         alt="PwaniStays" 
+                         class="logo-mobile"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                </div>
+                <p>Your trusted coastal experience partner in Kenya. We specialize in curated coastal and cultural excursions across Mombasa, Diani, Watamu, and beyond.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/pwanistayscom" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@pwanistays.com" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Experience Categories</h3>
+                <ul>
+                    <li><a href="#wildlife">Wildlife & Nature</a></li>
+                    <li><a href="#marine">Marine & Beach</a></li>
+                    <li><a href="#cultural">Cultural & History</a></li>
+                    <li><a href="#adventure">Adventure Activities</a></li>
+                    <li><a href="#safari">Safari Experiences</a></li>
+                    <li><a href="#custom">Custom Packages</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/accommodations.html">Accommodation</a></li>
+                    <li><a href="/experiences.html">All Experiences</a></li>
+                    <li><a href="/experiences/safari.html">Safari Packages</a></li>
+                    <li><a href="/experiences/nairobi-inland.html">Nairobi & Inland</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact & Support</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:experiences@pwanistays.com">experiences@pwanistays.com</a></li>
+                    <li><i class="fas fa-clock"></i> 24/7 Experience Support</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> PwaniStays — Curated Coastal Experiences. All rights reserved. | 
+               <a href="/privacy">Privacy Policy</a> | 
+               <a href="/terms">Terms of Service</a> | 
+               <a href="/cancellation">Cancellation Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Package data for filtering
+        const packageData = {
+            1: {
+                title: "Nguuni Nature Sanctuary & Haller Park Day Expedition",
+                price: "Ksh 8,500",
+                category: "wildlife"
+            },
+            2: {
+                title: "Mamba Village + Mombasa Marine Park Adventure",
+                price: "Ksh 9,200",
+                category: "marine wildlife"
+            },
+            3: {
+                title: "Mombasa Old Town & Cultural Day",
+                price: "Ksh 7,800",
+                category: "cultural"
+            },
+            4: {
+                title: "Diani Beach & Leisure Day",
+                price: "Ksh 6,500",
+                category: "marine"
+            },
+            5: {
+                title: "Kisite–Wasini Marine Safari",
+                price: "Ksh 12,500",
+                category: "marine wildlife"
+            },
+            6: {
+                title: "Shimba Hills Nature & Waterfall Experience",
+                price: "Ksh 9,800",
+                category: "wildlife adventure"
+            },
+            7: {
+                title: "Coastal Outdoor & Active Experience",
+                price: "Ksh 11,200",
+                category: "adventure"
+            },
+            8: {
+                title: "Tsavo East Game Safari with Train-to-Voi + Overnight",
+                price: "Ksh 35,000",
+                category: "safari wildlife"
+            },
+            9: {
+                title: "Cultural & Community Immersion",
+                price: "Ksh 8,900",
+                category: "cultural"
+            }
+        };
+
+        // Package enquiry function
+        function enquirePackage(packageId) {
+            const packageInfo = packageData[packageId];
+            const message = `Hello PwaniStays! I'm interested in the "${packageInfo.title}" experience. \nPrice: ${packageInfo.price} per person\n\nPlease provide more information about availability, group discounts, and booking process.`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            window.open(
+                `https://wa.me/254738544784?text=${encodedMessage}`,
+                "_blank"
+            );
+        }
+
+        // Filter packages by category
+        function filterPackages(category) {
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.toLowerCase().includes(category) || 
+                    (category === 'all' && btn.textContent === 'All Experiences')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const packages = document.querySelectorAll('.package-card');
+            
+            packages.forEach(packageCard => {
+                if (category === 'all') {
+                    packageCard.style.display = 'block';
+                } else {
+                    const categories = packageCard.getAttribute('data-category');
+                    if (categories && categories.includes(category)) {
+                        packageCard.style.display = 'block';
+                    } else {
+                        packageCard.style.display = 'none';
+                    }
+                }
+                
+                // Add fade animation
+                setTimeout(() => {
+                    packageCard.style.opacity = '1';
+                }, 100);
+            });
+        }
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close mobile menu when clicking any link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href === '#' || href.startsWith('javascript:')) {
+                        return;
+                    }
+                    
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        // Initialize with all packages showing
+        window.onload = function() {
+            filterPackages('all');
+        };
+    </script>
+</body>
+</html>

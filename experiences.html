@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="PwaniStays Experiences: Discover Kenya's ultimate travel adventures - coastal escapes, wildlife safaris, and urban explorations with expert local guidance.">
+    <meta name="keywords" content="kenya travel experiences, coastal adventures, safari packages, nairobi tours, cultural immersion, marine activities, wildlife encounters, curated travel kenya, guided tours, local experiences">
+    <meta name="author" content="PwaniStays - Kenyan Experience Experts">
+    
+    <title>Travel Experiences | PwaniStays - Curated Kenya Adventures</title>
+    
+    <!-- Favicon Package -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pwanistays.com/experiences.html">
+    <meta property="og:title" content="Travel Experiences | PwaniStays - Curated Kenya Adventures">
+    <meta property="og:description" content="Discover Kenya's ultimate travel adventures - coastal escapes, wildlife safaris, and urban explorations with expert local guidance.">
+    <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
+    
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Travel Experiences | PwaniStays - Curated Kenya Adventures">
+    <meta name="twitter:description" content="Kenya's ultimate travel adventures - coastal, safari, and urban experiences.">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0d7a5f;
+            --primary-light: #0f9b7a;
+            --secondary: #f8b400;
+            --dark: #1a2b3c;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            line-height: 1;
+        }
+        
+        .logo-desktop {
+            display: inline-block;
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo-mobile {
+            display: none;
+            height: 50px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .btn-book {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-book:hover {
+            background: #e09c00;
+            transform: translateY(-2px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Experiences Hero */
+        .experiences-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 180px 5% 100px;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+        }
+        
+        .experiences-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .experiences-hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(13, 122, 95, 0.8);
+            border-radius: 15px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background: var(--light);
+            padding: 15px 5%;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 50px;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 100px 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Experience Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-image {
+            height: 300px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 30px;
+            color: white;
+        }
+        
+        .category-overlay h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .category-count {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .category-content {
+            padding: 30px;
+        }
+        
+        .category-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .category-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-tag {
+            background: #f0f8f4;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .category-cta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .category-price {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .btn-view-all {
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .btn-view-all:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        /* Featured Experiences */
+        .featured-experiences {
+            background: var(--light);
+        }
+        
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .featured-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .featured-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .featured-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .featured-content {
+            padding: 25px;
+        }
+        
+        .featured-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .featured-location {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .featured-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .featured-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .featured-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .btn-details {
+            background: transparent;
+            color: var(--primary);
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        
+        .btn-details:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Why Choose Us */
+        .why-choose {
+            background: white;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .benefit-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-light);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+        
+        .benefit-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            background: linear-gradient(135deg, #0d7a5f 0%, #0f9b7a 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .how-it-works .section-title h2 {
+            color: white;
+        }
+        
+        .how-it-works .section-title p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        /* Custom Experiences */
+        .custom-experiences {
+            background: white;
+            text-align: center;
+        }
+        
+        .custom-box {
+            background: linear-gradient(135deg, #1a2b3c 0%, #2c3e50 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .custom-box h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .custom-box p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn-custom {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-custom:hover {
+            background: #e09c00;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(248, 180, 0, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            color: white;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-col ul li a {
+            transition: var(--transition);
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .footer-logo {
+            display: inline-block;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+            
+            .hero-stats {
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .logo-desktop {
+                display: none;
+            }
+            
+            .logo-mobile {
+                display: inline-block;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .experiences-hero {
+                padding: 150px 5% 80px;
+            }
+            
+            .steps-container::before {
+                display: none;
+            }
+            
+            .category-image {
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .experiences-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .category-overlay h3 {
+                font-size: 1.5rem;
+            }
+            
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .custom-box {
+                padding: 40px 20px;
+            }
+            
+            .custom-box h3 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I'm%20interested%20in%20your%20Travel%20Experiences" 
+       class="whatsapp-float" 
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <!-- Header -->
+    <header role="banner">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="/index.html" class="logo-link">
+                <img src="/logo-header.png" 
+                     alt="PwaniStays - Curated Coastal Stays" 
+                     class="logo-desktop">
+                <img src="/logo-mobile.png" 
+                     alt="PwaniStays" 
+                     class="logo-mobile">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="/index.html" role="menuitem">Home</a></li>
+                <li role="none"><a href="/accommodations.html" role="menuitem">Accommodation</a></li>
+                <li role="none"><a href="/experiences.html" class="active" role="menuitem">Experiences</a></li>
+                <li role="none"><a href="/experiences/coastal-cultural.html" role="menuitem">Coastal & Cultural</a></li>
+                <li role="none"><a href="/experiences/safari.html" role="menuitem">Safari</a></li>
+                <li role="none"><a href="/experiences/nairobi-inland.html" role="menuitem">Nairobi & Inland</a></li>
+                <li role="none"><a href="/about.html" role="menuitem">About Us</a></li>
+                <li role="none"><a href="/contact.html" role="menuitem">Contact</a></li>
+                <li role="none"><a href="https://wa.me/254738544784" class="btn-book" role="menuitem" target="_blank">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Experiences Hero -->
+    <section class="experiences-hero">
+        <h1>Curated Kenya Experiences</h1>
+        <p>Discover the soul of Kenya through our handpicked adventures. From coastal wonders and wildlife safaris to urban explorations - experience Kenya like a local with expert guidance.</p>
+        <a href="#experience-categories" class="btn-custom">
+            <i class="fas fa-compass"></i> Explore All Experiences
+        </a>
+        
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number">25+</span>
+                <span class="stat-label">Experience Packages</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">Guest Satisfaction</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">10+</span>
+                <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Local Support</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <span><a href="/index.html">Home</a> &gt; 
+              Travel Experiences</span>
+    </div>
+
+    <!-- Experience Categories -->
+    <section id="experience-categories">
+        <div class="section-title">
+            <h2>Experience Categories</h2>
+            <p>Choose your adventure from our three main experience categories</p>
+        </div>
+
+        <div class="categories-grid">
+            <!-- Coastal & Cultural -->
+            <a href="/experiences/coastal-cultural.html" class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="category-overlay">
+                        <h3>Coastal & Cultural</h3>
+                        <div class="category-count">
+                            <i class="fas fa-umbrella-beach"></i>
+                            <span>10+ packages from Ksh 6,500</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p>Immerse yourself in Kenya's coastal beauty, rich Swahili heritage, and marine adventures. Experience the authentic coastal lifestyle from Mombasa to Diani.</p>
+                    
+                    <div class="category-features">
+                        <span class="feature-tag">Marine Parks</span>
+                        <span class="feature-tag">Cultural Tours</span>
+                        <span class="feature-tag">Beach Activities</span>
+                        <span class="feature-tag">Local Cuisine</span>
+                    </div>
+                    
+                    <div class="category-cta">
+                        <span class="category-price">From Ksh 6,500</span>
+                        <span class="btn-view-all">View All Packages →</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Safari -->
+            <a href="/experiences/safari.html" class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="category-overlay">
+                        <h3>Safari Adventures</h3>
+                        <div class="category-count">
+                            <i class="fas fa-binoculars"></i>
+                            <span>8+ packages from $280</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p>Experience Kenya's world-famous wildlife in their natural habitat. From the Great Migration in Masai Mara to the elephants of Amboseli.</p>
+                    
+                    <div class="category-features">
+                        <span class="feature-tag">Big Five</span>
+                        <span class="feature-tag">Luxury Lodges</span>
+                        <span class="feature-tag">Photography</span>
+                        <span class="feature-tag">Conservation</span>
+                    </div>
+                    
+                    <div class="category-cta">
+                        <span class="category-price">From $280</span>
+                        <span class="btn-view-all">View All Safaris →</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Nairobi & Inland -->
+            <a href="/experiences/nairobi-inland.html" class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="category-overlay">
+                        <h3>Nairobi & Inland</h3>
+                        <div class="category-count">
+                            <i class="fas fa-city"></i>
+                            <span>8+ packages from Ksh 6,500</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p>Discover urban adventures, cultural immersion, and nature escapes in Kenya's capital and surrounding highlands.</p>
+                    
+                    <div class="category-features">
+                        <span class="feature-tag">City Tours</span>
+                        <span class="feature-tag">Wildlife Centers</span>
+                        <span class="feature-tag">Food Experiences</span>
+                        <span class="feature-tag">Day Trips</span>
+                    </div>
+                    
+                    <div class="category-cta">
+                        <span class="category-price">From Ksh 6,500</span>
+                        <span class="btn-view-all">View All Experiences →</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Experiences -->
+    <section class="featured-experiences">
+        <div class="section-title">
+            <h2>Featured Experiences</h2>
+            <p>Handpicked adventures from each category</p>
+        </div>
+
+        <div class="featured-grid">
+            <!-- Featured 1: Kisite Marine Safari -->
+            <div class="featured-card">
+                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="featured-badge">Coastal</div>
+                </div>
+                <div class="featured-content">
+                    <h4>Kisite–Wasini Marine Safari</h4>
+                    <div class="featured-location">
+                        <i class="fas fa-map-marker-alt"></i> Shimoni – Kisite Marine Park
+                    </div>
+                    <p class="featured-desc">An all-day marine adventure with snorkeling, dolphin spotting, and seafood lunch on Wasini Island.</p>
+                    <div class="featured-meta">
+                        <span class="featured-price">Ksh 12,500</span>
+                        <a href="/experiences/coastal-cultural.html" class="btn-details">Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured 2: Masai Mara Classic -->
+            <div class="featured-card">
+                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="featured-badge">Safari</div>
+                </div>
+                <div class="featured-content">
+                    <h4>Masai Mara Classic Safari</h4>
+                    <div class="featured-location">
+                        <i class="fas fa-map-marker-alt"></i> Masai Mara National Reserve
+                    </div>
+                    <p class="featured-desc">4-day luxury safari witnessing the Great Migration with expert guides and premium accommodations.</p>
+                    <div class="featured-meta">
+                        <span class="featured-price">$1,850</span>
+                        <a href="/experiences/safari.html" class="btn-details">Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured 3: Nairobi Wildlife Conservation -->
+            <div class="featured-card">
+                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="featured-badge">Nairobi</div>
+                </div>
+                <div class="featured-content">
+                    <h4>Nairobi Wildlife Conservation</h4>
+                    <div class="featured-location">
+                        <i class="fas fa-map-marker-alt"></i> Nairobi National Park & Centers
+                    </div>
+                    <p class="featured-desc">Full-day experience combining Nairobi National Park with elephant orphanage and giraffe center visits.</p>
+                    <div class="featured-meta">
+                        <span class="featured-price">Ksh 12,500</span>
+                        <a href="/experiences/nairobi-inland.html" class="btn-details">Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured 4: Tsavo Wilderness -->
+            <div class="featured-card">
+                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="featured-badge">Safari</div>
+                </div>
+                <div class="featured-content">
+                    <h4>Tsavo Wilderness Adventure</h4>
+                    <div class="featured-location">
+                        <i class="fas fa-map-marker-alt"></i> Tsavo East & West
+                    </div>
+                    <p class="featured-desc">3-day budget safari exploring Kenya's largest national park, famous for its red elephants.</p>
+                    <div class="featured-meta">
+                        <span class="featured-price">$480</span>
+                        <a href="/experiences/safari.html" class="btn-details">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose">
+        <div class="section-title">
+            <h2>Why Choose PwaniStays Experiences</h2>
+            <p>What sets our travel experiences apart</p>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3>Local Expertise</h3>
+                <p>Designed and led by Kenyan experts with deep knowledge of each destination</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Safety First</h3>
+                <p>Vetted guides, insured activities, and 24/7 support throughout your journey</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Ethical Tourism</h3>
+                <p>Supporting local communities and conservation efforts</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <h3>Small Groups</h3>
+                <p>Intimate experiences with personalized attention</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="section-title">
+            <h2>How It Works</h2>
+            <p>Simple steps to your perfect Kenya experience</p>
+        </div>
+
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Choose Your Experience</h3>
+                <p>Browse our curated categories and select packages that match your interests</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Customize & Book</h3>
+                <p>Tailor your experience with our experts and confirm your booking</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Prepare & Travel</h3>
+                <p>Receive detailed pre-trip information and meet your local guide</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Experience Kenya</h3>
+                <p>Immerse yourself in authentic experiences with local support throughout</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Experiences -->
+    <section class="custom-experiences">
+        <div class="section-title">
+            <h2>Tailored to You</h2>
+            <p>Create your perfect Kenya itinerary</p>
+        </div>
+
+        <div class="custom-box">
+            <h3>Custom Experience Packages</h3>
+            <p>Combine elements from different categories, adjust durations, or create a completely unique itinerary. Perfect for groups, special occasions, or travelers with specific interests.</p>
+            
+            <div style="max-width: 600px; margin: 30px auto; background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px;">
+                <h4 style="margin-bottom: 15px; color: white;">Custom Package Includes:</h4>
+                <ul style="list-style: none; text-align: left; color: white;">
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check" style="color: var(--secondary);"></i> Dedicated experience consultant
+                    </li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check" style="color: var(--secondary);"></i> Flexible itinerary planning
+                    </li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check" style="color: var(--secondary);"></i> Private guides and transport
+                    </li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check" style="color: var(--secondary);"></i> Special requests accommodated
+                    </li>
+                </ul>
+            </div>
+            
+            <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20discuss%20a%20custom%20experience%20package%20combining%20different%20categories." 
+               class="btn-custom" target="_blank">
+               <i class="fas fa-crown"></i> Design Your Experience
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="/logo-footer.png" 
+                         alt="PwaniStays - Curated Kenya Experiences" 
+                         class="logo-desktop"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                    <img src="/logo-mobile.png" 
+                         alt="PwaniStays" 
+                         class="logo-mobile"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                </div>
+                <p>Your trusted partner for authentic Kenya experiences. We specialize in curated coastal adventures, wildlife safaris, and urban explorations with expert local guidance.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/pwanistayscom" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@pwanistays.com" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Experience Categories</h3>
+                <ul>
+                    <li><a href="/experiences/coastal-cultural.html">Coastal & Cultural</a></li>
+                    <li><a href="/experiences/safari.html">Safari Adventures</a></li>
+                    <li><a href="/experiences/nairobi-inland.html">Nairobi & Inland</a></li>
+                    <li><a href="#custom">Custom Packages</a></li>
+                    <li><a href="#family">Family Experiences</a></li>
+                    <li><a href="#luxury">Luxury Travel</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/accommodations.html">Accommodation</a></li>
+                    <li><a href="/about.html">About Us</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                    <li><a href="/faq.html">FAQs</a></li>
+                    <li><a href="/blog.html">Travel Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Experience Support</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Mombasa & Nairobi, Kenya</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Experience Chat</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:experiences@pwanistays.com">experiences@pwanistays.com</a></li>
+                    <li><i class="fas fa-clock"></i> 24/7 Experience Support</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> PwaniStays — Curated Kenya Experiences. All rights reserved. | 
+               <a href="/privacy">Privacy Policy</a> | 
+               <a href="/terms">Terms of Service</a> | 
+               <a href="/cancellation">Cancellation Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close mobile menu when clicking any link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href === '#' || href.startsWith('javascript:')) {
+                        return;
+                    }
+                    
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Add animation to category cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe category cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Observe featured cards
+            document.querySelectorAll('.featured-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

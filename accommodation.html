@@ -122,10 +122,11 @@
             }
         }
         
+        /* Navigation */
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 25px;
             align-items: center;
         }
         
@@ -135,6 +136,7 @@
             position: relative;
             text-decoration: none;
             color: var(--dark);
+            white-space: nowrap;
         }
         
         .nav-links a:hover,
@@ -150,6 +152,106 @@
             width: 100%;
             height: 2px;
             background: var(--primary);
+        }
+        
+        /* Dropdown Menu Styles - UPDATED from index.html */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 10px 0;
+            z-index: 1001;
+            list-style: none;
+            margin-top: 10px;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        /* FIX: Add a transparent gap between parent and dropdown */
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: transparent;
+        }
+        
+        .dropdown:hover .dropdown-menu,
+        .dropdown:focus-within .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-menu li {
+            margin: 0;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            font-size: 0.95rem;
+        }
+        
+        .dropdown-menu a:hover {
+            background: #f8f9fa;
+            color: var(--primary);
+            border-left-color: var(--primary);
+            padding-left: 25px;
+        }
+        
+        .dropdown-menu a:before {
+            content: "– ";
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Header Search Icon - UPDATED from index.html */
+        .header-search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header-search-container.active #headerSearch {
+            display: block;
+        }
+        
+        #headerSearch {
+            width: 200px;
+            padding: 8px 15px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: none;
+        }
+        
+        #searchToggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 5px;
+            transition: var(--transition);
+        }
+        
+        #searchToggle:hover {
+            color: var(--primary);
         }
         
         .btn-book {
@@ -449,10 +551,10 @@
             transform: translateY(-2px);
         }
         
-        /* Experience Bridge Section */
+        /* Experience Bridge Section - UPDATED BACKGROUND IMAGE */
         .experience-bridge {
             background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-                        url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+                        url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -674,6 +776,25 @@
             }
         }
         
+        @media (max-width: 992px) {
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                display: none;
+                margin-top: 0;
+                padding-left: 20px;
+                background: #f8f9fa;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            
+            .dropdown::after {
+                display: none;
+            }
+        }
+        
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -690,13 +811,54 @@
                 align-items: center;
                 justify-content: flex-start;
                 padding-top: 50px;
-                gap: 30px;
+                gap: 25px;
                 transition: var(--transition);
                 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
             }
             
             .nav-links.active {
                 left: 0;
+            }
+            
+            .dropdown {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                background: #f8f9fa;
+                border-radius: 10px;
+                margin-top: 10px;
+                padding: 10px;
+                display: none;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            
+            /* Mobile search should be always visible */
+            .header-search-container {
+                position: static;
+                background: transparent;
+                padding: 0;
+                box-shadow: none;
+                display: flex !important;
+                width: 100%;
+            }
+            
+            #headerSearch {
+                display: block !important;
+                width: 100%;
+                position: static;
+                margin-top: 10px;
+            }
+            
+            #searchToggle {
+                display: none;
             }
             
             section {
@@ -823,7 +985,7 @@
         <i class="fab fa-whatsapp" aria-hidden="true"></i>
     </a>
 
-    <!-- Header -->
+    <!-- Header - UPDATED with navigation from index.html -->
     <header role="banner">
         <nav class="navbar" aria-label="Main navigation">
             <a href="/" class="logo-link">
@@ -841,11 +1003,31 @@
             </button>
             <ul class="nav-links" role="menubar">
                 <li role="none"><a href="/" role="menuitem">Home</a></li>
-                <li role="none"><a href="/about.html" role="menuitem">About Us</a></li>
+                <li role="none"><a href="about.html" role="menuitem">About Us</a></li>
                 <li role="none"><a href="accommodation.html" class="active" role="menuitem">Accommodation</a></li>
-                <li role="none"><a href="#property-types" role="menuitem">Property Types</a></li>
-                <li role="none"><a href="#destinations" role="menuitem">Destinations</a></li>
-                <li role="none"><a href="/#contact" class="btn-book" role="menuitem">Book Now</a></li>
+                
+                <!-- Experiences Dropdown - ADDED from index.html -->
+                <li role="none" class="dropdown">
+                    <a href="experiences.html" role="menuitem" class="dropdown-toggle">Experiences ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="nairobi.html">Nairobi & Inland</a></li>
+                        <li><a href="safari.html">Safari</a></li>
+                        <li><a href="coastal-cultural.html">Coastal & Cultural</a></li>
+                    </ul>
+                </li>
+                
+                <li role="none"><a href="how-it-works.html" role="menuitem">How It Works</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                
+                <!-- Header Search Icon - ADDED from index.html -->
+                <li role="none" class="header-search-container" id="mobileSearchContainer">
+                    <button id="searchToggle" aria-label="Toggle search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
+                </li>
+                
+                <li role="none"><a href="#contact" class="btn-book" role="menuitem">Book Now</a></li>
             </ul>
         </nav>
     </header>
@@ -955,7 +1137,7 @@
         </div>
     </section>
 
-    <!-- Explore Kenyan Coast Destinations -->
+    <!-- Explore Kenyan Coast Destinations - UPDATED Diani image -->
     <section class="content-section" id="destinations">
         <div class="container">
             <div class="section-title">
@@ -977,8 +1159,9 @@
                 </div>
                 
                 <div class="destination-card">
-                    <img src="https://images.unsplash.com/photo-1573843989-c9d9a2a211c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                         alt="Diani Beach white sands and palm trees">
+                    <!-- UPDATED: Changed Diani image to a beach house -->
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Beach house in Diani">
                     <div class="destination-card-content">
                         <h3>Diani</h3>
                         <p>White-sand beaches, resorts, and water activities. Ideal for beach-focused holidays and water sports enthusiasts.</p>
@@ -1015,7 +1198,7 @@
         </div>
     </section>
 
-    <!-- Experience Bridge Section -->
+    <!-- Experience Bridge Section - UPDATED background image -->
     <section class="experience-bridge">
         <div class="container">
             <h2>More Than a Place to Stay</h2>
@@ -1025,7 +1208,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section">
+    <section class="cta-section" id="contact">
         <div class="container">
             <h2>Find Your Perfect Coastal Retreat</h2>
             <p>Browse our featured properties or tell us about your trip, and we will help you choose accommodation that fits your needs and dreams.</p>
@@ -1072,11 +1255,11 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/about.html">About Us</a></li>
+                    <li><a href="about.html">About Us</a></li>
                     <li><a href="accommodation.html">Accommodation</a></li>
-                    <li><a href="/#services">Our Services</a></li>
-                    <li><a href="/#testimonials">Guest Reviews</a></li>
-                    <li><a href="/#contact">Contact Us</a></li>
+                    <li><a href="experiences.html">Experiences</a></li>
+                    <li><a href="how-it-works.html">How It Works</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -1110,14 +1293,15 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript - UPDATED with navigation functionality from index.html -->
     <script>
         // Set current year in footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // Mobile menu toggle
+        // Mobile menu and dropdown toggle - UPDATED from index.html
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
+        const dropdownToggles = document.querySelectorAll('.dropdown > a');
         
         if (menuToggle) {
             menuToggle.addEventListener('click', function() {
@@ -1126,8 +1310,8 @@
                 this.setAttribute('aria-expanded', !isExpanded);
             });
             
-            // Close mobile menu when clicking any link
-            document.querySelectorAll('.nav-links a').forEach(link => {
+            // Close mobile menu when clicking any non-dropdown link
+            document.querySelectorAll('.nav-links a:not(.dropdown > a)').forEach(link => {
                 link.addEventListener('click', (e) => {
                     if (window.innerWidth <= 768) {
                         navLinks.classList.remove('active');
@@ -1135,6 +1319,65 @@
                     }
                 });
             });
+            
+            // Dropdown toggle for mobile
+            dropdownToggles.forEach(dropdownToggle => {
+                dropdownToggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 992) {
+                        e.preventDefault();
+                        const parent = this.parentElement;
+                        parent.classList.toggle('active');
+                        
+                        // Close other dropdowns
+                        dropdownToggles.forEach(otherToggle => {
+                            const otherParent = otherToggle.parentElement;
+                            if (otherParent !== parent && otherParent.classList.contains('active')) {
+                                otherParent.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+        }
+        
+        // Close dropdowns when clicking outside (desktop)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth > 992) {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(e.target)) {
+                        dropdown.classList.remove('active');
+                    }
+                });
+            }
+        });
+        
+        // Header Search Toggle - ADDED from index.html
+        const headerSearchContainer = document.querySelector(".header-search-container");
+        const headerSearchToggle = document.getElementById("searchToggle");
+        const headerSearchInput = document.getElementById("headerSearch");
+
+        if (headerSearchToggle && headerSearchContainer && headerSearchInput) {
+            headerSearchToggle.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                headerSearchContainer.classList.toggle("active");
+                
+                if (headerSearchContainer.classList.contains("active")) {
+                    setTimeout(() => headerSearchInput.focus(), 50);
+                }
+            });
+
+            // Close when clicking outside (desktop only)
+            if (window.innerWidth > 768) {
+                document.addEventListener("click", (e) => {
+                    if (!headerSearchContainer.contains(e.target) && 
+                        e.target !== headerSearchToggle && 
+                        e.target !== headerSearchInput) {
+                        headerSearchContainer.classList.remove("active");
+                    }
+                });
+            }
         }
         
         // Smooth scrolling for anchor links

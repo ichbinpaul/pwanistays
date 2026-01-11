@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="PwaniStays Safari Experiences: Premium wildlife safaris across Kenya's famous national parks - Masai Mara, Amboseli, Tsavo, Samburu, and more.">
+    <meta name="keywords" content="kenya safari packages, masai mara safari, amboseli national park, tsavo safari, samburu game reserve, lake nakuru, meru national park, wildlife photography, luxury safari camps, budget safari kenya">
+    <meta name="author" content="PwaniStays - Kenyan Safari Experts">
+    
+    <title>Safari Experiences | PwaniStays - Kenya Wildlife Adventures</title>
+    
+    <!-- Favicon Package -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pwanistays.com/experiences/safari.html">
+    <meta property="og:title" content="Safari Experiences | PwaniStays - Kenya Wildlife Adventures">
+    <meta property="og:description" content="Premium wildlife safaris across Kenya's famous national parks - Masai Mara, Amboseli, Tsavo, Samburu, and more.">
+    <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
+    
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Safari Experiences | PwaniStays - Kenya Wildlife Adventures">
+    <meta name="twitter:description" content="Premium wildlife safaris across Kenya's famous national parks.">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0d7a5f;
+            --primary-light: #0f9b7a;
+            --secondary: #f8b400;
+            --dark: #1a2b3c;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            line-height: 1;
+        }
+        
+        .logo-desktop {
+            display: inline-block;
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo-mobile {
+            display: none;
+            height: 50px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .btn-book {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-book:hover {
+            background: #e09c00;
+            transform: translateY(-2px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Safari Hero */
+        .safari-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 180px 5% 100px;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+        }
+        
+        .safari-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .safari-hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .safari-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(13, 122, 95, 0.8);
+            border-radius: 15px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background: var(--light);
+            padding: 15px 5%;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 50px;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 100px 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Safari Categories */
+        .safari-categories {
+            background: var(--light);
+            padding: 60px 5%;
+        }
+        
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-light);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+        
+        /* Safari Packages Grid */
+        .safari-packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .safari-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .safari-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .safari-image {
+            height: 250px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .safari-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .budget-badge {
+            background: #28a745;
+        }
+        
+        .luxury-badge {
+            background: #dc3545;
+        }
+        
+        .midrange-badge {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .safari-content {
+            padding: 30px;
+        }
+        
+        .safari-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .safari-title {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            flex: 1;
+        }
+        
+        .safari-location {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .safari-type {
+            background: #f0f8f4;
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .safari-duration {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .safari-overview {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .safari-highlights {
+            margin-bottom: 20px;
+        }
+        
+        .safari-highlights h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .safari-highlights ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .safari-highlights li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .safari-highlights li:before {
+            content: "🐘";
+            min-width: 20px;
+        }
+        
+        .safari-inclusions {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .safari-inclusions h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .safari-inclusions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .safari-inclusions li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .safari-inclusions li:before {
+            content: "✔";
+            color: var(--primary);
+            font-weight: bold;
+            min-width: 15px;
+        }
+        
+        .safari-wildlife {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .animal-tag {
+            background: #e8f4f1;
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .safari-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .safari-price {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .price-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .price-person {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(13, 122, 95, 0.3);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        /* Best For Section */
+        .safari-best-for {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff9e6;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .safari-best-for p {
+            color: var(--dark);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Safari Seasons */
+        .safari-seasons {
+            background: var(--light);
+            padding: 80px 5%;
+        }
+        
+        .seasons-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .season-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .season-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .season-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Luxury Safari Section */
+        .luxury-safari {
+            background: linear-gradient(135deg, #1a2b3c 0%, #2c3e50 100%);
+            color: white;
+            padding: 80px 5%;
+            text-align: center;
+        }
+        
+        .luxury-safari h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .luxury-safari p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .luxury-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+        
+        .luxury-feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .luxury-feature i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: 2px solid white;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            color: white;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-col ul li a {
+            transition: var(--transition);
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .footer-logo {
+            display: inline-block;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .safari-packages-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .safari-stats {
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .logo-desktop {
+                display: none;
+            }
+            
+            .logo-mobile {
+                display: inline-block;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .safari-hero {
+                padding: 150px 5% 80px;
+            }
+            
+            .safari-footer {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+            }
+            
+            .luxury-safari h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .safari-packages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .safari-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .safari-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .luxury-safari h2 {
+                font-size: 1.8rem;
+            }
+            
+            .season-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I'm%20interested%20in%20your%20Safari%20Experiences" 
+       class="whatsapp-float" 
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <!-- Header -->
+    <header role="banner">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="/index.html" class="logo-link">
+                <img src="/logo-header.png" 
+                     alt="PwaniStays - Curated Coastal Stays" 
+                     class="logo-desktop">
+                <img src="/logo-mobile.png" 
+                     alt="PwaniStays" 
+                     class="logo-mobile">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="/index.html" role="menuitem">Home</a></li>
+                <li role="none"><a href="/accommodations.html" role="menuitem">Accommodation</a></li>
+                <li role="none"><a href="/experiences.html" role="menuitem">Experiences</a></li>
+                <li role="none"><a href="/experiences/coastal-cultural.html" role="menuitem">Coastal & Cultural</a></li>
+                <li role="none"><a href="/experiences/safari.html" class="active" role="menuitem">Safari</a></li>
+                <li role="none"><a href="/experiences/nairobi-inland.html" role="menuitem">Nairobi & Inland</a></li>
+                <li role="none"><a href="/about.html" role="menuitem">About Us</a></li>
+                <li role="none"><a href="/contact.html" role="menuitem">Contact</a></li>
+                <li role="none"><a href="https://wa.me/254738544784" class="btn-book" role="menuitem" target="_blank">Book Safari</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Safari Hero -->
+    <section class="safari-hero">
+        <h1>Kenya Safari Experiences</h1>
+        <p>Experience the ultimate wildlife adventure in Kenya's world-famous national parks and reserves. From the Great Migration in Masai Mara to the elephants of Amboseli, we offer curated safari experiences for every traveler.</p>
+        <a href="#safari-packages" class="btn-primary">
+            <i class="fas fa-binoculars"></i> Explore Safari Packages
+        </a>
+        
+        <div class="safari-stats">
+            <div class="stat-item">
+                <span class="stat-number">12+</span>
+                <span class="stat-label">National Parks</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">450+</span>
+                <span class="stat-label">Bird Species</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">Big 5</span>
+                <span class="stat-label">Complete</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">Success Rate</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <span><a href="/index.html">Home</a> &gt; 
+              <a href="/experiences.html">Experiences</a> &gt; 
+              Safari Packages</span>
+    </div>
+
+    <!-- Safari Categories -->
+    <section class="safari-categories">
+        <div class="section-title">
+            <h2>Safari Categories</h2>
+            <p>Choose the perfect safari experience for your adventure</p>
+        </div>
+        <div class="categories-container">
+            <div class="category-card" onclick="filterSafari('budget')">
+                <div class="category-icon">
+                    <i class="fas fa-campground"></i>
+                </div>
+                <h3>Budget Safaris</h3>
+                <p>Affordable camping and basic lodges for adventurous travelers</p>
+                <small>From $150/day</small>
+            </div>
+            <div class="category-card" onclick="filterSafari('midrange')">
+                <div class="category-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Mid-Range</h3>
+                <p>Comfortable lodges and tented camps with good amenities</p>
+                <small>From $300/day</small>
+            </div>
+            <div class="category-card" onclick="filterSafari('luxury')">
+                <div class="category-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h3>Luxury Safaris</h3>
+                <p>Premium lodges, private guides, and exclusive experiences</p>
+                <small>From $600/day</small>
+            </div>
+            <div class="category-card" onclick="filterSafari('family')">
+                <div class="category-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Family Safaris</h3>
+                <p>Child-friendly accommodations and activities for all ages</p>
+                <small>Special family rates</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safari Packages -->
+    <section id="safari-packages">
+        <div class="section-title">
+            <h2>Premium Safari Packages</h2>
+            <p>Handpicked safari experiences across Kenya's most spectacular wildlife destinations</p>
+        </div>
+
+        <div class="safari-packages-grid">
+            <!-- Package 1: Masai Mara Classic -->
+            <div class="safari-card" data-category="luxury midrange">
+                <div class="safari-image" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="safari-badge luxury-badge">Luxury</div>
+                </div>
+                <div class="safari-content">
+                    <div class="safari-header">
+                        <h3 class="safari-title">Masai Mara Classic Safari</h3>
+                        <span class="safari-type">4 Days / 3 Nights</span>
+                    </div>
+                    
+                    <div class="safari-location">
+                        <i class="fas fa-map-marker-alt"></i> Masai Mara National Reserve
+                    </div>
+                    
+                    <div class="safari-duration">
+                        <i class="fas fa-clock"></i> Best: July-October (Migration)
+                    </div>
+                    
+                    <p class="safari-overview">Experience the world-famous Masai Mara, home to the Great Migration and abundant wildlife. Stay in luxury tented camps with stunning savannah views.</p>
+                    
+                    <div class="safari-highlights">
+                        <h4><i class="fas fa-star"></i> Safari Highlights</h4>
+                        <ul>
+                            <li>Witness the Great Migration (seasonal)</li>
+                            <li>Multiple game drives including early morning and sunset</li>
+                            <li>Visit a traditional Maasai village</li>
+                            <li>Hot air balloon safari (optional add-on)</li>
+                            <li>Expert guides with 10+ years experience</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-wildlife">
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Lions</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Elephants</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Wildebeest</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Cheetahs</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Leopards</span>
+                    </div>
+                    
+                    <div class="safari-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>All park fees and conservation charges</li>
+                            <li>Luxury tented camp accommodation</li>
+                            <li>All meals (breakfast, lunch, dinner)</li>
+                            <li>Professional safari guide and driver</li>
+                            <li>Game drives in 4x4 safari vehicle</li>
+                            <li>Return flights from Nairobi (optional)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Wildlife photographers, honeymooners, first-time safari-goers</p>
+                    </div>
+                    
+                    <div class="safari-footer">
+                        <div class="safari-price">
+                            <span class="price-amount">$1,850</span>
+                            <span class="price-person">per person sharing</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireSafari(1)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 2: Amboseli Elephant Safari -->
+            <div class="safari-card" data-category="midrange budget">
+                <div class="safari-image" style="background-image: url('https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="safari-badge midrange-badge">Mid-Range</div>
+                </div>
+                <div class="safari-content">
+                    <div class="safari-header">
+                        <h3 class="safari-title">Amboseli Elephant Experience</h3>
+                        <span class="safari-type">3 Days / 2 Nights</span>
+                    </div>
+                    
+                    <div class="safari-location">
+                        <i class="fas fa-map-marker-alt"></i> Amboseli National Park
+                    </div>
+                    
+                    <div class="safari-duration">
+                        <i class="fas fa-clock"></i> Year-round destination
+                    </div>
+                    
+                    <p class="safari-overview">Famous for its large elephant herds and stunning views of Mount Kilimanjaro. Perfect for elephant lovers and landscape photographers.</p>
+                    
+                    <div class="safari-highlights">
+                        <h4><i class="fas fa-star"></i> Safari Highlights</h4>
+                        <ul>
+                            <li>Close encounters with large elephant herds</li>
+                            <li>Photograph elephants with Kilimanjaro backdrop</li>
+                            <li>Visit Observation Hill for panoramic views</li>
+                            <li>Morning and afternoon game drives</li>
+                            <li>Cultural visit to Maasai community</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-wildlife">
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Elephants</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Buffalo</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Lions</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Giraffes</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Hippos</span>
+                    </div>
+                    
+                    <div class="safari-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Park entry fees and vehicle fees</li>
+                            <li>Lodge accommodation with views</li>
+                            <li>All meals and drinking water</li>
+                            <li>Professional English-speaking guide</li>
+                            <li>Transport in custom safari minibus</li>
+                            <li>Hotel pickup/dropoff in Nairobi</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Elephant lovers, photographers, families</p>
+                    </div>
+                    
+                    <div class="safari-footer">
+                        <div class="safari-price">
+                            <span class="price-amount">$750</span>
+                            <span class="price-person">per person sharing</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireSafari(2)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 3: Tsavo Wilderness Adventure -->
+            <div class="safari-card" data-category="budget adventure">
+                <div class="safari-image" style="background-image: url('https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="safari-badge budget-badge">Budget</div>
+                </div>
+                <div class="safari-content">
+                    <div class="safari-header">
+                        <h3 class="safari-title">Tsavo Wilderness Adventure</h3>
+                        <span class="safari-type">3 Days / 2 Nights</span>
+                    </div>
+                    
+                    <div class="safari-location">
+                        <i class="fas fa-map-marker-alt"></i> Tsavo East & West National Parks
+                    </div>
+                    
+                    <div class="safari-duration">
+                        <i class="fas fa-clock"></i> Dry seasons: Jan-Mar, Jun-Oct
+                    </div>
+                    
+                    <p class="safari-overview">Explore Kenya's largest national park, famous for its red elephants, maneless lions, and dramatic landscapes including Mzima Springs.</p>
+                    
+                    <div class="safari-highlights">
+                        <h4><i class="fas fa-star"></i> Safari Highlights</h4>
+                        <ul>
+                            <li>See the famous "red elephants" of Tsavo</li>
+                            <li>Visit Mzima Springs with underwater hippo viewing</li>
+                            <li>Explore lava flows at Shetani Lava</li>
+                            <li>Bird watching at Aruba Dam</li>
+                            <li>Night game drive (optional)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-wildlife">
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Red Elephants</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Maneless Lions</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Hippos</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Crocodiles</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> 500+ Bird Species</span>
+                    </div>
+                    
+                    <div class="safari-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Camping accommodation or basic lodge</li>
+                            <li>All park fees and camping fees</li>
+                            <li>Meals as per itinerary</li>
+                            <li>Transport in 4x4 safari vehicle</li>
+                            <li>Professional driver/guide</li>
+                            <li>Camping equipment (if camping)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Adventure travelers, budget explorers, photography groups</p>
+                    </div>
+                    
+                    <div class="safari-footer">
+                        <div class="safari-price">
+                            <span class="price-amount">$480</span>
+                            <span class="price-person">per person sharing</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireSafari(3)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 4: Samburu Special 5 Safari -->
+            <div class="safari-card" data-category="midrange luxury">
+                <div class="safari-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="safari-badge midrange-badge">Mid-Range</div>
+                </div>
+                <div class="safari-content">
+                    <div class="safari-header">
+                        <h3 class="safari-title">Samburu Special 5 Safari</h3>
+                        <span class="safari-type">4 Days / 3 Nights</span>
+                    </div>
+                    
+                    <div class="safari-location">
+                        <i class="fas fa-map-marker-alt"></i> Samburu National Reserve
+                    </div>
+                    
+                    <div class="safari-duration">
+                        <i class="fas fa-clock"></i> Best: June-October, Jan-Feb
+                    </div>
+                    
+                    <p class="safari-overview">Discover the unique wildlife of northern Kenya, home to the "Samburu Special Five" - rare species found only in this arid ecosystem.</p>
+                    
+                    <div class="safari-highlights">
+                        <h4><i class="fas fa-star"></i> Safari Highlights</h4>
+                        <ul>
+                            <li>Search for the Samburu Special Five</li>
+                            <li>Camel safari experience with Samburu guides</li>
+                            <li>Visit to a Samburu cultural village</li>
+                            <li>Game drives along the Ewaso Ng'iro river</li>
+                            <li>Bird watching for dry country species</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-wildlife">
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Grevy's Zebra</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Reticulated Giraffe</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Somali Ostrich</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Gerenuk</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Beisa Oryx</span>
+                    </div>
+                    
+                    <div class="safari-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Tented camp accommodation</li>
+                            <li>All park and reserve fees</li>
+                            <li>Full board accommodation</li>
+                            <li>Game drives in 4x4 vehicle</li>
+                            <li>Camel safari experience</li>
+                            <li>Cultural village visit</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Wildlife enthusiasts, cultural travelers, photographers</p>
+                    </div>
+                    
+                    <div class="safari-footer">
+                        <div class="safari-price">
+                            <span class="price-amount">$920</span>
+                            <span class="price-person">per person sharing</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireSafari(4)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 5: Lake Nakuru Flamingo Safari -->
+            <div class="safari-card" data-category="budget family">
+                <div class="safari-image" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="safari-badge budget-badge">Budget</div>
+                </div>
+                <div class="safari-content">
+                    <div class="safari-header">
+                        <h3 class="safari-title">Lake Nakuru Flamingo Safari</h3>
+                        <span class="safari-type">2 Days / 1 Night</span>
+                    </div>
+                    
+                    <div class="safari-location">
+                        <i class="fas fa-map-marker-alt"></i> Lake Nakuru National Park
+                    </div>
+                    
+                    <div class="safari-duration">
+                        <i class="fas fa-clock"></i> Year-round (flamingos seasonal)
+                    </div>
+                    
+                    <p class="safari-overview">A short safari perfect for bird watchers and those with limited time. Famous for its flamingo populations and rhino sanctuary.</p>
+                    
+                    <div class="safari-highlights">
+                        <h4><i class="fas fa-star"></i> Safari Highlights</h4>
+                        <ul>
+                            <li>Spectacular flocks of pink flamingos</li>
+                            <li>Visit the rhino sanctuary (black & white rhinos)</li>
+                            <li>Baboon cliff viewpoint</li>
+                            <li>Game drive around the lake shore</li>
+                            <li>Over 450 bird species</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-wildlife">
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Flamingos</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Rhinos</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Lions</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Pelicans</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Waterbuck</span>
+                    </div>
+                    
+                    <div class="safari-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Lodge accommodation</li>
+                            <li>Park entry fees</li>
+                            <li>All meals</li>
+                            <li>Game drives</li>
+                            <li>Transport from Nairobi</li>
+                            <li>Professional guide</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Bird watchers, short break travelers, families</p>
+                    </div>
+                    
+                    <div class="safari-footer">
+                        <div class="safari-price">
+                            <span class="price-amount">$350</span>
+                            <span class="price-person">per person sharing</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireSafari(5)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 6: Aberdare Mountain Forest Safari -->
+            <div class="safari-card" data-category="midrange luxury">
+                <div class="safari-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="safari-badge luxury-badge">Luxury</div>
+                </div>
+                <div class="safari-content">
+                    <div class="safari-header">
+                        <h3 class="safari-title">Aberdare Mountain Forest Safari</h3>
+                        <span class="safari-type">3 Days / 2 Nights</span>
+                    </div>
+                    
+                    <div class="safari-location">
+                        <i class="fas fa-map-marker-alt"></i> Aberdare National Park
+                    </div>
+                    
+                    <div class="safari-duration">
+                        <i class="fas fa-clock"></i> Dry seasons: Jan-Feb, Jun-Sep
+                    </div>
+                    
+                    <p class="safari-overview">Experience mountain forest wildlife viewing from the unique tree lodges and ark-style accommodations overlooking waterholes.</p>
+                    
+                    <div class="safari-highlights">
+                        <h4><i class="fas fa-star"></i> Safari Highlights</h4>
+                        <ul>
+                            <li>Stay at famous tree lodges (The Ark or Treetops)</li>
+                            <li>Night wildlife viewing from lodge balconies</li>
+                            <li>Mountain forest walks with armed guard</li>
+                            <li>Visit waterfalls and scenic viewpoints</li>
+                            <li>See rare mountain forest species</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-wildlife">
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Bongo Antelope</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Elephants</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Black Leopards</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Buffalo</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Giant Forest Hog</span>
+                    </div>
+                    
+                    <div class="safari-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Tree lodge accommodation</li>
+                            <li>All park fees and conservation charges</li>
+                            <li>Full board accommodation</li>
+                            <li>Guided forest walks</li>
+                            <li>Transport from Nairobi</li>
+                            <li>All game viewing activities</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Nature lovers, honeymooners, photographers</p>
+                    </div>
+                    
+                    <div class="safari-footer">
+                        <div class="safari-price">
+                            <span class="price-amount">$680</span>
+                            <span class="price-person">per person sharing</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireSafari(6)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 7: Meru National Park Adventure -->
+            <div class="safari-card" data-category="midrange adventure">
+                <div class="safari-image" style="background-image: url('https://images.unsplash.com/photo-1511994717241-8e4e484dfa8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="safari-badge midrange-badge">Mid-Range</div>
+                </div>
+                <div class="safari-content">
+                    <div class="safari-header">
+                        <h3 class="safari-title">Meru National Park Adventure</h3>
+                        <span class="safari-type">4 Days / 3 Nights</span>
+                    </div>
+                    
+                    <div class="safari-location">
+                        <i class="fas fa-map-marker-alt"></i> Meru National Park
+                    </div>
+                    
+                    <div class="safari-duration">
+                        <i class="fas fa-clock"></i> Dry season: June-October
+                    </div>
+                    
+                    <p class="safari-overview">Explore the wilderness that inspired Joy Adamson's "Born Free". Less crowded than other parks with diverse landscapes and wildlife.</p>
+                    
+                    <div class="safari-highlights">
+                        <h4><i class="fas fa-star"></i> Safari Highlights</h4>
+                        <ul>
+                            <li>Visit Elsa's Kopje (lioness memorial site)</li>
+                            <li>Game drives across diverse habitats</li>
+                            <li>Bird watching along 13 permanent rivers</li>
+                            <li>See the park's rhino sanctuary</li>
+                            <li>Optional fishing in Tana River</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-wildlife">
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Lions</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Elephants</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Cheetahs</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Rhinos</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> 300+ Bird Species</span>
+                    </div>
+                    
+                    <div class="safari-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Tented camp accommodation</li>
+                            <li>All park fees and activities</li>
+                            <li>Full board meals</li>
+                            <li>Professional guide and driver</li>
+                            <li>Transport in 4x4 vehicle</li>
+                            <li>Rhino sanctuary visit</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Wildlife enthusiasts, history buffs, photographers</p>
+                    </div>
+                    
+                    <div class="safari-footer">
+                        <div class="safari-price">
+                            <span class="price-amount">$790</span>
+                            <span class="price-person">per person sharing</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireSafari(7)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 8: Hell's Gate & Lake Naivasha -->
+            <div class="safari-card" data-category="budget adventure">
+                <div class="safari-image" style="background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="safari-badge budget-badge">Budget</div>
+                </div>
+                <div class="safari-content">
+                    <div class="safari-header">
+                        <h3 class="safari-title">Hell's Gate & Lake Naivasha Adventure</h3>
+                        <span class="safari-type">2 Days / 1 Night</span>
+                    </div>
+                    
+                    <div class="safari-location">
+                        <i class="fas fa-map-marker-alt"></i> Hell's Gate National Park & Lake Naivasha
+                    </div>
+                    
+                    <div class="safari-duration">
+                        <i class="fas fa-clock"></i> Year-round destination
+                    </div>
+                    
+                    <p class="safari-overview">The only Kenyan national park where you can walk, cycle, or rock climb among wildlife. Perfect for active travelers.</p>
+                    
+                    <div class="safari-highlights">
+                        <h4><i class="fas fa-star"></i> Safari Highlights</h4>
+                        <ul>
+                            <li>Cycling safari through Hell's Gate</li>
+                            <li>Rock climbing at Fischer's Tower</li>
+                            <li>Boat ride on Lake Naivasha</li>
+                            <li>Walking safari among wildlife</li>
+                            <li>Visit geothermal power plant</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-wildlife">
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Buffalo</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Zebra</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Giraffe</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Hippos</span>
+                        <span class="animal-tag"><i class="fas fa-paw"></i> Birds</span>
+                    </div>
+                    
+                    <div class="safari-inclusions">
+                        <h4><i class="fas fa-check-circle"></i> Included</h4>
+                        <ul>
+                            <li>Lodge accommodation at Lake Naivasha</li>
+                            <li>All park entry fees</li>
+                            <li>Bicycle rental for cycling safari</li>
+                            <li>Boat ride on Lake Naivasha</li>
+                            <li>All meals</li>
+                            <li>Professional guide</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="safari-best-for">
+                        <p><i class="fas fa-users"></i> <strong>Best for:</strong> Active travelers, adventure seekers, families</p>
+                    </div>
+                    
+                    <div class="safari-footer">
+                        <div class="safari-price">
+                            <span class="price-amount">$280</span>
+                            <span class="price-person">per person sharing</span>
+                        </div>
+                        <button class="btn-whatsapp" onclick="enquireSafari(8)">
+                            <i class="fab fa-whatsapp"></i> Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safari Seasons -->
+    <section class="safari-seasons">
+        <div class="section-title">
+            <h2>Best Time for Safari</h2>
+            <p>Plan your safari according to Kenya's wildlife seasons</p>
+        </div>
+        <div class="seasons-container">
+            <div class="season-cards">
+                <div class="season-card">
+                    <h4>January - March</h4>
+                    <p>Dry season, great for general wildlife viewing. Pleasant weather with clear skies.</p>
+                </div>
+                <div class="season-card">
+                    <h4>April - May</h4>
+                    <p>Long rains, fewer tourists, lush green landscapes. Lower rates available.</p>
+                </div>
+                <div class="season-card">
+                    <h4>June - October</h4>
+                    <p>Peak season. Great Migration in Masai Mara. Dry weather, excellent game viewing.</p>
+                </div>
+                <div class="season-card">
+                    <h4>November - December</h4>
+                    <p>Short rains, good wildlife viewing. Migratory birds arrive. Holiday season.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Luxury Safari Section -->
+    <section class="luxury-safari">
+        <h2>Luxury & Custom Safari Experiences</h2>
+        <p>For those seeking exclusive, tailor-made safari adventures with premium accommodations and private guides.</p>
+        
+        <div class="luxury-features">
+            <div class="luxury-feature">
+                <i class="fas fa-concierge-bell"></i>
+                <h3>Private Guides</h3>
+                <p>Dedicated safari guide with 10+ years experience</p>
+            </div>
+            <div class="luxury-feature">
+                <i class="fas fa-umbrella-beach"></i>
+                <h3>Premium Lodges</h3>
+                <p>5-star lodges and boutique tented camps</p>
+            </div>
+            <div class="luxury-feature">
+                <i class="fas fa-helicopter"></i>
+                <h3>Fly-in Safaris</h3>
+                <p>Private charters between parks to maximize time</p>
+            </div>
+        </div>
+        
+        <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20discuss%20a%20luxury%20or%20custom%20safari%20experience." 
+           class="btn-secondary" target="_blank">
+           <i class="fas fa-crown"></i> Discuss Luxury Safari
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="/logo-footer.png" 
+                         alt="PwaniStays - Safari Experts" 
+                         class="logo-desktop"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                    <img src="/logo-mobile.png" 
+                         alt="PwaniStays" 
+                         class="logo-mobile"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                </div>
+                <p>Your trusted safari partner in Kenya. We specialize in curated wildlife experiences across Kenya's most spectacular national parks and reserves.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/pwanistayscom" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@pwanistays.com" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Safari Parks</h3>
+                <ul>
+                    <li><a href="#masaimara">Masai Mara</a></li>
+                    <li><a href="#amboseli">Amboseli</a></li>
+                    <li><a href="#tsavo">Tsavo East & West</a></li>
+                    <li><a href="#samburu">Samburu</a></li>
+                    <li><a href="#nakuru">Lake Nakuru</a></li>
+                    <li><a href="#aberdare">Aberdare</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Safari Types</h3>
+                <ul>
+                    <li><a href="#budget">Budget Safaris</a></li>
+                    <li><a href="#midrange">Mid-Range Safaris</a></li>
+                    <li><a href="#luxury">Luxury Safaris</a></li>
+                    <li><a href="#family">Family Safaris</a></li>
+                    <li><a href="#photography">Photography Safaris</a></li>
+                    <li><a href="#custom">Custom Safaris</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Safari Support</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Nairobi & Mombasa, Kenya</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Safari Chat</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:safari@pwanistays.com">safari@pwanistays.com</a></li>
+                    <li><i class="fas fa-clock"></i> 24/7 Safari Support</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> PwaniStays — Premium Safari Experiences. All rights reserved. | 
+               <a href="/privacy">Privacy Policy</a> | 
+               <a href="/terms">Terms of Service</a> | 
+               <a href="/cancellation">Cancellation Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Safari data for filtering and enquiries
+        const safariData = {
+            1: {
+                title: "Masai Mara Classic Safari",
+                price: "$1,850",
+                category: "luxury"
+            },
+            2: {
+                title: "Amboseli Elephant Experience",
+                price: "$750",
+                category: "midrange"
+            },
+            3: {
+                title: "Tsavo Wilderness Adventure",
+                price: "$480",
+                category: "budget"
+            },
+            4: {
+                title: "Samburu Special 5 Safari",
+                price: "$920",
+                category: "midrange"
+            },
+            5: {
+                title: "Lake Nakuru Flamingo Safari",
+                price: "$350",
+                category: "budget"
+            },
+            6: {
+                title: "Aberdare Mountain Forest Safari",
+                price: "$680",
+                category: "luxury"
+            },
+            7: {
+                title: "Meru National Park Adventure",
+                price: "$790",
+                category: "midrange"
+            },
+            8: {
+                title: "Hell's Gate & Lake Naivasha Adventure",
+                price: "$280",
+                category: "budget"
+            }
+        };
+
+        // Safari enquiry function
+        function enquireSafari(safariId) {
+            const safariInfo = safariData[safariId];
+            const message = `Hello PwaniStays Safari Team! I'm interested in the "${safariInfo.title}" safari package. \nPrice: ${safariInfo.price} per person sharing\n\nPlease provide more information about availability, best travel dates, and booking process.`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            window.open(
+                `https://wa.me/254738544784?text=${encodedMessage}`,
+                "_blank"
+            );
+        }
+
+        // Filter safaris by category
+        function filterSafari(category) {
+            const cards = document.querySelectorAll('.safari-card');
+            
+            // Update active states on category cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.border = 'none';
+                if (card.querySelector('h3').textContent.toLowerCase().includes(category)) {
+                    card.style.border = '2px solid var(--primary)';
+                }
+            });
+            
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    const categories = card.getAttribute('data-category');
+                    if (categories && categories.includes(category)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+                
+                // Add fade animation
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                }, 100);
+            });
+            
+            // Scroll to packages
+            document.getElementById('safari-packages').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close mobile menu when clicking any link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href === '#' || href.startsWith('javascript:')) {
+                        return;
+                    }
+                    
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Initialize with all safaris showing
+            filterSafari('all');
+        });
+    </script>
+</body>
+</html>

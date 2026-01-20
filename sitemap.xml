@@ -40,9 +40,6 @@
     <priority>0.7</priority>
   </url>
   
-  <!-- Contact Section (Since no separate contact page) -->
-  <!-- Note: You don't need to include this as it's on homepage -->
-  
   <!-- Experience Subpages -->
   <url>
     <loc>https://pwanistays.com/nairobi/</loc>

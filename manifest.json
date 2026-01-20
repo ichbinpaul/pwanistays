@@ -1,7 +1,11 @@
 {
-  "name": "PwaniStays",
+  "name": "PwaniStays | Curated Coastal Stays & Experiences",
   "short_name": "PwaniStays",
-  "description": "Luxury Coastal Accommodation in Kenya",
+  "description": "Curated coastal stays and guided experiences across Kenya's coast",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d7a5f",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,9 +17,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "theme_color": "#0d7a5f",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "start_url": "/"
+  ]
 }

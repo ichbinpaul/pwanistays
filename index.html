@@ -1787,6 +1787,25 @@
             font-size: 0.8rem;
         }
         
+        /* NEW: Footer Logo Mobile Support */
+        .footer-logo-desktop {
+            display: block;
+        }
+        
+        .footer-logo-mobile {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-logo-desktop {
+                display: none;
+            }
+            
+            .footer-logo-mobile {
+                display: block;
+            }
+        }
+        
         /* Responsive Design */
         @media (max-width: 1200px) {
             .nav-links {
@@ -2690,15 +2709,18 @@
     <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
-                <!-- UPDATED FOOTER LOGO -->
+                <!-- UPDATED FOOTER LOGO with mobile support -->
                 <div class="footer-logo">
+                    <!-- Desktop Footer Logo -->
                     <img src="/logo-footer.png" 
                          alt="PwaniStays - Curated Coastal Stays" 
-                         class="logo-desktop"
+                         class="footer-logo-desktop"
                          style="height: 60px; width: auto; margin-bottom: 20px;">
-                    <img src="/logo-mobile.png" 
+                    
+                    <!-- Mobile Footer Logo -->
+                    <img src="/logo-mobile-footer.png" 
                          alt="PwaniStays" 
-                         class="logo-mobile"
+                         class="footer-logo-mobile"
                          style="height: 60px; width: auto; margin-bottom: 20px;">
                 </div>
                 <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>

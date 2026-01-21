@@ -1,0 +1,25 @@
+{
+  "name": "PwaniStays | Curated Coastal Stays & Experiences",
+  "short_name": "PwaniStays",
+  "description": "Curated coastal stays and guided experiences across Kenya's coast",
+  "icons": [
+    {
+      "src": "/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#0d7a5f",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "orientation": "portrait-primary"
+}

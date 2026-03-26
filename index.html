@@ -2116,6 +2116,103 @@
             }
         }
         
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 14px;
+            right: 16px;
+            z-index: 2001;
+            font-family: inherit;
+        }
+
+        .language-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 999px;
+            padding: 10px 14px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            color: var(--dark);
+            font-weight: 600;
+            transition: var(--transition);
+            backdrop-filter: blur(8px);
+        }
+
+        .language-toggle:hover {
+            transform: translateY(-1px);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .language-toggle i:first-child {
+            color: var(--primary);
+        }
+
+        .language-toggle i:last-child {
+            font-size: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+
+        .language-switcher.open .language-toggle i:last-child {
+            transform: rotate(180deg);
+        }
+
+        .language-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            min-width: 220px;
+            background: rgba(255, 255, 255, 0.99);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 8px;
+            display: none;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(10px);
+        }
+
+        .language-switcher.open .language-menu {
+            display: block;
+        }
+
+        .language-menu button {
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 11px 14px;
+            text-align: left;
+            border-radius: 12px;
+            cursor: pointer;
+            color: var(--dark);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .language-menu button:hover,
+        .language-menu button.active {
+            background: #f0f8f4;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .language-switcher {
+                top: 10px;
+                right: 10px;
+            }
+
+            .language-toggle {
+                padding: 9px 12px;
+            }
+
+            .language-menu {
+                min-width: 200px;
+            }
+        }
+
         /* Accessibility */
         .sr-only {
             position: absolute;
@@ -2249,6 +2346,28 @@
             </ul>
         </nav>
     </header>
+
+
+    <!-- Language Switcher -->
+    <div class="language-switcher" id="languageSwitcher">
+        <button class="language-toggle" id="languageToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Change language">
+            <i class="fas fa-globe" aria-hidden="true"></i>
+            <span id="currentLanguageLabel">English</span>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="language-menu" id="languageMenu" role="menu" aria-label="Language selection">
+            <button type="button" data-lang="en">English</button>
+            <button type="button" data-lang="no">Norwegian</button>
+            <button type="button" data-lang="da">Danish</button>
+            <button type="button" data-lang="pl">Polish</button>
+            <button type="button" data-lang="sv">Swedish</button>
+            <button type="button" data-lang="fi">Finnish</button>
+            <button type="button" data-lang="de">German</button>
+            <button type="button" data-lang="nl">Dutch</button>
+            <button type="button" data-lang="fr">French</button>
+            <button type="button" data-lang="is">Icelandic</button>
+        </div>
+    </div>
 
     <!-- CHANGE 3: Hero Section - NOW A 2-IMAGE CAROUSEL -->
     <section class="hero" id="home" role="region" aria-label="Hero section">
@@ -2898,11 +3017,888 @@
             return finalPrice;
         }
 
+
+        const I18N = {
+            en: {
+                "Home": "Home",
+                "About Us": "About Us",
+                "Accommodation": "Accommodation",
+                "Experiences ▾": "Experiences ▾",
+                "Nairobi & Inland": "Nairobi & Inland",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Coastal & Cultural",
+                "How It Works": "How It Works",
+                "Contact": "Contact",
+                "Book Now": "Book Now",
+                "Curated Stays & Coastal Experiences": "Curated Stays & Coastal Experiences",
+                "Any Location": "Any Location",
+                "Any Type": "Any Type",
+                "Search Properties": "Search Properties",
+                "Search Results": "Search Results",
+                "Clear filters and show all properties": "Clear filters and show all properties",
+                "Featured Properties": "Featured Properties",
+                "Loading featured properties...": "Loading featured properties...",
+                "View All Properties": "View All Properties",
+                "Complete Coastal Experience": "Complete Coastal Experience",
+                "Browse Accommodation": "Browse Accommodation",
+                "Book Transfers": "Book Transfers",
+                "Explore Experiences": "Explore Experiences",
+                "Why Choose PwaniStays?": "Why Choose PwaniStays?",
+                "What Our Guests Say": "What Our Guests Say",
+                "Share Your Experience": "Share Your Experience",
+                "Leave Your Feedback": "Leave Your Feedback",
+                "Start Your Coastal Journey": "Start Your Coastal Journey",
+                "Call Us Direct": "Call Us Direct",
+                "WhatsApp Chat": "WhatsApp Chat",
+                "Email Us": "Email Us",
+                "Operating Hours": "Operating Hours",
+                "Send Detailed Inquiry": "Send Detailed Inquiry",
+                "Service Interested In *": "Service Interested In *",
+                "Accommodation Only": "Accommodation Only",
+                "Accommodation + Transfers": "Accommodation + Transfers",
+                "Full Package (Stay + Transfers + Tours)": "Full Package (Stay + Transfers + Tours)",
+                "Corporate/Group Booking": "Corporate/Group Booking",
+                "Quick Links": "Quick Links",
+                "Our Services": "Our Services",
+                "Guest Reviews": "Guest Reviews",
+                "Leave Feedback": "Leave Feedback",
+                "Contact Us": "Contact Us",
+                "Coastal Destinations": "Coastal Destinations",
+                "Contact & Support": "Contact & Support",
+                "Your Name *": "Your Name *",
+                "City": "City",
+                "Country": "Country",
+                "Your Rating *": "Your Rating *",
+                "Your Review *": "Your Review *",
+                "Submit Your Review": "Submit Your Review",
+                "Full Name *": "Full Name *",
+                "Email Address *": "Email Address *",
+                "Phone Number with Country Code *": "Phone Number with Country Code *",
+                "Enter your full name": "Enter your full name",
+                "Your City": "Your City",
+                "Your Country": "Your Country",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Your Detailed Requirements (Travel dates, group size, budget, special requests) *",
+                "Tell us about your stay with PwaniStays": "Tell us about your stay with PwaniStays",
+                "Loading properties...": "Loading properties...",
+                "Search beachfront, villa, Nyali...": "Search beachfront, villa, Nyali...",
+                "Check-in → Check-out": "Check-in → Check-out",
+                "Select check-in → Select checkout": "Select check-in → Select checkout",
+                "Select check-in → Select check-out": "Select check-in → Select check-out",
+                "Flexible dates": "Flexible dates",
+                "Local & International calls": "Local & International calls",
+                "Instant response guaranteed": "Instant response guaranteed",
+                "Response within 1 hour": "Response within 1 hour",
+                "We're always available for you": "We're always available for you",
+                "Mombasa, Coastal Kenya": "Mombasa, Coastal Kenya",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Hand-selected luxury accommodations across Kenya's finest beach destinations",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "End-to-end travel solutions for your Kenyan coastal vacation"
+            },
+            no: {
+                "Home": "Hjem",
+                "About Us": "Om oss",
+                "Accommodation": "Overnatting",
+                "Experiences ▾": "Opplevelser ▾",
+                "Nairobi & Inland": "Nairobi og innlandet",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Kyst og kultur",
+                "How It Works": "Slik fungerer det",
+                "Contact": "Kontakt",
+                "Book Now": "Bestill nå",
+                "Curated Stays & Coastal Experiences": "Kuraterte opphold og kystopplevelser",
+                "Any Location": "Hvilket som helst sted",
+                "Any Type": "Hvilken som helst type",
+                "Search Properties": "Søk etter eiendommer",
+                "Search Results": "Søkeresultater",
+                "Clear filters and show all properties": "Fjern filtre og vis alle eiendommer",
+                "Featured Properties": "Utvalgte eiendommer",
+                "Loading featured properties...": "Laster utvalgte eiendommer...",
+                "View All Properties": "Vis alle eiendommer",
+                "Complete Coastal Experience": "Komplett kystopplevelse",
+                "Browse Accommodation": "Bla gjennom overnatting",
+                "Book Transfers": "Bestill transport",
+                "Explore Experiences": "Utforsk opplevelser",
+                "Why Choose PwaniStays?": "Hvorfor velge PwaniStays?",
+                "What Our Guests Say": "Hva gjestene våre sier",
+                "Share Your Experience": "Del din opplevelse",
+                "Leave Your Feedback": "Legg igjen tilbakemeldingen din",
+                "Start Your Coastal Journey": "Start din kystreise",
+                "Call Us Direct": "Ring oss direkte",
+                "WhatsApp Chat": "WhatsApp-chat",
+                "Email Us": "Send oss e-post",
+                "Operating Hours": "Åpningstider",
+                "Send Detailed Inquiry": "Send detaljert forespørsel",
+                "Service Interested In *": "Tjeneste du er interessert i *",
+                "Accommodation Only": "Kun overnatting",
+                "Accommodation + Transfers": "Overnatting + transport",
+                "Full Package (Stay + Transfers + Tours)": "Full pakke (opphold + transport + turer)",
+                "Corporate/Group Booking": "Bedrifts-/gruppebooking",
+                "Quick Links": "Hurtiglenker",
+                "Our Services": "Våre tjenester",
+                "Guest Reviews": "Gjestevurderinger",
+                "Leave Feedback": "Legg igjen tilbakemelding",
+                "Contact Us": "Kontakt oss",
+                "Coastal Destinations": "Kystdestinasjoner",
+                "Contact & Support": "Kontakt og support",
+                "Your Name *": "Ditt navn *",
+                "City": "By",
+                "Country": "Land",
+                "Your Rating *": "Din vurdering *",
+                "Your Review *": "Din anmeldelse *",
+                "Submit Your Review": "Send inn anmeldelsen din",
+                "Full Name *": "Fullt navn *",
+                "Email Address *": "E-postadresse *",
+                "Phone Number with Country Code *": "Telefonnummer med landskode *",
+                "Enter your full name": "Skriv inn fullt navn",
+                "Your City": "Din by",
+                "Your Country": "Ditt land",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Dine detaljerte ønsker (reisedatoer, gruppestørrelse, budsjett, spesielle ønsker) *",
+                "Tell us about your stay with PwaniStays": "Fortell oss om oppholdet ditt med PwaniStays",
+                "Loading properties...": "Laster eiendommer...",
+                "Search beachfront, villa, Nyali...": "Søk etter strandnært, villa, Nyali...",
+                "Check-in → Check-out": "Innsjekk → Utsjekk",
+                "Select check-in → Select checkout": "Velg innsjekk → Velg utsjekk",
+                "Select check-in → Select check-out": "Velg innsjekk → Velg utsjekk",
+                "Flexible dates": "Fleksible datoer",
+                "Local & International calls": "Lokale og internasjonale samtaler",
+                "Instant response guaranteed": "Rask respons garantert",
+                "Response within 1 hour": "Svar innen 1 time",
+                "We're always available for you": "Vi er alltid tilgjengelige for deg",
+                "Mombasa, Coastal Kenya": "Mombasa, Kenyas kyst",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Håndplukkede luksusopphold langs Kenyas fineste stranddestinasjoner",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Helhetlige reiseløsninger for din kenyanske kystferie"
+},
+            da: {
+                "Home": "Hjem",
+                "About Us": "Om os",
+                "Accommodation": "Overnatning",
+                "Experiences ▾": "Oplevelser ▾",
+                "Nairobi & Inland": "Nairobi og indlandet",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Kyst og kultur",
+                "How It Works": "Sådan fungerer det",
+                "Contact": "Kontakt",
+                "Book Now": "Book nu",
+                "Curated Stays & Coastal Experiences": "Udvalgte ophold og kystoplevelser",
+                "Any Location": "Enhver placering",
+                "Any Type": "Enhver type",
+                "Search Properties": "Søg boliger",
+                "Search Results": "Søgeresultater",
+                "Clear filters and show all properties": "Ryd filtre og vis alle boliger",
+                "Featured Properties": "Udvalgte boliger",
+                "Loading featured properties...": "Indlæser udvalgte boliger...",
+                "View All Properties": "Se alle boliger",
+                "Complete Coastal Experience": "Komplet kystoplevelse",
+                "Browse Accommodation": "Se overnatning",
+                "Book Transfers": "Book transport",
+                "Explore Experiences": "Udforsk oplevelser",
+                "Why Choose PwaniStays?": "Hvorfor vælge PwaniStays?",
+                "What Our Guests Say": "Hvad vores gæster siger",
+                "Share Your Experience": "Del din oplevelse",
+                "Leave Your Feedback": "Skriv din feedback",
+                "Start Your Coastal Journey": "Start din kystrejse",
+                "Call Us Direct": "Ring direkte til os",
+                "WhatsApp Chat": "WhatsApp-chat",
+                "Email Us": "Skriv til os",
+                "Operating Hours": "Åbningstider",
+                "Send Detailed Inquiry": "Send detaljeret forespørgsel",
+                "Service Interested In *": "Service du er interesseret i *",
+                "Accommodation Only": "Kun overnatning",
+                "Accommodation + Transfers": "Overnatning + transport",
+                "Full Package (Stay + Transfers + Tours)": "Fuld pakke (ophold + transport + ture)",
+                "Corporate/Group Booking": "Erhvervs-/gruppebooking",
+                "Quick Links": "Hurtige links",
+                "Our Services": "Vores tjenester",
+                "Guest Reviews": "Gæsteanmeldelser",
+                "Leave Feedback": "Skriv feedback",
+                "Contact Us": "Kontakt os",
+                "Coastal Destinations": "Kystdestinationer",
+                "Contact & Support": "Kontakt og support",
+                "Your Name *": "Dit navn *",
+                "City": "By",
+                "Country": "Land",
+                "Your Rating *": "Din vurdering *",
+                "Your Review *": "Din anmeldelse *",
+                "Submit Your Review": "Send din anmeldelse",
+                "Full Name *": "Fulde navn *",
+                "Email Address *": "E-mailadresse *",
+                "Phone Number with Country Code *": "Telefonnummer med landekode *",
+                "Enter your full name": "Indtast dit fulde navn",
+                "Your City": "Din by",
+                "Your Country": "Dit land",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Dine detaljerede ønsker (rejsedatoer, gruppestørrelse, budget, særlige ønsker) *",
+                "Tell us about your stay with PwaniStays": "Fortæl os om dit ophold hos PwaniStays",
+                "Loading properties...": "Indlæser boliger...",
+                "Search beachfront, villa, Nyali...": "Søg strandnært, villa, Nyali...",
+                "Check-in → Check-out": "Check-in → Check-out",
+                "Select check-in → Select checkout": "Vælg check-in → Vælg check-out",
+                "Select check-in → Select check-out": "Vælg check-in → Vælg check-out",
+                "Flexible dates": "Fleksible datoer",
+                "Local & International calls": "Lokale og internationale opkald",
+                "Instant response guaranteed": "Hurtigt svar garanteret",
+                "Response within 1 hour": "Svar inden for 1 time",
+                "We're always available for you": "Vi er altid tilgængelige for dig",
+                "Mombasa, Coastal Kenya": "Mombasa, Kenyas kyst",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Håndplukkede luksusophold langs Kenyas fineste stranddestinationer",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Helhedsrejseløsninger til din kenyanske kystferie"
+},
+            pl: {
+                "Home": "Strona główna",
+                "About Us": "O nas",
+                "Accommodation": "Noclegi",
+                "Experiences ▾": "Atrakcje ▾",
+                "Nairobi & Inland": "Nairobi i interior",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Wybrzeże i kultura",
+                "How It Works": "Jak to działa",
+                "Contact": "Kontakt",
+                "Book Now": "Rezerwuj teraz",
+                "Curated Stays & Coastal Experiences": "Starannie dobrane pobyty i nadmorskie atrakcje",
+                "Any Location": "Dowolna lokalizacja",
+                "Any Type": "Dowolny typ",
+                "Search Properties": "Szukaj nieruchomości",
+                "Search Results": "Wyniki wyszukiwania",
+                "Clear filters and show all properties": "Wyczyść filtry i pokaż wszystkie obiekty",
+                "Featured Properties": "Polecane obiekty",
+                "Loading featured properties...": "Ładowanie polecanych obiektów...",
+                "View All Properties": "Zobacz wszystkie obiekty",
+                "Complete Coastal Experience": "Pełne nadmorskie doświadczenie",
+                "Browse Accommodation": "Przeglądaj noclegi",
+                "Book Transfers": "Zarezerwuj transfery",
+                "Explore Experiences": "Odkryj atrakcje",
+                "Why Choose PwaniStays?": "Dlaczego PwaniStays?",
+                "What Our Guests Say": "Co mówią nasi goście",
+                "Share Your Experience": "Podziel się swoim doświadczeniem",
+                "Leave Your Feedback": "Zostaw opinię",
+                "Start Your Coastal Journey": "Rozpocznij swoją nadmorską podróż",
+                "Call Us Direct": "Zadzwoń do nas",
+                "WhatsApp Chat": "Czat WhatsApp",
+                "Email Us": "Napisz do nas",
+                "Operating Hours": "Godziny pracy",
+                "Send Detailed Inquiry": "Wyślij szczegółowe zapytanie",
+                "Service Interested In *": "Usługa, którą jesteś zainteresowany *",
+                "Accommodation Only": "Tylko nocleg",
+                "Accommodation + Transfers": "Nocleg + transfery",
+                "Full Package (Stay + Transfers + Tours)": "Pełny pakiet (nocleg + transfery + wycieczki)",
+                "Corporate/Group Booking": "Rezerwacja firmowa / grupowa",
+                "Quick Links": "Szybkie linki",
+                "Our Services": "Nasze usługi",
+                "Guest Reviews": "Opinie gości",
+                "Leave Feedback": "Zostaw opinię",
+                "Contact Us": "Skontaktuj się z nami",
+                "Coastal Destinations": "Nadmorskie kierunki",
+                "Contact & Support": "Kontakt i pomoc",
+                "Your Name *": "Twoje imię *",
+                "City": "Miasto",
+                "Country": "Kraj",
+                "Your Rating *": "Twoja ocena *",
+                "Your Review *": "Twoja opinia *",
+                "Submit Your Review": "Wyślij opinię",
+                "Full Name *": "Imię i nazwisko *",
+                "Email Address *": "Adres e-mail *",
+                "Phone Number with Country Code *": "Numer telefonu z kodem kraju *",
+                "Enter your full name": "Wpisz swoje pełne imię i nazwisko",
+                "Your City": "Twoje miasto",
+                "Your Country": "Twój kraj",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Twoje szczegółowe wymagania (daty podróży, liczba osób, budżet, specjalne prośby) *",
+                "Tell us about your stay with PwaniStays": "Opowiedz nam o swoim pobycie z PwaniStays",
+                "Loading properties...": "Ładowanie obiektów...",
+                "Search beachfront, villa, Nyali...": "Szukaj przy plaży, willa, Nyali...",
+                "Check-in → Check-out": "Przyjazd → Wyjazd",
+                "Select check-in → Select checkout": "Wybierz przyjazd → Wybierz wyjazd",
+                "Select check-in → Select check-out": "Wybierz przyjazd → Wybierz wyjazd",
+                "Flexible dates": "Elastyczne daty",
+                "Local & International calls": "Połączenia lokalne i międzynarodowe",
+                "Instant response guaranteed": "Natychmiastowa odpowiedź gwarantowana",
+                "Response within 1 hour": "Odpowiedź w ciągu 1 godziny",
+                "We're always available for you": "Jesteśmy zawsze do Twojej dyspozycji",
+                "Mombasa, Coastal Kenya": "Mombasa, wybrzeże Kenii",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Starannie wybrane luksusowe noclegi w najlepszych nadmorskich miejscach Kenii",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Kompleksowe rozwiązania podróżne na Twoje wakacje na kenijskim wybrzeżu"
+},
+            sv: {
+                "Home": "Hem",
+                "About Us": "Om oss",
+                "Accommodation": "Boende",
+                "Experiences ▾": "Upplevelser ▾",
+                "Nairobi & Inland": "Nairobi och inlandet",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Kust och kultur",
+                "How It Works": "Så fungerar det",
+                "Contact": "Kontakt",
+                "Book Now": "Boka nu",
+                "Curated Stays & Coastal Experiences": "Utvalda vistelser och kustupplevelser",
+                "Any Location": "Valfri plats",
+                "Any Type": "Valfri typ",
+                "Search Properties": "Sök boenden",
+                "Search Results": "Sökresultat",
+                "Clear filters and show all properties": "Rensa filter och visa alla boenden",
+                "Featured Properties": "Utvalda boenden",
+                "Loading featured properties...": "Läser in utvalda boenden...",
+                "View All Properties": "Visa alla boenden",
+                "Complete Coastal Experience": "Fullständig kustupplevelse",
+                "Browse Accommodation": "Bläddra bland boenden",
+                "Book Transfers": "Boka transfer",
+                "Explore Experiences": "Utforska upplevelser",
+                "Why Choose PwaniStays?": "Varför välja PwaniStays?",
+                "What Our Guests Say": "Vad våra gäster säger",
+                "Share Your Experience": "Dela din upplevelse",
+                "Leave Your Feedback": "Lämna din feedback",
+                "Start Your Coastal Journey": "Starta din kustresa",
+                "Call Us Direct": "Ring oss direkt",
+                "WhatsApp Chat": "WhatsApp-chatt",
+                "Email Us": "E-posta oss",
+                "Operating Hours": "Öppettider",
+                "Send Detailed Inquiry": "Skicka detaljerad förfrågan",
+                "Service Interested In *": "Tjänst du är intresserad av *",
+                "Accommodation Only": "Endast boende",
+                "Accommodation + Transfers": "Boende + transfer",
+                "Full Package (Stay + Transfers + Tours)": "Hela paketet (boende + transfer + turer)",
+                "Corporate/Group Booking": "Företags-/gruppbokning",
+                "Quick Links": "Snabblänkar",
+                "Our Services": "Våra tjänster",
+                "Guest Reviews": "Gästrecensioner",
+                "Leave Feedback": "Lämna feedback",
+                "Contact Us": "Kontakta oss",
+                "Coastal Destinations": "Kustdestinationer",
+                "Contact & Support": "Kontakt och support",
+                "Your Name *": "Ditt namn *",
+                "City": "Stad",
+                "Country": "Land",
+                "Your Rating *": "Ditt betyg *",
+                "Your Review *": "Din recension *",
+                "Submit Your Review": "Skicka din recension",
+                "Full Name *": "Fullständigt namn *",
+                "Email Address *": "E-postadress *",
+                "Phone Number with Country Code *": "Telefonnummer med landskod *",
+                "Enter your full name": "Ange ditt fullständiga namn",
+                "Your City": "Din stad",
+                "Your Country": "Ditt land",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Dina detaljerade önskemål (resedatum, gruppstorlek, budget, särskilda önskemål) *",
+                "Tell us about your stay with PwaniStays": "Berätta om din vistelse med PwaniStays",
+                "Loading properties...": "Läser in boenden...",
+                "Search beachfront, villa, Nyali...": "Sök strandnära, villa, Nyali...",
+                "Check-in → Check-out": "Incheckning → Utcheckning",
+                "Select check-in → Select checkout": "Välj incheckning → Välj utcheckning",
+                "Select check-in → Select check-out": "Välj incheckning → Välj utcheckning",
+                "Flexible dates": "Flexibla datum",
+                "Local & International calls": "Lokala och internationella samtal",
+                "Instant response guaranteed": "Omedelbart svar garanterat",
+                "Response within 1 hour": "Svar inom 1 timme",
+                "We're always available for you": "Vi är alltid tillgängliga för dig",
+                "Mombasa, Coastal Kenya": "Mombasa, Kenyas kust",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Handplockade lyxboenden längs Kenyas finaste stranddestinationer",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Helhetslösningar för din semester vid Kenyas kust"
+},
+            fi: {
+                "Home": "Etusivu",
+                "About Us": "Tietoa meistä",
+                "Accommodation": "Majoitus",
+                "Experiences ▾": "Elämykset ▾",
+                "Nairobi & Inland": "Nairobi ja sisämaa",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Rannikko ja kulttuuri",
+                "How It Works": "Miten se toimii",
+                "Contact": "Yhteystiedot",
+                "Book Now": "Varaa nyt",
+                "Curated Stays & Coastal Experiences": "Huolella valitut majoitukset ja rannikkoelämykset",
+                "Any Location": "Mikä tahansa sijainti",
+                "Any Type": "Mikä tahansa tyyppi",
+                "Search Properties": "Hae majoituksia",
+                "Search Results": "Hakutulokset",
+                "Clear filters and show all properties": "Tyhjennä suodattimet ja näytä kaikki kohteet",
+                "Featured Properties": "Suositellut kohteet",
+                "Loading featured properties...": "Ladataan suositeltuja kohteita...",
+                "View All Properties": "Näytä kaikki kohteet",
+                "Complete Coastal Experience": "Täydellinen rannikkoelämys",
+                "Browse Accommodation": "Selaa majoituksia",
+                "Book Transfers": "Varaa kuljetukset",
+                "Explore Experiences": "Tutustu elämyksiin",
+                "Why Choose PwaniStays?": "Miksi valita PwaniStays?",
+                "What Our Guests Say": "Mitä vieraamme sanovat",
+                "Share Your Experience": "Jaa kokemuksesi",
+                "Leave Your Feedback": "Jätä palautetta",
+                "Start Your Coastal Journey": "Aloita matkasi rannikolle",
+                "Call Us Direct": "Soita meille suoraan",
+                "WhatsApp Chat": "WhatsApp-chat",
+                "Email Us": "Lähetä sähköpostia",
+                "Operating Hours": "Aukioloajat",
+                "Send Detailed Inquiry": "Lähetä yksityiskohtainen tiedustelu",
+                "Service Interested In *": "Palvelu, josta olet kiinnostunut *",
+                "Accommodation Only": "Vain majoitus",
+                "Accommodation + Transfers": "Majoitus + kuljetukset",
+                "Full Package (Stay + Transfers + Tours)": "Täysi paketti (majoitus + kuljetukset + retket)",
+                "Corporate/Group Booking": "Yritys-/ryhmävaraus",
+                "Quick Links": "Pikalinkit",
+                "Our Services": "Palvelumme",
+                "Guest Reviews": "Vierasarviot",
+                "Leave Feedback": "Jätä palaute",
+                "Contact Us": "Ota yhteyttä",
+                "Coastal Destinations": "Rannikon kohteet",
+                "Contact & Support": "Yhteys ja tuki",
+                "Your Name *": "Nimesi *",
+                "City": "Kaupunki",
+                "Country": "Maa",
+                "Your Rating *": "Arviosi *",
+                "Your Review *": "Arvostelusi *",
+                "Submit Your Review": "Lähetä arvostelu",
+                "Full Name *": "Koko nimi *",
+                "Email Address *": "Sähköpostiosoite *",
+                "Phone Number with Country Code *": "Puhelinnumero maakoodilla *",
+                "Enter your full name": "Kirjoita koko nimesi",
+                "Your City": "Kaupunkisi",
+                "Your Country": "Maasi",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Yksityiskohtaiset toiveesi (matkapäivät, ryhmäkoko, budjetti, erityistoiveet) *",
+                "Tell us about your stay with PwaniStays": "Kerro majoituksestasi PwaniStaysin kanssa",
+                "Loading properties...": "Ladataan kohteita...",
+                "Search beachfront, villa, Nyali...": "Hae rannalta, villa, Nyali...",
+                "Check-in → Check-out": "Sisäänkirjautuminen → Uloskirjautuminen",
+                "Select check-in → Select checkout": "Valitse sisäänkirjautuminen → Valitse uloskirjautuminen",
+                "Select check-in → Select check-out": "Valitse sisäänkirjautuminen → Valitse uloskirjautuminen",
+                "Flexible dates": "Joustavat päivät",
+                "Local & International calls": "Paikalliset ja kansainväliset puhelut",
+                "Instant response guaranteed": "Välitön vastaus taattu",
+                "Response within 1 hour": "Vastaus tunnin sisällä",
+                "We're always available for you": "Olemme aina tavoitettavissa",
+                "Mombasa, Coastal Kenya": "Mombasa, Kenian rannikko",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Huolella valitut luksusmajoitukset Kenian parhaissa rantakohteissa",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Kokonaisvaltaiset matkailuratkaisut Kenian rannikkolomallesi"
+},
+            de: {
+                "Home": "Startseite",
+                "About Us": "Über uns",
+                "Accommodation": "Unterkunft",
+                "Experiences ▾": "Erlebnisse ▾",
+                "Nairobi & Inland": "Nairobi & Inland",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Küste & Kultur",
+                "How It Works": "So funktioniert es",
+                "Contact": "Kontakt",
+                "Book Now": "Jetzt buchen",
+                "Curated Stays & Coastal Experiences": "Kuratiere Aufenthalte und Küstenerlebnisse",
+                "Any Location": "Beliebiger Ort",
+                "Any Type": "Beliebiger Typ",
+                "Search Properties": "Unterkünfte suchen",
+                "Search Results": "Suchergebnisse",
+                "Clear filters and show all properties": "Filter löschen und alle Unterkünfte anzeigen",
+                "Featured Properties": "Empfohlene Unterkünfte",
+                "Loading featured properties...": "Empfohlene Unterkünfte werden geladen...",
+                "View All Properties": "Alle Unterkünfte anzeigen",
+                "Complete Coastal Experience": "Komplettes Küstenerlebnis",
+                "Browse Accommodation": "Unterkünfte durchsuchen",
+                "Book Transfers": "Transfers buchen",
+                "Explore Experiences": "Erlebnisse entdecken",
+                "Why Choose PwaniStays?": "Warum PwaniStays?",
+                "What Our Guests Say": "Was unsere Gäste sagen",
+                "Share Your Experience": "Teile deine Erfahrung",
+                "Leave Your Feedback": "Hinterlasse dein Feedback",
+                "Start Your Coastal Journey": "Beginne deine Küstenreise",
+                "Call Us Direct": "Ruf uns direkt an",
+                "WhatsApp Chat": "WhatsApp-Chat",
+                "Email Us": "Schreib uns eine E-Mail",
+                "Operating Hours": "Öffnungszeiten",
+                "Send Detailed Inquiry": "Detaillierte Anfrage senden",
+                "Service Interested In *": "Gewünschte Dienstleistung *",
+                "Accommodation Only": "Nur Unterkunft",
+                "Accommodation + Transfers": "Unterkunft + Transfers",
+                "Full Package (Stay + Transfers + Tours)": "Komplettpaket (Aufenthalt + Transfers + Touren)",
+                "Corporate/Group Booking": "Firmen-/Gruppenbuchung",
+                "Quick Links": "Schnelllinks",
+                "Our Services": "Unsere Leistungen",
+                "Guest Reviews": "Gästebewertungen",
+                "Leave Feedback": "Feedback hinterlassen",
+                "Contact Us": "Kontaktiere uns",
+                "Coastal Destinations": "Küstenziele",
+                "Contact & Support": "Kontakt & Support",
+                "Your Name *": "Ihr Name *",
+                "City": "Stadt",
+                "Country": "Land",
+                "Your Rating *": "Ihre Bewertung *",
+                "Your Review *": "Ihre Rezension *",
+                "Submit Your Review": "Rezension absenden",
+                "Full Name *": "Vollständiger Name *",
+                "Email Address *": "E-Mail-Adresse *",
+                "Phone Number with Country Code *": "Telefonnummer mit Ländervorwahl *",
+                "Enter your full name": "Gib deinen vollständigen Namen ein",
+                "Your City": "Ihre Stadt",
+                "Your Country": "Ihr Land",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Ihre detaillierten Anforderungen (Reisedaten, Gruppengröße, Budget, Sonderwünsche) *",
+                "Tell us about your stay with PwaniStays": "Erzählen Sie uns von Ihrem Aufenthalt mit PwaniStays",
+                "Loading properties...": "Unterkünfte werden geladen...",
+                "Search beachfront, villa, Nyali...": "Suche Strandnähe, Villa, Nyali...",
+                "Check-in → Check-out": "Check-in → Check-out",
+                "Select check-in → Select checkout": "Check-in auswählen → Check-out auswählen",
+                "Select check-in → Select check-out": "Check-in auswählen → Check-out auswählen",
+                "Flexible dates": "Flexible Daten",
+                "Local & International calls": "Lokale und internationale Anrufe",
+                "Instant response guaranteed": "Sofortige Antwort garantiert",
+                "Response within 1 hour": "Antwort innerhalb 1 Stunde",
+                "We're always available for you": "Wir sind immer für Sie da",
+                "Mombasa, Coastal Kenya": "Mombasa, Küste Kenias",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Sorgfältig ausgewählte Luxusunterkünfte an Kenias schönsten Stränden",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Komplette Reiselösungen für Ihren Küstenurlaub in Kenia"
+},
+            nl: {
+                "Home": "Home",
+                "About Us": "Over ons",
+                "Accommodation": "Accommodatie",
+                "Experiences ▾": "Ervaringen ▾",
+                "Nairobi & Inland": "Nairobi & het binnenland",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Kust & cultuur",
+                "How It Works": "Hoe het werkt",
+                "Contact": "Contact",
+                "Book Now": "Nu boeken",
+                "Curated Stays & Coastal Experiences": "Zorgvuldig geselecteerde verblijven en kustervaringen",
+                "Any Location": "Elke locatie",
+                "Any Type": "Elke type",
+                "Search Properties": "Zoek accommodaties",
+                "Search Results": "Zoekresultaten",
+                "Clear filters and show all properties": "Wis filters en toon alle accommodaties",
+                "Featured Properties": "Uitgelichte accommodaties",
+                "Loading featured properties...": "Uitgelichte accommodaties laden...",
+                "View All Properties": "Toon alle accommodaties",
+                "Complete Coastal Experience": "Complete kustbeleving",
+                "Browse Accommodation": "Blader door accommodaties",
+                "Book Transfers": "Transfers boeken",
+                "Explore Experiences": "Ontdek ervaringen",
+                "Why Choose PwaniStays?": "Waarom kiezen voor PwaniStays?",
+                "What Our Guests Say": "Wat onze gasten zeggen",
+                "Share Your Experience": "Deel je ervaring",
+                "Leave Your Feedback": "Laat je feedback achter",
+                "Start Your Coastal Journey": "Begin je kustreis",
+                "Call Us Direct": "Bel ons direct",
+                "WhatsApp Chat": "WhatsApp-chat",
+                "Email Us": "Stuur ons een e-mail",
+                "Operating Hours": "Openingstijden",
+                "Send Detailed Inquiry": "Stuur gedetailleerde aanvraag",
+                "Service Interested In *": "Geïnteresseerd in dienst *",
+                "Accommodation Only": "Alleen accommodatie",
+                "Accommodation + Transfers": "Accommodatie + transfers",
+                "Full Package (Stay + Transfers + Tours)": "Volledig pakket (verblijf + transfers + tours)",
+                "Corporate/Group Booking": "Zakelijke/groepsboeking",
+                "Quick Links": "Snelle links",
+                "Our Services": "Onze diensten",
+                "Guest Reviews": "Gastervaringen",
+                "Leave Feedback": "Feedback achterlaten",
+                "Contact Us": "Neem contact op",
+                "Coastal Destinations": "Kustbestemmingen",
+                "Contact & Support": "Contact & ondersteuning",
+                "Your Name *": "Je naam *",
+                "City": "Stad",
+                "Country": "Land",
+                "Your Rating *": "Je beoordeling *",
+                "Your Review *": "Je recensie *",
+                "Submit Your Review": "Recensie verzenden",
+                "Full Name *": "Volledige naam *",
+                "Email Address *": "E-mailadres *",
+                "Phone Number with Country Code *": "Telefoonnummer met landcode *",
+                "Enter your full name": "Voer je volledige naam in",
+                "Your City": "Jouw stad",
+                "Your Country": "Jouw land",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Je gedetailleerde wensen (reisdagen, groepsgrootte, budget, speciale verzoeken) *",
+                "Tell us about your stay with PwaniStays": "Vertel ons over je verblijf bij PwaniStays",
+                "Loading properties...": "Accommodaties laden...",
+                "Search beachfront, villa, Nyali...": "Zoek strand, villa, Nyali...",
+                "Check-in → Check-out": "Inchecken → Uitchecken",
+                "Select check-in → Select checkout": "Kies inchecken → Kies uitchecken",
+                "Select check-in → Select check-out": "Kies inchecken → Kies uitchecken",
+                "Flexible dates": "Flexibele data",
+                "Local & International calls": "Lokale en internationale oproepen",
+                "Instant response guaranteed": "Direct antwoord gegarandeerd",
+                "Response within 1 hour": "Reactie binnen 1 uur",
+                "We're always available for you": "We zijn altijd beschikbaar voor je",
+                "Mombasa, Coastal Kenya": "Mombasa, Keniaanse kust",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Handgeselecteerde luxe accommodaties langs Kenia's beste strandbestemmingen",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Complete reisdiensten voor je vakantie aan de Keniaanse kust"
+},
+            fr: {
+                "Home": "Accueil",
+                "About Us": "À propos",
+                "Accommodation": "Hébergement",
+                "Experiences ▾": "Expériences ▾",
+                "Nairobi & Inland": "Nairobi et intérieur",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Côte et culture",
+                "How It Works": "Comment ça marche",
+                "Contact": "Contact",
+                "Book Now": "Réserver",
+                "Curated Stays & Coastal Experiences": "Séjours et expériences côtières sélectionnés",
+                "Any Location": "N’importe quel lieu",
+                "Any Type": "Tout type",
+                "Search Properties": "Rechercher des hébergements",
+                "Search Results": "Résultats de recherche",
+                "Clear filters and show all properties": "Effacer les filtres et afficher tous les hébergements",
+                "Featured Properties": "Hébergements à la une",
+                "Loading featured properties...": "Chargement des hébergements à la une...",
+                "View All Properties": "Voir tous les hébergements",
+                "Complete Coastal Experience": "Expérience côtière complète",
+                "Browse Accommodation": "Parcourir les hébergements",
+                "Book Transfers": "Réserver les transferts",
+                "Explore Experiences": "Découvrir les expériences",
+                "Why Choose PwaniStays?": "Pourquoi choisir PwaniStays ?",
+                "What Our Guests Say": "Ce que disent nos invités",
+                "Share Your Experience": "Partagez votre expérience",
+                "Leave Your Feedback": "Laissez votre avis",
+                "Start Your Coastal Journey": "Commencez votre voyage côtier",
+                "Call Us Direct": "Appelez-nous directement",
+                "WhatsApp Chat": "Chat WhatsApp",
+                "Email Us": "Envoyez-nous un e-mail",
+                "Operating Hours": "Horaires",
+                "Send Detailed Inquiry": "Envoyer une demande détaillée",
+                "Service Interested In *": "Service qui vous intéresse *",
+                "Accommodation Only": "Hébergement uniquement",
+                "Accommodation + Transfers": "Hébergement + transferts",
+                "Full Package (Stay + Transfers + Tours)": "Forfait complet (séjour + transferts + excursions)",
+                "Corporate/Group Booking": "Réservation entreprise/groupe",
+                "Quick Links": "Liens rapides",
+                "Our Services": "Nos services",
+                "Guest Reviews": "Avis des clients",
+                "Leave Feedback": "Laisser un avis",
+                "Contact Us": "Contactez-nous",
+                "Coastal Destinations": "Destinations côtières",
+                "Contact & Support": "Contact et assistance",
+                "Your Name *": "Votre nom *",
+                "City": "Ville",
+                "Country": "Pays",
+                "Your Rating *": "Votre note *",
+                "Your Review *": "Votre avis *",
+                "Submit Your Review": "Envoyer votre avis",
+                "Full Name *": "Nom complet *",
+                "Email Address *": "Adresse e-mail *",
+                "Phone Number with Country Code *": "Numéro de téléphone avec indicatif pays *",
+                "Enter your full name": "Entrez votre nom complet",
+                "Your City": "Votre ville",
+                "Your Country": "Votre pays",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Vos exigences détaillées (dates de voyage, taille du groupe, budget, demandes spéciales) *",
+                "Tell us about your stay with PwaniStays": "Parlez-nous de votre séjour chez PwaniStays",
+                "Loading properties...": "Chargement des hébergements...",
+                "Search beachfront, villa, Nyali...": "Rechercher front de mer, villa, Nyali...",
+                "Check-in → Check-out": "Arrivée → Départ",
+                "Select check-in → Select checkout": "Choisir l’arrivée → Choisir le départ",
+                "Select check-in → Select check-out": "Choisir l’arrivée → Choisir le départ",
+                "Flexible dates": "Dates flexibles",
+                "Local & International calls": "Appels locaux et internationaux",
+                "Instant response guaranteed": "Réponse instantanée garantie",
+                "Response within 1 hour": "Réponse sous 1 heure",
+                "We're always available for you": "Nous sommes toujours disponibles pour vous",
+                "Mombasa, Coastal Kenya": "Mombasa, côte du Kenya",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Hébergements de luxe triés sur le volet dans les plus belles destinations balnéaires du Kenya",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Solutions de voyage complètes pour vos vacances sur la côte kenyane"
+},
+            is: {
+                "Home": "Heim",
+                "About Us": "Um okkur",
+                "Accommodation": "Gisting",
+                "Experiences ▾": "Upplifanir ▾",
+                "Nairobi & Inland": "Nairobi og innland",
+                "Safari": "Safari",
+                "Coastal & Cultural": "Strönd og menning",
+                "How It Works": "Hvernig það virkar",
+                "Contact": "Hafðu samband",
+                "Book Now": "Bóka núna",
+                "Curated Stays & Coastal Experiences": "Vandaðar dvalir og strandupplifanir",
+                "Any Location": "Hvaða staðsetning sem er",
+                "Any Type": "Hvaða gerð sem er",
+                "Search Properties": "Leita að gistingu",
+                "Search Results": "Leitarniðurstöður",
+                "Clear filters and show all properties": "Hreinsa síur og sýna alla gististaði",
+                "Featured Properties": "Valdar gististaðir",
+                "Loading featured properties...": "Hleð valdum gististöðum...",
+                "View All Properties": "Sjá alla gististaði",
+                "Complete Coastal Experience": "Fullkomin strandupplifun",
+                "Browse Accommodation": "Skoða gistingu",
+                "Book Transfers": "Bóka ferðir",
+                "Explore Experiences": "Skoða upplifanir",
+                "Why Choose PwaniStays?": "Af hverju að velja PwaniStays?",
+                "What Our Guests Say": "Það sem gestir okkar segja",
+                "Share Your Experience": "Deildu upplifun þinni",
+                "Leave Your Feedback": "Skildu eftir álit",
+                "Start Your Coastal Journey": "Byrjaðu ferð þína meðfram ströndinni",
+                "Call Us Direct": "Hringdu beint í okkur",
+                "WhatsApp Chat": "WhatsApp spjall",
+                "Email Us": "Senda tölvupóst",
+                "Operating Hours": "Opnunartími",
+                "Send Detailed Inquiry": "Senda ítarlega fyrirspurn",
+                "Service Interested In *": "Þjónusta sem þú hefur áhuga á *",
+                "Accommodation Only": "Aðeins gisting",
+                "Accommodation + Transfers": "Gisting + ferðir",
+                "Full Package (Stay + Transfers + Tours)": "Heildarpakki (gisting + ferðir + ferðir)",
+                "Corporate/Group Booking": "Fyrirtækja-/hópbókun",
+                "Quick Links": "Flýtitenglar",
+                "Our Services": "Þjónustur okkar",
+                "Guest Reviews": "Umsagnir gesta",
+                "Leave Feedback": "Skildu eftir álit",
+                "Contact Us": "Hafðu samband",
+                "Coastal Destinations": "Strandstaðir",
+                "Contact & Support": "Tengiliður og þjónusta",
+                "Your Name *": "Nafn þitt *",
+                "City": "Borg",
+                "Country": "Land",
+                "Your Rating *": "Einkunn þín *",
+                "Your Review *": "Umsögn þín *",
+                "Submit Your Review": "Senda umsögn",
+                "Full Name *": "Fullt nafn *",
+                "Email Address *": "Netfang *",
+                "Phone Number with Country Code *": "Símanúmer með landsnúmeri *",
+                "Enter your full name": "Sláðu inn fullt nafn",
+                "Your City": "Borgin þín",
+                "Your Country": "Landið þitt",
+                "Your Detailed Requirements (Travel dates, group size, budget, special requests) *": "Ítarlegar óskir þínar (ferðadagsetningar, hópastærð, fjárhagsáætlun, sérstakar óskir) *",
+                "Tell us about your stay with PwaniStays": "Segðu okkur frá dvölinni þinni með PwaniStays",
+                "Loading properties...": "Hleð gististöðum...",
+                "Search beachfront, villa, Nyali...": "Leita strandnært, villa, Nyali...",
+                "Check-in → Check-out": "Innritun → Útritun",
+                "Select check-in → Select checkout": "Veldu innritun → Veldu útritun",
+                "Select check-in → Select check-out": "Veldu innritun → Veldu útritun",
+                "Flexible dates": "Sveigjanlegar dagsetningar",
+                "Local & International calls": "Staðbundin og alþjóðleg símtöl",
+                "Instant response guaranteed": "Svar strax tryggt",
+                "Response within 1 hour": "Svar innan 1 klukkustundar",
+                "We're always available for you": "Við erum alltaf tiltæk fyrir þig",
+                "Mombasa, Coastal Kenya": "Mombasa, strandlengja Kenýa",
+                "Hand-selected luxury accommodations across Kenya's finest beach destinations": "Vandaðar lúxusgistingar á bestu strandstöðum Kenýa",
+                "End-to-end travel solutions for your Kenyan coastal vacation": "Heildarlausnir fyrir strandfríið þitt í Kenýa"
+}
+        };
+
+        const LANGUAGE_NAMES = {
+            en: "English",
+            no: "Norwegian",
+            da: "Danish",
+            pl: "Polish",
+            sv: "Swedish",
+            fi: "Finnish",
+            de: "German",
+            nl: "Dutch",
+            fr: "French",
+            is: "Icelandic"
+        };
+
+        function getBrowserLanguage() {
+            const raw = (navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language || "en").toLowerCase();
+            if (raw.startsWith("nb") || raw.startsWith("nn") || raw.startsWith("no")) return "no";
+            if (raw.startsWith("da")) return "da";
+            if (raw.startsWith("pl")) return "pl";
+            if (raw.startsWith("sv")) return "sv";
+            if (raw.startsWith("fi")) return "fi";
+            if (raw.startsWith("de")) return "de";
+            if (raw.startsWith("nl")) return "nl";
+            if (raw.startsWith("fr")) return "fr";
+            if (raw.startsWith("is")) return "is";
+            return "en";
+        }
+
+        function replaceTextNode(node, lang) {
+            if (!node || node.nodeType !== Node.TEXT_NODE) return;
+            const original = node.nodeValue;
+            const trimmed = original.trim();
+            if (!trimmed) return;
+
+            const translated = I18N[lang] && I18N[lang][trimmed];
+            if (!translated) return;
+
+            const leading = original.match(/^\s*/)?.[0] || "";
+            const trailing = original.match(/\s*$/)?.[0] || "";
+            node.nodeValue = `${leading}${translated}${trailing}`;
+        }
+
+        function translateAttributes(root, lang) {
+            const attrs = ["placeholder", "aria-label", "title", "alt"];
+            const elements = root.querySelectorAll ? root.querySelectorAll("*") : [];
+            const all = root.nodeType === Node.ELEMENT_NODE ? [root, ...elements] : elements;
+
+            all.forEach(el => {
+                attrs.forEach(attr => {
+                    if (!el.hasAttribute || !el.hasAttribute(attr)) return;
+                    const value = el.getAttribute(attr);
+                    const translated = I18N[lang] && I18N[lang][value];
+                    if (translated) el.setAttribute(attr, translated);
+                });
+            });
+        }
+
+        function translateNode(root, lang) {
+            if (!root) return;
+
+            if (root.nodeType === Node.TEXT_NODE) {
+                replaceTextNode(root, lang);
+                return;
+            }
+
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+            const textNodes = [];
+            let current;
+            while ((current = walker.nextNode())) textNodes.push(current);
+            textNodes.forEach(node => replaceTextNode(node, lang));
+            translateAttributes(root, lang);
+        }
+
+        function applyLanguage(lang) {
+            const normalized = I18N[lang] ? lang : "en";
+            document.documentElement.lang = normalized;
+            localStorage.setItem("pwanistays-language", normalized);
+            document.getElementById("currentLanguageLabel").textContent = LANGUAGE_NAMES[normalized] || "English";
+
+            translateNode(document.body, normalized);
+
+            document.querySelectorAll(".language-menu button[data-lang]").forEach(btn => {
+                btn.classList.toggle("active", btn.dataset.lang === normalized);
+            });
+        }
+
+        function initLanguageSwitcher() {
+            const switcher = document.getElementById("languageSwitcher");
+            const toggle = document.getElementById("languageToggle");
+            const menu = document.getElementById("languageMenu");
+            const stored = localStorage.getItem("pwanistays-language");
+            const initial = stored || getBrowserLanguage();
+
+            applyLanguage(initial);
+
+            toggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                switcher.classList.toggle("open");
+                toggle.setAttribute("aria-expanded", switcher.classList.contains("open") ? "true" : "false");
+            });
+
+            menu.querySelectorAll("button[data-lang]").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    applyLanguage(btn.dataset.lang);
+                    switcher.classList.remove("open");
+                    toggle.setAttribute("aria-expanded", "false");
+                });
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!switcher.contains(e.target)) {
+                    switcher.classList.remove("open");
+                    toggle.setAttribute("aria-expanded", "false");
+                }
+            });
+
+            const observer = new MutationObserver((mutations) => {
+                const lang = document.documentElement.lang || "en";
+                mutations.forEach(m => {
+                    m.addedNodes.forEach(node => {
+                        if (node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) {
+                            translateNode(node, lang);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body, { childList: true, subtree: true });
+            window.__pwanistaysLanguageObserver = observer;
+        }
+
+
         // Wrap ALL logic in DOMContentLoaded
         document.addEventListener("DOMContentLoaded", () => {
             
             // Use the globally initialized Supabase client
             const supabase = window.supabaseClient;
+            initLanguageSwitcher();
             
             // ==========================
             // Calendar Variables

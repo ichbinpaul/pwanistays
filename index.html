@@ -477,16 +477,20 @@
             background: transparent;
         }
         
-        /* UPDATED: Button container spans all 3 columns */
+        /* Search button layout */
         .search-btn-container {
             grid-column: auto;
-display: flex;
+            display: flex;
             justify-content: flex-end;
             margin-top: 0;
             align-items: stretch;
-}
-        
-        Mpx 20px;
+        }
+
+        .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 20px;
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
@@ -495,7 +499,7 @@ display: flex;
             min-width: 0;
             width: 100%;
             white-space: nowrap;
-}
+        }
         
         .search-btn:hover {
             background: var(--primary-light);

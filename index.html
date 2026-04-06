@@ -2182,6 +2182,75 @@
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
         }
+        /* Language Switcher */
+        .navbar {
+            gap: 16px;
+        }
+        .nav-links {
+            flex: 1;
+            justify-content: center;
+        }
+        #langSwitcher {
+            position: relative;
+            display: inline-block;
+            font-size: 0.85rem;
+            z-index: 1100;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+        .lang-current {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px 10px;
+            border: 1.5px solid var(--light-gray);
+            border-radius: 20px;
+            background: white;
+            font-weight: 600;
+            color: var(--dark);
+            transition: var(--transition);
+            white-space: nowrap;
+            user-select: none;
+        }
+        .lang-current:hover { border-color: var(--primary); color: var(--primary); }
+        .lang-flag { font-size: 1.1rem; line-height: 1; }
+        .lang-arrow { font-size: 0.7rem; margin-left: 2px; }
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 6px 0;
+            min-width: 160px;
+            list-style: none;
+            z-index: 1200;
+            animation: fadeIn 0.15s ease;
+        }
+        .lang-dropdown.open { display: block; }
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 0.9rem;
+        }
+        .lang-option:hover { background: var(--light); }
+        .lang-option.active {
+            background: #e8f5f1;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .lang-name { flex: 1; }
+        @media (max-width: 768px) {
+            #langSwitcher { order: 3; margin-left: auto; }
+            .lang-dropdown { right: auto; left: 0; }
+        }
     </style>
     
     <!-- Defer non-critical CSS -->
@@ -2190,6 +2259,8 @@
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://pwanistays.com">
+    <!-- i18n Translation System -->
+    <script src="/i18n.js"></script>
 </head>
 <body>
     <!-- WhatsApp Float -->
@@ -2219,22 +2290,22 @@
                 <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
             <ul class="nav-links" role="menubar">
-                <li role="none"><a href="#home" class="active" role="menuitem">Home</a></li>
-                <li role="none"><a href="about" role="menuitem">About Us</a></li>
-                <li role="none"><a href="accommodation" role="menuitem">Accommodation</a></li>
+                <li role="none"><a href="#home" class="active" role="menuitem" data-i18n="nav_home">Home</a></li>
+                <li role="none"><a href="about" role="menuitem" data-i18n="nav_about">About Us</a></li>
+                <li role="none"><a href="accommodation" role="menuitem" data-i18n="nav_accommodation">Accommodation</a></li>
                 
                 <!-- Experiences Dropdown - FIXED -->
                 <li role="none" class="dropdown">
-                    <a href="experiences" role="menuitem" class="dropdown-toggle">Experiences ▾</a>
+                    <a href="experiences" role="menuitem" class="dropdown-toggle" data-i18n="nav_experiences">Experiences ▾</a>
                     <ul class="dropdown-menu">
-                        <li><a href="nairobi">Nairobi & Inland</a></li>
-                        <li><a href="safari">Safari</a></li>
-                        <li><a href="coastal-cultural">Coastal & Cultural</a></li>
+                        <li><a href="nairobi" data-i18n="nav_nairobi">Nairobi & Inland</a></li>
+                        <li><a href="safari" data-i18n="nav_safari">Safari</a></li>
+                        <li><a href="coastal-cultural" data-i18n="nav_coastal">Coastal & Cultural</a></li>
                     </ul>
                 </li>
                 
-                <li role="none"><a href="how-it-works" role="menuitem">How It Works</a></li>
-                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                <li role="none"><a href="how-it-works" role="menuitem" data-i18n="nav_how_it_works">How It Works</a></li>
+                <li role="none"><a href="#contact" role="menuitem" data-i18n="nav_contact">Contact</a></li>
                 
                 <!-- PHASE 4 — Header Search Icon - UPDATED -->
                 <li role="none" class="header-search-container" id="mobileSearchContainer">
@@ -2245,8 +2316,9 @@
                 </li>
                 
                 <!-- UPDATED: Book Now button now opens WhatsApp -->
-                <li role="none"><a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20book%20a%20stay%20or%20get%20more%20information." class="btn-book" role="menuitem">Book Now</a></li>
+                <li role="none"><a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20book%20a%20stay%20or%20get%20more%20information." class="btn-book" role="menuitem" data-i18n="nav_book_now">Book Now</a></li>
             </ul>
+            <div id="langSwitcher" aria-label="Select language"></div>
         </nav>
     </header>
 
@@ -2271,15 +2343,15 @@
         <div class="hero-content">
             <h1 class="sr-only">PwaniStays - Curated Coastal Stays & Experiences</h1>
             <!-- UPDATED: Changed from "Experience Luxury on the Kenyan Coast" to "Curated Stays & Coastal Experiences" -->
-            <h2>Curated Stays & Coastal Experiences</h2>
-            <p>Curated beachfront stays and guided coastal experiences across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu — with safaris, marine adventures, and seamless airport transfers.</p>
+            <h2 data-i18n="hero_heading">Curated Stays & Coastal Experiences</h2>
+            <p data-i18n="hero_subheading">Curated beachfront stays and guided coastal experiences across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu — with safaris, marine adventures, and seamless airport transfers.</p>
             
             <!-- UPDATED: Search Box with 3 inputs - ADDED VILLA OPTION -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                     <select id="searchLocation" aria-label="Select destination">
-                        <option value="">Any Location</option>
+                        <option value="" data-i18n="search_any_location">Any Location</option>
                         <option value="Mombasa">Mombasa</option>
                         <option value="Nyali">Nyali</option>
                         <option value="Bamburi">Bamburi</option>
@@ -2293,25 +2365,25 @@
                 </div>
                 <div class="search-input date-range-input" onclick="showCalendar()">
                     <i class="fas fa-calendar" aria-hidden="true"></i>
-                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly>
+                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>
                     <!-- UPDATED: Property type dropdown with normalized values - ADDED VILLA -->
                     <select id="propertyType" aria-label="Property type">
-                        <option value="">Any Type</option>
-                        <option value="studio">Studio</option>
-                        <option value="1br">1 Bedroom</option>
-                        <option value="2br">2 Bedrooms</option>
-                        <option value="3br">3 Bedrooms</option>
-                        <option value="4br">4 Bedrooms</option>
-                        <option value="5br">5 Bedrooms</option>
-                        <option value="villa">Villa</option>
+                        <option value="" data-i18n="search_any_type">Any Type</option>
+                        <option value="studio" data-i18n="type_studio">Studio</option>
+                        <option value="1br" data-i18n="type_1br">1 Bedroom</option>
+                        <option value="2br" data-i18n="type_2br">2 Bedrooms</option>
+                        <option value="3br" data-i18n="type_3br">3 Bedrooms</option>
+                        <option value="4br" data-i18n="type_4br">4 Bedrooms</option>
+                        <option value="5br" data-i18n="type_5br">5 Bedrooms</option>
+                        <option value="villa" data-i18n="type_villa">Villa</option>
                     </select>
                 </div>
                 <div class="search-btn-container">
                     <button class="search-btn" onclick="searchProperties()" aria-label="Search properties">
-                        <i class="fas fa-search" aria-hidden="true"></i> Search Properties
+                        <i class="fas fa-search" aria-hidden="true"></i> <span data-i18n="search_btn">Search Properties</span>
                     </button>
                 </div>
             </div>
@@ -2327,14 +2399,14 @@
     <!-- Results Section -->
     <section id="searchResults" class="properties-section" style="display: none;">
         <div class="section-title">
-            <h2>Search Results</h2>
-            <p id="resultsCount">Loading properties...</p>
+            <h2 data-i18n="results_title">Search Results</h2>
+            <p id="resultsCount" data-i18n="results_loading">Loading properties...</p>
         </div>
         
         <div id="resultsHeader" class="results-header" style="display: none;">
             <h3 id="searchCriteria"></h3>
             <p id="datesCriteria"></p>
-            <a class="clear-filters" onclick="clearSearch()">Clear filters and show all properties</a>
+            <a class="clear-filters" onclick="clearSearch()" data-i18n="results_clear">Clear filters and show all properties</a>
         </div>
         
         <div id="propertyList" class="properties-grid">
@@ -2345,8 +2417,8 @@
     <!-- Featured Stays - UPDATED with View All button -->
     <section class="featured-stays" id="stays">
         <div class="section-title">
-            <h2>Featured Properties</h2>
-            <p>Hand-selected luxury accommodations across Kenya's finest beach destinations</p>
+            <h2 data-i18n="section_featured">Featured Properties</h2>
+            <p data-i18n="section_featured_sub">Hand-selected luxury accommodations across Kenya's finest beach destinations</p>
         </div>
         <div id="featuredProperties" class="stays-container">
             <div class="loading-spinner">
@@ -2355,7 +2427,7 @@
         </div>
         <div class="view-all-container">
             <button class="btn-secondary" onclick="showAllProperties()">
-                <i class="fas fa-eye"></i> View All Properties
+                <i class="fas fa-eye"></i> <span data-i18n="section_view_all">View All Properties</span>
             </button>
         </div>
     </section>
@@ -2363,16 +2435,16 @@
     <!-- UPDATED: Services Section with proper CTA links -->
     <section class="services" id="services" role="region" aria-label="Our services">
         <div class="section-title">
-            <h2>Complete Coastal Experience</h2>
-            <p>End-to-end travel solutions for your Kenyan coastal vacation</p>
+            <h2 data-i18n="section_services">Complete Coastal Experience</h2>
+            <p data-i18n="section_services_sub">End-to-end travel solutions for your Kenyan coastal vacation</p>
         </div>
         <div class="services-container">
             <div class="service-card" role="article">
                 <div class="service-icon">
                     <i class="fas fa-umbrella-beach" aria-hidden="true"></i>
                 </div>
-                <h3>Coastal Accommodation</h3>
-                <p>Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations. From budget-friendly options to luxurious 5-bedroom villas with private pools, we have the perfect stay for every traveler.</p>
+                <h3 data-i18n="svc_accommodation">Coastal Accommodation</h3>
+                <p data-i18n="svc_accommodation_desc">Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations. From budget-friendly options to luxurious 5-bedroom villas with private pools, we have the perfect stay for every traveler.</p>
                 <a href="accommodation.html" class="service-btn">
                     <i class="fas fa-search"></i> Browse Accommodation
                 </a>
@@ -2381,8 +2453,8 @@
                 <div class="service-icon">
                     <i class="fas fa-plane-arrival" aria-hidden="true"></i>
                 </div>
-                <h3>Seamless Transfers</h3>
-                <p>Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service. Our professional drivers ensure safe, comfortable transfers in air-conditioned vehicles with complimentary bottled water.</p>
+                <h3 data-i18n="svc_transfers">Seamless Transfers</h3>
+                <p data-i18n="svc_transfers_desc">Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service. Our professional drivers ensure safe, comfortable transfers in air-conditioned vehicles with complimentary bottled water.</p>
                 <button class="service-btn service-whatsapp-btn" onclick="serviceEnquiry('Airport Transfers')">
                     <i class="fab fa-whatsapp"></i> Book Transfers
                 </button>
@@ -2391,8 +2463,8 @@
                 <div class="service-icon">
                     <i class="fas fa-ship" aria-hidden="true"></i>
                 </div>
-                <h3>Marine Experiences</h3>
-                <p>Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides. We arrange all equipment, permits, and transportation for unforgettable coastal adventures.</p>
+                <h3 data-i18n="svc_marine">Marine Experiences</h3>
+                <p data-i18n="svc_marine_desc">Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides. We arrange all equipment, permits, and transportation for unforgettable coastal adventures.</p>
                 <a href="coastal-cultural.html" class="service-btn">
                     <i class="fas fa-compass"></i> Explore Experiences
                 </a>
@@ -2403,29 +2475,29 @@
     <!-- Why Choose Us - UPDATED with European Guest Specialists -->
     <section class="why-us" id="about" role="region" aria-label="Why choose us">
         <div class="section-title">
-            <h2>Why Choose PwaniStays?</h2>
-            <p>Local expertise meets international standards</p>
+            <h2 data-i18n="section_why">Why Choose PwaniStays?</h2>
+            <p data-i18n="section_why_sub">Local expertise meets international standards</p>
         </div>
         <div class="features-container">
             <div class="feature" role="article">
                 <i class="fas fa-award" aria-hidden="true"></i>
-                <h3>Coastal Specialists</h3>
-                <p>Deep local knowledge of Kenya's coastline with verified partnerships across all major coastal destinations.</p>
+                <h3 data-i18n="why_specialists">Coastal Specialists</h3>
+                <p data-i18n="why_specialists_desc">Deep local knowledge of Kenya's coastline with verified partnerships across all major coastal destinations.</p>
             </div>
             <div class="feature" role="article">
                 <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                <h3>Property Vetting</h3>
-                <p>Every property personally inspected for safety, cleanliness, and guest satisfaction.</p>
+                <h3 data-i18n="why_vetting">Property Vetting</h3>
+                <p data-i18n="why_vetting_desc">Every property personally inspected for safety, cleanliness, and guest satisfaction.</p>
             </div>
             <div class="feature" role="article">
                 <i class="fas fa-handshake" aria-hidden="true"></i>
-                <h3>Direct Owner Rates</h3>
-                <p>We work directly with property owners to offer you the best rates without middlemen fees.</p>
+                <h3 data-i18n="why_rates">Direct Owner Rates</h3>
+                <p data-i18n="why_rates_desc">We work directly with property owners to offer you the best rates without middlemen fees.</p>
             </div>
             <div class="feature" role="article">
                 <i class="fas fa-globe-europe" aria-hidden="true"></i>
-                <h3>European Guest Specialists</h3>
-                <p>Expertise in catering to European travelers with understanding of preferences, travel standards, and seamless communication.</p>
+                <h3 data-i18n="why_european">European Guest Specialists</h3>
+                <p data-i18n="why_european_desc">Expertise in catering to European travelers with understanding of preferences, travel standards, and seamless communication.</p>
             </div>
         </div>
     </section>
@@ -2433,8 +2505,8 @@
     <!-- Testimonials - FIXED with proper display -->
     <section class="testimonials" id="testimonials" role="region" aria-label="Client testimonials">
         <div class="section-title">
-            <h2>What Our Guests Say</h2>
-            <p>Real experiences from local and international travelers</p>
+            <h2 data-i18n="section_testimonials">What Our Guests Say</h2>
+            <p data-i18n="section_testimonials_sub">Real experiences from local and international travelers</p>
         </div>
         <div class="testimonials-container">
             <div class="testimonial-slider">
@@ -2690,8 +2762,8 @@
     <!-- Contact Section -->
     <section class="contact" id="contact" role="region" aria-label="Contact us">
         <div class="section-title">
-            <h2>Start Your Coastal Journey</h2>
-            <p>Contact our coastal experts for personalized assistance</p>
+            <h2 data-i18n="section_contact">Start Your Coastal Journey</h2>
+            <p data-i18n="section_contact_sub">Contact our coastal experts for personalized assistance</p>
         </div>
         <div class="contact-container">
             <div class="contact-info">
@@ -2732,17 +2804,17 @@
                 <h3>Send Detailed Inquiry</h3>
                 <form id="inquiryForm">
                     <div class="form-group">
-                        <input type="text" placeholder="Full Name *" id="name" required aria-required="true">
+                        <input type="text" placeholder="Full Name *" id="name" required aria-required="true" data-i18n-placeholder="contact_name">
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Email Address *" id="email" required aria-required="true">
+                        <input type="email" placeholder="Email Address *" id="email" required aria-required="true" data-i18n-placeholder="contact_email">
                     </div>
                     <div class="form-group">
-                        <input type="tel" placeholder="Phone Number with Country Code *" id="phone" required aria-required="true">
+                        <input type="tel" placeholder="Phone Number with Country Code *" id="phone" required aria-required="true" data-i18n-placeholder="contact_phone">
                     </div>
                     <div class="form-group">
                         <select id="service" required aria-required="true">
-                            <option value="" disabled selected>Service Interested In *</option>
+                            <option value="" disabled selected data-i18n="contact_select_service">Service Interested In *</option>
                             <option value="stay">Accommodation Only</option>
                             <option value="transfer">Accommodation + Transfers</option>
                             <option value="tour">Full Package (Stay + Transfers + Tours)</option>
@@ -2753,7 +2825,7 @@
                         <textarea placeholder="Your Detailed Requirements (Travel dates, group size, budget, special requests) *" 
                                   rows="5" id="message" required aria-required="true"></textarea>
                     </div>
-                    <button type="submit" class="submit-btn">Send Detailed Inquiry</button>
+                    <button type="submit" class="submit-btn" data-i18n="contact_submit">Send Detailed Inquiry</button>
                 </form>
             </div>
         </div>
@@ -2777,7 +2849,7 @@
                          class="footer-logo-mobile"
                          style="height: 60px; width: auto; margin-bottom: 20px;">
                 </div>
-                <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
+                <p data-i18n="footer_desc">Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
                 <div class="social-links">
                     <!-- UPDATED: Removed TripAdvisor and X, updated Instagram username -->
                     <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
@@ -2792,15 +2864,15 @@
                 </div>
             </div>
             <div class="footer-col">
-                <h3>Quick Links</h3>
+                <h3 data-i18n="footer_links">Quick Links</h3>
                 <ul>
                     <!-- UPDATED: Working navigation links -->
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#stays">Featured Properties</a></li>
-                    <li><a href="#services">Our Services</a></li>
-                    <li><a href="#testimonials">Guest Reviews</a></li>
-                    <li><a href="#leave-feedback">Leave Feedback</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#home" data-i18n="nav_home">Home</a></li>
+                    <li><a href="#stays" data-i18n="section_featured">Featured Properties</a></li>
+                    <li><a href="#services" data-i18n="footer_services">Our Services</a></li>
+                    <li><a href="#testimonials" data-i18n="section_testimonials">Guest Reviews</a></li>
+                    <li><a href="#leave-feedback" data-i18n="feedback_title">Leave Feedback</a></li>
+                    <li><a href="#contact" data-i18n="footer_contact">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -2816,7 +2888,7 @@
                 </ul>
             </div>
             <div class="footer-col">
-                <h3>Contact & Support</h3>
+                <h3 data-i18n="footer_contact">Contact & Support</h3>
                 <ul class="contact-info">
                     <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
                     <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
@@ -3230,9 +3302,9 @@
                     if (selectedCheckin && selectedCheckout) {
                         dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
                     } else if (selectedCheckin) {
-                        dateRangeInput.value = `${formatDate(selectedCheckin)} → Select checkout`;
+                        dateRangeInput.value = `${formatDate(selectedCheckin)} → ${window.i18n?.t('cal_select_checkout') || 'Select checkout'}`;
                     } else {
-                        dateRangeInput.value = 'Select check-in → Select check-out';
+                        dateRangeInput.value = window.i18n?.t('select_checkin_checkout') || 'Select check-in → Select check-out';
                     }
                 }
             }
@@ -3242,9 +3314,17 @@
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
+                const calTitle = window.i18n?.t('cal_title') || 'Select Check-in & Check-out Dates';
+                const checkinLabel = window.i18n?.t('cal_checkin') || 'Check-in';
+                const checkoutLabel = window.i18n?.t('cal_checkout') || 'Check-out';
+                const notSelected = window.i18n?.t('cal_not_selected') || 'Not selected';
+                const clearDatesLabel = window.i18n?.t('cal_clear') || 'Clear Dates';
+                const applyDatesLabel = window.i18n?.t('cal_apply') || 'Apply Dates';
+                const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
                 let html = `
                     <div class="calendar-header">
-                        <h4>Select Check-in & Check-out Dates</h4>
+                        <h4>${calTitle}</h4>
                         <div class="calendar-nav">
                             <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
                             <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
@@ -3252,13 +3332,7 @@
                         </div>
                     </div>
                     <div class="calendar-grid">
-                        <div class="calendar-day-header">Sun</div>
-                        <div class="calendar-day-header">Mon</div>
-                        <div class="calendar-day-header">Tue</div>
-                        <div class="calendar-day-header">Wed</div>
-                        <div class="calendar-day-header">Thu</div>
-                        <div class="calendar-day-header">Fri</div>
-                        <div class="calendar-day-header">Sat</div>
+                        ${weekdays.map(day => `<div class="calendar-day-header">${day}</div>`).join('')}
                 `;
 
                 const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -3307,17 +3381,17 @@
                     </div>
                     <div class="selected-dates-display">
                         <div>
-                            <strong>Check-in</strong><br>
-                            ${selectedCheckin ? formatDate(selectedCheckin) : "Not selected"}
+                            <strong>${checkinLabel}</strong><br>
+                            ${selectedCheckin ? formatDate(selectedCheckin) : notSelected}
                         </div>
                         <div>
-                            <strong>Check-out</strong><br>
-                            ${selectedCheckout ? formatDate(selectedCheckout) : "Not selected"}
+                            <strong>${checkoutLabel}</strong><br>
+                            ${selectedCheckout ? formatDate(selectedCheckout) : notSelected}
                         </div>
                     </div>
                     <div class="calendar-actions">
-                        <button class="calendar-clear" onclick="clearDates()">Clear Dates</button>
-                        <button class="calendar-apply" onclick="applyDates()">Apply Dates</button>
+                        <button class="calendar-clear" onclick="clearDates()">${clearDatesLabel}</button>
+                        <button class="calendar-apply" onclick="applyDates()">${applyDatesLabel}</button>
                     </div>
                 `;
 
@@ -3602,30 +3676,30 @@
                 card.className = 'property-card';
                 const shortId = shortUUID(property.id);
                 card.id = `property-${shortId}`;
-                
+
                 // Calculate price based on selected check-in date or current date
                 const checkinDate = selectedCheckin || new Date();
                 const displayPrice = calculateDisplayPrice(property, checkinDate);
-                
+
                 // Get property type display
                 const unitTypeLabels = {
-                    studio: "Studio",
-                    "1br": "1 Bedroom",
-                    "2br": "2 Bedrooms",
-                    "3br": "3 Bedrooms",
-                    "4br": "4 Bedrooms",
-                    "5br": "5 Bedrooms",
-                    "villa": "Villa"
+                    studio: window.i18n?.t('type_studio') || 'Studio',
+                    "1br": window.i18n?.t('type_1br') || '1 Bedroom',
+                    "2br": window.i18n?.t('type_2br') || '2 Bedrooms',
+                    "3br": window.i18n?.t('type_3br') || '3 Bedrooms',
+                    "4br": window.i18n?.t('type_4br') || '4 Bedrooms',
+                    "5br": window.i18n?.t('type_5br') || '5 Bedrooms',
+                    "villa": window.i18n?.t('type_villa') || 'Villa'
                 };
                 const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
-                
+
                 // Show beds from property.beds
                 const bedsCount = property.beds || 1;
-                const bedsDisplay = `${bedsCount} ${bedsCount === 1 ? 'Bed' : 'Beds'}`;
-                
+                const bedsDisplay = `${bedsCount} ${bedsCount === 1 ? (window.i18n?.t('card_bed') || 'Bed') : (window.i18n?.t('card_beds') || 'Beds')}`;
+
                 // Escape special characters for safety
-                const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
-                
+                const safeTitle = property.title ? property.title.replace(/'/g, "\'") : 'Property';
+
                 // REMOVED: Season badge from the property card
                 card.innerHTML = `
                     <div class="property-gallery">
@@ -3643,7 +3717,7 @@
                             <div class="swiper-wrapper"></div>
                         </div>
                     </div>
-                    
+
                     <div class="property-content">
                         <h3 class="property-title">${property.title || 'Premium Property'}</h3>
                         <div class="property-meta">
@@ -3652,16 +3726,16 @@
                             </span>
                             <span class="property-type">${propertyTypeDisplay}</span>
                         </div>
-                        
+
                         <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}">
                         </ul>
                         <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;">
                         </button>
-                        
+
                         <div class="property-price">
-                            Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">/ night</span>
+                            Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);" data-i18n="card_night">/ night</span>
                         </div>
-                        
+
                         <div class="property-footer">
                             <div class="property-info">
                                 <div class="property-beds">
@@ -3669,17 +3743,17 @@
                                 </div>
                             </div>
                             <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
-                                <i class="fas fa-calendar-alt"></i> Check Availability
+                                <i class="fas fa-calendar-alt"></i> ${window.i18n?.t('card_check_availability') || 'Check Availability'}
                             </button>
                         </div>
                     </div>
                 `;
-                
+
                 // Render amenities after card is created
                 setTimeout(() => {
                     renderAmenities(property.id, property.description, false);
                 }, 0);
-                
+
                 return card;
             }
 
@@ -3986,23 +4060,27 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 while (container.firstChild) {
                     container.removeChild(container.firstChild);
                 }
-                
+
                 const fragment = document.createDocumentFragment();
                 const cards = [];
-                
+
                 properties.forEach(property => {
                     const card = createPropertyCard(property);
                     cards.push({ property, card });
                     fragment.appendChild(card);
                 });
-                
+
                 container.appendChild(fragment);
-                
+
                 setTimeout(() => {
                     cards.forEach(({ property }) => {
                         loadPropertyImages(property);
                     });
                 }, 300);
+
+                if (window.i18n?.translatePropertyCards) {
+                    window.i18n.translatePropertyCards(container);
+                }
             }
 
             async function loadPropertyImages(property) {
@@ -4152,8 +4230,8 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 if (amenities.length > 4) {
                     toggleBtn.style.display = 'inline-block';
                     toggleBtn.textContent = expanded
-                        ? 'View Less'
-                        : `+ ${amenities.length - 4} more amenities`;
+                        ? (window.i18n?.t('card_view_less') || 'View Less')
+                        : (window.i18n?.t('card_more_amenities', { n: amenities.length - 4 }) || `+ ${amenities.length - 4} more amenities`);
                 } else {
                     toggleBtn.style.display = 'none';
                 }

@@ -479,9 +479,9 @@
         
         /* UPDATED: Button container spans all 3 columns */
         .search-btn-container {
-            grid-column: span 3;
+            grid-column: 1 / -1;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             margin-top: 10px;
         }
         
@@ -1876,6 +1876,7 @@
             .search-btn-container {
                 grid-column: span 1;
                 margin-top: 5px;
+                justify-content: flex-end;
             }
             
             .testimonial-prev {
@@ -2365,7 +2366,7 @@
                 </div>
                 <div class="search-input date-range-input" onclick="showCalendar()">
                     <i class="fas fa-calendar" aria-hidden="true"></i>
-                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly
+                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly>
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>

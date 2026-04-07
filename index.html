@@ -437,7 +437,7 @@
             border-radius: 15px;
             padding: 30px;
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-top: 30px;
@@ -477,28 +477,25 @@
             background: transparent;
         }
         
-        /* Search button layout */
+        /* UPDATED: Button container spans all 3 columns */
         .search-btn-container {
-            grid-column: auto;
+            grid-column: span 3;
             display: flex;
-            justify-content: flex-end;
-            margin-top: 0;
-            align-items: stretch;
+            justify-content: center;
+            margin-top: 10px;
         }
-
+        
         .search-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 15px 20px;
+            padding: 15px 40px;
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             font-size: 1.1rem;
-            min-width: 0;
-            width: 100%;
-            white-space: nowrap;
+            min-width: 200px;
         }
         
         .search-btn:hover {
@@ -1879,15 +1876,9 @@
             .search-btn-container {
                 grid-column: span 1;
                 margin-top: 5px;
-                justify-content: flex-end;
             }
             
-            
-            .search-btn {
-                width: auto;
-                min-width: 200px;
-            }
-.testimonial-prev {
+            .testimonial-prev {
                 left: 10px;
             }
             
@@ -2191,28 +2182,27 @@
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
         }
-        /* Language Switcher */
-        .navbar {
-            gap: 16px;
-        }
-        .nav-links {
-            flex: 1;
-            justify-content: center;
+
+        /* ── Language Switcher ── */
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
         }
         #langSwitcher {
             position: relative;
             display: inline-block;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             z-index: 1100;
             flex-shrink: 0;
-            margin-left: 12px;
         }
         .lang-current {
             display: flex;
             align-items: center;
             gap: 4px;
             cursor: pointer;
-            padding: 6px 10px;
+            padding: 5px 10px;
             border: 1.5px solid var(--light-gray);
             border-radius: 20px;
             background: white;
@@ -2221,10 +2211,12 @@
             transition: var(--transition);
             white-space: nowrap;
             user-select: none;
+            line-height: 1;
         }
         .lang-current:hover { border-color: var(--primary); color: var(--primary); }
-        .lang-flag { font-size: 1.1rem; line-height: 1; }
-        .lang-arrow { font-size: 0.7rem; margin-left: 2px; }
+        .lang-flag { font-size: 1rem; line-height: 1; }
+        .lang-code { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.03em; }
+        .lang-arrow { font-size: 0.6rem; margin-left: 1px; opacity: 0.6; }
         .lang-dropdown {
             display: none;
             position: absolute;
@@ -2234,32 +2226,33 @@
             border-radius: 10px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             padding: 6px 0;
-            min-width: 160px;
+            min-width: 155px;
             list-style: none;
             z-index: 1200;
-            animation: fadeIn 0.15s ease;
         }
         .lang-dropdown.open { display: block; }
         .lang-option {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 16px;
+            padding: 8px 14px;
             cursor: pointer;
             transition: background 0.15s;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
+            color: var(--dark);
         }
         .lang-option:hover { background: var(--light); }
-        .lang-option.active {
-            background: #e8f5f1;
-            color: var(--primary);
-            font-weight: 600;
-        }
+        .lang-option.active { background: #e8f5f1; color: var(--primary); font-weight: 600; }
         .lang-name { flex: 1; }
-        @media (max-width: 768px) {
-            #langSwitcher { order: 3; margin-left: auto; }
-            .lang-dropdown { right: auto; left: 0; }
+        @media (max-width: 992px) {
+            .navbar-right { gap: 8px; }
         }
+        @media (max-width: 768px) {
+            #langSwitcher .lang-dropdown { right: auto; left: 0; }
+            .navbar-right { gap: 6px; }
+            .lang-current { padding: 4px 8px; }
+        }
+
     </style>
     
     <!-- Defer non-critical CSS -->
@@ -2303,7 +2296,7 @@
                 <li role="none"><a href="about" role="menuitem" data-i18n="nav_about">About Us</a></li>
                 <li role="none"><a href="accommodation" role="menuitem" data-i18n="nav_accommodation">Accommodation</a></li>
                 
-                <!-- Experiences Dropdown - FIXED -->
+                <!-- Experiences Dropdown -->
                 <li role="none" class="dropdown">
                     <a href="experiences" role="menuitem" class="dropdown-toggle" data-i18n="nav_experiences">Experiences ▾</a>
                     <ul class="dropdown-menu">
@@ -2316,18 +2309,19 @@
                 <li role="none"><a href="how-it-works" role="menuitem" data-i18n="nav_how_it_works">How It Works</a></li>
                 <li role="none"><a href="#contact" role="menuitem" data-i18n="nav_contact">Contact</a></li>
                 
-                <!-- PHASE 4 — Header Search Icon - UPDATED -->
+                <!-- Header Search -->
                 <li role="none" class="header-search-container" id="mobileSearchContainer">
                     <button id="searchToggle" aria-label="Toggle search">
                         <i class="fas fa-search"></i>
                     </button>
                     <input type="text" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
                 </li>
-                
-                <!-- UPDATED: Book Now button now opens WhatsApp -->
-                <li role="none"><a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20book%20a%20stay%20or%20get%20more%20information." class="btn-book" role="menuitem" data-i18n="nav_book_now">Book Now</a></li>
             </ul>
-            <div id="langSwitcher" aria-label="Select language"></div>
+            <!-- Navbar Right: Book Now + Language Switcher -->
+            <div class="navbar-right">
+                <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20book%20a%20stay%20or%20get%20more%20information." class="btn-book" data-i18n="nav_book_now">Book Now</a>
+                <div id="langSwitcher" aria-label="Select language"></div>
+            </div>
         </nav>
     </header>
 
@@ -2374,7 +2368,7 @@
                 </div>
                 <div class="search-input date-range-input" onclick="showCalendar()">
                     <i class="fas fa-calendar" aria-hidden="true"></i>
-                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly>
+                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly data-i18n-placeholder="search_checkin_checkout">
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>
@@ -2796,7 +2790,7 @@
                     <i class="fas fa-envelope" aria-hidden="true"></i>
                     <div>
                         <h3>Email Us</h3>
-                        <p><a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></p>
+                        <p><a href="/cdn-cgi/l/email-protection#a2c0cdcdc9cbccc5d1e2d2d5c3cccbd1d6c3dbd18cc1cdcf"><span class="__cf_email__" data-cfemail="99fbf6f6f2f0f7feead9e9eef8f7f0eaedf8e0eab7faf6f4">[email&#160;protected]</span></a></p>
                         <small>Response within 1 hour</small>
                     </div>
                 </div>
@@ -2858,7 +2852,7 @@
                          class="footer-logo-mobile"
                          style="height: 60px; width: auto; margin-bottom: 20px;">
                 </div>
-                <p data-i18n="footer_desc">Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
+                <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
                 <div class="social-links">
                     <!-- UPDATED: Removed TripAdvisor and X, updated Instagram username -->
                     <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
@@ -2876,12 +2870,12 @@
                 <h3 data-i18n="footer_links">Quick Links</h3>
                 <ul>
                     <!-- UPDATED: Working navigation links -->
-                    <li><a href="#home" data-i18n="nav_home">Home</a></li>
-                    <li><a href="#stays" data-i18n="section_featured">Featured Properties</a></li>
-                    <li><a href="#services" data-i18n="footer_services">Our Services</a></li>
-                    <li><a href="#testimonials" data-i18n="section_testimonials">Guest Reviews</a></li>
-                    <li><a href="#leave-feedback" data-i18n="feedback_title">Leave Feedback</a></li>
-                    <li><a href="#contact" data-i18n="footer_contact">Contact Us</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#stays">Featured Properties</a></li>
+                    <li><a href="#services">Our Services</a></li>
+                    <li><a href="#testimonials">Guest Reviews</a></li>
+                    <li><a href="#leave-feedback">Leave Feedback</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -2902,7 +2896,7 @@
                     <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
                     <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
                     <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
-                    <li><i class="fas fa-envelope"></i> <a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#791b16161210171e0a39090e1817100a0d18000a571a1614"><span class="__cf_email__" data-cfemail="21434e4e4a484f4652615156404f4852554058520f424e4c">[email&#160;protected]</span></a></li>
                     <li><i class="fas fa-clock"></i> 24/7 Customer Support</li>
                 </ul>
             </div>
@@ -2918,7 +2912,7 @@
     </footer>
 
     <!-- Supabase JS - Initialize Supabase ONE TIME ONLY -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
@@ -3262,7 +3256,12 @@
                     }
                     
                     // Update results count
-                    document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'} for "${keyword}"`;
+                    if (window.i18n) {
+                        const typeWord2 = data.length === 1 ? window.i18n.t('results_property') : window.i18n.t('results_properties');
+                        document.getElementById('resultsCount').textContent = window.i18n.t('results_found', { n: data.length, type: typeWord2 }) + ` for "${keyword}"`;
+                    } else {
+                        document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'} for "${keyword}"`;
+                    }
                     
                     // Clear container
                     while (container.firstChild) {
@@ -3288,6 +3287,7 @@
                         cards.forEach(({ property }) => {
                             loadPropertyImages(property);
                         });
+                        if (window.i18n) window.i18n.translatePropertyCards(container);
                     }, 300);
                     
                 } catch (error) {
@@ -3311,9 +3311,10 @@
                     if (selectedCheckin && selectedCheckout) {
                         dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
                     } else if (selectedCheckin) {
-                        dateRangeInput.value = `${formatDate(selectedCheckin)} → ${window.i18n?.t('cal_select_checkout') || 'Select checkout'}`;
+                        dateRangeInput.value = `${formatDate(selectedCheckin)} → ${window.i18n ? window.i18n.t('cal_select_checkout') : 'Select checkout'}`;
                     } else {
-                        dateRangeInput.value = window.i18n?.t('select_checkin_checkout') || 'Select check-in → Select check-out';
+                        dateRangeInput.value = window.i18n ? window.i18n.t('select_checkin_checkout') : 'Select check-in → Select check-out';
+                        dateRangeInput.placeholder = window.i18n ? window.i18n.t('search_checkin_checkout') : 'Check-in → Check-out';
                     }
                 }
             }
@@ -3323,17 +3324,9 @@
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
-                const calTitle = window.i18n?.t('cal_title') || 'Select Check-in & Check-out Dates';
-                const checkinLabel = window.i18n?.t('cal_checkin') || 'Check-in';
-                const checkoutLabel = window.i18n?.t('cal_checkout') || 'Check-out';
-                const notSelected = window.i18n?.t('cal_not_selected') || 'Not selected';
-                const clearDatesLabel = window.i18n?.t('cal_clear') || 'Clear Dates';
-                const applyDatesLabel = window.i18n?.t('cal_apply') || 'Apply Dates';
-                const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
                 let html = `
                     <div class="calendar-header">
-                        <h4>${calTitle}</h4>
+                        <h4>${window.i18n ? window.i18n.t('cal_title') : 'Select Check-in & Check-out Dates'}</h4>
                         <div class="calendar-nav">
                             <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
                             <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
@@ -3341,7 +3334,13 @@
                         </div>
                     </div>
                     <div class="calendar-grid">
-                        ${weekdays.map(day => `<div class="calendar-day-header">${day}</div>`).join('')}
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
                 `;
 
                 const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -3390,17 +3389,17 @@
                     </div>
                     <div class="selected-dates-display">
                         <div>
-                            <strong>${checkinLabel}</strong><br>
-                            ${selectedCheckin ? formatDate(selectedCheckin) : notSelected}
+                            <strong>${window.i18n ? window.i18n.t('cal_checkin') : 'Check-in'}</strong><br>
+                            ${selectedCheckin ? formatDate(selectedCheckin) : (window.i18n ? window.i18n.t('cal_not_selected') : 'Not selected')}
                         </div>
                         <div>
-                            <strong>${checkoutLabel}</strong><br>
-                            ${selectedCheckout ? formatDate(selectedCheckout) : notSelected}
+                            <strong>${window.i18n ? window.i18n.t('cal_checkout') : 'Check-out'}</strong><br>
+                            ${selectedCheckout ? formatDate(selectedCheckout) : (window.i18n ? window.i18n.t('cal_not_selected') : 'Not selected')}
                         </div>
                     </div>
                     <div class="calendar-actions">
-                        <button class="calendar-clear" onclick="clearDates()">${clearDatesLabel}</button>
-                        <button class="calendar-apply" onclick="applyDates()">${applyDatesLabel}</button>
+                        <button class="calendar-clear" onclick="clearDates()">${window.i18n ? window.i18n.t('cal_clear') : 'Clear Dates'}</button>
+                        <button class="calendar-apply" onclick="applyDates()">${window.i18n ? window.i18n.t('cal_apply') : 'Apply Dates'}</button>
                     </div>
                 `;
 
@@ -3545,10 +3544,12 @@
                         }
                         
                         displayProperties(recentData, container);
+                        setTimeout(() => { if (window.i18n) window.i18n.translatePropertyCards(container); }, 350);
                         return;
                     }
                     
                     displayProperties(data, container);
+                    setTimeout(() => { if (window.i18n) window.i18n.translatePropertyCards(container); }, 350);
                     
                 } catch (error) {
                     console.error("Error:", error);
@@ -3602,6 +3603,7 @@
                         cards.forEach(({ property }) => {
                             loadPropertyImages(property);
                         });
+                        if (window.i18n) window.i18n.translatePropertyCards(container);
                     }, 300);
                     
                 } catch (error) {
@@ -3646,7 +3648,12 @@
                     }
                     
                     // Update results count
-                    document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
+                    if (window.i18n) {
+                        const typeWord = data.length === 1 ? window.i18n.t('results_property') : window.i18n.t('results_properties');
+                        document.getElementById('resultsCount').textContent = window.i18n.t('results_found', { n: data.length, type: typeWord });
+                    } else {
+                        document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
+                    }
                     
                     // Clear container
                     while (container.firstChild) {
@@ -3672,6 +3679,7 @@
                         cards.forEach(({ property }) => {
                             loadPropertyImages(property);
                         });
+                        if (window.i18n) window.i18n.translatePropertyCards(container);
                     }, 300);
                     
                 } catch (error) {
@@ -3685,30 +3693,39 @@
                 card.className = 'property-card';
                 const shortId = shortUUID(property.id);
                 card.id = `property-${shortId}`;
-
+                
                 // Calculate price based on selected check-in date or current date
                 const checkinDate = selectedCheckin || new Date();
                 const displayPrice = calculateDisplayPrice(property, checkinDate);
-
+                
                 // Get property type display
-                const unitTypeLabels = {
-                    studio: window.i18n?.t('type_studio') || 'Studio',
-                    "1br": window.i18n?.t('type_1br') || '1 Bedroom',
-                    "2br": window.i18n?.t('type_2br') || '2 Bedrooms',
-                    "3br": window.i18n?.t('type_3br') || '3 Bedrooms',
-                    "4br": window.i18n?.t('type_4br') || '4 Bedrooms',
-                    "5br": window.i18n?.t('type_5br') || '5 Bedrooms',
-                    "villa": window.i18n?.t('type_villa') || 'Villa'
+                const unitTypeLabels = window.i18n ? {
+                    studio: window.i18n.t("type_studio"),
+                    "1br": window.i18n.t("type_1br"),
+                    "2br": window.i18n.t("type_2br"),
+                    "3br": window.i18n.t("type_3br"),
+                    "4br": window.i18n.t("type_4br"),
+                    "5br": window.i18n.t("type_5br"),
+                    "villa": window.i18n.t("type_villa"),
+                } : {
+                    studio: "Studio",
+                    "1br": "1 Bedroom",
+                    "2br": "2 Bedrooms",
+                    "3br": "3 Bedrooms",
+                    "4br": "4 Bedrooms",
+                    "5br": "5 Bedrooms",
+                    "villa": "Villa"
                 };
                 const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
-
+                
                 // Show beds from property.beds
                 const bedsCount = property.beds || 1;
-                const bedsDisplay = `${bedsCount} ${bedsCount === 1 ? (window.i18n?.t('card_bed') || 'Bed') : (window.i18n?.t('card_beds') || 'Beds')}`;
-
+                const bedLabel = window.i18n ? (bedsCount === 1 ? window.i18n.t('card_bed') : window.i18n.t('card_beds')) : (bedsCount === 1 ? 'Bed' : 'Beds');
+                const bedsDisplay = `${bedsCount} ${bedLabel}`;
+                
                 // Escape special characters for safety
-                const safeTitle = property.title ? property.title.replace(/'/g, "\'") : 'Property';
-
+                const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
+                
                 // REMOVED: Season badge from the property card
                 card.innerHTML = `
                     <div class="property-gallery">
@@ -3726,7 +3743,7 @@
                             <div class="swiper-wrapper"></div>
                         </div>
                     </div>
-
+                    
                     <div class="property-content">
                         <h3 class="property-title">${property.title || 'Premium Property'}</h3>
                         <div class="property-meta">
@@ -3735,16 +3752,16 @@
                             </span>
                             <span class="property-type">${propertyTypeDisplay}</span>
                         </div>
-
+                        
                         <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}">
                         </ul>
                         <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;">
                         </button>
-
+                        
                         <div class="property-price">
-                            Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);" data-i18n="card_night">/ night</span>
+                            Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">${window.i18n ? window.i18n.t('card_night') : '/ night'}</span>
                         </div>
-
+                        
                         <div class="property-footer">
                             <div class="property-info">
                                 <div class="property-beds">
@@ -3752,17 +3769,17 @@
                                 </div>
                             </div>
                             <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
-                                <i class="fas fa-calendar-alt"></i> ${window.i18n?.t('card_check_availability') || 'Check Availability'}
+                                <i class="fas fa-calendar-alt"></i> ${window.i18n ? window.i18n.t('card_check_availability') : 'Check Availability'}
                             </button>
                         </div>
                     </div>
                 `;
-
+                
                 // Render amenities after card is created
                 setTimeout(() => {
                     renderAmenities(property.id, property.description, false);
                 }, 0);
-
+                
                 return card;
             }
 
@@ -4069,27 +4086,25 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 while (container.firstChild) {
                     container.removeChild(container.firstChild);
                 }
-
+                
                 const fragment = document.createDocumentFragment();
                 const cards = [];
-
+                
                 properties.forEach(property => {
                     const card = createPropertyCard(property);
                     cards.push({ property, card });
                     fragment.appendChild(card);
                 });
-
+                
                 container.appendChild(fragment);
-
+                
                 setTimeout(() => {
                     cards.forEach(({ property }) => {
                         loadPropertyImages(property);
                     });
+                    // Translate dynamic Supabase content
+                    if (window.i18n) window.i18n.translatePropertyCards(container);
                 }, 300);
-
-                if (window.i18n?.translatePropertyCards) {
-                    window.i18n.translatePropertyCards(container);
-                }
             }
 
             async function loadPropertyImages(property) {
@@ -4238,9 +4253,15 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
 
                 if (amenities.length > 4) {
                     toggleBtn.style.display = 'inline-block';
-                    toggleBtn.textContent = expanded
-                        ? (window.i18n?.t('card_view_less') || 'View Less')
-                        : (window.i18n?.t('card_more_amenities', { n: amenities.length - 4 }) || `+ ${amenities.length - 4} more amenities`);
+                    if (window.i18n) {
+                        toggleBtn.textContent = expanded
+                            ? window.i18n.t('card_view_less')
+                            : window.i18n.t('card_more_amenities', { n: amenities.length - 4 });
+                    } else {
+                        toggleBtn.textContent = expanded
+                            ? 'View Less'
+                            : `+ ${amenities.length - 4} more amenities`;
+                    }
                 } else {
                     toggleBtn.style.display = 'none';
                 }
@@ -4282,16 +4303,30 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
 
             function showFeedbackMessage(message, type) {
                 const messageDiv = document.getElementById('feedbackMessage');
+        
+                if (!messageDiv) return;
+                
                 messageDiv.textContent = message;
-                messageDiv.style.color = type === 'error' ? '#dc3545' : '#28a745';
+                messageDiv.className = `feedback-message ${type}`;
                 messageDiv.style.display = 'block';
+                messageDiv.style.padding = '15px';
+                messageDiv.style.borderRadius = '8px';
+                messageDiv.style.fontWeight = '600';
+                
+                if (type === 'success') {
+                    messageDiv.style.background = '#d4edda';
+                    messageDiv.style.color = '#155724';
+                } else {
+                    messageDiv.style.background = '#f8d7da';
+                    messageDiv.style.color = '#721c24';
+                }
                 
                 setTimeout(() => {
                     messageDiv.style.display = 'none';
                 }, 5000);
             }
 
-        }); // End of DOMContentLoaded
+        }); // end DOMContentLoaded
     </script>
 </body>
 </html>

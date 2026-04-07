@@ -712,7 +712,7 @@
             }
         }
 
-        /* Ensure language dropdown is always clickable */
+        /* Ensure language dropdown is always clickable and visible */
         .lang-dropdown {
             pointer-events: auto !important;
             z-index: 9999 !important;
@@ -1019,7 +1019,7 @@
     <!-- Shared header loader -->
     <script src="/header-loader.js"></script>
 
-    <!-- Page-specific scripts + language switcher safety -->
+    <!-- Page-specific scripts + language switcher manual binding -->
     <script>
         // Set current year in footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
@@ -1044,15 +1044,64 @@
             });
         });
 
-        // SAFETY: Re-attach language switcher events if needed (ensures clickability)
-        function ensureLanguageSwitcher() {
-            if (typeof window.setLanguage === 'function' && typeof window.toggleLangDropdown === 'function') return;
-            console.warn("Language switcher functions missing – reloading header-loader");
-            const script = document.createElement('script');
-            script.src = '/header-loader.js';
-            document.body.appendChild(script);
+        // ============================================================
+        // FIX: Manually bind language switcher events (bypass inline onclick)
+        // ============================================================
+        function bindLanguageSwitcher() {
+            const switcher = document.getElementById('langSwitcher');
+            if (!switcher) {
+                setTimeout(bindLanguageSwitcher, 200);
+                return;
+            }
+            
+            // Find current button and dropdown
+            const currentBtn = switcher.querySelector('#langCurrentBtn');
+            const dropdown = switcher.querySelector('#langDropdown');
+            const options = switcher.querySelectorAll('.lang-option');
+            
+            // Remove any existing inline onclick attributes to avoid conflicts
+            if (currentBtn) {
+                currentBtn.removeAttribute('onclick');
+                currentBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (dropdown) {
+                        dropdown.classList.toggle('open');
+                        const expanded = dropdown.classList.contains('open');
+                        currentBtn.setAttribute('aria-expanded', expanded);
+                    }
+                });
+            }
+            
+            // Bind each language option
+            options.forEach(opt => {
+                const langCode = opt.getAttribute('onclick')?.match(/setLanguage\('([^']+)'\)/)?.[1];
+                if (langCode && window.setLanguage) {
+                    opt.removeAttribute('onclick');
+                    opt.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        window.setLanguage(langCode);
+                        // Close dropdown after selection
+                        if (dropdown) dropdown.classList.remove('open');
+                        if (currentBtn) currentBtn.setAttribute('aria-expanded', 'false');
+                    });
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (switcher && !switcher.contains(e.target)) {
+                    if (dropdown) dropdown.classList.remove('open');
+                    if (currentBtn) currentBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
         }
-        setTimeout(ensureLanguageSwitcher, 500);
+        
+        // Wait for header to be fully injected
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => setTimeout(bindLanguageSwitcher, 300));
+        } else {
+            setTimeout(bindLanguageSwitcher, 300);
+        }
     </script>
 </body>
 </html>

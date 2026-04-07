@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="PwaniStays — [PAGE DESCRIPTION HERE]">
+    <title>PwaniStays | [PAGE TITLE HERE]</title>
+
+    <!-- Favicon (same as index.html) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#0d7a5f">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pwanistays.com/[PAGE-SLUG]">
+    <meta property="og:title" content="PwaniStays | [PAGE TITLE]">
+    <meta property="og:description" content="[PAGE DESCRIPTION]">
+    <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
+    <meta property="og:site_name" content="PwaniStays">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  STEP 1 — Load i18n FIRST (language detection + translations) ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <script src="/i18n.js"></script>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  STEP 2 — Shared header CSS                                  ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <link rel="stylesheet" href="/header.css">
+
+    <!-- Font Awesome (icons) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          media="print" onload="this.media='all'" crossorigin="anonymous">
+
+    <!-- YOUR PAGE-SPECIFIC CSS goes here -->
+    <style>
+        /* ── Page layout — account for fixed header ── */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #1a2b3c;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Push page content below the fixed header */
+        .page-content {
+            padding-top: 90px; /* matches header height */
+        }
+
+        /* ── Example section styles ── */
+        .page-hero {
+            background: linear-gradient(135deg, #0d7a5f 0%, #0f9b7a 100%);
+            color: white;
+            padding: 80px 5% 60px;
+            text-align: center;
+        }
+        .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 15px; }
+        .page-hero p  { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        section { padding: 80px 5%; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #1a2b3c;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 50%;
+            transform: translateX(-50%);
+            width: 70px; height: 3px;
+            background: #f8b400;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a2b3c;
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            padding: 30px 5%;
+            font-size: 0.9rem;
+        }
+        footer a { color: #f8b400; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+
+    <link rel="canonical" href="https://pwanistays.com/[PAGE-SLUG]">
+</head>
+<body>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  STEP 3 — Header mount point                                 ║
+    ║  The header-loader.js will inject header.html here.         ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <div id="site-header"></div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!--  YOUR PAGE CONTENT BELOW                               -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="page-content">
+
+        <!-- Page Hero -->
+        <div class="page-hero">
+            <h1>[PAGE TITLE]</h1>
+            <p>[SHORT PAGE DESCRIPTION]</p>
+        </div>
+
+        <!-- Main Content Section -->
+        <section>
+            <div class="section-title">
+                <h2>Section Heading</h2>
+            </div>
+            <p>Your page content goes here.</p>
+        </section>
+
+    </div><!-- /.page-content -->
+
+    <!-- Simple Footer (or copy full footer from index.html) -->
+    <footer>
+        <p>&copy; <span id="currentYear"></span> PwaniStays — a Pwanira Ventures brand. All rights reserved. |
+           <a href="/privacy">Privacy Policy</a> |
+           <a href="/terms">Terms of Service</a>
+        </p>
+    </footer>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  STEP 4 — Load header-loader.js LAST                        ║
+    ║  (after Font Awesome so icons render correctly)             ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <script src="/header-loader.js"></script>
+
+    <!-- Page-specific scripts -->
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Any page-specific JS goes here
+    </script>
+
+</body>
+</html>

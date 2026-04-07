@@ -711,6 +711,15 @@
                 scroll-behavior: auto !important;
             }
         }
+
+        /* Ensure language dropdown is always clickable */
+        .lang-dropdown {
+            pointer-events: auto !important;
+            z-index: 9999 !important;
+        }
+        .lang-option {
+            cursor: pointer !important;
+        }
     </style>
 </head>
 <body>
@@ -1010,7 +1019,7 @@
     <!-- Shared header loader -->
     <script src="/header-loader.js"></script>
 
-    <!-- Page-specific scripts -->
+    <!-- Page-specific scripts + language switcher safety -->
     <script>
         // Set current year in footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
@@ -1019,28 +1028,31 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                
-                if (href === '#' || href.startsWith('javascript:')) {
-                    return;
-                }
-                
+                if (href === '#' || href.startsWith('javascript:')) return;
                 if (href.startsWith('#')) {
                     e.preventDefault();
-                    
                     const targetId = href.substring(1);
                     const targetElement = document.getElementById(targetId);
-                    
                     if (targetElement) {
                         window.scrollTo({
                             top: targetElement.offsetTop - 80,
                             behavior: 'smooth'
                         });
-                        
                         history.pushState(null, null, href);
                     }
                 }
             });
         });
+
+        // SAFETY: Re-attach language switcher events if needed (ensures clickability)
+        function ensureLanguageSwitcher() {
+            if (typeof window.setLanguage === 'function' && typeof window.toggleLangDropdown === 'function') return;
+            console.warn("Language switcher functions missing – reloading header-loader");
+            const script = document.createElement('script');
+            script.src = '/header-loader.js';
+            document.body.appendChild(script);
+        }
+        setTimeout(ensureLanguageSwitcher, 500);
     </script>
 </body>
 </html>

@@ -1347,19 +1347,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-window.setLanguage = async function (lang) {
-  if (!TRANSLATIONS[lang]) return;
-  currentLang = lang;
-  try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) {}
-
-  document.getElementById("langDropdown")?.classList.remove("open");
-  buildLanguageSwitcher();
-  applyStaticTranslations();
-
-  // Re-translate any currently visible property cards
-  await translatePropertyCards(document.getElementById("featuredProperties"));
-  await translatePropertyCards(document.getElementById("propertyList"));
-};
+// setLanguage is now handled via window.i18n.setLanguage (see export block above)
 
 // ─────────────────────────────────────────────
 // 10. INIT
@@ -1370,6 +1358,15 @@ window.i18n = {
   translateBatch,
   translatePropertyCards,
   getCurrentLang: () => currentLang,
+  applyStaticTranslations,
+  setLanguage: async function(lang) {
+    if (!lang || !TRANSLATIONS[lang]) return;
+    currentLang = lang;
+    try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) {}
+    applyStaticTranslations();
+    await translatePropertyCards(document.getElementById('featuredProperties'));
+    await translatePropertyCards(document.getElementById('propertyList'));
+  },
 };
 
 // Main init — called on DOMContentLoaded

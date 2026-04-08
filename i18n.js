@@ -1352,18 +1352,94 @@ document.addEventListener("click", (e) => {
 // ─────────────────────────────────────────────
 // 10. INIT
 // ─────────────────────────────────────────────
+
+// ─────────────────────────────────────────────
+// 7b. TRANSLATE FULL PAGE BODY TEXT
+// ─────────────────────────────────────────────
+/**
+ * Collects all meaningful text nodes in the page body that are NOT
+ * already handled by data-i18n attributes, batches them for translation,
+ * and writes the results back. Uses caching so it only calls the API once
+ * per language per page.
+ *
+ * Skip list: script, style, noscript, code, nav elements (handled by data-i18n),
+ * and elements that already have data-i18n on them.
+ */
+const SKIP_TAGS = new Set(['SCRIPT','STYLE','NOSCRIPT','CODE','PRE','TEXTAREA','INPUT','SELECT','BUTTON','OPTION']);
+const SKIP_SELECTORS = '[data-i18n],[data-i18n-placeholder],[data-i18n-html]';
+
+async function translatePageBody(targetLang) {
+  if (targetLang === 'en') {
+    // Restore originals if switching back to English
+    document.querySelectorAll('[data-orig-text]').forEach(el => {
+      el.textContent = el.getAttribute('data-orig-text');
+    });
+    return;
+  }
+
+  // Collect all leaf text-bearing elements that aren't already translated
+  const candidates = [];
+  const walker = document.createTreeWalker(
+    document.body,
+    NodeFilter.SHOW_ELEMENT,
+    {
+      acceptNode(node) {
+        if (SKIP_TAGS.has(node.tagName)) return NodeFilter.FILTER_REJECT;
+        if (node.closest(SKIP_SELECTORS)) return NodeFilter.FILTER_SKIP;
+        if (node.closest('#site-header')) return NodeFilter.FILTER_REJECT; // header handled separately
+        // Only accept leaf elements (no child elements, just text)
+        const hasOnlyText = [...node.childNodes].every(
+          n => n.nodeType === Node.TEXT_NODE
+        );
+        if (hasOnlyText && node.textContent.trim().length > 1) {
+          return NodeFilter.FILTER_ACCEPT;
+        }
+        return NodeFilter.FILTER_SKIP;
+      }
+    }
+  );
+
+  let node;
+  while ((node = walker.nextNode())) {
+    const text = node.textContent.trim();
+    if (text.length > 1 && /[a-zA-Z]/.test(text)) { // only translate if has real words
+      candidates.push({ el: node, text });
+    }
+  }
+
+  if (!candidates.length) return;
+
+  const texts = candidates.map(c => c.text);
+  const translated = await translateBatch(texts, targetLang);
+
+  candidates.forEach(({ el }, i) => {
+    if (translated[i] && translated[i] !== texts[i]) {
+      // Store original for language switching back
+      if (!el.hasAttribute('data-orig-text')) {
+        el.setAttribute('data-orig-text', texts[i]);
+      }
+      el.textContent = translated[i];
+    }
+  });
+}
+
 window.i18n = {
   t,
   translateText,
   translateBatch,
   translatePropertyCards,
+  translatePageBody,
   getCurrentLang: () => currentLang,
   applyStaticTranslations,
   setLanguage: async function(lang) {
     if (!lang || !TRANSLATIONS[lang]) return;
     currentLang = lang;
     try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) {}
+    // 1. Apply all data-i18n static string swaps immediately
     applyStaticTranslations();
+    // 2. Translate non-tagged page body text via Google Translate
+    await translatePageBody(lang);
+    // 3. Re-translate any visible property cards (Supabase content)
     await translatePropertyCards(document.getElementById('featuredProperties'));
     await translatePropertyCards(document.getElementById('propertyList'));
   },
@@ -1374,6 +1450,10 @@ async function initI18n() {
   currentLang = await detectLanguage();
   buildLanguageSwitcher();
   applyStaticTranslations();
+  // Translate full page body if not English
+  if (currentLang !== 'en') {
+    await translatePageBody(currentLang);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initI18n);

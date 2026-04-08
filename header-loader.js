@@ -118,15 +118,13 @@
   async function handleSetLanguage(langCode) {
     closeDropdown();
     if (window.i18n) {
+      // setLanguage handles: applyStaticTranslations + translatePageBody + property cards
       await window.i18n.setLanguage(langCode);
     } else {
       try { localStorage.setItem("pwani_lang", langCode); } catch (_) {}
     }
+    // Rebuild the switcher button to show new flag/code
     rebuildSwitcherButton();
-    if (window.i18n) {
-      window.i18n.translatePropertyCards(document.getElementById("featuredProperties"));
-      window.i18n.translatePropertyCards(document.getElementById("propertyList"));
-    }
   }
 
   // ── Build the trigger button (not the dropdown list) ─────────────

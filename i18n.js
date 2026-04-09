@@ -1357,6 +1357,200 @@ document.addEventListener("click", (e) => {
 // 7b. TRANSLATE FULL PAGE BODY TEXT
 // ─────────────────────────────────────────────
 /**
+ * Walks every TEXT NODE in document.body and translates any that contain
+ * real words. This correctly handles mixed-content elements like:
+ *   <li><i class="fas fa-check-circle"></i> 10+ years in Kenyan tourism</li>
+ *   <p>Text with <strong>emphasis</strong> inline</p>
+ *
+ * How it works:
+ *  1. TreeWalker visits TEXT NODES (not elements)
+ *  2. Filters out: whitespace-only, numbers-only, inside skipped tags,
+ *     inside [data-i18n] elements (already handled), inside #site-header
+ *  3. Deduplicates identical strings so we don't translate "Menu" 20 times
+ *  4. Batch-translates all unique strings in one API call
+ *  5. Writes translated text back to each text node directly
+ *  6. Stores originals in a WeakMap for English restore
+ */
+
+const _origTextNodes = new Map(); // textNode -> original string
+
+const BODY_SKIP_TAGS  = new Set(['SCRIPT','STYLE','NOSCRIPT','CODE','PRE',
+                                  'TEXTAREA','INPUT','SELECT']);
+const BODY_SKIP_ATTRS = '[data-i18n],[data-i18n-placeholder],[data-i18n-html]';
+const NO_TRANSLATE    = new Set(['#site-header', '.whatsapp-float']);
+
+function _shouldSkipNode(node) {
+  let el = node.parentElement;
+  while (el && el !== document.body) {
+    if (BODY_SKIP_TAGS.has(el.tagName))           return true;
+    if (el.closest && el.closest(BODY_SKIP_ATTRS)) return true;
+    if (el.id === 'site-header')                   return true;
+    if (el.closest && el.closest('.whatsapp-float')) return true;
+    el = el.parentElement;
+  }
+  return false;
+}
+
+async function translatePageBody(targetLang) {
+  if (targetLang === 'en') {
+    // Restore original English text nodes
+    _origTextNodes.forEach((original, textNode) => {
+      if (textNode.parentNode) textNode.textContent = original;
+    });
+    _origTextNodes.clear();
+    return;
+  }
+
+  // ── 1. Collect all text nodes with real translatable content ──
+  const allTextNodes = [];
+  const walker = document.createTreeWalker(
+    document.body,
+    NodeFilter.SHOW_TEXT,
+    null
+  );
+
+  let node;
+  while ((node = walker.nextNode())) {
+    const raw = node.textContent;
+    const trimmed = raw.trim();
+    // Must have letters and be more than one character
+    if (trimmed.length < 2 || !/[a-zA-Z]/.test(trimmed)) continue;
+    // Skip nodes inside ignored containers
+    if (_shouldSkipNode(node)) continue;
+    allTextNodes.push({ node, text: trimmed });
+  }
+
+  if (!allTextNodes.length) return;
+
+  // ── 2. Deduplicate strings ──
+  const uniqueMap  = new Map(); // text -> [textNode, ...]
+  allTextNodes.forEach(({ node, text }) => {
+    if (!uniqueMap.has(text)) uniqueMap.set(text, []);
+    uniqueMap.get(text).push(node);
+  });
+
+  const uniqueTexts = [...uniqueMap.keys()];
+
+  // ── 3. Batch translate all unique strings ──
+  const translated = await translateBatch(uniqueTexts, targetLang);
+
+  // ── 4. Write back to every matching text node ──
+  uniqueTexts.forEach((original, idx) => {
+    const translatedText = translated[idx];
+    if (!translatedText || translatedText === original) return;
+
+    uniqueMap.get(original).forEach(textNode => {
+      if (!textNode.parentNode) return; // node was removed from DOM
+      // Save original for restore
+      if (!_origTextNodes.has(textNode)) {
+        _origTextNodes.set(textNode, textNode.textContent);
+      }
+      // Preserve surrounding whitespace that the raw node had
+      const raw = textNode.textContent;
+      const leadSpace  = raw.match(/^\s*/)[0];
+      const trailSpace = raw.match(/\s*$/)[0];
+      textNode.textContent = leadSpace + translatedText + trailSpace;
+    });
+  });
+}
+
+// ─────────────────────────────────────────────
+// 8. LANGUAGE DETECTION
+// ─────────────────────────────────────────────
+async function detectLanguage() {
+  // 1. Check user's saved preference first
+  try {
+    const saved = localStorage.getItem(LANG_STORAGE_KEY);
+    if (saved && TRANSLATIONS[saved]) return saved;
+  } catch (e) {}
+
+  // 2. Try geo-IP detection (ipapi.co — free, no key needed, 1000 req/day)
+  try {
+    const res = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      const data = await res.json();
+      const countryCode = data.country_code?.toUpperCase();
+      if (countryCode && COUNTRY_LANGUAGE_MAP[countryCode]) {
+        return COUNTRY_LANGUAGE_MAP[countryCode];
+      }
+    }
+  } catch (e) {}
+
+  // 3. Fallback: browser language
+  const browserLang = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
+  if (TRANSLATIONS[browserLang]) return browserLang;
+
+  return "en";
+}
+
+// ─────────────────────────────────────────────
+// 9. LANGUAGE SWITCHER UI
+// ─────────────────────────────────────────────
+const LANGUAGES = [
+  { code: "en", label: "EN", name: "English", flag: "🇬🇧" },
+  { code: "no", label: "NO", name: "Norsk", flag: "🇳🇴" },
+  { code: "da", label: "DA", name: "Dansk", flag: "🇩🇰" },
+  { code: "pl", label: "PL", name: "Polski", flag: "🇵🇱" },
+  { code: "sv", label: "SV", name: "Svenska", flag: "🇸🇪" },
+  { code: "fi", label: "FI", name: "Suomi", flag: "🇫🇮" },
+  { code: "de", label: "DE", name: "Deutsch", flag: "🇩🇪" },
+  { code: "nl", label: "NL", name: "Nederlands", flag: "🇳🇱" },
+  { code: "fr", label: "FR", name: "Français", flag: "🇫🇷" },
+  { code: "is", label: "IS", name: "Íslenska", flag: "🇮🇸" },
+];
+
+function buildLanguageSwitcher() {
+  const current = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
+  const switcher = document.getElementById("langSwitcher");
+  if (!switcher) return;
+
+  switcher.innerHTML = `
+    <div class="lang-current" onclick="toggleLangDropdown()" aria-haspopup="true" aria-expanded="false" id="langCurrentBtn">
+      <span class="lang-flag">${current.flag}</span>
+      <span class="lang-code">${current.label}</span>
+      <span class="lang-arrow">▾</span>
+    </div>
+    <ul class="lang-dropdown" id="langDropdown" role="listbox">
+      ${LANGUAGES.map(
+        (lang) => `
+        <li role="option" 
+            class="lang-option ${lang.code === currentLang ? "active" : ""}" 
+            onclick="setLanguage('${lang.code}')"
+            aria-selected="${lang.code === currentLang}">
+          <span class="lang-flag">${lang.flag}</span>
+          <span class="lang-name">${lang.name}</span>
+        </li>`
+      ).join("")}
+    </ul>
+  `;
+}
+
+window.toggleLangDropdown = function () {
+  const dropdown = document.getElementById("langDropdown");
+  const btn = document.getElementById("langCurrentBtn");
+  if (!dropdown) return;
+  const isOpen = dropdown.classList.toggle("open");
+  btn?.setAttribute("aria-expanded", isOpen);
+};
+
+// Close on outside click
+document.addEventListener("click", (e) => {
+  const switcher = document.getElementById("langSwitcher");
+  if (switcher && !switcher.contains(e.target)) {
+    document.getElementById("langDropdown")?.classList.remove("open");
+  }
+});
+
+// setLanguage is now handled via window.i18n.setLanguage (see export block above)
+
+// ─────────────────────────────────────────────
+// 10. INIT
+// ─────────────────────────────────────────────
+
+// ─────────────────────────────────────────────
+// 7b. TRANSLATE FULL PAGE BODY TEXT
+// ─────────────────────────────────────────────
+/**
  * Collects all meaningful text nodes in the page body that are NOT
  * already handled by data-i18n attributes, batches them for translation,
  * and writes the results back. Uses caching so it only calls the API once
@@ -1437,9 +1631,12 @@ window.i18n = {
     try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) {}
     // 1. Apply all data-i18n static string swaps immediately
     applyStaticTranslations();
-    // 2. Translate non-tagged page body text via Google Translate
+    // 2. Rebuild the switcher button on pages that use i18n.js's own switcher
+    //    (index.html has no header-loader.js, so this is needed there)
+    buildLanguageSwitcher();
+    // 3. Translate non-tagged page body text via Google Translate
     await translatePageBody(lang);
-    // 3. Re-translate any visible property cards (Supabase content)
+    // 4. Re-translate any visible property cards (Supabase content)
     await translatePropertyCards(document.getElementById('featuredProperties'));
     await translatePropertyCards(document.getElementById('propertyList'));
   },

@@ -356,11 +356,22 @@
     markActiveLink(mountPoint);
     initMobileMenu(mountPoint);
     initHeaderSearch(mountPoint);
-    rebuildSwitcherButton();
 
+    // If i18n.js is loaded, let it own the language switcher entirely.
+    // i18n.js's buildLanguageSwitcher() uses the same floating dropdown approach
+    // and is already wired up. We just need to call applyStaticTranslations.
+    // If i18n.js is NOT loaded, fall back to our own switcher.
     function applyI18n() {
       if (window.i18n) {
         window.i18n.applyStaticTranslations?.();
+        // Let i18n.js rebuild the switcher (it owns #langSwitcher)
+        if (typeof buildLanguageSwitcher === 'function') {
+          buildLanguageSwitcher();
+        } else {
+          // i18n.js not present — use our own switcher
+          rebuildSwitcherButton();
+        }
+      } else {
         rebuildSwitcherButton();
       }
     }
@@ -372,7 +383,7 @@
       const poll = setInterval(() => {
         attempts++;
         if (window.i18n) { applyI18n(); clearInterval(poll); }
-        if (attempts > 30) clearInterval(poll);
+        if (attempts > 30) { rebuildSwitcherButton(); clearInterval(poll); }
       }, 100);
     }
 

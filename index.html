@@ -3549,7 +3549,13 @@
                     }
                     
                     displayProperties(data, container);
-                    setTimeout(() => { if (window.i18n) window.i18n.translatePropertyCards(container); }, 350);
+                    setTimeout(() => {
+                        if (window.i18n) {
+                            window.i18n.translatePropertyCards(container);
+                            const lang = window.i18n.getCurrentLang();
+                            if (lang !== 'en') window.i18n.translatePageBody(lang);
+                        }
+                    }, 350);
                     
                 } catch (error) {
                     console.error("Error:", error);
@@ -4103,7 +4109,13 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                         loadPropertyImages(property);
                     });
                     // Translate dynamic Supabase content
-                    if (window.i18n) window.i18n.translatePropertyCards(container);
+                    if (window.i18n) {
+                        window.i18n.translatePropertyCards(container);
+                        // Re-run page body translation to catch any new text
+                        // that appeared after DOMContentLoaded (async Supabase content)
+                        const lang = window.i18n.getCurrentLang();
+                        if (lang !== 'en') window.i18n.translatePageBody(lang);
+                    }
                 }, 300);
             }
 

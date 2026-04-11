@@ -1290,64 +1290,139 @@ async function detectLanguage() {
 }
 
 // ─────────────────────────────────────────────
-// 9. LANGUAGE SWITCHER UI
+// 9. LANGUAGE SWITCHER UI  (floating dropdown — never clipped)
 // ─────────────────────────────────────────────
-const LANGUAGES = [
-  { code: "en", label: "EN", name: "English", flag: "🇬🇧" },
-  { code: "no", label: "NO", name: "Norsk", flag: "🇳🇴" },
-  { code: "da", label: "DA", name: "Dansk", flag: "🇩🇰" },
-  { code: "pl", label: "PL", name: "Polski", flag: "🇵🇱" },
-  { code: "sv", label: "SV", name: "Svenska", flag: "🇸🇪" },
-  { code: "fi", label: "FI", name: "Suomi", flag: "🇫🇮" },
-  { code: "de", label: "DE", name: "Deutsch", flag: "🇩🇪" },
-  { code: "nl", label: "NL", name: "Nederlands", flag: "🇳🇱" },
-  { code: "fr", label: "FR", name: "Français", flag: "🇫🇷" },
-  { code: "is", label: "IS", name: "Íslenska", flag: "🇮🇸" },
-];
+// The dropdown <ul> is appended directly to <body> and positioned with
+// getBoundingClientRect so it is never clipped by the fixed header or
+// any other stacking context.
 
-function buildLanguageSwitcher() {
-  const current = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
-  const switcher = document.getElementById("langSwitcher");
-  if (!switcher) return;
+let _floatingDrop  = null;   // the <ul> appended to body
+let _dropOpen      = false;
 
-  switcher.innerHTML = `
-    <div class="lang-current" onclick="toggleLangDropdown()" aria-haspopup="true" aria-expanded="false" id="langCurrentBtn">
-      <span class="lang-flag">${current.flag}</span>
-      <span class="lang-code">${current.label}</span>
-      <span class="lang-arrow">▾</span>
-    </div>
-    <ul class="lang-dropdown" id="langDropdown" role="listbox">
-      ${LANGUAGES.map(
-        (lang) => `
-        <li role="option" 
-            class="lang-option ${lang.code === currentLang ? "active" : ""}" 
-            onclick="setLanguage('${lang.code}')"
-            aria-selected="${lang.code === currentLang}">
-          <span class="lang-flag">${lang.flag}</span>
-          <span class="lang-name">${lang.name}</span>
-        </li>`
-      ).join("")}
-    </ul>
-  `;
+function _getCurrentLang() { return currentLang; }
+
+function _createFloatingDropdown() {
+  if (_floatingDrop) _floatingDrop.remove();
+
+  const ul = document.createElement('ul');
+  ul.id = 'langDropdownFloating';
+  ul.setAttribute('role', 'listbox');
+
+  LANGUAGES.forEach((lang) => {
+    const li = document.createElement('li');
+    li.setAttribute('role', 'option');
+    li.setAttribute('aria-selected', lang.code === currentLang);
+    li.className = 'lang-option' + (lang.code === currentLang ? ' active' : '');
+    li.innerHTML = `<span class="lang-flag">${lang.flag}</span><span class="lang-name">${lang.name}</span>`;
+    // Use addEventListener — no inline onclick, no global scope dependency
+    li.addEventListener('click', (e) => {
+      e.stopPropagation();
+      _closeDrop();
+      window.setLanguage(lang.code);   // defined below as global
+    });
+    ul.appendChild(li);
+  });
+
+  // Inline critical styles — works regardless of CSS file load order
+  Object.assign(ul.style, {
+    position:     'fixed',
+    background:   'white',
+    borderRadius: '10px',
+    boxShadow:    '0 8px 25px rgba(0,0,0,0.18)',
+    padding:      '6px 0',
+    minWidth:     '160px',
+    listStyle:    'none',
+    zIndex:       '99999',
+    display:      'none',
+    margin:       '0',
+    cursor:       'pointer',
+  });
+
+  document.body.appendChild(ul);
+  _floatingDrop = ul;
 }
 
-window.toggleLangDropdown = function () {
-  const dropdown = document.getElementById("langDropdown");
-  const btn = document.getElementById("langCurrentBtn");
-  if (!dropdown) return;
-  const isOpen = dropdown.classList.toggle("open");
-  btn?.setAttribute("aria-expanded", isOpen);
-};
+function _positionDrop(triggerEl) {
+  if (!_floatingDrop) return;
+  const rect    = triggerEl.getBoundingClientRect();
+  const dropH   = _floatingDrop.offsetHeight || 340;
+  const below   = window.innerHeight - rect.bottom;
+  const top     = below < dropH && rect.top > dropH
+                    ? rect.top - dropH - 4
+                    : rect.bottom + 4;
+  let left = rect.right - 160;
+  if (left < 8) left = 8;
+  _floatingDrop.style.top  = top  + 'px';
+  _floatingDrop.style.left = left + 'px';
+}
 
-// Close on outside click
-document.addEventListener("click", (e) => {
-  const switcher = document.getElementById("langSwitcher");
-  if (switcher && !switcher.contains(e.target)) {
-    document.getElementById("langDropdown")?.classList.remove("open");
+function _openDrop(triggerEl) {
+  _createFloatingDropdown();
+  _floatingDrop.style.display = 'block';
+  _positionDrop(triggerEl);
+  _dropOpen = true;
+  triggerEl.setAttribute('aria-expanded', 'true');
+}
+
+function _closeDrop() {
+  if (_floatingDrop) _floatingDrop.style.display = 'none';
+  _dropOpen = false;
+  const btn = document.getElementById('langCurrentBtn');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// Close on outside click / scroll / resize
+document.addEventListener('click', (e) => {
+  if (!_dropOpen) return;
+  const sw = document.getElementById('langSwitcher');
+  if (sw && sw.contains(e.target)) return;
+  if (_floatingDrop && _floatingDrop.contains(e.target)) return;
+  _closeDrop();
+});
+document.addEventListener('scroll', () => {
+  if (_dropOpen) {
+    const btn = document.getElementById('langCurrentBtn');
+    if (btn) _positionDrop(btn);
+  }
+}, { passive: true });
+window.addEventListener('resize', () => {
+  if (_dropOpen) {
+    const btn = document.getElementById('langCurrentBtn');
+    btn ? _positionDrop(btn) : _closeDrop();
   }
 });
 
-// setLanguage is now handled via window.i18n.setLanguage (see export block above)
+function buildLanguageSwitcher() {
+  const sw = document.getElementById('langSwitcher');
+  if (!sw) return;
+
+  const cur = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
+  sw.innerHTML = `
+    <div class="lang-current" id="langCurrentBtn"
+         role="button" tabindex="0"
+         aria-haspopup="listbox" aria-expanded="false">
+      <span class="lang-flag">${cur.flag}</span>
+      <span class="lang-code">${cur.label}</span>
+      <span class="lang-arrow">▾</span>
+    </div>`;
+
+  const btn = sw.querySelector('#langCurrentBtn');
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    _dropOpen ? _closeDrop() : _openDrop(btn);
+  });
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+    if (e.key === 'Escape') _closeDrop();
+  });
+}
+
+// Global alias so onclick="toggleLangDropdown()" still works (legacy)
+window.toggleLangDropdown = function () {
+  const btn = document.getElementById('langCurrentBtn');
+  if (!btn) return;
+  _dropOpen ? _closeDrop() : _openDrop(btn);
+};
 
 // ─────────────────────────────────────────────
 // 10. INIT
@@ -1484,64 +1559,139 @@ async function detectLanguage() {
 }
 
 // ─────────────────────────────────────────────
-// 9. LANGUAGE SWITCHER UI
+// 9. LANGUAGE SWITCHER UI  (floating dropdown — never clipped)
 // ─────────────────────────────────────────────
-const LANGUAGES = [
-  { code: "en", label: "EN", name: "English", flag: "🇬🇧" },
-  { code: "no", label: "NO", name: "Norsk", flag: "🇳🇴" },
-  { code: "da", label: "DA", name: "Dansk", flag: "🇩🇰" },
-  { code: "pl", label: "PL", name: "Polski", flag: "🇵🇱" },
-  { code: "sv", label: "SV", name: "Svenska", flag: "🇸🇪" },
-  { code: "fi", label: "FI", name: "Suomi", flag: "🇫🇮" },
-  { code: "de", label: "DE", name: "Deutsch", flag: "🇩🇪" },
-  { code: "nl", label: "NL", name: "Nederlands", flag: "🇳🇱" },
-  { code: "fr", label: "FR", name: "Français", flag: "🇫🇷" },
-  { code: "is", label: "IS", name: "Íslenska", flag: "🇮🇸" },
-];
+// The dropdown <ul> is appended directly to <body> and positioned with
+// getBoundingClientRect so it is never clipped by the fixed header or
+// any other stacking context.
 
-function buildLanguageSwitcher() {
-  const current = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
-  const switcher = document.getElementById("langSwitcher");
-  if (!switcher) return;
+let _floatingDrop  = null;   // the <ul> appended to body
+let _dropOpen      = false;
 
-  switcher.innerHTML = `
-    <div class="lang-current" onclick="toggleLangDropdown()" aria-haspopup="true" aria-expanded="false" id="langCurrentBtn">
-      <span class="lang-flag">${current.flag}</span>
-      <span class="lang-code">${current.label}</span>
-      <span class="lang-arrow">▾</span>
-    </div>
-    <ul class="lang-dropdown" id="langDropdown" role="listbox">
-      ${LANGUAGES.map(
-        (lang) => `
-        <li role="option" 
-            class="lang-option ${lang.code === currentLang ? "active" : ""}" 
-            onclick="setLanguage('${lang.code}')"
-            aria-selected="${lang.code === currentLang}">
-          <span class="lang-flag">${lang.flag}</span>
-          <span class="lang-name">${lang.name}</span>
-        </li>`
-      ).join("")}
-    </ul>
-  `;
+function _getCurrentLang() { return currentLang; }
+
+function _createFloatingDropdown() {
+  if (_floatingDrop) _floatingDrop.remove();
+
+  const ul = document.createElement('ul');
+  ul.id = 'langDropdownFloating';
+  ul.setAttribute('role', 'listbox');
+
+  LANGUAGES.forEach((lang) => {
+    const li = document.createElement('li');
+    li.setAttribute('role', 'option');
+    li.setAttribute('aria-selected', lang.code === currentLang);
+    li.className = 'lang-option' + (lang.code === currentLang ? ' active' : '');
+    li.innerHTML = `<span class="lang-flag">${lang.flag}</span><span class="lang-name">${lang.name}</span>`;
+    // Use addEventListener — no inline onclick, no global scope dependency
+    li.addEventListener('click', (e) => {
+      e.stopPropagation();
+      _closeDrop();
+      window.setLanguage(lang.code);   // defined below as global
+    });
+    ul.appendChild(li);
+  });
+
+  // Inline critical styles — works regardless of CSS file load order
+  Object.assign(ul.style, {
+    position:     'fixed',
+    background:   'white',
+    borderRadius: '10px',
+    boxShadow:    '0 8px 25px rgba(0,0,0,0.18)',
+    padding:      '6px 0',
+    minWidth:     '160px',
+    listStyle:    'none',
+    zIndex:       '99999',
+    display:      'none',
+    margin:       '0',
+    cursor:       'pointer',
+  });
+
+  document.body.appendChild(ul);
+  _floatingDrop = ul;
 }
 
-window.toggleLangDropdown = function () {
-  const dropdown = document.getElementById("langDropdown");
-  const btn = document.getElementById("langCurrentBtn");
-  if (!dropdown) return;
-  const isOpen = dropdown.classList.toggle("open");
-  btn?.setAttribute("aria-expanded", isOpen);
-};
+function _positionDrop(triggerEl) {
+  if (!_floatingDrop) return;
+  const rect    = triggerEl.getBoundingClientRect();
+  const dropH   = _floatingDrop.offsetHeight || 340;
+  const below   = window.innerHeight - rect.bottom;
+  const top     = below < dropH && rect.top > dropH
+                    ? rect.top - dropH - 4
+                    : rect.bottom + 4;
+  let left = rect.right - 160;
+  if (left < 8) left = 8;
+  _floatingDrop.style.top  = top  + 'px';
+  _floatingDrop.style.left = left + 'px';
+}
 
-// Close on outside click
-document.addEventListener("click", (e) => {
-  const switcher = document.getElementById("langSwitcher");
-  if (switcher && !switcher.contains(e.target)) {
-    document.getElementById("langDropdown")?.classList.remove("open");
+function _openDrop(triggerEl) {
+  _createFloatingDropdown();
+  _floatingDrop.style.display = 'block';
+  _positionDrop(triggerEl);
+  _dropOpen = true;
+  triggerEl.setAttribute('aria-expanded', 'true');
+}
+
+function _closeDrop() {
+  if (_floatingDrop) _floatingDrop.style.display = 'none';
+  _dropOpen = false;
+  const btn = document.getElementById('langCurrentBtn');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// Close on outside click / scroll / resize
+document.addEventListener('click', (e) => {
+  if (!_dropOpen) return;
+  const sw = document.getElementById('langSwitcher');
+  if (sw && sw.contains(e.target)) return;
+  if (_floatingDrop && _floatingDrop.contains(e.target)) return;
+  _closeDrop();
+});
+document.addEventListener('scroll', () => {
+  if (_dropOpen) {
+    const btn = document.getElementById('langCurrentBtn');
+    if (btn) _positionDrop(btn);
+  }
+}, { passive: true });
+window.addEventListener('resize', () => {
+  if (_dropOpen) {
+    const btn = document.getElementById('langCurrentBtn');
+    btn ? _positionDrop(btn) : _closeDrop();
   }
 });
 
-// setLanguage is now handled via window.i18n.setLanguage (see export block above)
+function buildLanguageSwitcher() {
+  const sw = document.getElementById('langSwitcher');
+  if (!sw) return;
+
+  const cur = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
+  sw.innerHTML = `
+    <div class="lang-current" id="langCurrentBtn"
+         role="button" tabindex="0"
+         aria-haspopup="listbox" aria-expanded="false">
+      <span class="lang-flag">${cur.flag}</span>
+      <span class="lang-code">${cur.label}</span>
+      <span class="lang-arrow">▾</span>
+    </div>`;
+
+  const btn = sw.querySelector('#langCurrentBtn');
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    _dropOpen ? _closeDrop() : _openDrop(btn);
+  });
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+    if (e.key === 'Escape') _closeDrop();
+  });
+}
+
+// Global alias so onclick="toggleLangDropdown()" still works (legacy)
+window.toggleLangDropdown = function () {
+  const btn = document.getElementById('langCurrentBtn');
+  if (!btn) return;
+  _dropOpen ? _closeDrop() : _openDrop(btn);
+};
 
 // ─────────────────────────────────────────────
 // 10. INIT
@@ -1641,6 +1791,12 @@ window.i18n = {
     await translatePropertyCards(document.getElementById('propertyList'));
   },
 };
+
+// ── Global shortcut so onclick="setLanguage('xx')" works anywhere ──
+window.setLanguage = async function(lang) {
+  await window.i18n.setLanguage(lang);
+};
+
 
 // Main init — called on DOMContentLoaded
 async function initI18n() {

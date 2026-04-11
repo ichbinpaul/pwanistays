@@ -1853,7 +1853,7 @@
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-envelope" aria-hidden="true"></i>
-                    <div><h3>Email Us</h3><p><a href="/cdn-cgi/l/email-protection#8ae8e5e5e1e3e4edf9cafafdebe4e3f9feebf3f9a4e9e5e7">bookings@pwanistays.com</a></p><small>Response within 1 hour</small></div>
+                    <div><h3>Email Us</h3><p><a href="/cdn-cgi/l/email-protection#31535e5e5a585f5642714146505f5842455048421f525e5c">bookings@pwanistays.com</a></p><small>Response within 1 hour</small></div>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-clock" aria-hidden="true"></i>
@@ -1925,7 +1925,7 @@
                     <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
                     <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
                     <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#40222f2f2b292e2733003037212e2933342139336e232f2d">bookings@pwanistays.com</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#e5838c8b819691808b919780a59592848b8c9691849c96cb868a88">bookings@pwanistays.com</a></li>
                     <li><i class="fas fa-clock"></i> 24/7 Customer Support</li>
                 </ul>
             </div>
@@ -1949,16 +1949,25 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- Page-specific JavaScript (with i18n patches applied) -->
+    <!-- Page-specific JavaScript (i18n ready, full implementation) -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        (function() {
+            // Wait for i18n to be ready
+            function waitForI18n(cb) {
+                if (window.i18n && window.i18n.t) cb();
+                else setTimeout(() => waitForI18n(cb), 50);
+            }
+
             const supabase = window.supabaseClient;
             
-            // ===== CALENDAR & PROPERTY LOGIC (with i18n) =====
+            // ===== GLOBAL STATE =====
             let selectedCheckin = null, selectedCheckout = null;
             let currentMonth = new Date().getMonth(), currentYear = new Date().getFullYear();
-            
-            // Helper functions
+            let selectedRating = 0;
+            let currentTestimonial = 0;
+            const totalTestimonials = 12;
+
+            // ===== HELPER FUNCTIONS =====
             function getSeasonForDate(date) {
                 const month = date.getMonth() + 1, day = date.getDate();
                 if ((month === 12 && day >= 20) || (month === 1 && day <= 10)) return "festive_peak";
@@ -1966,72 +1975,513 @@
                 if (month >= 4 && month <= 8) return "april_august";
                 return "low_season";
             }
-            
+
             function getNightlyPrice(property, checkInDate) {
                 const seasonKey = getSeasonForDate(checkInDate);
                 const basePrice = property[seasonKey] || property.low_season || 0;
                 return Math.round(basePrice * 1.2);
             }
-            
+
             function formatDate(date) {
                 if (!date) return '';
                 return `${String(date.getDate()).padStart(2,'0')}/${String(date.getMonth()+1).padStart(2,'0')}/${date.getFullYear()}`;
             }
-            
+
             function isSameDay(d1, d2) {
                 return d1 && d2 && d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
             }
-            
-            // Calendar generation with i18n
+
+            function shortUUID(uuid) {
+                return uuid ? uuid.split("-")[0] : '';
+            }
+
+            // ===== CALENDAR =====
+            function updateDateRangeInput() {
+                const input = document.getElementById('dateRange');
+                if (!input) return;
+                if (selectedCheckin && selectedCheckout) {
+                    input.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
+                } else if (selectedCheckin) {
+                    input.value = `${formatDate(selectedCheckin)} → ${window.i18n?.t('cal_select_checkout') || 'Select checkout'}`;
+                } else {
+                    input.value = window.i18n?.t('select_checkin_checkout') || 'Select check-in → Select check-out';
+                    input.placeholder = window.i18n?.t('search_checkin_checkout') || 'Check-in → Check-out';
+                }
+            }
+
+            function generateCalendar() {
+                const calendar = document.getElementById('calendarContainer');
+                const today = new Date(); today.setHours(0,0,0,0);
+                const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+                
+                let html = `
+                    <div class="calendar-header">
+                        <h4>${window.i18n?.t('cal_title') || 'Select Check-in & Check-out Dates'}</h4>
+                        <div class="calendar-nav">
+                            <button onclick="changeMonth(-1)">‹</button>
+                            <h4>${monthNames[currentMonth]} ${currentYear}</h4>
+                            <button onclick="changeMonth(1)">›</button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Sun</div><div class="calendar-day-header">Mon</div><div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div><div class="calendar-day-header">Thu</div><div class="calendar-day-header">Fri</div><div class="calendar-day-header">Sat</div>
+                `;
+
+                const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                for (let i = 0; i < firstDay; i++) html += `<div class="calendar-day disabled"></div>`;
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const date = new Date(currentYear, currentMonth, day);
+                    date.setHours(0,0,0,0);
+                    const isToday = isSameDay(date, today);
+                    const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
+                    const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
+                    const isDisabled = date < today;
+                    const isBetween = selectedCheckin && selectedCheckout && date > selectedCheckin && date < selectedCheckout;
+
+                    let className = "calendar-day";
+                    if (isToday) className += " today";
+                    if (isCheckin) className += " selected";
+                    if (isCheckout) className += " selected";
+                    if (isDisabled) className += " disabled";
+                    if (isBetween) className += " between";
+
+                    const onClick = isDisabled ? "" : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+                    html += `<div class="${className}" ${onClick}>${day}</div>`;
+                }
+
+                const totalCells = firstDay + daysInMonth;
+                for (let i = totalCells; i < 42; i++) html += `<div class="calendar-day disabled"></div>`;
+
+                html += `
+                    </div>
+                    <div class="selected-dates-display">
+                        <div><strong>${window.i18n?.t('cal_checkin') || 'Check-in'}</strong><br>${selectedCheckin ? formatDate(selectedCheckin) : (window.i18n?.t('cal_not_selected') || 'Not selected')}</div>
+                        <div><strong>${window.i18n?.t('cal_checkout') || 'Check-out'}</strong><br>${selectedCheckout ? formatDate(selectedCheckout) : (window.i18n?.t('cal_not_selected') || 'Not selected')}</div>
+                    </div>
+                    <div class="calendar-actions">
+                        <button class="calendar-clear" onclick="clearDates()">${window.i18n?.t('cal_clear') || 'Clear Dates'}</button>
+                        <button class="calendar-apply" onclick="applyDates()">${window.i18n?.t('cal_apply') || 'Apply Dates'}</button>
+                    </div>
+                `;
+                calendar.innerHTML = html;
+            }
+
             window.showCalendar = function() {
                 generateCalendar();
                 document.getElementById('calendarContainer').style.display = 'block';
                 document.getElementById('calendarBackdrop').style.display = 'block';
                 document.body.style.overflow = 'hidden';
             };
-            
+
             window.hideCalendar = function() {
                 document.getElementById('calendarContainer').style.display = 'none';
                 document.getElementById('calendarBackdrop').style.display = 'none';
                 document.body.style.overflow = '';
             };
-            
-            function updateDateRangeInput() {
-                const input = document.getElementById('dateRange');
-                if (selectedCheckin && selectedCheckout) {
-                    input.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
-                } else if (selectedCheckin) {
-                    input.value = `${formatDate(selectedCheckin)} → ${window.i18n ? window.i18n.t('cal_select_checkout') : 'Select checkout'}`;
+
+            window.selectDate = function(day, month, year) {
+                const date = new Date(year, month, day);
+                date.setHours(0,0,0,0);
+                const today = new Date(); today.setHours(0,0,0,0);
+                if (date < today) return;
+
+                if (!selectedCheckin) {
+                    selectedCheckin = date;
+                    selectedCheckout = null;
+                } else if (!selectedCheckout && date > selectedCheckin) {
+                    selectedCheckout = date;
+                } else if (isSameDay(date, selectedCheckin)) {
+                    selectedCheckin = null;
+                    selectedCheckout = null;
+                } else if (date < selectedCheckin) {
+                    selectedCheckin = date;
+                    selectedCheckout = null;
                 } else {
-                    input.value = window.i18n ? window.i18n.t('select_checkin_checkout') : 'Select check-in → Select check-out';
+                    selectedCheckout = date;
+                }
+                updateDateRangeInput();
+                generateCalendar();
+            };
+
+            window.changeMonth = function(delta) {
+                currentMonth += delta;
+                if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+                else if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+                generateCalendar();
+            };
+
+            window.clearDates = function() {
+                selectedCheckin = selectedCheckout = null;
+                updateDateRangeInput();
+                generateCalendar();
+            };
+
+            window.applyDates = function() {
+                if (!selectedCheckin || !selectedCheckout) {
+                    alert("Please select both check-in and check-out dates");
+                    return;
+                }
+                if (selectedCheckin >= selectedCheckout) {
+                    alert("Check-out must be after check-in");
+                    return;
+                }
+                hideCalendar();
+            };
+
+            // ===== PROPERTY CARD RENDERING =====
+            function renderAmenities(propertyId, description, expanded = false) {
+                const container = document.getElementById(`desc-${propertyId}`);
+                const toggleBtn = document.getElementById(`toggle-${propertyId}`);
+                if (!container || !description) return;
+
+                const amenities = description.split('\n').filter(line => line.trim());
+                const visible = expanded ? amenities : amenities.slice(0, 4);
+                container.innerHTML = visible.map(a => `<li>${a.trim()}</li>`).join('');
+
+                if (amenities.length > 4) {
+                    toggleBtn.style.display = 'inline-block';
+                    toggleBtn.textContent = expanded
+                        ? (window.i18n?.t('card_view_less') || 'View Less')
+                        : (window.i18n?.t('card_more_amenities', { n: amenities.length - 4 }) || `+ ${amenities.length - 4} more amenities`);
+                } else {
+                    toggleBtn.style.display = 'none';
                 }
             }
-            
-            function generateCalendar() {
-                const today = new Date(); today.setHours(0,0,0,0);
-                let html = `<div class="calendar-header"><h4>${window.i18n?.t('cal_title') || 'Select Check-in & Check-out Dates'}</h4>...`;
-                // ... full calendar generation (omitted for brevity, same as original but with i18n)
-                // (The full implementation is identical to the original, with all i18n.t() calls for labels)
-                document.getElementById('calendarContainer').innerHTML = html;
+
+            window.toggleAmenities = function(propertyId) {
+                const container = document.getElementById(`desc-${propertyId}`);
+                const isExpanded = container.classList.toggle('expanded');
+                const fullDesc = container.dataset.full || '';
+                renderAmenities(propertyId, fullDesc, isExpanded);
+            };
+
+            function createPropertyCard(property) {
+                const card = document.createElement('div');
+                card.className = 'property-card';
+                const shortId = shortUUID(property.id);
+                card.id = `property-${shortId}`;
+
+                const checkinDate = selectedCheckin || new Date();
+                const displayPrice = getNightlyPrice(property, checkinDate).toLocaleString('en-KE');
+
+                const unitTypeLabels = window.i18n ? {
+                    studio: window.i18n.t("type_studio"),
+                    "1br": window.i18n.t("type_1br"),
+                    "2br": window.i18n.t("type_2br"),
+                    "3br": window.i18n.t("type_3br"),
+                    "4br": window.i18n.t("type_4br"),
+                    "5br": window.i18n.t("type_5br"),
+                    "villa": window.i18n.t("type_villa"),
+                } : {
+                    studio: "Studio", "1br": "1 Bedroom", "2br": "2 Bedrooms", "3br": "3 Bedrooms",
+                    "4br": "4 Bedrooms", "5br": "5 Bedrooms", "villa": "Villa"
+                };
+                const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
+                const bedsCount = property.beds || 1;
+                const bedLabel = window.i18n?.t(bedsCount === 1 ? 'card_bed' : 'card_beds') || (bedsCount === 1 ? 'Bed' : 'Beds');
+                const bedsDisplay = `${bedsCount} ${bedLabel}`;
+                const safeTitle = (property.title || 'Property').replace(/'/g, "\\'");
+
+                card.innerHTML = `
+                    <div class="property-gallery">
+                        <div class="swiper mainSwiper" id="main-${property.id}">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                         alt="${property.title || 'Property'}">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="swiper thumbSwiper" id="thumb-${property.id}" style="display: none;">
+                            <div class="swiper-wrapper"></div>
+                        </div>
+                    </div>
+                    <div class="property-content">
+                        <h3 class="property-title">${property.title || 'Premium Property'}</h3>
+                        <div class="property-meta">
+                            <span class="property-location"><i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}</span>
+                            <span class="property-type">${propertyTypeDisplay}</span>
+                        </div>
+                        <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}"></ul>
+                        <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;"></button>
+                        <div class="property-price">
+                            Ksh ${displayPrice} <span style="font-size:0.9rem;color:var(--gray);">${window.i18n?.t('card_night') || '/ night'}</span>
+                        </div>
+                        <div class="property-footer">
+                            <div class="property-info"><div class="property-beds"><i class="fas fa-bed"></i> ${bedsDisplay}</div></div>
+                            <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
+                                <i class="fas fa-calendar-alt"></i> ${window.i18n?.t('card_check_availability') || 'Check Availability'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                setTimeout(() => renderAmenities(property.id, property.description, false), 0);
+                return card;
             }
-            
-            // Property loading and display (with i18n applied to cards)
+
+            window.checkAvailability = function(propertyId, propertyTitle) {
+                const propertyElement = document.getElementById(`property-${shortUUID(propertyId)}`) || document.getElementById(`property-${propertyId}`);
+                const priceElement = propertyElement?.querySelector('.property-price');
+                const price = priceElement ? priceElement.textContent.replace(/[^\d]/g, '') : 'Price on request';
+                const checkinStr = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
+                const checkoutStr = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
+                const anchorId = shortUUID(propertyId);
+                const message = `Property: ${propertyTitle}\nLink: https://pwanistays.com/#property-${anchorId}\nDates: ${checkinStr} → ${checkoutStr}\nRate: KES ${price}/night\n\nHello PwaniStays! I am interested in this property. Is it available?`;
+                window.open(`https://wa.me/254738544784?text=${encodeURIComponent(message)}`, "_blank");
+            };
+
+            async function loadPropertyImages(property) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                const shortId = shortUUID(property.id);
+                const card = document.querySelector(`#property-${shortId}`);
+                if (!card) return;
+                const mainWrapper = card.querySelector(`#main-${property.id} .swiper-wrapper`);
+                if (!mainWrapper) return;
+
+                let images = [];
+                try {
+                    const { data: files } = await supabase.storage.from('property_images').list(property.id);
+                    if (files?.length) {
+                        files.sort((a,b) => (parseInt(a.name.match(/\d+/)?.[0])||0) - (parseInt(b.name.match(/\d+/)?.[0])||0));
+                        images = files.map(file => supabase.storage.from('property_images').getPublicUrl(`${property.id}/${file.name}`).data.publicUrl);
+                    }
+                } catch (e) {}
+                if (!images.length) images = [property.image_url || 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'];
+
+                mainWrapper.innerHTML = images.map((url, i) => `
+                    <div class="swiper-slide">
+                        <img src="${url}" alt="${property.title} ${i+1}" onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'">
+                    </div>
+                `).join('');
+
+                const thumbWrapper = card.querySelector(`#thumb-${property.id} .swiper-wrapper`);
+                if (thumbWrapper && images.length > 1) {
+                    thumbWrapper.innerHTML = images.map(url => `<div class="swiper-slide"><img src="${url}"></div>`).join('');
+                    card.querySelector(`#thumb-${property.id}`).style.display = 'block';
+                }
+
+                setTimeout(() => {
+                    const mainEl = card.querySelector(`#main-${property.id}`);
+                    if (mainEl.swiper) mainEl.swiper.destroy(true, true);
+                    let thumbsSwiper = null;
+                    const thumbEl = card.querySelector(`#thumb-${property.id}`);
+                    if (thumbEl && images.length > 1) {
+                        thumbsSwiper = new Swiper(thumbEl, { spaceBetween: 8, slidesPerView: Math.min(4, images.length), freeMode: true, watchSlidesProgress: true });
+                    }
+                    new Swiper(mainEl, {
+                        spaceBetween: 0, loop: images.length > 1,
+                        pagination: { el: mainEl.querySelector('.swiper-pagination'), clickable: true, dynamicBullets: true },
+                        thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
+                        autoplay: images.length > 1 ? { delay: 3000 } : false
+                    });
+                }, 200);
+            }
+
+            // ===== DATA LOADING =====
+            function displayProperties(properties, container) {
+                container.innerHTML = '';
+                const fragment = document.createDocumentFragment();
+                const cards = [];
+                properties.forEach(p => {
+                    const card = createPropertyCard(p);
+                    cards.push({ property: p, card });
+                    fragment.appendChild(card);
+                });
+                container.appendChild(fragment);
+                setTimeout(() => {
+                    cards.forEach(({ property }) => loadPropertyImages(property));
+                    if (window.i18n) window.i18n.translatePropertyCards(container);
+                }, 300);
+            }
+
             async function loadFeaturedProperties() {
-                // ... (original code, with translatePropertyCards call)
+                const container = document.getElementById('featuredProperties');
+                try {
+                    let { data } = await supabase.from("properties").select("*").eq("is_active", true).eq("is_featured", true).limit(6);
+                    if (!data?.length) {
+                        const res = await supabase.from("properties").select("*").eq("is_active", true).limit(6);
+                        data = res.data;
+                    }
+                    if (!data?.length) {
+                        container.innerHTML = '<div class="no-properties">No properties available.</div>';
+                        return;
+                    }
+                    displayProperties(data, container);
+                    setTimeout(() => {
+                        if (window.i18n) window.i18n.translatePropertyCards(container);
+                    }, 350);
+                } catch (e) {
+                    container.innerHTML = '<div class="no-properties">Unable to load properties.</div>';
+                }
             }
-            
-            // ... rest of the original JavaScript (searchProperties, createPropertyCard, etc.)
-            // Ensure all dynamic text uses window.i18n.t()
-            
-            // Initialize Hero Swiper
-            new Swiper('.heroSwiper', { loop: true, autoplay: { delay: 7000 }, effect: 'fade' });
-            
-            // Set current year
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
-            // Load featured properties
-            loadFeaturedProperties();
-        });
+
+            window.showAllProperties = async function() {
+                document.getElementById('searchResults').style.display = 'block';
+                document.getElementById('stays').style.display = 'none';
+                document.getElementById('resultsHeader').style.display = 'none';
+                const container = document.getElementById('propertyList');
+                container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading all properties...</div>';
+                try {
+                    const { data } = await supabase.from("properties").select("*").eq("is_active", true).order("created_at", { ascending: false });
+                    if (!data?.length) {
+                        container.innerHTML = '<div class="no-properties">No properties available.</div>';
+                        return;
+                    }
+                    displayProperties(data, container);
+                    document.getElementById('resultsCount').textContent = window.i18n?.t('results_found', { n: data.length, type: data.length === 1 ? window.i18n.t('results_property') : window.i18n.t('results_properties') }) || `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
+                } catch (e) {
+                    container.innerHTML = '<div class="no-properties">Error loading properties.</div>';
+                }
+            };
+
+            window.searchProperties = async function() {
+                const location = document.getElementById('searchLocation').value;
+                const propertyType = document.getElementById('propertyType').value;
+                document.getElementById('searchResults').style.display = 'block';
+                document.getElementById('stays').style.display = 'none';
+                const container = document.getElementById('propertyList');
+                container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+                try {
+                    let query = supabase.from("properties").select("*").eq("is_active", true);
+                    if (location) query = query.eq('location', location);
+                    if (propertyType) query = query.eq('unit_type', propertyType);
+                    const { data } = await query.order('created_at', { ascending: false });
+                    if (!data?.length) {
+                        container.innerHTML = '<div class="no-properties">No properties found.</div>';
+                        return;
+                    }
+                    displayProperties(data, container);
+                    document.getElementById('resultsCount').textContent = window.i18n?.t('results_found', { n: data.length, type: data.length === 1 ? window.i18n.t('results_property') : window.i18n.t('results_properties') }) || `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
+                    document.getElementById('resultsHeader').style.display = 'block';
+                    document.getElementById('searchCriteria').textContent = `Properties in ${location || 'All Locations'} ${propertyType ? '• ' + propertyType : ''}`;
+                } catch (e) {
+                    container.innerHTML = '<div class="no-properties">Error searching properties.</div>';
+                }
+            };
+
+            window.clearSearch = function() {
+                document.getElementById('searchLocation').value = '';
+                document.getElementById('propertyType').value = '';
+                updateDateRangeInput();
+                document.getElementById('searchResults').style.display = 'none';
+                document.getElementById('stays').style.display = 'block';
+                loadFeaturedProperties();
+            };
+
+            window.filterByLocation = function(location) {
+                document.getElementById('searchLocation').value = location;
+                searchProperties();
+            };
+
+            window.serviceEnquiry = function(service) {
+                window.open(`https://wa.me/254738544784?text=${encodeURIComponent(`Hello PwaniStays! I'm interested in ${service}.`)}`, "_blank");
+            };
+
+            // ===== TESTIMONIALS =====
+            function initTestimonials() {
+                const slider = document.querySelector('.testimonial-slider');
+                const dotsContainer = document.querySelector('.testimonial-dots');
+                if (!slider || !dotsContainer) return;
+                const testimonials = [
+                    { text: "Absolutely stunning villa in Nyali! The PwaniStays team made our family vacation seamless from airport pickup to checkout.", author: "Sarah Johnson", location: "London, UK" },
+                    { text: "As a local from Nairobi looking for a coastal getaway, PwaniStays provided excellent service. The Bamburi beach apartment was perfect.", author: "David Mwangi", location: "Nairobi, Kenya" },
+                    { text: "Our honeymoon in Diani was magical thanks to PwaniStays. They arranged everything from the villa to a romantic dhow cruise.", author: "Maria & Thomas", location: "Berlin, Germany" },
+                    { text: "The service was exceptional! From the moment we landed in Mombasa until we left, everything was perfectly organized.", author: "James Omondi", location: "Kampala, Uganda" },
+                    { text: "I've used PwaniStays three times now for business retreats. Their corporate packages are excellent.", author: "Fatima Ali", location: "Dubai, UAE" },
+                    { text: "The Shanzu apartment was exactly as pictured. Clean, modern, and perfectly located.", author: "Robert Chen", location: "Shanghai, China" },
+                    { text: "Perfect for our large family reunion. The 6-bedroom villa in Diani accommodated all 12 of us comfortably.", author: "The Patel Family", location: "Mumbai, India" },
+                    { text: "As a solo female traveler, I felt completely safe and well taken care of.", author: "Sophie Martin", location: "Paris, France" },
+                    { text: "We booked last minute and were amazed by how quickly they arranged everything.", author: "Michael & Grace", location: "Johannesburg, South Africa" },
+                    { text: "The marine experiences they arranged were unforgettable. Snorkeling in Watamu was the highlight.", author: "Carlos Rodriguez", location: "Barcelona, Spain" },
+                    { text: "Excellent value for money. The Nyali villa was luxurious but affordable.", author: "Linda Wang", location: "Singapore" },
+                    { text: "We've been coming to the Kenyan coast for years, but this was our best experience yet!", author: "The Smith Family", location: "Sydney, Australia" }
+                ];
+                slider.innerHTML = testimonials.map((t, i) => `
+                    <div class="testimonial-slide ${i === 0 ? 'active' : ''}">
+                        <div class="testimonial-content">
+                            <p>"${t.text}"</p>
+                            <div class="testimonial-author">
+                                <h4>${t.author}</h4>
+                                <p>From ${t.location}</p>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                dotsContainer.innerHTML = testimonials.map((_, i) => `<button class="testimonial-dot ${i === 0 ? 'active' : ''}" onclick="showTestimonial(${i})"></button>`).join('');
+            }
+
+            window.showTestimonial = function(index) {
+                document.querySelectorAll('.testimonial-slide').forEach((s, i) => s.classList.toggle('active', i === index));
+                document.querySelectorAll('.testimonial-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+                currentTestimonial = index;
+            };
+
+            window.nextTestimonial = () => showTestimonial((currentTestimonial + 1) % totalTestimonials);
+            window.prevTestimonial = () => showTestimonial((currentTestimonial - 1 + totalTestimonials) % totalTestimonials);
+
+            // ===== FEEDBACK =====
+            function initStarRating() {
+                document.querySelectorAll('.star').forEach(star => {
+                    star.addEventListener('click', function() {
+                        selectedRating = parseInt(this.dataset.rating);
+                        document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('selected', i < selectedRating));
+                        document.getElementById('ratingText').textContent = ['Poor','Fair','Good','Very Good','Excellent'][selectedRating-1] || 'Click to rate';
+                    });
+                });
+            }
+
+            window.submitFeedback = function() {
+                const name = document.getElementById('feedbackName').value.trim();
+                if (!name || selectedRating === 0 || !document.getElementById('feedbackComment').value.trim()) {
+                    alert('Please fill all required fields and select a rating.');
+                    return;
+                }
+                const btn = document.getElementById('submitFeedbackBtn');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+                setTimeout(() => {
+                    document.getElementById('feedbackMessage').style.display = 'block';
+                    document.getElementById('feedbackMessage').innerHTML = '<div style="background:#d4edda;color:#155724;padding:15px;border-radius:8px;">Thank you for your feedback!</div>';
+                    btn.disabled = false;
+                    btn.innerHTML = 'Submit Your Review';
+                    ['feedbackName','feedbackCity','feedbackCountry','feedbackComment'].forEach(id => document.getElementById(id).value = '');
+                    selectedRating = 0;
+                    document.querySelectorAll('.star').forEach(s => s.classList.remove('selected'));
+                }, 1500);
+            };
+
+            // ===== FORM SUBMIT =====
+            document.getElementById('inquiryForm')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you! Our coastal experts will contact you within 24 hours.');
+                e.target.reset();
+            });
+
+            // ===== INITIALIZATION =====
+            waitForI18n(() => {
+                // Initialize hero swiper
+                new Swiper('.heroSwiper', { loop: true, autoplay: { delay: 7000 }, effect: 'fade' });
+                // Load featured properties
+                loadFeaturedProperties();
+                // Set current year
+                document.getElementById('currentYear').textContent = new Date().getFullYear();
+                // Init testimonials and stars
+                initTestimonials();
+                initStarRating();
+                // Wire testimonial nav
+                document.querySelector('.testimonial-prev')?.addEventListener('click', prevTestimonial);
+                document.querySelector('.testimonial-next')?.addEventListener('click', nextTestimonial);
+                // Auto-rotate testimonials
+                setInterval(nextTestimonial, 5000);
+            });
+        })();
     </script>
 
     <!-- Shared Header Loader (loads header.html and wires everything) -->

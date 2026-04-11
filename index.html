@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <!-- UPDATED: Meta description -->
     <meta name="description" content="PwaniStays offers curated coastal stays and guided experiences across Kenya's coast, including safaris, marine adventures, and cultural excursions.">
     <meta name="keywords" content="kenya beach accommodation, mombasa luxury villas, diani beach resorts, watamu hotels, nyali apartments, bamburi beach houses, shanzu vacation rentals, coastal kenya tourism, airport transfers mombasa, safari coastal packages, faq, frequently asked questions, booking process, cancellation policy">
     <meta name="author" content="PwaniStays - Kenyan Coastal Experts">
+    
+    <!-- UPDATED: Website/SERP Title -->
     <title>PwaniStays | Curated Coastal Stays & Experiences</title>
     
-    <!-- Favicon Package -->
+    <!-- UPDATED: Correct Favicon Package for PWA -->
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
@@ -16,17 +19,23 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Keep theme colors for browser UI -->
     <meta name="theme-color" content="#0d7a5f">
     <meta name="msapplication-TileColor" content="#0d7a5f">
+    
+    <!-- Apple Mobile Web App Capable -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="PwaniStays">
     
-    <!-- Open Graph -->
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pwanistays.com/">
+    <!-- UPDATED: Open Graph Title and Description -->
     <meta property="og:title" content="PwaniStays | Curated Coastal Stays & Experiences">
     <meta property="og:description" content="Curated coastal stays and guided experiences across Kenya's coast — safaris, marine adventures, and cultural exploration.">
+    <!-- CHANGED: Use logo-mobile.png instead of logo-header.png -->
     <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -34,12 +43,14 @@
     <meta property="og:locale" content="en_KE">
     <meta property="og:site_name" content="PwaniStays">
     
-    <!-- Twitter -->
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@PwaniStays">
     <meta name="twitter:creator" content="@PwaniStays">
+    <!-- UPDATED: Twitter Title and Description -->
     <meta name="twitter:title" content="PwaniStays | Curated Coastal Stays & Experiences">
     <meta name="twitter:description" content="Curated coastal stays and guided experiences across Kenya's coast — safaris, marine adventures, and cultural exploration.">
+    <!-- CHANGED: Use logo-mobile.png instead of logo-header.png -->
     <meta name="twitter:image" content="https://pwanistays.com/logo-mobile.png">
     <meta name="twitter:image:alt" content="PwaniStays Logo">
     
@@ -49,7 +60,7 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     
-    <!-- Structured Data -->
+    <!-- Structured Data for Rich Results -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -97,18 +108,11 @@
     }
     </script>
     
-    <!-- Swiper.js CSS -->
+    <!-- STEP 1 — Add Swiper.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     
-    <!-- i18n Translation System (MUST be loaded before header) -->
-    <script src="/i18n.js"></script>
-    
-    <!-- Shared Header CSS -->
-    <link rel="stylesheet" href="/header.css">
-    
-    <!-- Inline Page-Specific CSS -->
+    <!-- Inline Critical CSS -->
     <style>
-        /* ===== PAGE-SPECIFIC STYLES (variables, hero, cards, etc.) ===== */
         :root {
             --primary: #0d7a5f;
             --primary-light: #0f9b7a;
@@ -121,7 +125,7 @@
             --transition: all 0.3s ease;
         }
         
-        /* Global image reset */
+        /* === GLOBAL IMAGE RESET - KILLS ALL STRIPS === */
         img {
             display: block;
             max-width: 100%;
@@ -148,13 +152,218 @@
             color: var(--dark);
             overflow-x: hidden;
             background: #fff;
-            padding-top: 90px; /* Fixed header offset */
         }
         
-        /* Hero Section (carousel) */
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Logo link styling */
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            line-height: 1;
+        }
+        
+        /* Responsive logo styles */
+        .logo-desktop {
+            display: inline-block;
+        }
+        
+        .logo-mobile {
+            display: none;
+        }
+        
+        /* On mobile screens, hide desktop and show mobile logo */
+        @media (max-width: 768px) {
+            .logo-desktop {
+                display: none;
+            }
+            
+            .logo-mobile {
+                display: inline-block;
+            }
+        }
+        
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            text-decoration: none;
+            color: var(--dark);
+            white-space: nowrap;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        /* Dropdown Menu Styles - FIXED */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 10px 0;
+            z-index: 1001;
+            list-style: none;
+            margin-top: 10px;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        /* FIX: Add a transparent gap between parent and dropdown */
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: transparent;
+        }
+        
+        .dropdown:hover .dropdown-menu,
+        .dropdown:focus-within .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-menu li {
+            margin: 0;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            font-size: 0.95rem;
+        }
+        
+        .dropdown-menu a:hover {
+            background: #f8f9fa;
+            color: var(--primary);
+            border-left-color: var(--primary);
+            padding-left: 25px;
+        }
+        
+        .dropdown-menu a:before {
+            content: "– ";
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* PHASE 4 — Header Search Icon - UPDATED */
+        .header-search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header-search-container.active #headerSearch {
+            display: block;
+        }
+        
+        #headerSearch {
+            width: 200px;
+            padding: 8px 15px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: none;
+        }
+        
+        #searchToggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 5px;
+            transition: var(--transition);
+        }
+        
+        #searchToggle:hover {
+            color: var(--primary);
+        }
+        
+        .btn-book {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-book:hover {
+            background: #e09c00;
+            transform: translateY(-2px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* === CHANGE 3: HERO SECTION - 2-IMAGE CAROUSEL === */
         .hero {
             height: 100vh;
             min-height: 600px;
+            margin-top: 80px;
             padding: 0 20px;
             position: relative;
         }
@@ -206,6 +415,7 @@
             padding-top: 100px;
         }
         
+        /* UPDATED: Hero tagline from "Experience Luxury on the Kenyan Coast" to "Curated Stays & Coastal Experiences" */
         .hero-content h2 {
             font-size: clamp(1.8rem, 5vw, 3rem);
             margin-bottom: 15px;
@@ -221,7 +431,7 @@
             margin-right: auto;
         }
         
-        /* Search Box */
+        /* UPDATED: Search Box with 3 inputs */
         .search-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
@@ -267,6 +477,7 @@
             background: transparent;
         }
         
+        /* UPDATED: Button container spans all 3 columns */
         .search-btn-container {
             grid-column: span 3;
             display: flex;
@@ -291,6 +502,16 @@
             background: var(--primary-light);
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(13, 122, 95, 0.3);
+        }
+        
+        /* Date Range Input */
+        .date-range-input {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .date-range-input input {
+            width: 100%;
         }
         
         /* Section Common Styles */
@@ -341,6 +562,7 @@
             margin: 0 auto;
         }
         
+        /* === PART 1: FINAL FIX FOR STRIP ABOVE IMAGE === */
         .property-card {
             background: white;
             border-radius: 15px;
@@ -359,11 +581,13 @@
             padding: 25px;
         }
         
+        /* ✅ FIX 4 — ENSURE GALLERY CONTAINER DOES NOT COLLAPSE */
         .property-gallery {
             width: 100%;
             position: relative;
         }
         
+        /* ✅ FIX 2 — FORCE MAIN IMAGE HEIGHT (CRITICAL) */
         .mainSwiper {
             width: 100%;
             height: 260px;
@@ -392,6 +616,7 @@
             opacity: 1;
         }
         
+        /* ✅ FIX 3 — THUMBNAIL STRIP (PREVENT COLLISION) */
         .thumbSwiper {
             margin-top: 8px;
             height: 70px;
@@ -443,6 +668,7 @@
             font-weight: 500;
         }
         
+        /* === PART 2: AMENITIES AS POINTS + AUTO-TRUNCATION === */
         .property-desc {
             list-style: none;
             padding: 0;
@@ -491,6 +717,8 @@
             margin-bottom: 20px;
         }
         
+        /* REMOVED: Season indicator badge */
+        
         .property-footer {
             display: flex;
             justify-content: space-between;
@@ -505,6 +733,7 @@
             gap: 5px;
         }
         
+        /* FIXED: Show beds from property.beds */
         .property-beds {
             color: var(--dark);
             font-weight: 500;
@@ -514,6 +743,11 @@
         .property-beds i {
             color: var(--primary);
             margin-right: 5px;
+        }
+        
+        /* REMOVED: property-code section */
+        .property-code {
+            display: none;
         }
         
         .no-properties {
@@ -571,7 +805,7 @@
             border-bottom-color: var(--primary-light);
         }
         
-        /* Featured Stays */
+        /* Featured Stays - UPDATED with View All button */
         .featured-stays {
             background: white;
         }
@@ -582,6 +816,102 @@
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto 50px;
+        }
+        
+        .stay-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .stay-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .stay-img {
+            height: 200px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .stay-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .stay-content {
+            padding: 25px;
+        }
+        
+        .stay-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .stay-location {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stay-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--gray);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .stay-features span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .amenities {
+            margin: 15px 0;
+            min-height: 40px;
+        }
+        
+        .amenity-tag {
+            display: inline-block;
+            background: #f0f8f4;
+            color: #0d7a5f;
+            padding: 4px 10px;
+            margin: 2px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .stay-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .price-amount {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .price-period {
+            color: var(--gray);
+            font-size: 0.9rem;
         }
         
         .btn-primary {
@@ -619,7 +949,6 @@
             border: 2px solid var(--primary);
             transition: var(--transition);
             text-decoration: none;
-            cursor: pointer;
         }
         
         .btn-secondary:hover {
@@ -627,7 +956,7 @@
             color: white;
         }
         
-        /* Services */
+        /* UPDATED: Services Section with proper CTA links */
         .services {
             background: var(--light);
         }
@@ -681,6 +1010,7 @@
             flex-grow: 1;
         }
         
+        /* UPDATED: Service buttons with different CTAs */
         .service-btn {
             display: inline-block;
             background: var(--primary);
@@ -716,7 +1046,7 @@
             box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
         }
         
-        /* Why Us */
+        /* Why Choose Us - UPDATED with European Guest Specialists */
         .why-us {
             background: var(--light);
         }
@@ -745,7 +1075,7 @@
             font-size: 1.2rem;
         }
         
-        /* Testimonials */
+        /* Testimonials - FIXED with proper display */
         .testimonials {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
@@ -894,7 +1224,7 @@
             transform: scale(1.2);
         }
         
-        /* Feedback Section */
+        /* NEW: Leave Feedback Section */
         .leave-feedback {
             background: white;
             padding: 80px 5%;
@@ -1005,7 +1335,7 @@
             transform: none;
         }
         
-        /* Destinations */
+        /* Coastal Destinations - UPDATED with different Diani image */
         .destinations {
             background: white;
         }
@@ -1070,7 +1400,7 @@
             background: var(--primary-light);
         }
         
-        /* Contact */
+        /* Contact Section */
         .contact {
             background: white;
         }
@@ -1273,7 +1603,32 @@
             text-decoration: underline;
         }
         
-        /* Calendar Styles */
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        /* Calendar Styles - FIXED: Made more compact and fixed selection issues */
         .calendar-overlay {
             display: none;
             position: fixed;
@@ -1486,53 +1841,279 @@
             font-size: 0.8rem;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 1200px) {
-            .nav-links { gap: 20px; }
+        /* NEW: Footer Logo Mobile Support */
+        .footer-logo-desktop {
+            display: block;
         }
         
-        @media (max-width: 992px) {
-            .search-box { grid-template-columns: 1fr; gap: 12px; }
-            .search-btn-container { grid-column: span 1; margin-top: 5px; }
-            .testimonial-prev { left: 10px; }
-            .testimonial-next { right: 10px; }
-            .services-container { grid-template-columns: repeat(2, 1fr); }
-            .properties-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-            .form-row { grid-template-columns: 1fr; }
+        .footer-logo-mobile {
+            display: none;
         }
         
         @media (max-width: 768px) {
-            body { padding-top: 80px; }
-            .hero { margin-top: 0; padding: 0 15px; }
-            .testimonial-slider { height: 400px; }
-            section { padding: 80px 5%; }
-            .section-title h2 { font-size: 2rem; }
-            .search-box { padding: 20px; }
-            .contact-form { padding: 30px 20px; }
-            .feedback-form { padding: 30px 20px; }
-            .services-container { grid-template-columns: 1fr; }
-            .properties-grid { grid-template-columns: 1fr; }
-            .calendar-overlay { width: 340px; padding: 12px; }
-            .calendar-day { padding: 6px 1px; font-size: 0.75rem; height: 30px; min-width: 30px; }
-            .calendar-day-header { padding: 6px 1px; font-size: 0.7rem; height: 30px; }
+            .footer-logo-desktop {
+                display: none;
+            }
+            
+            .footer-logo-mobile {
+                display: block;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .nav-links {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .search-box {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .search-btn-container {
+                grid-column: span 1;
+                margin-top: 5px;
+            }
+            
+            .testimonial-prev {
+                left: 10px;
+            }
+            
+            .testimonial-next {
+                right: 10px;
+            }
+            
+            .services-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .properties-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                display: none;
+                margin-top: 0;
+                padding-left: 20px;
+                background: #f8f9fa;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            
+            .dropdown::after {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 25px;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .dropdown {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                background: #f8f9fa;
+                border-radius: 10px;
+                margin-top: 10px;
+                padding: 10px;
+                display: none;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            
+            /* Mobile search should be always visible */
+            .header-search-container {
+                position: static;
+                background: transparent;
+                padding: 0;
+                box-shadow: none;
+                display: flex !important;
+                width: 100%;
+            }
+            
+            #headerSearch {
+                display: block !important;
+                width: 100%;
+                position: static;
+                margin-top: 10px;
+            }
+            
+            #searchToggle {
+                display: none;
+            }
+            
+            .testimonial-slider {
+                height: 400px;
+            }
+            
+            section {
+                padding: 80px 5%;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                margin-top: 70px;
+                padding: 0 15px;
+            }
+            
+            .search-box {
+                padding: 20px;
+            }
+            
+            .contact-form {
+                padding: 30px 20px;
+            }
+            
+            .feedback-form {
+                padding: 30px 20px;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-overlay {
+                width: 340px;
+                padding: 12px;
+            }
+            
+            .calendar-day {
+                padding: 6px 1px;
+                font-size: 0.75rem;
+                height: 30px;
+                min-width: 30px;
+            }
+            
+            .calendar-day-header {
+                padding: 6px 1px;
+                font-size: 0.7rem;
+                height: 30px;
+            }
+            
             .testimonial-content p::before,
-            .testimonial-content p::after { display: none; }
-            .thumbSwiper { display: none; }
-            .mainSwiper { height: 220px; }
+            .testimonial-content p::after {
+                display: none;
+            }
+            
+            /* ✅ FIX 5 — MOBILE SAFETY (IMPORTANT) */
+            .thumbSwiper {
+                display: none;
+            }
+
+            .mainSwiper {
+                height: 220px;
+            }
         }
         
         @media (max-width: 576px) {
-            .hero-content h2 { font-size: 1.8rem; }
-            .section-title h2 { font-size: 1.8rem; }
-            .testimonial-content p { font-size: 1rem; }
-            .footer-logo { flex-direction: column; align-items: flex-start; gap: 5px; }
-            .footer-logo h2 { font-size: 1.3rem; }
-            .calendar-overlay { width: 320px; padding: 10px; max-height: 450px; }
-            .calendar-day { padding: 5px 0; font-size: 0.7rem; height: 28px; min-width: 28px; }
-            .calendar-day-header { padding: 5px 0; font-size: 0.65rem; height: 28px; }
-            .star { font-size: 1.5rem; }
-            .calendar-actions button { padding: 8px; font-size: 0.8rem; }
-            .mainSwiper { height: 200px; }
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .testimonial-content p {
+                font-size: 1rem;
+            }
+            
+            .footer-logo {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .footer-logo h2 {
+                font-size: 1.3rem;
+            }
+            
+            .calendar-overlay {
+                width: 320px;
+                padding: 10px;
+                max-height: 450px;
+            }
+            
+            .calendar-day {
+                padding: 5px 0;
+                font-size: 0.7rem;
+                height: 28px;
+                min-width: 28px;
+            }
+            
+            .calendar-day-header {
+                padding: 5px 0;
+                font-size: 0.65rem;
+                height: 28px;
+            }
+            
+            .star {
+                font-size: 1.5rem;
+            }
+            
+            .calendar-actions button {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+            
+            .mainSwiper {
+                height: 200px;
+            }
         }
         
         /* Accessibility */
@@ -1554,33 +2135,207 @@
         }
         
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+            *,
+            *::before,
+            *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
         }
+
+        /* ✅ FIX 1 — ADD THESE REQUIRED SWIPER CSS RULES */
+        /* ===== SWIPER CORE FIX ===== */
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-wrapper {
+            display: flex;
+        }
+
+        .swiper-slide {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== DESKTOP HEADER SEARCH FIX ===== */
+        @media (min-width: 769px) {
+            .header-search-container {
+                position: relative;
+            }
+            
+            #headerSearch {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 260px;
+                padding: 8px 10px;
+                border: 1px solid var(--primary);
+                background: #fff;
+                z-index: 1000;
+                border-radius: 20px;
+                margin-top: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        /* ── Language Switcher ── */
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        #langSwitcher {
+            position: relative;
+            display: inline-block;
+            font-size: 0.82rem;
+            z-index: 1100;
+            flex-shrink: 0;
+        }
+        .lang-current {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1.5px solid var(--light-gray);
+            border-radius: 20px;
+            background: white;
+            font-weight: 600;
+            color: var(--dark);
+            transition: var(--transition);
+            white-space: nowrap;
+            user-select: none;
+            line-height: 1;
+        }
+        .lang-current:hover { border-color: var(--primary); color: var(--primary); }
+        .lang-flag { font-size: 1rem; line-height: 1; }
+        .lang-code { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.03em; }
+        .lang-arrow { font-size: 0.6rem; margin-left: 1px; opacity: 0.6; }
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 6px 0;
+            min-width: 155px;
+            list-style: none;
+            z-index: 1200;
+        }
+        .lang-dropdown.open { display: block; }
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 0.88rem;
+            color: var(--dark);
+        }
+        .lang-option:hover { background: var(--light); }
+        .lang-option.active { background: #e8f5f1; color: var(--primary); font-weight: 600; }
+        .lang-name { flex: 1; }
+        @media (max-width: 992px) {
+            .navbar-right { gap: 8px; }
+        }
+        @media (max-width: 768px) {
+            #langSwitcher .lang-dropdown { right: auto; left: 0; }
+            .navbar-right { gap: 6px; }
+            .lang-current { padding: 4px 8px; }
+        }
+
     </style>
     
-    <!-- Font Awesome (deferred) -->
+    <!-- Defer non-critical CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
           media="print" onload="this.media='all'" crossorigin="anonymous">
     
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://pwanistays.com">
+    <!-- i18n Translation System -->
+    <script src="/i18n.js"></script>
 </head>
 <body>
-    <!-- SHARED HEADER INJECTION POINT -->
-    <div id="site-header"></div>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20need%20help%20with%20a%20booking" 
+       class="whatsapp-float" 
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
 
-    <!-- Hero Section -->
+    <!-- Header -->
+    <header role="banner">
+        <nav class="navbar" aria-label="Main navigation">
+            <!-- UPDATED HEADER LOGO -->
+            <a href="/" class="logo-link">
+                <img src="/logo-header.png" 
+                     alt="PwaniStays - Curated Coastal Stays" 
+                     class="logo-desktop"
+                     style="height: 50px; width: auto;">
+                <img src="/logo-mobile.png" 
+                     alt="PwaniStays" 
+                     class="logo-mobile"
+                     style="height: 50px; width: auto;">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="#home" class="active" role="menuitem" data-i18n="nav_home">Home</a></li>
+                <li role="none"><a href="about" role="menuitem" data-i18n="nav_about">About Us</a></li>
+                <li role="none"><a href="accommodation" role="menuitem" data-i18n="nav_accommodation">Accommodation</a></li>
+                
+                <!-- Experiences Dropdown -->
+                <li role="none" class="dropdown">
+                    <a href="experiences" role="menuitem" class="dropdown-toggle" data-i18n="nav_experiences">Experiences ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="nairobi" data-i18n="nav_nairobi">Nairobi & Inland</a></li>
+                        <li><a href="safari" data-i18n="nav_safari">Safari</a></li>
+                        <li><a href="coastal-cultural" data-i18n="nav_coastal">Coastal & Cultural</a></li>
+                    </ul>
+                </li>
+                
+                <li role="none"><a href="how-it-works" role="menuitem" data-i18n="nav_how_it_works">How It Works</a></li>
+                <li role="none"><a href="#contact" role="menuitem" data-i18n="nav_contact">Contact</a></li>
+                
+                <!-- Header Search -->
+                <li role="none" class="header-search-container" id="mobileSearchContainer">
+                    <button id="searchToggle" aria-label="Toggle search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
+                </li>
+            </ul>
+            <!-- Navbar Right: Book Now + Language Switcher -->
+            <div class="navbar-right">
+                <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20book%20a%20stay%20or%20get%20more%20information." class="btn-book" data-i18n="nav_book_now">Book Now</a>
+                <div id="langSwitcher" aria-label="Select language"></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CHANGE 3: Hero Section - NOW A 2-IMAGE CAROUSEL -->
     <section class="hero" id="home" role="region" aria-label="Hero section">
+        <!-- Hero Carousel -->
         <div class="hero-carousel">
             <div class="swiper heroSwiper">
                 <div class="swiper-wrapper">
+                    <!-- Slide 1: Ocean-facing balcony / exterior (NEW IMAGE - NO DIVER) -->
                     <div class="swiper-slide">
                         <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
                     </div>
+                    <!-- Slide 2: Bright interior with coastal feel -->
                     <div class="swiper-slide">
                         <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
                     </div>
@@ -1590,9 +2345,11 @@
         
         <div class="hero-content">
             <h1 class="sr-only">PwaniStays - Curated Coastal Stays & Experiences</h1>
+            <!-- UPDATED: Changed from "Experience Luxury on the Kenyan Coast" to "Curated Stays & Coastal Experiences" -->
             <h2 data-i18n="hero_heading">Curated Stays & Coastal Experiences</h2>
             <p data-i18n="hero_subheading">Curated beachfront stays and guided coastal experiences across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu — with safaris, marine adventures, and seamless airport transfers.</p>
             
+            <!-- UPDATED: Search Box with 3 inputs - ADDED VILLA OPTION -->
             <div class="search-box" role="search">
                 <div class="search-input">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
@@ -1615,6 +2372,7 @@
                 </div>
                 <div class="search-input">
                     <i class="fas fa-home" aria-hidden="true"></i>
+                    <!-- UPDATED: Property type dropdown with normalized values - ADDED VILLA -->
                     <select id="propertyType" aria-label="Property type">
                         <option value="" data-i18n="search_any_type">Any Type</option>
                         <option value="studio" data-i18n="type_studio">Studio</option>
@@ -1633,7 +2391,10 @@
                 </div>
             </div>
             
+            <!-- Calendar Backdrop -->
             <div id="calendarBackdrop" class="calendar-backdrop" onclick="hideCalendar()"></div>
+            
+            <!-- Calendar Container -->
             <div id="calendarContainer" class="calendar-overlay"></div>
         </div>
     </section>
@@ -1651,10 +2412,12 @@
             <a class="clear-filters" onclick="clearSearch()" data-i18n="results_clear">Clear filters and show all properties</a>
         </div>
         
-        <div id="propertyList" class="properties-grid"></div>
+        <div id="propertyList" class="properties-grid">
+            <!-- Properties will be loaded here -->
+        </div>
     </section>
 
-    <!-- Featured Stays -->
+    <!-- Featured Stays - UPDATED with View All button -->
     <section class="featured-stays" id="stays">
         <div class="section-title">
             <h2 data-i18n="section_featured">Featured Properties</h2>
@@ -1672,7 +2435,7 @@
         </div>
     </section>
 
-    <!-- Services -->
+    <!-- UPDATED: Services Section with proper CTA links -->
     <section class="services" id="services" role="region" aria-label="Our services">
         <div class="section-title">
             <h2 data-i18n="section_services">Complete Coastal Experience</h2>
@@ -1680,27 +2443,39 @@
         </div>
         <div class="services-container">
             <div class="service-card" role="article">
-                <div class="service-icon"><i class="fas fa-umbrella-beach" aria-hidden="true"></i></div>
+                <div class="service-icon">
+                    <i class="fas fa-umbrella-beach" aria-hidden="true"></i>
+                </div>
                 <h3 data-i18n="svc_accommodation">Coastal Accommodation</h3>
                 <p data-i18n="svc_accommodation_desc">Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations. From budget-friendly options to luxurious 5-bedroom villas with private pools, we have the perfect stay for every traveler.</p>
-                <a href="accommodation.html" class="service-btn"><i class="fas fa-search"></i> Browse Accommodation</a>
+                <a href="accommodation.html" class="service-btn">
+                    <i class="fas fa-search"></i> Browse Accommodation
+                </a>
             </div>
             <div class="service-card" role="article">
-                <div class="service-icon"><i class="fas fa-plane-arrival" aria-hidden="true"></i></div>
+                <div class="service-icon">
+                    <i class="fas fa-plane-arrival" aria-hidden="true"></i>
+                </div>
                 <h3 data-i18n="svc_transfers">Seamless Transfers</h3>
                 <p data-i18n="svc_transfers_desc">Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service. Our professional drivers ensure safe, comfortable transfers in air-conditioned vehicles with complimentary bottled water.</p>
-                <button class="service-btn service-whatsapp-btn" onclick="serviceEnquiry('Airport Transfers')"><i class="fab fa-whatsapp"></i> Book Transfers</button>
+                <button class="service-btn service-whatsapp-btn" onclick="serviceEnquiry('Airport Transfers')">
+                    <i class="fab fa-whatsapp"></i> Book Transfers
+                </button>
             </div>
             <div class="service-card" role="article">
-                <div class="service-icon"><i class="fas fa-ship" aria-hidden="true"></i></div>
+                <div class="service-icon">
+                    <i class="fas fa-ship" aria-hidden="true"></i>
+                </div>
                 <h3 data-i18n="svc_marine">Marine Experiences</h3>
                 <p data-i18n="svc_marine_desc">Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides. We arrange all equipment, permits, and transportation for unforgettable coastal adventures.</p>
-                <a href="coastal-cultural.html" class="service-btn"><i class="fas fa-compass"></i> Explore Experiences</a>
+                <a href="coastal-cultural.html" class="service-btn">
+                    <i class="fas fa-compass"></i> Explore Experiences
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Why Choose Us -->
+    <!-- Why Choose Us - UPDATED with European Guest Specialists -->
     <section class="why-us" id="about" role="region" aria-label="Why choose us">
         <div class="section-title">
             <h2 data-i18n="section_why">Why Choose PwaniStays?</h2>
@@ -1730,7 +2505,7 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
+    <!-- Testimonials - FIXED with proper display -->
     <section class="testimonials" id="testimonials" role="region" aria-label="Client testimonials">
         <div class="section-title">
             <h2 data-i18n="section_testimonials">What Our Guests Say</h2>
@@ -1738,7 +2513,149 @@
         </div>
         <div class="testimonials-container">
             <div class="testimonial-slider">
-                <!-- Testimonials will be populated by JS -->
+                <!-- Testimonial 1 -->
+                <div class="testimonial-slide active">
+                    <div class="testimonial-content">
+                        <p>"Absolutely stunning villa in Nyali! The PwaniStays team made our family vacation seamless from airport pickup to checkout. The kids loved the private pool!"</p>
+                        <div class="testimonial-author">
+                            <h4>Sarah Johnson</h4>
+                            <p>From London, UK</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"As a local from Nairobi looking for a coastal getaway, PwaniStays provided excellent service. The Bamburi beach apartment was perfect and the rates were very competitive."</p>
+                        <div class="testimonial-author">
+                            <h4>David Mwangi</h4>
+                            <p>From Nairobi, Kenya</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Our honeymoon in Diani was magical thanks to PwaniStays. They arranged everything from the villa to a romantic dhow cruise. Highly recommended!"</p>
+                        <div class="testimonial-author">
+                            <h4>Maria & Thomas</h4>
+                            <p>From Berlin, Germany</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 4 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The service was exceptional! From the moment we landed in Mombasa until we left, everything was perfectly organized. The villa in Watamu was breathtaking."</p>
+                        <div class="testimonial-author">
+                            <h4>James Omondi</h4>
+                            <p>From Kampala, Uganda</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 5 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"I've used PwaniStays three times now for business retreats. Their corporate packages are excellent and the team is very professional."</p>
+                        <div class="testimonial-author">
+                            <h4>Fatima Ali</h4>
+                            <p>From Dubai, UAE</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 6 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The Shanzu apartment was exactly as pictured. Clean, modern, and perfectly located. The local host was incredibly helpful with restaurant recommendations."</p>
+                        <div class="testimonial-author">
+                            <h4>Robert Chen</h4>
+                            <p>From Shanghai, China</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 7 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Perfect for our large family reunion. The 6-bedroom villa in Diani accommodated all 12 of us comfortably. The chef prepared amazing Swahili dishes!"</p>
+                        <div class="testimonial-author">
+                            <h4>The Patel Family</h4>
+                            <p>From Mumbai, India</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 8 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"As a solo female traveler, I felt completely safe and well taken care of. The PwaniStays team checked in regularly and were always available."</p>
+                        <div class="testimonial-author">
+                            <h4>Sophie Martin</h4>
+                            <p>From Paris, France</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 9 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"We booked last minute and were amazed by how quickly they arranged everything. The transfer was waiting at the airport as promised."</p>
+                        <div class="testimonial-author">
+                            <h4>Michael & Grace</h4>
+                            <p>From Johannesburg, South Africa</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 10 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"The marine experiences they arranged were unforgettable. Snorkeling in Watamu Marine Park was the highlight of our trip."</p>
+                        <div class="testimonial-author">
+                            <h4>Carlos Rodriguez</h4>
+                            <p>From Barcelona, Spain</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 11 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Excellent value for money. The Nyali villa was luxurious but affordable, especially with the direct booking discount they offered."</p>
+                        <div class="testimonial-author">
+                            <h4>Linda Wang</h4>
+                            <p>From Singapore</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 12 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"We've been coming to the Kenyan coast for years, but this was our first time using PwaniStays. It was by far our best experience yet!"</p>
+                        <div class="testimonial-author">
+                            <h4>The Smith Family</h4>
+                            <p>From Sydney, Australia</p>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <button class="testimonial-prev" aria-label="Previous testimonial">‹</button>
             <button class="testimonial-next" aria-label="Next testimonial">›</button>
@@ -1746,28 +2663,33 @@
         </div>
     </section>
 
-    <!-- Leave Feedback -->
+    <!-- NEW: Leave Feedback Section -->
     <section class="leave-feedback" id="leave-feedback">
         <div class="section-title">
             <h2>Share Your Experience</h2>
             <p>Tell us about your stay with PwaniStays</p>
         </div>
+        
         <div class="feedback-form">
             <h3>Leave Your Feedback</h3>
+            
             <div class="form-group">
                 <label for="feedbackName">Your Name *</label>
                 <input type="text" id="feedbackName" placeholder="Enter your full name" required>
             </div>
+            
             <div class="form-row">
                 <div class="form-group">
                     <label for="feedbackCity">City</label>
                     <input type="text" id="feedbackCity" placeholder="e.g., Nairobi, London">
                 </div>
+                
                 <div class="form-group">
                     <label for="feedbackCountry">Country</label>
                     <input type="text" id="feedbackCountry" placeholder="e.g., Kenya, USA">
                 </div>
             </div>
+            
             <div class="form-group">
                 <label>Your Rating *</label>
                 <div class="star-rating">
@@ -1779,24 +2701,29 @@
                 </div>
                 <div class="rating-text" id="ratingText">Click to rate your experience</div>
             </div>
+            
             <div class="form-group">
                 <label for="feedbackComment">Your Review *</label>
                 <textarea id="feedbackComment" rows="5" placeholder="Tell us about your experience with PwaniStays..." required></textarea>
             </div>
-            <button class="feedback-btn" onclick="submitFeedback()" id="submitFeedbackBtn">Submit Your Review</button>
+            
+            <button class="feedback-btn" onclick="submitFeedback()" id="submitFeedbackBtn">
+                Submit Your Review
+            </button>
+            
             <div id="feedbackMessage" style="margin-top: 20px; text-align: center; display: none;"></div>
         </div>
     </section>
 
-    <!-- Destinations -->
+    <!-- Coastal Destinations - UPDATED with different Diani image -->
     <section class="destinations" id="destinations" role="region" aria-label="Coastal destinations">
         <div class="section-title">
             <h2>Explore Kenyan Coast Destinations</h2>
             <p>From historic Mombasa to pristine Diani</p>
         </div>
         <div class="destinations-container">
-            <!-- Destination cards as before -->
             <div class="destination-card">
+                <!-- UPDATED: Added proper Mombasa thumbnail image -->
                 <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
                     <h3>Mombasa</h3>
                 </div>
@@ -1835,7 +2762,7 @@
         </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Contact Section -->
     <section class="contact" id="contact" role="region" aria-label="Contact us">
         <div class="section-title">
             <h2 data-i18n="section_contact">Start Your Coastal Journey</h2>
@@ -1845,29 +2772,51 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-phone-alt" aria-hidden="true"></i>
-                    <div><h3>Call Us Direct</h3><p><a href="tel:+254738544784">+254 738 544 784</a></p><small>Local & International calls</small></div>
+                    <div>
+                        <h3>Call Us Direct</h3>
+                        <p><a href="tel:+254738544784">+254 738 544 784</a></p>
+                        <small>Local & International calls</small>
+                    </div>
                 </div>
                 <div class="contact-item">
                     <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                    <div><h3>WhatsApp Chat</h3><p><a href="https://wa.me/254738544784">+254 738 544 784</a></p><small>Instant response guaranteed</small></div>
+                    <div>
+                        <h3>WhatsApp Chat</h3>
+                        <p><a href="https://wa.me/254738544784">+254 738 544 784</a></p>
+                        <small>Instant response guaranteed</small>
+                    </div>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-envelope" aria-hidden="true"></i>
-                    <div><h3>Email Us</h3><p><a href="/cdn-cgi/l/email-protection#31535e5e5a585f5642714146505f5842455048421f525e5c">bookings@pwanistays.com</a></p><small>Response within 1 hour</small></div>
+                    <div>
+                        <h3>Email Us</h3>
+                        <p><a href="/cdn-cgi/l/email-protection#a2c0cdcdc9cbccc5d1e2d2d5c3cccbd1d6c3dbd18cc1cdcf"><span class="__cf_email__" data-cfemail="99fbf6f6f2f0f7feead9e9eef8f7f0eaedf8e0eab7faf6f4">[email&#160;protected]</span></a></p>
+                        <small>Response within 1 hour</small>
+                    </div>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-clock" aria-hidden="true"></i>
-                    <div><h3>Operating Hours</h3><p>24/7 - 365 Days</p><small>We're always available for you</small></div>
+                    <div>
+                        <h3>Operating Hours</h3>
+                        <p>24/7 - 365 Days</p>
+                        <small>We're always available for you</small>
+                    </div>
                 </div>
             </div>
             <div class="contact-form" id="book-now" role="form" aria-label="Booking inquiry form">
                 <h3>Send Detailed Inquiry</h3>
                 <form id="inquiryForm">
-                    <div class="form-group"><input type="text" placeholder="Full Name *" id="name" required data-i18n-placeholder="contact_name"></div>
-                    <div class="form-group"><input type="email" placeholder="Email Address *" id="email" required data-i18n-placeholder="contact_email"></div>
-                    <div class="form-group"><input type="tel" placeholder="Phone Number with Country Code *" id="phone" required data-i18n-placeholder="contact_phone"></div>
                     <div class="form-group">
-                        <select id="service" required>
+                        <input type="text" placeholder="Full Name *" id="name" required aria-required="true" data-i18n-placeholder="contact_name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address *" id="email" required aria-required="true" data-i18n-placeholder="contact_email">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Phone Number with Country Code *" id="phone" required aria-required="true" data-i18n-placeholder="contact_phone">
+                    </div>
+                    <div class="form-group">
+                        <select id="service" required aria-required="true">
                             <option value="" disabled selected data-i18n="contact_select_service">Service Interested In *</option>
                             <option value="stay">Accommodation Only</option>
                             <option value="transfer">Accommodation + Transfers</option>
@@ -1875,31 +2824,52 @@
                             <option value="corporate">Corporate/Group Booking</option>
                         </select>
                     </div>
-                    <div class="form-group"><textarea placeholder="Your Detailed Requirements *" rows="5" id="message" required></textarea></div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Detailed Requirements (Travel dates, group size, budget, special requests) *" 
+                                  rows="5" id="message" required aria-required="true"></textarea>
+                    </div>
                     <button type="submit" class="submit-btn" data-i18n="contact_submit">Send Detailed Inquiry</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- UPDATED: Footer with working navigation links -->
     <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
+                <!-- UPDATED FOOTER LOGO with mobile support -->
                 <div class="footer-logo">
-                    <img src="/logo-footer.png" alt="PwaniStays - Curated Coastal Stays" class="footer-logo-desktop" style="height: 60px; width: auto; margin-bottom: 20px;">
-                    <img src="/logo-mobile-footer.png" alt="PwaniStays" class="footer-logo-mobile" style="height: 60px; width: auto; margin-bottom: 20px;">
+                    <!-- Desktop Footer Logo -->
+                    <img src="/logo-footer.png" 
+                         alt="PwaniStays - Curated Coastal Stays" 
+                         class="footer-logo-desktop"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
+                    
+                    <!-- Mobile Footer Logo -->
+                    <img src="/logo-mobile-footer.png" 
+                         alt="PwaniStays" 
+                         class="footer-logo-mobile"
+                         style="height: 60px; width: auto; margin-bottom: 20px;">
                 </div>
                 <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/pwanistayscom" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@pwanistays.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <!-- UPDATED: Removed TripAdvisor and X, updated Instagram username -->
+                    <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/pwanistayscom" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@pwanistays.com" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
                 </div>
             </div>
             <div class="footer-col">
                 <h3 data-i18n="footer_links">Quick Links</h3>
                 <ul>
+                    <!-- UPDATED: Working navigation links -->
                     <li><a href="#home">Home</a></li>
                     <li><a href="#stays">Featured Properties</a></li>
                     <li><a href="#services">Our Services</a></li>
@@ -1911,6 +2881,7 @@
             <div class="footer-col">
                 <h3>Coastal Destinations</h3>
                 <ul>
+                    <!-- UPDATED: Working location filter links -->
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Mombasa')">Mombasa</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Nyali')">Nyali</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Bamburi')">Bamburi</a></li>
@@ -1925,12 +2896,13 @@
                     <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
                     <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
                     <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#e5838c8b819691808b919780a59592848b8c9691849c96cb868a88">bookings@pwanistays.com</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#791b16161210171e0a39090e1817100a0d18000a571a1614"><span class="__cf_email__" data-cfemail="21434e4e4a484f4652615156404f4852554058520f424e4c">[email&#160;protected]</span></a></li>
                     <li><i class="fas fa-clock"></i> 24/7 Customer Support</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
+            <!-- MODIFIED: Added "a Pwanira Ventures brand" to copyright line -->
             <p>&copy; <span id="currentYear"></span> PwaniStays — a Pwanira Ventures brand. Curated Coastal Stays & Experiences. All rights reserved. | 
                <a href="/privacy">Privacy Policy</a> | 
                <a href="/terms">Terms of Service</a> | 
@@ -1939,108 +2911,458 @@
         </div>
     </footer>
 
-    <!-- Supabase and Swiper -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase JS - Initialize Supabase ONE TIME ONLY -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        window.supabaseClient = window.supabase.createClient(
-            "https://aanyrtsfeeynykskwxen.supabase.co",
-            "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD"
-        );
+        const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
+
+        if (!window.supabaseClient) {
+            window.supabaseClient = window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+        }
     </script>
+    
+    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- Page-specific JavaScript (i18n ready, full implementation) -->
     <script>
-        (function() {
-            // Wait for i18n to be ready
-            function waitForI18n(cb) {
-                if (window.i18n && window.i18n.t) cb();
-                else setTimeout(() => waitForI18n(cb), 50);
+        // ==========================================
+        // SEASON PRICING HELPER FUNCTIONS
+        // ==========================================
+        
+        // Function to determine season based on date
+        function getSeasonForDate(date) {
+            const month = date.getMonth() + 1; // 1–12
+            const day = date.getDate();
+
+            // Festive Peak: 20 Dec – 10 Jan
+            if (
+                (month === 12 && day >= 20) ||
+                (month === 1 && day <= 10)
+            ) {
+                return "festive_peak";
             }
 
+            // Early December: 1 Dec – 19 Dec
+            if (month === 12 && day >= 1 && day <= 19) {
+                return "early_december";
+            }
+
+            // April – August
+            if (month >= 4 && month <= 8) {
+                return "april_august";
+            }
+
+            // Everything else (Low Season)
+            return "low_season";
+        }
+
+        // Function to get nightly price based on season WITH 20% COMMISSION
+        function getNightlyPrice(property, checkInDate) {
+            const seasonKey = getSeasonForDate(checkInDate);
+            
+            // Get the base price for the season
+            const basePrice = property[seasonKey] || property.low_season || 0;
+            
+            // Apply 20% commission multiplier
+            const finalPrice = Math.round(basePrice * 1.2);
+            
+            return finalPrice;
+        }
+
+        // Wrap ALL logic in DOMContentLoaded
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Use the globally initialized Supabase client
             const supabase = window.supabaseClient;
             
-            // ===== GLOBAL STATE =====
-            let selectedCheckin = null, selectedCheckout = null;
-            let currentMonth = new Date().getMonth(), currentYear = new Date().getFullYear();
-            let selectedRating = 0;
-            let currentTestimonial = 0;
-            const totalTestimonials = 12;
+            // ==========================
+            // Calendar Variables
+            // ==========================
+            let selectedCheckin = null;
+            let selectedCheckout = null;
+            let currentMonth = new Date().getMonth();
+            let currentYear = new Date().getFullYear();
+            let isCalendarVisible = false;
 
-            // ===== HELPER FUNCTIONS =====
-            function getSeasonForDate(date) {
-                const month = date.getMonth() + 1, day = date.getDate();
-                if ((month === 12 && day >= 20) || (month === 1 && day <= 10)) return "festive_peak";
-                if (month === 12 && day >= 1 && day <= 19) return "early_december";
-                if (month >= 4 && month <= 8) return "april_august";
-                return "low_season";
+            // ==========================
+            // Global Functions for HTML onclick
+            // ==========================
+            window.showCalendar = function() {
+                generateCalendar();
+                
+                document.getElementById('calendarContainer').style.display = 'block';
+                document.getElementById('calendarBackdrop').style.display = 'block';
+                isCalendarVisible = true;
+                
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.hideCalendar = function() {
+                document.getElementById('calendarContainer').style.display = 'none';
+                document.getElementById('calendarBackdrop').style.display = 'none';
+                isCalendarVisible = false;
+                
+                document.body.style.overflow = '';
+            };
+
+            window.searchProperties = async function() {
+                const location = document.getElementById('searchLocation').value;
+                const propertyType = document.getElementById('propertyType').value;
+                
+                // Show search results section
+                document.getElementById('searchResults').style.display = 'block';
+                document.getElementById('stays').style.display = 'none';
+                
+                // Scroll to results
+                document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+                
+                // Update results header
+                const resultsHeader = document.getElementById('resultsHeader');
+                const searchCriteria = document.getElementById('searchCriteria');
+                const datesCriteria = document.getElementById('datesCriteria');
+                
+                let criteriaText = [];
+                if (location) criteriaText.push(location);
+                if (propertyType) {
+                    const unitTypeLabels = {
+                        studio: "Studio",
+                        "1br": "1 Bedroom",
+                        "2br": "2 Bedrooms",
+                        "3br": "3 Bedrooms",
+                        "4br": "4 Bedrooms",
+                        "5br": "5 Bedrooms",
+                        "villa": "Villa"
+                    };
+                    criteriaText.push(unitTypeLabels[propertyType] || propertyType);
+                }
+                
+                searchCriteria.textContent = criteriaText.length > 0 
+                    ? `Properties in ${criteriaText.join(' • ')}`
+                    : 'All Properties';
+                
+                datesCriteria.textContent = (selectedCheckin && selectedCheckout) 
+                    ? `Dates: ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}`
+                    : 'Flexible dates';
+                
+                resultsHeader.style.display = 'block';
+                
+                // Load filtered properties
+                await loadFilteredProperties(location, propertyType);
+            };
+
+            window.serviceEnquiry = function(serviceName) {
+                const message = `Hello PwaniStays! I would like more information about your ${serviceName} services. Please provide details about availability, pricing, and what's included.`;
+                const whatsappNumber = "254738544784";
+                const encodedMessage = encodeURIComponent(message);
+                
+                window.open(
+                    `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+                    "_blank"
+                );
+            };
+
+            window.showAllProperties = function() {
+                // Show search results section
+                document.getElementById('searchResults').style.display = 'block';
+                document.getElementById('stays').style.display = 'none';
+                
+                // Clear any filters
+                document.getElementById('searchLocation').value = '';
+                document.getElementById('propertyType').value = '';
+                updateDateRangeInput();
+                
+                // Update results header
+                const resultsHeader = document.getElementById('resultsHeader');
+                const searchCriteria = document.getElementById('searchCriteria');
+                const datesCriteria = document.getElementById('datesCriteria');
+                
+                searchCriteria.textContent = 'All Properties';
+                datesCriteria.textContent = '';
+                resultsHeader.style.display = 'none';
+                
+                // Scroll to results
+                document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+                
+                // Load all properties
+                loadAllProperties();
+            };
+
+            window.filterByLocation = function(location) {
+                document.getElementById('searchLocation').value = location;
+                searchProperties();
+            };
+
+            window.clearSearch = function() {
+                // Reset filters
+                document.getElementById('searchLocation').value = '';
+                document.getElementById('propertyType').value = '';
+                updateDateRangeInput();
+                
+                // Show featured properties section
+                document.getElementById('searchResults').style.display = 'none';
+                document.getElementById('stays').style.display = 'block';
+                
+                // Scroll to featured properties
+                document.getElementById('stays').scrollIntoView({ behavior: 'smooth' });
+                
+                // Reload featured properties
+                loadFeaturedProperties();
+            };
+
+            window.submitFeedback = function() {
+                const name = document.getElementById('feedbackName').value.trim();
+                const city = document.getElementById('feedbackCity').value.trim();
+                const country = document.getElementById('feedbackCountry').value.trim();
+                const comment = document.getElementById('feedbackComment').value.trim();
+                
+                // Validation
+                if (!name) {
+                    showFeedbackMessage('Please enter your name', 'error');
+                    return;
+                }
+                
+                if (selectedRating === 0) {
+                    showFeedbackMessage('Please select a rating', 'error');
+                    return;
+                }
+                
+                if (!comment) {
+                    showFeedbackMessage('Please enter your review', 'error');
+                    return;
+                }
+                
+                // Disable submit button
+                const submitBtn = document.getElementById('submitFeedbackBtn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+                
+                // Simulate submission
+                setTimeout(() => {
+                    // Show success message
+                    showFeedbackMessage('Thank you for your feedback! Your review has been submitted successfully.', 'success');
+                    
+                    // Reset form
+                    document.getElementById('feedbackName').value = '';
+                    document.getElementById('feedbackCity').value = '';
+                    document.getElementById('feedbackCountry').value = '';
+                    document.getElementById('feedbackComment').value = '';
+                    setRating(0);
+                    
+                    // Re-enable button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Submit Your Review';
+                    
+                }, 1500);
+            };
+
+            // ==========================
+            // HEADER SEARCH FIX - ADDED
+            // ==========================
+            const headerSearchContainer = document.querySelector(".header-search-container");
+            const headerSearchToggle = document.getElementById("searchToggle");
+            const headerSearchInput = document.getElementById("headerSearch");
+
+            if (headerSearchToggle && headerSearchContainer && headerSearchInput) {
+                // Toggle open / close on desktop
+                headerSearchToggle.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    headerSearchContainer.classList.toggle("active");
+                    
+                    if (headerSearchContainer.classList.contains("active")) {
+                        setTimeout(() => headerSearchInput.focus(), 50);
+                    }
+                });
+
+                // Trigger search on Enter
+                headerSearchInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        // Use header search value to filter properties
+                        const searchTerm = headerSearchInput.value.trim();
+                        if (searchTerm) {
+                            // Trigger a keyword search
+                            performKeywordSearch(searchTerm);
+                        }
+                    }
+                });
+
+                // Close when clicking outside (desktop only)
+                if (window.innerWidth > 768) {
+                    document.addEventListener("click", (e) => {
+                        if (!headerSearchContainer.contains(e.target) && 
+                            e.target !== headerSearchToggle && 
+                            e.target !== headerSearchInput) {
+                            headerSearchContainer.classList.remove("active");
+                        }
+                    });
+                }
             }
 
-            function getNightlyPrice(property, checkInDate) {
-                const seasonKey = getSeasonForDate(checkInDate);
-                const basePrice = property[seasonKey] || property.low_season || 0;
-                return Math.round(basePrice * 1.2);
+            // New function for keyword search from header
+            async function performKeywordSearch(keyword) {
+                // Show search results section
+                document.getElementById('searchResults').style.display = 'block';
+                document.getElementById('stays').style.display = 'none';
+                
+                // Scroll to results
+                document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth' });
+                
+                // Update results header
+                const resultsHeader = document.getElementById('resultsHeader');
+                const searchCriteria = document.getElementById('searchCriteria');
+                const datesCriteria = document.getElementById('datesCriteria');
+                
+                searchCriteria.textContent = `Search results for: "${keyword}"`;
+                datesCriteria.textContent = '';
+                resultsHeader.style.display = 'block';
+                
+                // Hide header search input on mobile after search
+                if (window.innerWidth <= 768) {
+                    headerSearchInput.value = '';
+                }
+                
+                // Perform search
+                await searchByKeyword(keyword);
             }
 
-            function formatDate(date) {
-                if (!date) return '';
-                return `${String(date.getDate()).padStart(2,'0')}/${String(date.getMonth()+1).padStart(2,'0')}/${date.getFullYear()}`;
+            async function searchByKeyword(keyword) {
+                const container = document.getElementById('propertyList');
+                container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
+                
+                try {
+                    let query = supabase
+                        .from("properties")
+                        .select("*")
+                        .eq("is_active", true)
+                        .or(`title.ilike.%${keyword}%,location.ilike.%${keyword}%,description.ilike.%${keyword}%`)
+                        .order('created_at', { ascending: false });
+                    
+                    const { data, error } = await query;
+                    
+                    if (error) {
+                        console.error("Search error:", error);
+                        container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
+                        return;
+                    }
+                    
+                    if (!data || data.length === 0) {
+                        container.innerHTML = `<div class="no-properties"><i class="fas fa-search"></i><p>No properties found for "${keyword}".</p><p>Try different keywords or browse all properties.</p></div>`;
+                        return;
+                    }
+                    
+                    // Update results count
+                    if (window.i18n) {
+                        const typeWord2 = data.length === 1 ? window.i18n.t('results_property') : window.i18n.t('results_properties');
+                        document.getElementById('resultsCount').textContent = window.i18n.t('results_found', { n: data.length, type: typeWord2 }) + ` for "${keyword}"`;
+                    } else {
+                        document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'} for "${keyword}"`;
+                    }
+                    
+                    // Clear container
+                    while (container.firstChild) {
+                        container.removeChild(container.firstChild);
+                    }
+                    
+                    // Create document fragment for batch append
+                    const fragment = document.createDocumentFragment();
+                    const cards = [];
+                    
+                    // First create all cards and append to fragment
+                    data.forEach(property => {
+                        const card = createPropertyCard(property);
+                        cards.push({ property, card });
+                        fragment.appendChild(card);
+                    });
+                    
+                    // Append all cards at once
+                    container.appendChild(fragment);
+                    
+                    // THEN load images for each property after DOM is ready
+                    setTimeout(() => {
+                        cards.forEach(({ property }) => {
+                            loadPropertyImages(property);
+                        });
+                        if (window.i18n) window.i18n.translatePropertyCards(container);
+                    }, 300);
+                    
+                } catch (error) {
+                    console.error("Error:", error);
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Unable to search properties. Please check your connection.</p></div>';
+                }
             }
 
-            function isSameDay(d1, d2) {
-                return d1 && d2 && d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+            // ==========================
+            // Calendar Helper Functions
+            // ==========================
+            function initCalendarDates() {
+                selectedCheckin = null;
+                selectedCheckout = null;
+                updateDateRangeInput();
             }
 
-            function shortUUID(uuid) {
-                return uuid ? uuid.split("-")[0] : '';
-            }
-
-            // ===== CALENDAR =====
             function updateDateRangeInput() {
-                const input = document.getElementById('dateRange');
-                if (!input) return;
-                if (selectedCheckin && selectedCheckout) {
-                    input.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
-                } else if (selectedCheckin) {
-                    input.value = `${formatDate(selectedCheckin)} → ${window.i18n?.t('cal_select_checkout') || 'Select checkout'}`;
-                } else {
-                    input.value = window.i18n?.t('select_checkin_checkout') || 'Select check-in → Select check-out';
-                    input.placeholder = window.i18n?.t('search_checkin_checkout') || 'Check-in → Check-out';
+                const dateRangeInput = document.getElementById('dateRange');
+                if (dateRangeInput) {
+                    if (selectedCheckin && selectedCheckout) {
+                        dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
+                    } else if (selectedCheckin) {
+                        dateRangeInput.value = `${formatDate(selectedCheckin)} → ${window.i18n ? window.i18n.t('cal_select_checkout') : 'Select checkout'}`;
+                    } else {
+                        dateRangeInput.value = window.i18n ? window.i18n.t('select_checkin_checkout') : 'Select check-in → Select check-out';
+                        dateRangeInput.placeholder = window.i18n ? window.i18n.t('search_checkin_checkout') : 'Check-in → Check-out';
+                    }
                 }
             }
 
             function generateCalendar() {
                 const calendar = document.getElementById('calendarContainer');
-                const today = new Date(); today.setHours(0,0,0,0);
-                const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-                
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
                 let html = `
                     <div class="calendar-header">
-                        <h4>${window.i18n?.t('cal_title') || 'Select Check-in & Check-out Dates'}</h4>
+                        <h4>${window.i18n ? window.i18n.t('cal_title') : 'Select Check-in & Check-out Dates'}</h4>
                         <div class="calendar-nav">
-                            <button onclick="changeMonth(-1)">‹</button>
-                            <h4>${monthNames[currentMonth]} ${currentYear}</h4>
-                            <button onclick="changeMonth(1)">›</button>
+                            <button onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
+                            <h4>${getMonthName(currentMonth)} ${currentYear}</h4>
+                            <button onclick="changeMonth(1)" aria-label="Next month">›</button>
                         </div>
                     </div>
                     <div class="calendar-grid">
-                        <div class="calendar-day-header">Sun</div><div class="calendar-day-header">Mon</div><div class="calendar-day-header">Tue</div>
-                        <div class="calendar-day-header">Wed</div><div class="calendar-day-header">Thu</div><div class="calendar-day-header">Fri</div><div class="calendar-day-header">Sat</div>
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
                 `;
 
                 const firstDay = new Date(currentYear, currentMonth, 1).getDay();
                 const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-                for (let i = 0; i < firstDay; i++) html += `<div class="calendar-day disabled"></div>`;
+                for (let i = 0; i < firstDay; i++) {
+                    html += `<div class="calendar-day disabled"></div>`;
+                }
 
                 for (let day = 1; day <= daysInMonth; day++) {
                     const date = new Date(currentYear, currentMonth, day);
-                    date.setHours(0,0,0,0);
+                    date.setHours(0, 0, 0, 0);
+
                     const isToday = isSameDay(date, today);
                     const isCheckin = selectedCheckin && isSameDay(date, selectedCheckin);
                     const isCheckout = selectedCheckout && isSameDay(date, selectedCheckout);
                     const isDisabled = date < today;
-                    const isBetween = selectedCheckin && selectedCheckout && date > selectedCheckin && date < selectedCheckout;
+                    const isBetween =
+                        selectedCheckin &&
+                        selectedCheckout &&
+                        date > selectedCheckin &&
+                        date < selectedCheckout;
 
                     let className = "calendar-day";
                     if (isToday) className += " today";
@@ -2049,44 +3371,48 @@
                     if (isDisabled) className += " disabled";
                     if (isBetween) className += " between";
 
-                    const onClick = isDisabled ? "" : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+                    const onClick = isDisabled
+                        ? ""
+                        : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+
                     html += `<div class="${className}" ${onClick}>${day}</div>`;
                 }
 
                 const totalCells = firstDay + daysInMonth;
-                for (let i = totalCells; i < 42; i++) html += `<div class="calendar-day disabled"></div>`;
+                const remaining = 42 - totalCells;
+
+                for (let i = 0; i < remaining; i++) {
+                    html += `<div class="calendar-day disabled"></div>`;
+                }
 
                 html += `
                     </div>
                     <div class="selected-dates-display">
-                        <div><strong>${window.i18n?.t('cal_checkin') || 'Check-in'}</strong><br>${selectedCheckin ? formatDate(selectedCheckin) : (window.i18n?.t('cal_not_selected') || 'Not selected')}</div>
-                        <div><strong>${window.i18n?.t('cal_checkout') || 'Check-out'}</strong><br>${selectedCheckout ? formatDate(selectedCheckout) : (window.i18n?.t('cal_not_selected') || 'Not selected')}</div>
+                        <div>
+                            <strong>${window.i18n ? window.i18n.t('cal_checkin') : 'Check-in'}</strong><br>
+                            ${selectedCheckin ? formatDate(selectedCheckin) : (window.i18n ? window.i18n.t('cal_not_selected') : 'Not selected')}
+                        </div>
+                        <div>
+                            <strong>${window.i18n ? window.i18n.t('cal_checkout') : 'Check-out'}</strong><br>
+                            ${selectedCheckout ? formatDate(selectedCheckout) : (window.i18n ? window.i18n.t('cal_not_selected') : 'Not selected')}
+                        </div>
                     </div>
                     <div class="calendar-actions">
-                        <button class="calendar-clear" onclick="clearDates()">${window.i18n?.t('cal_clear') || 'Clear Dates'}</button>
-                        <button class="calendar-apply" onclick="applyDates()">${window.i18n?.t('cal_apply') || 'Apply Dates'}</button>
+                        <button class="calendar-clear" onclick="clearDates()">${window.i18n ? window.i18n.t('cal_clear') : 'Clear Dates'}</button>
+                        <button class="calendar-apply" onclick="applyDates()">${window.i18n ? window.i18n.t('cal_apply') : 'Apply Dates'}</button>
                     </div>
                 `;
+
                 calendar.innerHTML = html;
             }
 
-            window.showCalendar = function() {
-                generateCalendar();
-                document.getElementById('calendarContainer').style.display = 'block';
-                document.getElementById('calendarBackdrop').style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            };
-
-            window.hideCalendar = function() {
-                document.getElementById('calendarContainer').style.display = 'none';
-                document.getElementById('calendarBackdrop').style.display = 'none';
-                document.body.style.overflow = '';
-            };
-
             window.selectDate = function(day, month, year) {
                 const date = new Date(year, month, day);
-                date.setHours(0,0,0,0);
-                const today = new Date(); today.setHours(0,0,0,0);
+                date.setHours(0, 0, 0, 0);
+
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
                 if (date < today) return;
 
                 if (!selectedCheckin) {
@@ -2100,22 +3426,32 @@
                 } else if (date < selectedCheckin) {
                     selectedCheckin = date;
                     selectedCheckout = null;
+                } else if (selectedCheckin && !selectedCheckout && date <= selectedCheckin) {
+                    selectedCheckin = date;
+                    selectedCheckout = null;
                 } else {
                     selectedCheckout = date;
                 }
+
                 updateDateRangeInput();
                 generateCalendar();
             };
 
             window.changeMonth = function(delta) {
                 currentMonth += delta;
-                if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-                else if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                } else if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
                 generateCalendar();
             };
 
             window.clearDates = function() {
-                selectedCheckin = selectedCheckout = null;
+                selectedCheckin = null;
+                selectedCheckout = null;
                 updateDateRangeInput();
                 generateCalendar();
             };
@@ -2125,49 +3461,250 @@
                     alert("Please select both check-in and check-out dates");
                     return;
                 }
+                
                 if (selectedCheckin >= selectedCheckout) {
-                    alert("Check-out must be after check-in");
+                    alert("Check-out date must be after check-in date");
                     return;
                 }
+                
                 hideCalendar();
             };
 
-            // ===== PROPERTY CARD RENDERING =====
-            function renderAmenities(propertyId, description, expanded = false) {
-                const container = document.getElementById(`desc-${propertyId}`);
-                const toggleBtn = document.getElementById(`toggle-${propertyId}`);
-                if (!container || !description) return;
+            function isSameDay(date1, date2) {
+                if (!date1 || !date2) return false;
+                return date1.getFullYear() === date2.getFullYear() &&
+                       date1.getMonth() === date2.getMonth() &&
+                       date1.getDate() === date2.getDate();
+            }
 
-                const amenities = description.split('\n').filter(line => line.trim());
-                const visible = expanded ? amenities : amenities.slice(0, 4);
-                container.innerHTML = visible.map(a => `<li>${a.trim()}</li>`).join('');
+            function getMonthName(month) {
+                const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                              'July', 'August', 'September', 'October', 'November', 'December'];
+                return months[month];
+            }
 
-                if (amenities.length > 4) {
-                    toggleBtn.style.display = 'inline-block';
-                    toggleBtn.textContent = expanded
-                        ? (window.i18n?.t('card_view_less') || 'View Less')
-                        : (window.i18n?.t('card_more_amenities', { n: amenities.length - 4 }) || `+ ${amenities.length - 4} more amenities`);
-                } else {
-                    toggleBtn.style.display = 'none';
+            function formatDate(date) {
+                if (!date) return '';
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            }
+
+            // ==========================
+            // Property Functions
+            // ==========================
+            function shortUUID(uuid) {
+                return uuid ? uuid.split("-")[0] : '';
+            }
+
+            // UPDATED: Calculate display price with seasonal pricing and 20% commission
+            function calculateDisplayPrice(property, checkinDate = null) {
+                const date = checkinDate || new Date();
+                
+                // Get the season-based price with 20% commission
+                const price = getNightlyPrice(property, date);
+                
+                // Format the price
+                return price.toLocaleString('en-KE', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+            }
+
+            async function loadFeaturedProperties() {
+                const container = document.getElementById('featuredProperties');
+                
+                try {
+                    // First try to get featured properties
+                    let query = supabase
+                        .from("properties")
+                        .select("*")
+                        .eq("is_active", true)
+                        .eq("is_featured", true)
+                        .order("created_at", { ascending: false })
+                        .limit(6);
+                    
+                    const { data, error } = await query;
+                    
+                    if (error || !data || data.length === 0) {
+                        // If no featured properties, get recent ones
+                        query = supabase
+                            .from("properties")
+                            .select("*")
+                            .eq("is_active", true)
+                            .order("created_at", { ascending: false })
+                            .limit(6);
+                        
+                        const { data: recentData, error: recentError } = await query;
+                        
+                        if (recentError || !recentData || recentData.length === 0) {
+                            container.innerHTML = '<div class="no-properties">No featured properties at the moment.</div>';
+                            return;
+                        }
+                        
+                        displayProperties(recentData, container);
+                        setTimeout(() => { if (window.i18n) window.i18n.translatePropertyCards(container); }, 350);
+                        return;
+                    }
+                    
+                    displayProperties(data, container);
+                    setTimeout(() => {
+                        if (window.i18n) {
+                            window.i18n.translatePropertyCards(container);
+                            const lang = window.i18n.getCurrentLang();
+                            if (lang !== 'en') window.i18n.translatePageBody(lang);
+                        }
+                    }, 350);
+                    
+                } catch (error) {
+                    console.error("Error:", error);
+                    container.innerHTML = '<div class="no-properties">Unable to load featured properties.</div>';
                 }
             }
 
-            window.toggleAmenities = function(propertyId) {
-                const container = document.getElementById(`desc-${propertyId}`);
-                const isExpanded = container.classList.toggle('expanded');
-                const fullDesc = container.dataset.full || '';
-                renderAmenities(propertyId, fullDesc, isExpanded);
-            };
+            async function loadAllProperties() {
+                const container = document.getElementById('propertyList');
+                container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading all properties...</div>';
+                
+                try {
+                    const { data, error } = await supabase
+                        .from("properties")
+                        .select("*")
+                        .eq("is_active", true)
+                        .order("created_at", { ascending: false });
+                    
+                    if (error) {
+                        console.error("Error loading properties:", error);
+                        container.innerHTML = '<div class="no-properties"><p>Unable to load properties. Please try again later.</p></div>';
+                        return;
+                    }
+                    
+                    if (!data || data.length === 0) {
+                        container.innerHTML = '<div class="no-properties"><p>No properties available at the moment. Check back soon!</p></div>';
+                        return;
+                    }
+                    
+                    // Clear container
+                    while (container.firstChild) {
+                        container.removeChild(container.firstChild);
+                    }
+                    
+                    // Create document fragment for batch append
+                    const fragment = document.createDocumentFragment();
+                    const cards = [];
+                    
+                    // First create all cards and append to fragment
+                    data.forEach(property => {
+                        const card = createPropertyCard(property);
+                        cards.push({ property, card });
+                        fragment.appendChild(card);
+                    });
+                    
+                    // Append all cards at once
+                    container.appendChild(fragment);
+                    
+                    // THEN load images for each property after DOM is ready
+                    setTimeout(() => {
+                        cards.forEach(({ property }) => {
+                            loadPropertyImages(property);
+                        });
+                        if (window.i18n) window.i18n.translatePropertyCards(container);
+                    }, 300);
+                    
+                } catch (error) {
+                    console.error("Error:", error);
+                    container.innerHTML = '<div class="no-properties"><p>Error loading properties. Please refresh the page.</p></div>';
+                }
+            }
+
+            async function loadFilteredProperties(location, propertyType) {
+                const container = document.getElementById('propertyList');
+                container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
+                
+                try {
+                    let query = supabase
+                        .from("properties")
+                        .select("*")
+                        .eq("is_active", true);
+                    
+                    // Apply location filter
+                    if (location && location !== '') {
+                        query = query.eq('location', location);
+                    }
+                    
+                    // Apply property type filter
+                    if (propertyType && propertyType !== '') {
+                        query = query.eq('unit_type', propertyType);
+                    }
+                    
+                    query = query.order('created_at', { ascending: false });
+                    
+                    const { data, error } = await query;
+                    
+                    if (error) {
+                        console.error("Search error:", error);
+                        container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Error searching properties. Please try again.</p></div>';
+                        return;
+                    }
+                    
+                    if (!data || data.length === 0) {
+                        container.innerHTML = '<div class="no-properties"><i class="fas fa-search"></i><p>No properties found matching your search.</p><p>Try different filters or browse all properties.</p></div>';
+                        return;
+                    }
+                    
+                    // Update results count
+                    if (window.i18n) {
+                        const typeWord = data.length === 1 ? window.i18n.t('results_property') : window.i18n.t('results_properties');
+                        document.getElementById('resultsCount').textContent = window.i18n.t('results_found', { n: data.length, type: typeWord });
+                    } else {
+                        document.getElementById('resultsCount').textContent = `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
+                    }
+                    
+                    // Clear container
+                    while (container.firstChild) {
+                        container.removeChild(container.firstChild);
+                    }
+                    
+                    // Create document fragment for batch append
+                    const fragment = document.createDocumentFragment();
+                    const cards = [];
+                    
+                    // First create all cards and append to fragment
+                    data.forEach(property => {
+                        const card = createPropertyCard(property);
+                        cards.push({ property, card });
+                        fragment.appendChild(card);
+                    });
+                    
+                    // Append all cards at once
+                    container.appendChild(fragment);
+                    
+                    // THEN load images for each property after DOM is ready
+                    setTimeout(() => {
+                        cards.forEach(({ property }) => {
+                            loadPropertyImages(property);
+                        });
+                        if (window.i18n) window.i18n.translatePropertyCards(container);
+                    }, 300);
+                    
+                } catch (error) {
+                    console.error("Error:", error);
+                    container.innerHTML = '<div class="no-properties"><i class="fas fa-exclamation-triangle"></i><p>Unable to search properties. Please check your connection.</p></div>';
+                }
+            }
 
             function createPropertyCard(property) {
                 const card = document.createElement('div');
                 card.className = 'property-card';
                 const shortId = shortUUID(property.id);
                 card.id = `property-${shortId}`;
-
+                
+                // Calculate price based on selected check-in date or current date
                 const checkinDate = selectedCheckin || new Date();
-                const displayPrice = getNightlyPrice(property, checkinDate).toLocaleString('en-KE');
-
+                const displayPrice = calculateDisplayPrice(property, checkinDate);
+                
+                // Get property type display
                 const unitTypeLabels = window.i18n ? {
                     studio: window.i18n.t("type_studio"),
                     "1br": window.i18n.t("type_1br"),
@@ -2177,22 +3714,33 @@
                     "5br": window.i18n.t("type_5br"),
                     "villa": window.i18n.t("type_villa"),
                 } : {
-                    studio: "Studio", "1br": "1 Bedroom", "2br": "2 Bedrooms", "3br": "3 Bedrooms",
-                    "4br": "4 Bedrooms", "5br": "5 Bedrooms", "villa": "Villa"
+                    studio: "Studio",
+                    "1br": "1 Bedroom",
+                    "2br": "2 Bedrooms",
+                    "3br": "3 Bedrooms",
+                    "4br": "4 Bedrooms",
+                    "5br": "5 Bedrooms",
+                    "villa": "Villa"
                 };
                 const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
+                
+                // Show beds from property.beds
                 const bedsCount = property.beds || 1;
-                const bedLabel = window.i18n?.t(bedsCount === 1 ? 'card_bed' : 'card_beds') || (bedsCount === 1 ? 'Bed' : 'Beds');
+                const bedLabel = window.i18n ? (bedsCount === 1 ? window.i18n.t('card_bed') : window.i18n.t('card_beds')) : (bedsCount === 1 ? 'Bed' : 'Beds');
                 const bedsDisplay = `${bedsCount} ${bedLabel}`;
-                const safeTitle = (property.title || 'Property').replace(/'/g, "\\'");
-
+                
+                // Escape special characters for safety
+                const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
+                
+                // REMOVED: Season badge from the property card
                 card.innerHTML = `
                     <div class="property-gallery">
                         <div class="swiper mainSwiper" id="main-${property.id}">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                         alt="${property.title || 'Property'}">
+                                         alt="${property.title || 'Property'} placeholder image"
+                                         onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
                                 </div>
                             </div>
                             <div class="swiper-pagination"></div>
@@ -2201,290 +3749,596 @@
                             <div class="swiper-wrapper"></div>
                         </div>
                     </div>
+                    
                     <div class="property-content">
                         <h3 class="property-title">${property.title || 'Premium Property'}</h3>
                         <div class="property-meta">
-                            <span class="property-location"><i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}</span>
+                            <span class="property-location">
+                                <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
+                            </span>
                             <span class="property-type">${propertyTypeDisplay}</span>
                         </div>
-                        <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}"></ul>
-                        <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;"></button>
+                        
+                        <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}">
+                        </ul>
+                        <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;">
+                        </button>
+                        
                         <div class="property-price">
-                            Ksh ${displayPrice} <span style="font-size:0.9rem;color:var(--gray);">${window.i18n?.t('card_night') || '/ night'}</span>
+                            Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">${window.i18n ? window.i18n.t('card_night') : '/ night'}</span>
                         </div>
+                        
                         <div class="property-footer">
-                            <div class="property-info"><div class="property-beds"><i class="fas fa-bed"></i> ${bedsDisplay}</div></div>
+                            <div class="property-info">
+                                <div class="property-beds">
+                                    <i class="fas fa-bed"></i> ${bedsDisplay}
+                                </div>
+                            </div>
                             <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
-                                <i class="fas fa-calendar-alt"></i> ${window.i18n?.t('card_check_availability') || 'Check Availability'}
+                                <i class="fas fa-calendar-alt"></i> ${window.i18n ? window.i18n.t('card_check_availability') : 'Check Availability'}
                             </button>
                         </div>
                     </div>
                 `;
                 
-                setTimeout(() => renderAmenities(property.id, property.description, false), 0);
+                // Render amenities after card is created
+                setTimeout(() => {
+                    renderAmenities(property.id, property.description, false);
+                }, 0);
+                
                 return card;
             }
 
             window.checkAvailability = function(propertyId, propertyTitle) {
-                const propertyElement = document.getElementById(`property-${shortUUID(propertyId)}`) || document.getElementById(`property-${propertyId}`);
-                const priceElement = propertyElement?.querySelector('.property-price');
-                const price = priceElement ? priceElement.textContent.replace(/[^\d]/g, '') : 'Price on request';
-                const checkinStr = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
-                const checkoutStr = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
-                const anchorId = shortUUID(propertyId);
-                const message = `Property: ${propertyTitle}\nLink: https://pwanistays.com/#property-${anchorId}\nDates: ${checkinStr} → ${checkoutStr}\nRate: KES ${price}/night\n\nHello PwaniStays! I am interested in this property. Is it available?`;
-                window.open(`https://wa.me/254738544784?text=${encodeURIComponent(message)}`, "_blank");
+                // Get property element
+                let propertyElement = document.getElementById(`property-${shortUUID(propertyId)}`);
+                if (!propertyElement) {
+                    propertyElement = document.getElementById(`property-${propertyId}`);
+                    if (!propertyElement) {
+                        console.log(`Could not find property element for ID: ${propertyId}`);
+                        return;
+                    }
+                }
+                
+                // Get price
+                const priceElement = propertyElement.querySelector('.property-price');
+                const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '').split(' ')[0] : 'Price on request';
+                
+                // Get dates
+                const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
+                const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
+                
+                // Create property object
+                const property = {
+                    id: propertyId,
+                    title: propertyTitle
+                };
+                
+                // Open WhatsApp
+                openWhatsApp(property, checkinDate, checkoutDate, price);
             };
 
-            async function loadPropertyImages(property) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-                const shortId = shortUUID(property.id);
-                const card = document.querySelector(`#property-${shortId}`);
-                if (!card) return;
-                const mainWrapper = card.querySelector(`#main-${property.id} .swiper-wrapper`);
-                if (!mainWrapper) return;
+            window.openWhatsApp = function(property, checkin, checkout, rate) {
+                const anchorId = shortUUID(property.id);
+                const propertyLink = `https://pwanistays.com/#property-${anchorId}`;
 
-                let images = [];
-                try {
-                    const { data: files } = await supabase.storage.from('property_images').list(property.id);
-                    if (files?.length) {
-                        files.sort((a,b) => (parseInt(a.name.match(/\d+/)?.[0])||0) - (parseInt(b.name.match(/\d+/)?.[0])||0));
-                        images = files.map(file => supabase.storage.from('property_images').getPublicUrl(`${property.id}/${file.name}`).data.publicUrl);
-                    }
-                } catch (e) {}
-                if (!images.length) images = [property.image_url || 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'];
+                const message = `
+Property: ${property.title}
+Link: ${propertyLink}
+Dates: ${checkin} → ${checkout}
+Rate: KES ${rate}/night
 
-                mainWrapper.innerHTML = images.map((url, i) => `
-                    <div class="swiper-slide">
-                        <img src="${url}" alt="${property.title} ${i+1}" onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'">
-                    </div>
-                `).join('');
+Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
+`.trim();
 
-                const thumbWrapper = card.querySelector(`#thumb-${property.id} .swiper-wrapper`);
-                if (thumbWrapper && images.length > 1) {
-                    thumbWrapper.innerHTML = images.map(url => `<div class="swiper-slide"><img src="${url}"></div>`).join('');
-                    card.querySelector(`#thumb-${property.id}`).style.display = 'block';
+                const whatsappNumber = "254738544784";
+                const encodedMessage = encodeURIComponent(message);
+
+                window.open(
+                    `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+                    "_blank"
+                );
+            };
+
+            // ==========================
+            // Testimonials
+            // ==========================
+            let currentTestimonial = 0;
+            const totalTestimonials = 12;
+            
+            function initTestimonials() {
+                const dotsContainer = document.querySelector('.testimonial-dots');
+                if (!dotsContainer) return;
+                
+                // Create dots
+                for (let i = 0; i < totalTestimonials; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `testimonial-dot ${i === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `View testimonial ${i + 1}`);
+                    dot.addEventListener('click', () => showTestimonial(i));
+                    dotsContainer.appendChild(dot);
                 }
-
-                setTimeout(() => {
-                    const mainEl = card.querySelector(`#main-${property.id}`);
-                    if (mainEl.swiper) mainEl.swiper.destroy(true, true);
-                    let thumbsSwiper = null;
-                    const thumbEl = card.querySelector(`#thumb-${property.id}`);
-                    if (thumbEl && images.length > 1) {
-                        thumbsSwiper = new Swiper(thumbEl, { spaceBetween: 8, slidesPerView: Math.min(4, images.length), freeMode: true, watchSlidesProgress: true });
-                    }
-                    new Swiper(mainEl, {
-                        spaceBetween: 0, loop: images.length > 1,
-                        pagination: { el: mainEl.querySelector('.swiper-pagination'), clickable: true, dynamicBullets: true },
-                        thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
-                        autoplay: images.length > 1 ? { delay: 3000 } : false
-                    });
-                }, 200);
+                
+                // Navigation buttons
+                const prevBtn = document.querySelector('.testimonial-prev');
+                const nextBtn = document.querySelector('.testimonial-next');
+                
+                if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
+                if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
+                
+                // Auto-rotate
+                setInterval(nextTestimonial, 5000);
+            }
+            
+            function showTestimonial(index) {
+                const slides = document.querySelectorAll('.testimonial-slide');
+                const dots = document.querySelectorAll('.testimonial-dot');
+                
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                if (slides[index]) slides[index].classList.add('active');
+                if (dots[index]) dots[index].classList.add('active');
+                currentTestimonial = index;
+            }
+            
+            function nextTestimonial() {
+                currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
+                showTestimonial(currentTestimonial);
+            }
+            
+            function prevTestimonial() {
+                currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+                showTestimonial(currentTestimonial);
             }
 
-            // ===== DATA LOADING =====
+            // ==========================
+            // Star Rating
+            // ==========================
+            let selectedRating = 0;
+            
+            function initStarRating() {
+                const stars = document.querySelectorAll('.star');
+                stars.forEach(star => {
+                    star.addEventListener('click', function() {
+                        const rating = parseInt(this.getAttribute('data-rating'));
+                        setRating(rating);
+                    });
+                    
+                    star.addEventListener('mouseover', function() {
+                        const rating = parseInt(this.getAttribute('data-rating'));
+                        highlightStars(rating);
+                    });
+                });
+                
+                // Reset stars when mouse leaves rating container
+                document.querySelector('.star-rating').addEventListener('mouseleave', function() {
+                    highlightStars(selectedRating);
+                });
+            }
+            
+            function setRating(rating) {
+                selectedRating = rating;
+                highlightStars(rating);
+                
+                // Update rating text
+                const ratingText = document.getElementById('ratingText');
+                const ratingMessages = [
+                    "Click to rate your experience",
+                    "Poor - We'll do better",
+                    "Fair - Room for improvement",
+                    "Good - Satisfied with our service",
+                    "Very Good - Had a great experience",
+                    "Excellent - Absolutely loved it!"
+                ];
+                ratingText.textContent = ratingMessages[rating];
+            }
+            
+            function highlightStars(rating) {
+                const stars = document.querySelectorAll('.star');
+                stars.forEach(star => {
+                    const starRating = parseInt(star.getAttribute('data-rating'));
+                    if (starRating <= rating) {
+                        star.classList.add('selected');
+                    } else {
+                        star.classList.remove('selected');
+                    }
+                });
+            }
+
+            // ==========================
+            // Other Initialization
+            // ==========================
+            
+            // Mobile menu and dropdown toggle - FIXED
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const dropdownToggles = document.querySelectorAll('.dropdown > a');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close mobile menu when clicking any non-dropdown link
+                document.querySelectorAll('.nav-links a:not(.dropdown > a)').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        if (link.getAttribute('href').startsWith('#')) {
+                            navLinks.classList.remove('active');
+                            menuToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+                
+                // Dropdown toggle for mobile - FIXED
+                dropdownToggles.forEach(dropdownToggle => {
+                    dropdownToggle.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 992) {
+                            e.preventDefault();
+                            const parent = this.parentElement;
+                            parent.classList.toggle('active');
+                            
+                            // Close other dropdowns
+                            dropdownToggles.forEach(otherToggle => {
+                                const otherParent = otherToggle.parentElement;
+                                if (otherParent !== parent && otherParent.classList.contains('active')) {
+                                    otherParent.classList.remove('active');
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+            
+            // Close dropdowns when clicking outside (desktop) - FIXED
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth > 992) {
+                    const dropdowns = document.querySelectorAll('.dropdown');
+                    dropdowns.forEach(dropdown => {
+                        if (!dropdown.contains(e.target)) {
+                            dropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
+            
+            // Set current year
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Initialize calendar
+            initCalendarDates();
+            
+            // Initialize testimonials
+            initTestimonials();
+            
+            // Initialize star rating
+            initStarRating();
+            
+            // Form submission
+            const inquiryForm = document.getElementById('inquiryForm');
+            if (inquiryForm) {
+                inquiryForm.addEventListener('submit', handleFormSubmit);
+            }
+            
+            // Load properties on page load
+            loadFeaturedProperties();
+            
+            // Close calendar when clicking backdrop
+            document.getElementById('calendarBackdrop').addEventListener('click', hideCalendar);
+            
+            // Close calendar when pressing Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isCalendarVisible) {
+                    hideCalendar();
+                }
+            });
+            
+            // Initialize Hero Carousel
+            initHeroCarousel();
+            
+            // Add smooth scrolling for all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href === '#' || href.startsWith('javascript:')) {
+                        return;
+                    }
+                    
+                    if (href !== '#') {
+                        e.preventDefault();
+                        
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                            
+                            history.pushState(null, null, href);
+                        }
+                    }
+                });
+            });
+
+            // ==========================
+            // Additional Helper Functions
+            // ==========================
+            
+            function initHeroCarousel() {
+                const heroSwiper = new Swiper('.heroSwiper', {
+                    spaceBetween: 0,
+                    slidesPerView: 1,
+                    loop: true,
+                    autoplay: {
+                        delay: 7000,
+                        disableOnInteraction: false,
+                    },
+                    speed: 1000,
+                    effect: 'fade',
+                    fadeEffect: {
+                        crossFade: true
+                    },
+                    navigation: false,
+                    pagination: false
+                });
+            }
+
             function displayProperties(properties, container) {
-                container.innerHTML = '';
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                
                 const fragment = document.createDocumentFragment();
                 const cards = [];
-                properties.forEach(p => {
-                    const card = createPropertyCard(p);
-                    cards.push({ property: p, card });
+                
+                properties.forEach(property => {
+                    const card = createPropertyCard(property);
+                    cards.push({ property, card });
                     fragment.appendChild(card);
                 });
+                
                 container.appendChild(fragment);
+                
                 setTimeout(() => {
-                    cards.forEach(({ property }) => loadPropertyImages(property));
-                    if (window.i18n) window.i18n.translatePropertyCards(container);
+                    cards.forEach(({ property }) => {
+                        loadPropertyImages(property);
+                    });
+                    // Translate dynamic Supabase content
+                    if (window.i18n) {
+                        window.i18n.translatePropertyCards(container);
+                        // Re-run page body translation to catch any new text
+                        // that appeared after DOMContentLoaded (async Supabase content)
+                        const lang = window.i18n.getCurrentLang();
+                        if (lang !== 'en') window.i18n.translatePageBody(lang);
+                    }
                 }, 300);
             }
 
-            async function loadFeaturedProperties() {
-                const container = document.getElementById('featuredProperties');
+            async function loadPropertyImages(property) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                const shortId = shortUUID(property.id);
+                const card = document.querySelector(`#property-${shortId}`);
+                if (!card) return;
+                
+                const mainWrapper = card.querySelector(`#main-${property.id} .swiper-wrapper`);
+                if (!mainWrapper) return;
+                
+                let images = [];
+                
                 try {
-                    let { data } = await supabase.from("properties").select("*").eq("is_active", true).eq("is_featured", true).limit(6);
-                    if (!data?.length) {
-                        const res = await supabase.from("properties").select("*").eq("is_active", true).limit(6);
-                        data = res.data;
+                    const { data: files, error } = await supabase
+                        .storage
+                        .from('property_images')
+                        .list(property.id);
+                    
+                    if (!error && files && files.length > 0) {
+                        files.sort((a, b) => {
+                            const numA = parseInt(a.name.match(/\d+/)?.[0]) || 0;
+                            const numB = parseInt(b.name.match(/\d+/)?.[0]) || 0;
+                            return numA - numB;
+                        });
+                        
+                        files.forEach(file => {
+                            const { data } = supabase
+                                .storage
+                                .from('property_images')
+                                .getPublicUrl(`${property.id}/${file.name}`);
+                            
+                            if (data && data.publicUrl) {
+                                images.push(data.publicUrl);
+                            }
+                        });
                     }
-                    if (!data?.length) {
-                        container.innerHTML = '<div class="no-properties">No properties available.</div>';
-                        return;
-                    }
-                    displayProperties(data, container);
-                    setTimeout(() => {
-                        if (window.i18n) window.i18n.translatePropertyCards(container);
-                    }, 350);
-                } catch (e) {
-                    container.innerHTML = '<div class="no-properties">Unable to load properties.</div>';
+                } catch (error) {
+                    console.log(`Error loading storage images for property ${property.id}:`, error);
                 }
-            }
-
-            window.showAllProperties = async function() {
-                document.getElementById('searchResults').style.display = 'block';
-                document.getElementById('stays').style.display = 'none';
-                document.getElementById('resultsHeader').style.display = 'none';
-                const container = document.getElementById('propertyList');
-                container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading all properties...</div>';
-                try {
-                    const { data } = await supabase.from("properties").select("*").eq("is_active", true).order("created_at", { ascending: false });
-                    if (!data?.length) {
-                        container.innerHTML = '<div class="no-properties">No properties available.</div>';
-                        return;
+                
+                if (images.length === 0) {
+                    if (property.image_url) {
+                        images.push(property.image_url);
+                    } else {
+                        images.push('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
                     }
-                    displayProperties(data, container);
-                    document.getElementById('resultsCount').textContent = window.i18n?.t('results_found', { n: data.length, type: data.length === 1 ? window.i18n.t('results_property') : window.i18n.t('results_properties') }) || `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
-                } catch (e) {
-                    container.innerHTML = '<div class="no-properties">Error loading properties.</div>';
                 }
-            };
-
-            window.searchProperties = async function() {
-                const location = document.getElementById('searchLocation').value;
-                const propertyType = document.getElementById('propertyType').value;
-                document.getElementById('searchResults').style.display = 'block';
-                document.getElementById('stays').style.display = 'none';
-                const container = document.getElementById('propertyList');
-                container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
-                try {
-                    let query = supabase.from("properties").select("*").eq("is_active", true);
-                    if (location) query = query.eq('location', location);
-                    if (propertyType) query = query.eq('unit_type', propertyType);
-                    const { data } = await query.order('created_at', { ascending: false });
-                    if (!data?.length) {
-                        container.innerHTML = '<div class="no-properties">No properties found.</div>';
-                        return;
-                    }
-                    displayProperties(data, container);
-                    document.getElementById('resultsCount').textContent = window.i18n?.t('results_found', { n: data.length, type: data.length === 1 ? window.i18n.t('results_property') : window.i18n.t('results_properties') }) || `Found ${data.length} propert${data.length === 1 ? 'y' : 'ies'}`;
-                    document.getElementById('resultsHeader').style.display = 'block';
-                    document.getElementById('searchCriteria').textContent = `Properties in ${location || 'All Locations'} ${propertyType ? '• ' + propertyType : ''}`;
-                } catch (e) {
-                    container.innerHTML = '<div class="no-properties">Error searching properties.</div>';
-                }
-            };
-
-            window.clearSearch = function() {
-                document.getElementById('searchLocation').value = '';
-                document.getElementById('propertyType').value = '';
-                updateDateRangeInput();
-                document.getElementById('searchResults').style.display = 'none';
-                document.getElementById('stays').style.display = 'block';
-                loadFeaturedProperties();
-            };
-
-            window.filterByLocation = function(location) {
-                document.getElementById('searchLocation').value = location;
-                searchProperties();
-            };
-
-            window.serviceEnquiry = function(service) {
-                window.open(`https://wa.me/254738544784?text=${encodeURIComponent(`Hello PwaniStays! I'm interested in ${service}.`)}`, "_blank");
-            };
-
-            // ===== TESTIMONIALS =====
-            function initTestimonials() {
-                const slider = document.querySelector('.testimonial-slider');
-                const dotsContainer = document.querySelector('.testimonial-dots');
-                if (!slider || !dotsContainer) return;
-                const testimonials = [
-                    { text: "Absolutely stunning villa in Nyali! The PwaniStays team made our family vacation seamless from airport pickup to checkout.", author: "Sarah Johnson", location: "London, UK" },
-                    { text: "As a local from Nairobi looking for a coastal getaway, PwaniStays provided excellent service. The Bamburi beach apartment was perfect.", author: "David Mwangi", location: "Nairobi, Kenya" },
-                    { text: "Our honeymoon in Diani was magical thanks to PwaniStays. They arranged everything from the villa to a romantic dhow cruise.", author: "Maria & Thomas", location: "Berlin, Germany" },
-                    { text: "The service was exceptional! From the moment we landed in Mombasa until we left, everything was perfectly organized.", author: "James Omondi", location: "Kampala, Uganda" },
-                    { text: "I've used PwaniStays three times now for business retreats. Their corporate packages are excellent.", author: "Fatima Ali", location: "Dubai, UAE" },
-                    { text: "The Shanzu apartment was exactly as pictured. Clean, modern, and perfectly located.", author: "Robert Chen", location: "Shanghai, China" },
-                    { text: "Perfect for our large family reunion. The 6-bedroom villa in Diani accommodated all 12 of us comfortably.", author: "The Patel Family", location: "Mumbai, India" },
-                    { text: "As a solo female traveler, I felt completely safe and well taken care of.", author: "Sophie Martin", location: "Paris, France" },
-                    { text: "We booked last minute and were amazed by how quickly they arranged everything.", author: "Michael & Grace", location: "Johannesburg, South Africa" },
-                    { text: "The marine experiences they arranged were unforgettable. Snorkeling in Watamu was the highlight.", author: "Carlos Rodriguez", location: "Barcelona, Spain" },
-                    { text: "Excellent value for money. The Nyali villa was luxurious but affordable.", author: "Linda Wang", location: "Singapore" },
-                    { text: "We've been coming to the Kenyan coast for years, but this was our best experience yet!", author: "The Smith Family", location: "Sydney, Australia" }
-                ];
-                slider.innerHTML = testimonials.map((t, i) => `
-                    <div class="testimonial-slide ${i === 0 ? 'active' : ''}">
-                        <div class="testimonial-content">
-                            <p>"${t.text}"</p>
-                            <div class="testimonial-author">
-                                <h4>${t.author}</h4>
-                                <p>From ${t.location}</p>
-                                <div class="rating">★★★★★</div>
-                            </div>
+                
+                mainWrapper.innerHTML = '';
+                
+                const thumbWrapper = card.querySelector(`#thumb-${property.id} .swiper-wrapper`);
+                if (thumbWrapper) thumbWrapper.innerHTML = '';
+                
+                images.forEach((url, index) => {
+                    mainWrapper.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${url}" alt="${property.title || 'Property'} image ${index + 1}" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
                         </div>
-                    </div>
-                `).join('');
-                dotsContainer.innerHTML = testimonials.map((_, i) => `<button class="testimonial-dot ${i === 0 ? 'active' : ''}" onclick="showTestimonial(${i})"></button>`).join('');
+                    `;
+                    
+                    if (thumbWrapper && images.length > 1) {
+                        thumbWrapper.innerHTML += `
+                            <div class="swiper-slide">
+                                <img src="${url}" alt="${property.title || 'Property'} thumbnail ${index + 1}"
+                                     onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                            </div>
+                        `;
+                    }
+                });
+                
+                setTimeout(() => {
+                    initializePropertySwiper(property.id, images);
+                }, 200);
             }
 
-            window.showTestimonial = function(index) {
-                document.querySelectorAll('.testimonial-slide').forEach((s, i) => s.classList.toggle('active', i === index));
-                document.querySelectorAll('.testimonial-dot').forEach((d, i) => d.classList.toggle('active', i === index));
-                currentTestimonial = index;
+            function initializePropertySwiper(propertyId, images) {
+                const mainSwiperElement = document.querySelector(`#main-${propertyId}`);
+                const thumbSwiperElement = document.querySelector(`#thumb-${propertyId}`);
+                
+                if (!mainSwiperElement) return null;
+                
+                if (mainSwiperElement.swiper) {
+                    mainSwiperElement.swiper.destroy(true, true);
+                }
+                
+                if (thumbSwiperElement && thumbSwiperElement.swiper) {
+                    thumbSwiperElement.swiper.destroy(true, true);
+                }
+                
+                let thumbsSwiper = null;
+                if (images.length > 1 && thumbSwiperElement) {
+                    thumbSwiperElement.style.display = 'block';
+                    
+                    thumbsSwiper = new Swiper(thumbSwiperElement, {
+                        spaceBetween: 8,
+                        slidesPerView: Math.min(4, images.length),
+                        freeMode: true,
+                        watchSlidesProgress: true,
+                        breakpoints: {
+                            320: { slidesPerView: Math.min(3, images.length) },
+                            768: { slidesPerView: Math.min(4, images.length) }
+                        }
+                    });
+                } else if (thumbSwiperElement) {
+                    thumbSwiperElement.style.display = 'none';
+                }
+                
+                const mainSwiper = new Swiper(mainSwiperElement, {
+                    spaceBetween: 0,
+                    loop: images.length > 1,
+                    pagination: {
+                        el: mainSwiperElement.querySelector('.swiper-pagination'),
+                        clickable: true,
+                        dynamicBullets: true
+                    },
+                    navigation: false,
+                    thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
+                    autoplay: images.length > 1 ? {
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    } : false,
+                    effect: 'slide',
+                    speed: 500,
+                    preloadImages: false,
+                    lazy: {
+                        loadPrevNext: true,
+                    }
+                });
+                
+                return mainSwiper;
+            }
+
+            function renderAmenities(propertyId, description, expanded = false) {
+                const container = document.getElementById(`desc-${propertyId}`);
+                const toggleBtn = document.getElementById(`toggle-${propertyId}`);
+
+                if (!container || !description) return;
+
+                const amenities = description.split('\n').filter(line => line.trim().length > 0);
+                const visible = expanded ? amenities : amenities.slice(0, 4);
+
+                container.innerHTML = visible.map(amenity => `<li>${amenity.trim()}</li>`).join('');
+
+                if (amenities.length > 4) {
+                    toggleBtn.style.display = 'inline-block';
+                    if (window.i18n) {
+                        toggleBtn.textContent = expanded
+                            ? window.i18n.t('card_view_less')
+                            : window.i18n.t('card_more_amenities', { n: amenities.length - 4 });
+                    } else {
+                        toggleBtn.textContent = expanded
+                            ? 'View Less'
+                            : `+ ${amenities.length - 4} more amenities`;
+                    }
+                } else {
+                    toggleBtn.style.display = 'none';
+                }
+            }
+
+            window.toggleAmenities = function(propertyId) {
+                const container = document.getElementById(`desc-${propertyId}`);
+                const isExpanded = container.classList.toggle('expanded');
+                
+                const fullDescription = container.dataset.full || '';
+                
+                renderAmenities(
+                    propertyId,
+                    fullDescription,
+                    isExpanded
+                );
             };
 
-            window.nextTestimonial = () => showTestimonial((currentTestimonial + 1) % totalTestimonials);
-            window.prevTestimonial = () => showTestimonial((currentTestimonial - 1 + totalTestimonials) % totalTestimonials);
-
-            // ===== FEEDBACK =====
-            function initStarRating() {
-                document.querySelectorAll('.star').forEach(star => {
-                    star.addEventListener('click', function() {
-                        selectedRating = parseInt(this.dataset.rating);
-                        document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('selected', i < selectedRating));
-                        document.getElementById('ratingText').textContent = ['Poor','Fair','Good','Very Good','Excellent'][selectedRating-1] || 'Click to rate';
-                    });
-                });
-            }
-
-            window.submitFeedback = function() {
-                const name = document.getElementById('feedbackName').value.trim();
-                if (!name || selectedRating === 0 || !document.getElementById('feedbackComment').value.trim()) {
-                    alert('Please fill all required fields and select a rating.');
+            function handleFormSubmit(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    name: document.getElementById('name').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    service: document.getElementById('service').value,
+                    message: document.getElementById('message').value.trim()
+                };
+                
+                if (!formData.name || !formData.email || !formData.phone || !formData.service || !formData.message) {
+                    alert('Please fill all required fields marked with *');
                     return;
                 }
-                const btn = document.getElementById('submitFeedbackBtn');
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-                setTimeout(() => {
-                    document.getElementById('feedbackMessage').style.display = 'block';
-                    document.getElementById('feedbackMessage').innerHTML = '<div style="background:#d4edda;color:#155724;padding:15px;border-radius:8px;">Thank you for your feedback!</div>';
-                    btn.disabled = false;
-                    btn.innerHTML = 'Submit Your Review';
-                    ['feedbackName','feedbackCity','feedbackCountry','feedbackComment'].forEach(id => document.getElementById(id).value = '');
-                    selectedRating = 0;
-                    document.querySelectorAll('.star').forEach(s => s.classList.remove('selected'));
-                }, 1500);
-            };
-
-            // ===== FORM SUBMIT =====
-            document.getElementById('inquiryForm')?.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Thank you! Our coastal experts will contact you within 24 hours.');
+                
+                alert(`Thank you ${formData.name}! Our coastal experts will contact you within 24 hours.`);
                 e.target.reset();
-            });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
 
-            // ===== INITIALIZATION =====
-            waitForI18n(() => {
-                // Initialize hero swiper
-                new Swiper('.heroSwiper', { loop: true, autoplay: { delay: 7000 }, effect: 'fade' });
-                // Load featured properties
-                loadFeaturedProperties();
-                // Set current year
-                document.getElementById('currentYear').textContent = new Date().getFullYear();
-                // Init testimonials and stars
-                initTestimonials();
-                initStarRating();
-                // Wire testimonial nav
-                document.querySelector('.testimonial-prev')?.addEventListener('click', prevTestimonial);
-                document.querySelector('.testimonial-next')?.addEventListener('click', nextTestimonial);
-                // Auto-rotate testimonials
-                setInterval(nextTestimonial, 5000);
-            });
-        })();
+            function showFeedbackMessage(message, type) {
+                const messageDiv = document.getElementById('feedbackMessage');
+        
+                if (!messageDiv) return;
+                
+                messageDiv.textContent = message;
+                messageDiv.className = `feedback-message ${type}`;
+                messageDiv.style.display = 'block';
+                messageDiv.style.padding = '15px';
+                messageDiv.style.borderRadius = '8px';
+                messageDiv.style.fontWeight = '600';
+                
+                if (type === 'success') {
+                    messageDiv.style.background = '#d4edda';
+                    messageDiv.style.color = '#155724';
+                } else {
+                    messageDiv.style.background = '#f8d7da';
+                    messageDiv.style.color = '#721c24';
+                }
+                
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            }
+
+        }); // end DOMContentLoaded
     </script>
-
-    <!-- Shared Header Loader (loads header.html and wires everything) -->
-    <script src="/header-loader.js"></script>
 </body>
 </html>

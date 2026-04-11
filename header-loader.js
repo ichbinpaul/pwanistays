@@ -361,30 +361,14 @@
     // i18n.js's buildLanguageSwitcher() uses the same floating dropdown approach
     // and is already wired up. We just need to call applyStaticTranslations.
     // If i18n.js is NOT loaded, fall back to our own switcher.
-    function applyI18n() {
-      if (window.i18n) {
-        window.i18n.applyStaticTranslations?.();
-        // Let i18n.js rebuild the switcher (it owns #langSwitcher)
-        if (typeof buildLanguageSwitcher === 'function') {
-          buildLanguageSwitcher();
-        } else {
-          // i18n.js not present — use our own switcher
-          rebuildSwitcherButton();
-        }
-      } else {
-        rebuildSwitcherButton();
-      }
-    }
-
+    // Apply i18n static translations to the newly injected header
+    // The language switcher button is handled by i18n.js's MutationObserver
+    // which fires automatically when #langSwitcher appears in the DOM
     if (window.i18n) {
-      applyI18n();
+      window.i18n.applyStaticTranslations?.();
     } else {
-      let attempts = 0;
-      const poll = setInterval(() => {
-        attempts++;
-        if (window.i18n) { applyI18n(); clearInterval(poll); }
-        if (attempts > 30) { rebuildSwitcherButton(); clearInterval(poll); }
-      }, 100);
+      // i18n.js not loaded — use our own switcher as fallback
+      rebuildSwitcherButton();
     }
 
     handleSearchParam();

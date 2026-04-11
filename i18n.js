@@ -1800,13 +1800,51 @@ window.setLanguage = async function(lang) {
 
 // Main init — called on DOMContentLoaded
 async function initI18n() {
-  currentLang = await detectLanguage();
-  buildLanguageSwitcher();
+  // ── Step 1: Show switcher IMMEDIATELY with saved/default lang (no network wait) ──
+  try {
+    const saved = localStorage.getItem(LANG_STORAGE_KEY);
+    if (saved && TRANSLATIONS[saved]) currentLang = saved;
+  } catch (e) {}
+
+  // Build the switcher right away so it appears on page load
+  // Use a small delay to ensure DOM is painted first
+  requestAnimationFrame(() => {
+    buildLanguageSwitcher();
+  });
   applyStaticTranslations();
-  // Translate full page body if not English
-  if (currentLang !== 'en') {
+
+  // ── Step 2: Detect actual language from geo-IP (async, may take 1-3s) ──
+  const detected = await detectLanguage();
+  if (detected !== currentLang) {
+    currentLang = detected;
+    buildLanguageSwitcher();   // update flag if language changed
+    applyStaticTranslations();
+    if (currentLang !== 'en') {
+      await translatePageBody(currentLang);
+    }
+  } else if (currentLang !== 'en') {
     await translatePageBody(currentLang);
   }
 }
 
-document.addEventListener("DOMContentLoaded", initI18n);
+// Also watch for #langSwitcher being added to the DOM later
+// (e.g. on about.html where header-loader injects the header asynchronously)
+function _watchForSwitcher() {
+  if (document.getElementById('langSwitcher')) {
+    buildLanguageSwitcher();
+    return;
+  }
+  const obs = new MutationObserver(() => {
+    const sw = document.getElementById('langSwitcher');
+    if (sw) {
+      obs.disconnect();
+      buildLanguageSwitcher();
+    }
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initI18n();
+  _watchForSwitcher();
+});

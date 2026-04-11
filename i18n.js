@@ -2,15 +2,14 @@
  * PwaniStays i18n Translation System
  * ====================================
  * - 10 languages: EN, NO, DA, PL, SV, FI, DE, NL, FR, IS
- * - Auto-detects country → language via ipapi.co (free, no key needed)
- * - Falls back to browser navigator.language
- * - Caches translations in localStorage (keyed by lang + content hash)
+ * - Auto-detects country → language via ipapi.co
+ * - Caches translations in localStorage
  * - Uses Google Translate free endpoint for dynamic Supabase content
- * - Static UI strings are hard-coded below (no API call needed)
+ * - Static UI strings are hard-coded below
  */
 
 // ─────────────────────────────────────────────
-// 1. STATIC UI STRING DICTIONARY
+// 1. STATIC UI STRING DICTIONARY (FULL)
 // ─────────────────────────────────────────────
 const TRANSLATIONS = {
   en: {
@@ -465,7 +464,7 @@ const TRANSLATIONS = {
     svc_transfers: "Smidiga Transferer",
     svc_transfers_desc: "Privata flygplatstransporter från Moi International (MBA), Ukunda (UKA) och SGR-stationer.",
     svc_transfers_btn: "Boka Transfer",
-    svc_marine: "Havupplevelser",
+    svc_marine: "Havsupplevelser",
     svc_marine_desc: "Dhow-kryssningar, snorkling, djuphavsfiske och delfinsafari med certifierade guider.",
     svc_marine_btn: "Utforska Upplevelser",
     why_specialists: "Kustspecialister",
@@ -988,31 +987,11 @@ const TRANSLATIONS = {
 // 2. LANGUAGE → COUNTRY MAPPING
 // ─────────────────────────────────────────────
 const COUNTRY_LANGUAGE_MAP = {
-  // Norwegian
-  NO: "no",
-  // Danish
-  DK: "da",
-  // Polish
-  PL: "pl",
-  // Swedish
-  SE: "sv",
-  // Finnish
-  FI: "fi",
-  // German
+  NO: "no", DK: "da", PL: "pl", SE: "sv", FI: "fi",
   DE: "de", AT: "de", CH: "de", LI: "de",
-  // Dutch
   NL: "nl", BE: "nl",
-  // French
   FR: "fr", MC: "fr", LU: "fr",
-  // Icelandic
   IS: "is",
-  // Default English for everything else
-};
-
-// Google Translate language codes
-const GT_LANG_CODES = {
-  no: "no", da: "da", pl: "pl", sv: "sv",
-  fi: "fi", de: "de", nl: "nl", fr: "fr", is: "is", en: "en",
 };
 
 // ─────────────────────────────────────────────
@@ -1020,236 +999,64 @@ const GT_LANG_CODES = {
 // ─────────────────────────────────────────────
 let currentLang = "en";
 const LANG_STORAGE_KEY = "pwani_lang";
-const TRANSLATION_CACHE_PREFIX = "pwani_tr_";
 
 // ─────────────────────────────────────────────
-// 4. HELPER: get translation string
+// 4. PUBLIC FUNCTIONS
 // ─────────────────────────────────────────────
 function t(key, vars = {}) {
   const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
   let str = dict[key] || TRANSLATIONS.en[key] || key;
-  Object.entries(vars).forEach(([k, v]) => {
-    str = str.replace(`{${k}}`, v);
-  });
+  Object.entries(vars).forEach(([k, v]) => str = str.replace(`{${k}}`, v));
   return str;
 }
 
-// ─────────────────────────────────────────────
-// 5. GOOGLE TRANSLATE — Dynamic Content
-// ─────────────────────────────────────────────
-/**
- * Translates a single text string via Google Translate (no API key, free endpoint).
- * Returns translated string (or original on error).
- * Results are cached in localStorage.
- */
-async function translateText(text, targetLang) {
-  if (!text || targetLang === "en" || !text.trim()) return text;
+function applyStaticTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+      el.placeholder = t(key);
+    } else {
+      el.textContent = t(key);
+    }
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
+  });
+  document.documentElement.lang = currentLang;
+}
 
-  // Cache key: hash of lang + text
-  const cacheKey = TRANSLATION_CACHE_PREFIX + targetLang + "_" + simpleHash(text);
+// Simple Google Translate for dynamic content (cached)
+async function translateText(text, targetLang) {
+  if (!text || targetLang === "en") return text;
+  const cacheKey = `tr_${targetLang}_${btoa(text).slice(0, 50)}`;
   try {
     const cached = localStorage.getItem(cacheKey);
     if (cached) return cached;
-  } catch (e) {}
-
+  } catch (_) {}
   try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${GT_LANG_CODES[targetLang] || targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-    const res = await fetch(url);
-    if (!res.ok) return text;
+    const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
     const data = await res.json();
-    // Google's response is nested arrays: [[["translated", "original", ...]]]
-    const translated = data[0]?.map((s) => s[0]).join("") || text;
-    try {
-      localStorage.setItem(cacheKey, translated);
-    } catch (e) {}
+    const translated = data[0]?.map(s => s[0]).join("") || text;
+    try { localStorage.setItem(cacheKey, translated); } catch (_) {}
     return translated;
-  } catch (e) {
+  } catch {
     return text;
   }
 }
 
-/**
- * Translate multiple texts in one batch (reduces API calls).
- * Separator trick: join with a unique delimiter, translate once, split back.
- */
-const SEPARATOR = " ||||| ";
-async function translateBatch(texts, targetLang) {
-  if (targetLang === "en") return texts;
-
-  const nonEmpty = texts.map((t, i) => ({ text: t, index: i })).filter((x) => x.text && x.text.trim());
-  if (nonEmpty.length === 0) return texts;
-
-  // Check cache for each
-  const results = [...texts];
-  const toFetch = [];
-
-  for (const { text, index } of nonEmpty) {
-    const cacheKey = TRANSLATION_CACHE_PREFIX + targetLang + "_" + simpleHash(text);
-    try {
-      const cached = localStorage.getItem(cacheKey);
-      if (cached) {
-        results[index] = cached;
-      } else {
-        toFetch.push({ text, index });
-      }
-    } catch (e) {
-      toFetch.push({ text, index });
+async function translatePropertyCards(container) {
+  if (!container || currentLang === "en") return;
+  const cards = container.querySelectorAll(".property-card");
+  for (const card of cards) {
+    const title = card.querySelector(".property-title");
+    const type = card.querySelector(".property-type");
+    const descItems = card.querySelectorAll(".property-desc li");
+    if (title) title.textContent = await translateText(title.textContent, currentLang);
+    if (type) type.textContent = await translateText(type.textContent, currentLang);
+    for (const li of descItems) {
+      li.textContent = await translateText(li.textContent, currentLang);
     }
-  }
-
-  if (toFetch.length === 0) return results;
-
-  // Batch translate
-  const combined = toFetch.map((x) => x.text).join(SEPARATOR);
-  try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${GT_LANG_CODES[targetLang] || targetLang}&dt=t&q=${encodeURIComponent(combined)}`;
-    const res = await fetch(url);
-    if (!res.ok) return results;
-    const data = await res.json();
-    const translatedCombined = data[0]?.map((s) => s[0]).join("") || combined;
-    const parts = translatedCombined.split(/\s*\|\|\|\|\|\s*/);
-
-    toFetch.forEach(({ index }, i) => {
-      const translated = parts[i] || toFetch[i].text;
-      results[index] = translated;
-      const cacheKey = TRANSLATION_CACHE_PREFIX + targetLang + "_" + simpleHash(toFetch[i].text);
-      try { localStorage.setItem(cacheKey, translated); } catch (e) {}
-    });
-  } catch (e) {
-    // Return originals on failure
-  }
-
-  return results;
-}
-
-function simpleHash(str) {
-  let hash = 0;
-  for (let i = 0; i < Math.min(str.length, 200); i++) {
-    hash = (hash << 5) - hash + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash).toString(36);
-}
-
-// ─────────────────────────────────────────────
-// 6. APPLY STATIC TRANSLATIONS TO THE DOM
-// ─────────────────────────────────────────────
-function applyStaticTranslations() {
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const key = el.getAttribute("data-i18n");
-    const translated = t(key);
-    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
-      el.placeholder = translated;
-    } else if (el.tagName === "OPTION") {
-      el.textContent = translated;
-    } else {
-      el.textContent = translated;
-    }
-  });
-
-  // data-i18n-placeholder for inputs
-  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-    el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
-  });
-
-  // data-i18n-html for innerHTML (e.g. button with icon)
-  document.querySelectorAll("[data-i18n-html]").forEach((el) => {
-    const key = el.getAttribute("data-i18n-html");
-    // Keep any child icon elements, replace only text nodes
-    const icon = el.querySelector("i");
-    el.textContent = t(key);
-    if (icon) el.prepend(icon);
-  });
-
-  // Update html lang attribute
-  document.documentElement.lang = currentLang;
-}
-
-// ─────────────────────────────────────────────
-// 7. TRANSLATE SUPABASE PROPERTY CARDS
-// ─────────────────────────────────────────────
-/**
- * Called after property cards are rendered into the DOM.
- * Translates title, location, description amenities, and badges.
- */
-async function translatePropertyCards(containerEl) {
-  if (currentLang === "en") return;
-  if (!containerEl) return;
-
-  const cards = containerEl.querySelectorAll(".property-card");
-  if (!cards.length) return;
-
-  // Gather all unique texts to translate in one batch
-  const texts = [];
-  const targets = []; // {el, field}
-
-  cards.forEach((card) => {
-    const titleEl = card.querySelector(".property-title");
-    const descEl = card.querySelector(".property-desc");
-    const typeEl = card.querySelector(".property-type");
-
-    if (titleEl) {
-      texts.push(titleEl.textContent.trim());
-      targets.push({ el: titleEl, field: "text" });
-    }
-
-    if (typeEl) {
-      texts.push(typeEl.textContent.trim());
-      targets.push({ el: typeEl, field: "text" });
-    }
-
-    // Amenity list items
-    if (descEl) {
-      descEl.querySelectorAll("li").forEach((li) => {
-        texts.push(li.textContent.trim());
-        targets.push({ el: li, field: "text" });
-      });
-
-      // Also translate the data-full attribute (used for expand)
-      const full = descEl.dataset.full;
-      if (full) {
-        texts.push(full);
-        targets.push({ el: descEl, field: "data-full" });
-      }
-    }
-  });
-
-  if (!texts.length) return;
-
-  const translated = await translateBatch(texts, currentLang);
-
-  translated.forEach((text, i) => {
-    const { el, field } = targets[i];
-    if (field === "text") {
-      el.textContent = text;
-    } else if (field === "data-full") {
-      el.dataset.full = text;
-    }
-  });
-
-  // Update static card labels (/ night, Check Availability, Beds)
-  cards.forEach((card) => {
-    const nightEl = card.querySelector(".property-price span");
-    if (nightEl) nightEl.textContent = t("card_night");
-
-    const availBtn = card.querySelector(".btn-primary");
-    if (availBtn) {
-      const icon = availBtn.querySelector("i");
-      availBtn.textContent = " " + t("card_check_availability");
-      if (icon) availBtn.prepend(icon);
-    }
-
-    // Beds
-    const bedsEl = card.querySelector(".property-beds");
-    if (bedsEl) {
-      const icon = bedsEl.querySelector("i");
-      const count = parseInt(bedsEl.textContent.match(/\d+/)?.[0]) || 1;
-      const label = count === 1 ? t("card_bed") : t("card_beds");
-      bedsEl.textContent = ` ${count} ${label}`;
-      if (icon) bedsEl.prepend(icon);
-    }
-
-    // View more button
+    // Update "View more" button text
     const toggleBtn = card.querySelector(".view-more-btn");
     if (toggleBtn && toggleBtn.style.display !== "none") {
       const match = toggleBtn.textContent.match(/\d+/);
@@ -1257,594 +1064,60 @@ async function translatePropertyCards(containerEl) {
         toggleBtn.textContent = t("card_more_amenities", { n: match[0] });
       }
     }
-  });
+    // Update /night and Check Availability
+    const nightSpan = card.querySelector(".property-price span");
+    if (nightSpan) nightSpan.textContent = t("card_night");
+    const availBtn = card.querySelector(".btn-primary");
+    if (availBtn) {
+      const icon = availBtn.querySelector("i");
+      availBtn.textContent = " " + t("card_check_availability");
+      if (icon) availBtn.prepend(icon);
+    }
+  }
 }
 
-// ─────────────────────────────────────────────
-// 8. LANGUAGE DETECTION
-// ─────────────────────────────────────────────
+async function setLanguage(lang) {
+  if (!TRANSLATIONS[lang]) return;
+  currentLang = lang;
+  try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (_) {}
+  applyStaticTranslations();
+  await translatePropertyCards(document.getElementById("featuredProperties"));
+  await translatePropertyCards(document.getElementById("propertyList"));
+  // Rebuild language switcher UI if the function exists (defined in header-loader)
+  if (typeof window.buildLangSwitcher === "function") window.buildLangSwitcher();
+}
+
 async function detectLanguage() {
-  // 1. Check user's saved preference first
   try {
     const saved = localStorage.getItem(LANG_STORAGE_KEY);
     if (saved && TRANSLATIONS[saved]) return saved;
-  } catch (e) {}
-
-  // 2. Try geo-IP detection (ipapi.co — free, no key needed, 1000 req/day)
-  try {
-    const res = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) });
-    if (res.ok) {
-      const data = await res.json();
-      const countryCode = data.country_code?.toUpperCase();
-      if (countryCode && COUNTRY_LANGUAGE_MAP[countryCode]) {
-        return COUNTRY_LANGUAGE_MAP[countryCode];
-      }
-    }
-  } catch (e) {}
-
-  // 3. Fallback: browser language
-  const browserLang = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
-  if (TRANSLATIONS[browserLang]) return browserLang;
-
-  return "en";
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+    const country = data.country_code?.toUpperCase();
+    if (country && COUNTRY_LANGUAGE_MAP[country]) return COUNTRY_LANGUAGE_MAP[country];
+  } catch (_) {}
+  const browserLang = (navigator.language || "en").split("-")[0];
+  return TRANSLATIONS[browserLang] ? browserLang : "en";
 }
 
 // ─────────────────────────────────────────────
-// 9. LANGUAGE SWITCHER UI  (floating dropdown — never clipped)
+// 5. INITIALIZATION
 // ─────────────────────────────────────────────
-// The dropdown <ul> is appended directly to <body> and positioned with
-// getBoundingClientRect so it is never clipped by the fixed header or
-// any other stacking context.
-
-let _floatingDrop  = null;   // the <ul> appended to body
-let _dropOpen      = false;
-
-function _getCurrentLang() { return currentLang; }
-
-function _createFloatingDropdown() {
-  if (_floatingDrop) _floatingDrop.remove();
-
-  const ul = document.createElement('ul');
-  ul.id = 'langDropdownFloating';
-  ul.setAttribute('role', 'listbox');
-
-  LANGUAGES.forEach((lang) => {
-    const li = document.createElement('li');
-    li.setAttribute('role', 'option');
-    li.setAttribute('aria-selected', lang.code === currentLang);
-    li.className = 'lang-option' + (lang.code === currentLang ? ' active' : '');
-    li.innerHTML = `<span class="lang-flag">${lang.flag}</span><span class="lang-name">${lang.name}</span>`;
-    // Use addEventListener — no inline onclick, no global scope dependency
-    li.addEventListener('click', (e) => {
-      e.stopPropagation();
-      _closeDrop();
-      window.setLanguage(lang.code);   // defined below as global
-    });
-    ul.appendChild(li);
-  });
-
-  // Inline critical styles — works regardless of CSS file load order
-  Object.assign(ul.style, {
-    position:     'fixed',
-    background:   'white',
-    borderRadius: '10px',
-    boxShadow:    '0 8px 25px rgba(0,0,0,0.18)',
-    padding:      '6px 0',
-    minWidth:     '160px',
-    listStyle:    'none',
-    zIndex:       '99999',
-    display:      'none',
-    margin:       '0',
-    cursor:       'pointer',
-  });
-
-  document.body.appendChild(ul);
-  _floatingDrop = ul;
-}
-
-function _positionDrop(triggerEl) {
-  if (!_floatingDrop) return;
-  const rect    = triggerEl.getBoundingClientRect();
-  const dropH   = _floatingDrop.offsetHeight || 340;
-  const below   = window.innerHeight - rect.bottom;
-  const top     = below < dropH && rect.top > dropH
-                    ? rect.top - dropH - 4
-                    : rect.bottom + 4;
-  let left = rect.right - 160;
-  if (left < 8) left = 8;
-  _floatingDrop.style.top  = top  + 'px';
-  _floatingDrop.style.left = left + 'px';
-}
-
-function _openDrop(triggerEl) {
-  _createFloatingDropdown();
-  _floatingDrop.style.display = 'block';
-  _positionDrop(triggerEl);
-  _dropOpen = true;
-  triggerEl.setAttribute('aria-expanded', 'true');
-}
-
-function _closeDrop() {
-  if (_floatingDrop) _floatingDrop.style.display = 'none';
-  _dropOpen = false;
-  const btn = document.getElementById('langCurrentBtn');
-  if (btn) btn.setAttribute('aria-expanded', 'false');
-}
-
-// Close on outside click / scroll / resize
-document.addEventListener('click', (e) => {
-  if (!_dropOpen) return;
-  const sw = document.getElementById('langSwitcher');
-  if (sw && sw.contains(e.target)) return;
-  if (_floatingDrop && _floatingDrop.contains(e.target)) return;
-  _closeDrop();
-});
-document.addEventListener('scroll', () => {
-  if (_dropOpen) {
-    const btn = document.getElementById('langCurrentBtn');
-    if (btn) _positionDrop(btn);
-  }
-}, { passive: true });
-window.addEventListener('resize', () => {
-  if (_dropOpen) {
-    const btn = document.getElementById('langCurrentBtn');
-    btn ? _positionDrop(btn) : _closeDrop();
-  }
-});
-
-function buildLanguageSwitcher() {
-  const sw = document.getElementById('langSwitcher');
-  if (!sw) return;
-
-  const cur = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
-  sw.innerHTML = `
-    <div class="lang-current" id="langCurrentBtn"
-         role="button" tabindex="0"
-         aria-haspopup="listbox" aria-expanded="false">
-      <span class="lang-flag">${cur.flag}</span>
-      <span class="lang-code">${cur.label}</span>
-      <span class="lang-arrow">▾</span>
-    </div>`;
-
-  const btn = sw.querySelector('#langCurrentBtn');
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    _dropOpen ? _closeDrop() : _openDrop(btn);
-  });
-  btn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
-    if (e.key === 'Escape') _closeDrop();
-  });
-}
-
-// Global alias so onclick="toggleLangDropdown()" still works (legacy)
-window.toggleLangDropdown = function () {
-  const btn = document.getElementById('langCurrentBtn');
-  if (!btn) return;
-  _dropOpen ? _closeDrop() : _openDrop(btn);
-};
-
-// ─────────────────────────────────────────────
-// 10. INIT
-// ─────────────────────────────────────────────
-
-// ─────────────────────────────────────────────
-// 7b. TRANSLATE FULL PAGE BODY TEXT
-// ─────────────────────────────────────────────
-/**
- * Walks every TEXT NODE in document.body and translates any that contain
- * real words. This correctly handles mixed-content elements like:
- *   <li><i class="fas fa-check-circle"></i> 10+ years in Kenyan tourism</li>
- *   <p>Text with <strong>emphasis</strong> inline</p>
- *
- * How it works:
- *  1. TreeWalker visits TEXT NODES (not elements)
- *  2. Filters out: whitespace-only, numbers-only, inside skipped tags,
- *     inside [data-i18n] elements (already handled), inside #site-header
- *  3. Deduplicates identical strings so we don't translate "Menu" 20 times
- *  4. Batch-translates all unique strings in one API call
- *  5. Writes translated text back to each text node directly
- *  6. Stores originals in a WeakMap for English restore
- */
-
-const _origTextNodes = new Map(); // textNode -> original string
-
-const BODY_SKIP_TAGS  = new Set(['SCRIPT','STYLE','NOSCRIPT','CODE','PRE',
-                                  'TEXTAREA','INPUT','SELECT']);
-const BODY_SKIP_ATTRS = '[data-i18n],[data-i18n-placeholder],[data-i18n-html]';
-const NO_TRANSLATE    = new Set(['#site-header', '.whatsapp-float']);
-
-function _shouldSkipNode(node) {
-  let el = node.parentElement;
-  while (el && el !== document.body) {
-    if (BODY_SKIP_TAGS.has(el.tagName))           return true;
-    if (el.closest && el.closest(BODY_SKIP_ATTRS)) return true;
-    if (el.id === 'site-header')                   return true;
-    if (el.closest && el.closest('.whatsapp-float')) return true;
-    el = el.parentElement;
-  }
-  return false;
-}
-
-async function translatePageBody(targetLang) {
-  if (targetLang === 'en') {
-    // Restore original English text nodes
-    _origTextNodes.forEach((original, textNode) => {
-      if (textNode.parentNode) textNode.textContent = original;
-    });
-    _origTextNodes.clear();
-    return;
-  }
-
-  // ── 1. Collect all text nodes with real translatable content ──
-  const allTextNodes = [];
-  const walker = document.createTreeWalker(
-    document.body,
-    NodeFilter.SHOW_TEXT,
-    null
-  );
-
-  let node;
-  while ((node = walker.nextNode())) {
-    const raw = node.textContent;
-    const trimmed = raw.trim();
-    // Must have letters and be more than one character
-    if (trimmed.length < 2 || !/[a-zA-Z]/.test(trimmed)) continue;
-    // Skip nodes inside ignored containers
-    if (_shouldSkipNode(node)) continue;
-    allTextNodes.push({ node, text: trimmed });
-  }
-
-  if (!allTextNodes.length) return;
-
-  // ── 2. Deduplicate strings ──
-  const uniqueMap  = new Map(); // text -> [textNode, ...]
-  allTextNodes.forEach(({ node, text }) => {
-    if (!uniqueMap.has(text)) uniqueMap.set(text, []);
-    uniqueMap.get(text).push(node);
-  });
-
-  const uniqueTexts = [...uniqueMap.keys()];
-
-  // ── 3. Batch translate all unique strings ──
-  const translated = await translateBatch(uniqueTexts, targetLang);
-
-  // ── 4. Write back to every matching text node ──
-  uniqueTexts.forEach((original, idx) => {
-    const translatedText = translated[idx];
-    if (!translatedText || translatedText === original) return;
-
-    uniqueMap.get(original).forEach(textNode => {
-      if (!textNode.parentNode) return; // node was removed from DOM
-      // Save original for restore
-      if (!_origTextNodes.has(textNode)) {
-        _origTextNodes.set(textNode, textNode.textContent);
-      }
-      // Preserve surrounding whitespace that the raw node had
-      const raw = textNode.textContent;
-      const leadSpace  = raw.match(/^\s*/)[0];
-      const trailSpace = raw.match(/\s*$/)[0];
-      textNode.textContent = leadSpace + translatedText + trailSpace;
-    });
-  });
-}
-
-// ─────────────────────────────────────────────
-// 8. LANGUAGE DETECTION
-// ─────────────────────────────────────────────
-async function detectLanguage() {
-  // 1. Check user's saved preference first
-  try {
-    const saved = localStorage.getItem(LANG_STORAGE_KEY);
-    if (saved && TRANSLATIONS[saved]) return saved;
-  } catch (e) {}
-
-  // 2. Try geo-IP detection (ipapi.co — free, no key needed, 1000 req/day)
-  try {
-    const res = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) });
-    if (res.ok) {
-      const data = await res.json();
-      const countryCode = data.country_code?.toUpperCase();
-      if (countryCode && COUNTRY_LANGUAGE_MAP[countryCode]) {
-        return COUNTRY_LANGUAGE_MAP[countryCode];
-      }
-    }
-  } catch (e) {}
-
-  // 3. Fallback: browser language
-  const browserLang = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
-  if (TRANSLATIONS[browserLang]) return browserLang;
-
-  return "en";
-}
-
-// ─────────────────────────────────────────────
-// 9. LANGUAGE SWITCHER UI  (floating dropdown — never clipped)
-// ─────────────────────────────────────────────
-// The dropdown <ul> is appended directly to <body> and positioned with
-// getBoundingClientRect so it is never clipped by the fixed header or
-// any other stacking context.
-
-let _floatingDrop  = null;   // the <ul> appended to body
-let _dropOpen      = false;
-
-function _getCurrentLang() { return currentLang; }
-
-function _createFloatingDropdown() {
-  if (_floatingDrop) _floatingDrop.remove();
-
-  const ul = document.createElement('ul');
-  ul.id = 'langDropdownFloating';
-  ul.setAttribute('role', 'listbox');
-
-  LANGUAGES.forEach((lang) => {
-    const li = document.createElement('li');
-    li.setAttribute('role', 'option');
-    li.setAttribute('aria-selected', lang.code === currentLang);
-    li.className = 'lang-option' + (lang.code === currentLang ? ' active' : '');
-    li.innerHTML = `<span class="lang-flag">${lang.flag}</span><span class="lang-name">${lang.name}</span>`;
-    // Use addEventListener — no inline onclick, no global scope dependency
-    li.addEventListener('click', (e) => {
-      e.stopPropagation();
-      _closeDrop();
-      window.setLanguage(lang.code);   // defined below as global
-    });
-    ul.appendChild(li);
-  });
-
-  // Inline critical styles — works regardless of CSS file load order
-  Object.assign(ul.style, {
-    position:     'fixed',
-    background:   'white',
-    borderRadius: '10px',
-    boxShadow:    '0 8px 25px rgba(0,0,0,0.18)',
-    padding:      '6px 0',
-    minWidth:     '160px',
-    listStyle:    'none',
-    zIndex:       '99999',
-    display:      'none',
-    margin:       '0',
-    cursor:       'pointer',
-  });
-
-  document.body.appendChild(ul);
-  _floatingDrop = ul;
-}
-
-function _positionDrop(triggerEl) {
-  if (!_floatingDrop) return;
-  const rect    = triggerEl.getBoundingClientRect();
-  const dropH   = _floatingDrop.offsetHeight || 340;
-  const below   = window.innerHeight - rect.bottom;
-  const top     = below < dropH && rect.top > dropH
-                    ? rect.top - dropH - 4
-                    : rect.bottom + 4;
-  let left = rect.right - 160;
-  if (left < 8) left = 8;
-  _floatingDrop.style.top  = top  + 'px';
-  _floatingDrop.style.left = left + 'px';
-}
-
-function _openDrop(triggerEl) {
-  _createFloatingDropdown();
-  _floatingDrop.style.display = 'block';
-  _positionDrop(triggerEl);
-  _dropOpen = true;
-  triggerEl.setAttribute('aria-expanded', 'true');
-}
-
-function _closeDrop() {
-  if (_floatingDrop) _floatingDrop.style.display = 'none';
-  _dropOpen = false;
-  const btn = document.getElementById('langCurrentBtn');
-  if (btn) btn.setAttribute('aria-expanded', 'false');
-}
-
-// Close on outside click / scroll / resize
-document.addEventListener('click', (e) => {
-  if (!_dropOpen) return;
-  const sw = document.getElementById('langSwitcher');
-  if (sw && sw.contains(e.target)) return;
-  if (_floatingDrop && _floatingDrop.contains(e.target)) return;
-  _closeDrop();
-});
-document.addEventListener('scroll', () => {
-  if (_dropOpen) {
-    const btn = document.getElementById('langCurrentBtn');
-    if (btn) _positionDrop(btn);
-  }
-}, { passive: true });
-window.addEventListener('resize', () => {
-  if (_dropOpen) {
-    const btn = document.getElementById('langCurrentBtn');
-    btn ? _positionDrop(btn) : _closeDrop();
-  }
-});
-
-function buildLanguageSwitcher() {
-  const sw = document.getElementById('langSwitcher');
-  if (!sw) return;
-
-  const cur = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
-  sw.innerHTML = `
-    <div class="lang-current" id="langCurrentBtn"
-         role="button" tabindex="0"
-         aria-haspopup="listbox" aria-expanded="false">
-      <span class="lang-flag">${cur.flag}</span>
-      <span class="lang-code">${cur.label}</span>
-      <span class="lang-arrow">▾</span>
-    </div>`;
-
-  const btn = sw.querySelector('#langCurrentBtn');
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    _dropOpen ? _closeDrop() : _openDrop(btn);
-  });
-  btn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
-    if (e.key === 'Escape') _closeDrop();
-  });
-}
-
-// Global alias so onclick="toggleLangDropdown()" still works (legacy)
-window.toggleLangDropdown = function () {
-  const btn = document.getElementById('langCurrentBtn');
-  if (!btn) return;
-  _dropOpen ? _closeDrop() : _openDrop(btn);
-};
-
-// ─────────────────────────────────────────────
-// 10. INIT
-// ─────────────────────────────────────────────
-
-// ─────────────────────────────────────────────
-// 7b. TRANSLATE FULL PAGE BODY TEXT
-// ─────────────────────────────────────────────
-/**
- * Collects all meaningful text nodes in the page body that are NOT
- * already handled by data-i18n attributes, batches them for translation,
- * and writes the results back. Uses caching so it only calls the API once
- * per language per page.
- *
- * Skip list: script, style, noscript, code, nav elements (handled by data-i18n),
- * and elements that already have data-i18n on them.
- */
-const SKIP_TAGS = new Set(['SCRIPT','STYLE','NOSCRIPT','CODE','PRE','TEXTAREA','INPUT','SELECT','BUTTON','OPTION']);
-const SKIP_SELECTORS = '[data-i18n],[data-i18n-placeholder],[data-i18n-html]';
-
-async function translatePageBody(targetLang) {
-  if (targetLang === 'en') {
-    // Restore originals if switching back to English
-    document.querySelectorAll('[data-orig-text]').forEach(el => {
-      el.textContent = el.getAttribute('data-orig-text');
-    });
-    return;
-  }
-
-  // Collect all leaf text-bearing elements that aren't already translated
-  const candidates = [];
-  const walker = document.createTreeWalker(
-    document.body,
-    NodeFilter.SHOW_ELEMENT,
-    {
-      acceptNode(node) {
-        if (SKIP_TAGS.has(node.tagName)) return NodeFilter.FILTER_REJECT;
-        if (node.closest(SKIP_SELECTORS)) return NodeFilter.FILTER_SKIP;
-        if (node.closest('#site-header')) return NodeFilter.FILTER_REJECT; // header handled separately
-        // Only accept leaf elements (no child elements, just text)
-        const hasOnlyText = [...node.childNodes].every(
-          n => n.nodeType === Node.TEXT_NODE
-        );
-        if (hasOnlyText && node.textContent.trim().length > 1) {
-          return NodeFilter.FILTER_ACCEPT;
-        }
-        return NodeFilter.FILTER_SKIP;
-      }
-    }
-  );
-
-  let node;
-  while ((node = walker.nextNode())) {
-    const text = node.textContent.trim();
-    if (text.length > 1 && /[a-zA-Z]/.test(text)) { // only translate if has real words
-      candidates.push({ el: node, text });
-    }
-  }
-
-  if (!candidates.length) return;
-
-  const texts = candidates.map(c => c.text);
-  const translated = await translateBatch(texts, targetLang);
-
-  candidates.forEach(({ el }, i) => {
-    if (translated[i] && translated[i] !== texts[i]) {
-      // Store original for language switching back
-      if (!el.hasAttribute('data-orig-text')) {
-        el.setAttribute('data-orig-text', texts[i]);
-      }
-      el.textContent = translated[i];
-    }
-  });
-}
-
-window.i18n = {
-  t,
-  translateText,
-  translateBatch,
-  translatePropertyCards,
-  translatePageBody,
-  getCurrentLang: () => currentLang,
-  applyStaticTranslations,
-  setLanguage: async function(lang) {
-    if (!lang || !TRANSLATIONS[lang]) return;
-    currentLang = lang;
-    try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) {}
-    // 1. Apply all data-i18n static string swaps immediately
-    applyStaticTranslations();
-    // 2. Rebuild the switcher button on pages that use i18n.js's own switcher
-    //    (index.html has no header-loader.js, so this is needed there)
-    buildLanguageSwitcher();
-    // 3. Translate non-tagged page body text via Google Translate
-    await translatePageBody(lang);
-    // 4. Re-translate any visible property cards (Supabase content)
-    await translatePropertyCards(document.getElementById('featuredProperties'));
-    await translatePropertyCards(document.getElementById('propertyList'));
-  },
-};
-
-// ── Global shortcut so onclick="setLanguage('xx')" works anywhere ──
-window.setLanguage = async function(lang) {
-  await window.i18n.setLanguage(lang);
-};
-
-
-// Main init — called on DOMContentLoaded
-async function initI18n() {
-  // ── Step 1: Show switcher IMMEDIATELY with saved/default lang (no network wait) ──
-  try {
-    const saved = localStorage.getItem(LANG_STORAGE_KEY);
-    if (saved && TRANSLATIONS[saved]) currentLang = saved;
-  } catch (e) {}
-
-  // Build the switcher right away so it appears on page load
-  // Use a small delay to ensure DOM is painted first
-  requestAnimationFrame(() => {
-    buildLanguageSwitcher();
-  });
+(async function init() {
+  currentLang = await detectLanguage();
   applyStaticTranslations();
 
-  // ── Step 2: Detect actual language from geo-IP (async, may take 1-3s) ──
-  const detected = await detectLanguage();
-  if (detected !== currentLang) {
-    currentLang = detected;
-    buildLanguageSwitcher();   // update flag if language changed
-    applyStaticTranslations();
-    if (currentLang !== 'en') {
-      await translatePageBody(currentLang);
-    }
-  } else if (currentLang !== 'en') {
-    await translatePageBody(currentLang);
-  }
-}
+  // Expose global API
+  window.i18n = {
+    t,
+    translateText,
+    translatePropertyCards,
+    setLanguage,
+    getCurrentLang: () => currentLang,
+    applyStaticTranslations,
+  };
+  window.setLanguage = setLanguage; // for header-loader compatibility
 
-// Also watch for #langSwitcher being added to the DOM later
-// (e.g. on about.html where header-loader injects the header asynchronously)
-function _watchForSwitcher() {
-  if (document.getElementById('langSwitcher')) {
-    buildLanguageSwitcher();
-    return;
-  }
-  const obs = new MutationObserver(() => {
-    const sw = document.getElementById('langSwitcher');
-    if (sw) {
-      obs.disconnect();
-      buildLanguageSwitcher();
-    }
-  });
-  obs.observe(document.body, { childList: true, subtree: true });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  initI18n();
-  _watchForSwitcher();
-});
+  // Dispatch event when ready (useful for other scripts)
+  window.dispatchEvent(new CustomEvent("i18nReady", { detail: { lang: currentLang } }));
+})();

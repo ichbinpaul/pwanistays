@@ -1,354 +1,171 @@
 /**
  * PwaniStays — header-loader.js
  * ================================
- * Fetches /header.html and injects it into <div id="site-header">.
- * Also activates the correct nav link, wires up the mobile menu,
- * dropdown toggles, header search, and the language switcher.
+ * Fetches /header.html, injects it into <div id="site-header">,
+ * marks the active nav link, wires mobile menu, header search,
+ * and calls buildSwitcher() (from i18n.js) to show the language toggle.
  *
  * HOW TO USE ON ANY PAGE
- * ─────────────────────────────────────────────────────────────
- * 1. In <head> (BEFORE any other scripts):
- *      <script src="/i18n.js"></script>
- *
- * 2. In <head> — add the shared header CSS:
- *      <link rel="stylesheet" href="/header.css">
- *
- * 3. In <body>, at the very top (before page content):
- *      <div id="site-header"></div>
- *
- * 4. At the BOTTOM of <body> (after Font Awesome):
- *      <script src="/header-loader.js"></script>
- *
- * That's it. The header renders itself, detects the language,
- * marks the right nav link active, and everything works.
- * ─────────────────────────────────────────────────────────────
+ * ──────────────────────
+ * 1. In <head>:  <script src="/i18n.js"></script>
+ * 2. In <head>:  <link rel="stylesheet" href="/header.css">
+ * 3. In <body> top: <div id="site-header"></div>
+ * 4. Before </body>: <script src="/header-loader.js"></script>
  */
 
-(async function () {
-  const HEADER_URL = "/header.html";
+(function() {
 
-  // ── 1. Fetch the shared header HTML ──────────────────────
-  async function fetchHeader() {
-    try {
-      const res = await fetch(HEADER_URL, { cache: "no-cache" });
-      if (!res.ok) throw new Error("Header fetch failed: " + res.status);
-      return await res.text();
-    } catch (e) {
-      console.warn("[header-loader] Could not load header.html:", e);
-      return null;
-    }
+  // ── Fetch and inject header.html ───────────────────────────────
+  function loadHeader() {
+    var mount = document.getElementById("site-header");
+    if (!mount) return;
+
+    fetch("/header.html", { cache: "no-cache" })
+      .then(function(res) { return res.ok ? res.text() : Promise.reject(res.status); })
+      .then(function(html) {
+        mount.innerHTML = html;
+        onHeaderReady(mount);
+      })
+      .catch(function(err) {
+        console.warn("[header-loader] Could not load header.html:", err);
+      });
   }
 
-  // ── 2. Determine which page we're on ─────────────────────
-  function getCurrentPage() {
-    const path = window.location.pathname
-      .replace(/\/$/, "")        // strip trailing slash
-      .replace(/\.html$/, "")    // strip .html
-      .split("/")
-      .filter(Boolean)
-      .pop() || "home";
-    return path;
+  // ── Called once header HTML is in the DOM ──────────────────────
+  function onHeaderReady(mount) {
+    markActiveLink(mount);
+    initMobileMenu(mount);
+    initSearch(mount);
+    applyTranslations();
   }
 
-  // ── 3. Mark the active nav link ──────────────────────────
-  function markActiveLink(container) {
-    const page = getCurrentPage();
-    container.querySelectorAll("[data-nav-page]").forEach((el) => {
-      if (el.getAttribute("data-nav-page") === page) {
-        el.classList.add("active");
-        // If inside a dropdown, also highlight the parent
-        const parentDropdown = el.closest(".dropdown");
-        if (parentDropdown) {
-          parentDropdown.querySelector(".dropdown-toggle")?.classList.add("active");
-        }
-      } else {
-        el.classList.remove("active");
+  // ── Mark the current page's nav link as active ─────────────────
+  function markActiveLink(mount) {
+    var slug = window.location.pathname
+      .replace(/\/$/, "").replace(/\.html$/, "")
+      .split("/").filter(Boolean).pop() || "home";
+
+    mount.querySelectorAll("[data-nav-page]").forEach(function(el) {
+      var match = el.getAttribute("data-nav-page") === slug ||
+        (slug === "home" && el.getAttribute("data-nav-page") === "home");
+      el.classList.toggle("active", match);
+      if (match) {
+        var dd = el.closest(".dropdown");
+        if (dd) dd.querySelector(".dropdown-toggle").classList.add("active");
       }
     });
-    // Home page: mark home link active when path is "/" or "/index"
-    if (page === "home" || page === "index" || window.location.pathname === "/") {
-      container.querySelectorAll('[data-nav-page="home"]').forEach((el) =>
-        el.classList.add("active")
-      );
+    if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
+      mount.querySelectorAll('[data-nav-page="home"]').forEach(function(el) {
+        el.classList.add("active");
+      });
     }
   }
 
-  // ── 4. Wire up mobile menu toggle ────────────────────────
-  function initMobileMenu(container) {
-    const menuToggle = container.querySelector(".menu-toggle");
-    const navLinks = container.querySelector(".nav-links");
-    const dropdownToggles = container.querySelectorAll(".dropdown > a");
+  // ── Mobile menu ────────────────────────────────────────────────
+  function initMobileMenu(mount) {
+    var toggle   = mount.querySelector(".menu-toggle");
+    var navLinks = mount.querySelector(".nav-links");
+    var ddLinks  = mount.querySelectorAll(".dropdown > a");
+    if (!toggle || !navLinks) return;
 
-    if (!menuToggle || !navLinks) return;
-
-    menuToggle.addEventListener("click", function () {
+    toggle.addEventListener("click", function() {
       navLinks.classList.toggle("active");
-      const isExpanded = this.getAttribute("aria-expanded") === "true";
-      this.setAttribute("aria-expanded", !isExpanded);
+      this.setAttribute("aria-expanded", navLinks.classList.contains("active"));
     });
 
-    // Close menu when clicking a non-dropdown link
-    container.querySelectorAll(".nav-links a:not(.dropdown > a)").forEach((link) => {
-      link.addEventListener("click", () => {
-        if (!link.getAttribute("href")?.startsWith("#")) return;
-        navLinks.classList.remove("active");
-        menuToggle.setAttribute("aria-expanded", "false");
+    mount.querySelectorAll(".nav-links a:not(.dropdown > a)").forEach(function(a) {
+      a.addEventListener("click", function() {
+        if ((a.getAttribute("href") || "").startsWith("#")) {
+          navLinks.classList.remove("active");
+          toggle.setAttribute("aria-expanded", "false");
+        }
       });
     });
 
-    // Dropdown toggles on mobile / tablet
-    dropdownToggles.forEach((toggle) => {
-      toggle.addEventListener("click", function (e) {
+    ddLinks.forEach(function(a) {
+      a.addEventListener("click", function(e) {
         if (window.innerWidth <= 992) {
           e.preventDefault();
-          const parent = this.parentElement;
-          parent.classList.toggle("active");
-          dropdownToggles.forEach((other) => {
-            const otherParent = other.parentElement;
-            if (otherParent !== parent && otherParent.classList.contains("active")) {
-              otherParent.classList.remove("active");
-            }
+          var p = this.parentElement;
+          p.classList.toggle("active");
+          ddLinks.forEach(function(other) {
+            if (other.parentElement !== p) other.parentElement.classList.remove("active");
           });
         }
       });
     });
 
-    // Close dropdowns on outside click (desktop)
-    document.addEventListener("click", function (e) {
+    document.addEventListener("click", function(e) {
       if (window.innerWidth > 992) {
-        container.querySelectorAll(".dropdown").forEach((dd) => {
+        mount.querySelectorAll(".dropdown").forEach(function(dd) {
           if (!dd.contains(e.target)) dd.classList.remove("active");
         });
       }
     });
   }
 
-  // ── 5. Wire up header search ──────────────────────────────
-  function initHeaderSearch(container) {
-    const searchContainer = container.querySelector(".header-search-container");
-    const searchToggle = container.querySelector("#searchToggle");
-    const searchInput = container.querySelector("#headerSearch");
+  // ── Header search ──────────────────────────────────────────────
+  function initSearch(mount) {
+    var sc    = mount.querySelector(".header-search-container");
+    var btn   = mount.querySelector("#searchToggle");
+    var input = mount.querySelector("#headerSearch");
+    if (!sc || !btn || !input) return;
 
-    if (!searchToggle || !searchContainer || !searchInput) return;
+    btn.addEventListener("click", function(e) {
+      e.preventDefault(); e.stopPropagation();
+      sc.classList.toggle("active");
+      if (sc.classList.contains("active")) setTimeout(function() { input.focus(); }, 50);
+    });
 
-    searchToggle.addEventListener("click", (e) => {
+    input.addEventListener("keydown", function(e) {
+      if (e.key !== "Enter") return;
       e.preventDefault();
-      e.stopPropagation();
-      searchContainer.classList.toggle("active");
-      if (searchContainer.classList.contains("active")) {
-        setTimeout(() => searchInput.focus(), 50);
+      var term = input.value.trim();
+      if (!term) return;
+      if (typeof window.performKeywordSearch === "function") {
+        window.performKeywordSearch(term);
+      } else {
+        window.location.href = "/?search=" + encodeURIComponent(term);
       }
     });
 
-    searchInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        const term = searchInput.value.trim();
-        if (term) {
-          // If we're on the home page, trigger search directly
-          if (typeof window.performKeywordSearch === "function") {
-            window.performKeywordSearch(term);
-          } else {
-            // Navigate to home with search query
-            window.location.href = `/?search=${encodeURIComponent(term)}`;
-          }
-        }
-      }
-    });
-
-    // Close on outside click
-    document.addEventListener("click", (e) => {
-      if (
-        window.innerWidth > 768 &&
-        !searchContainer.contains(e.target) &&
-        e.target !== searchToggle &&
-        e.target !== searchInput
-      ) {
-        searchContainer.classList.remove("active");
+    document.addEventListener("click", function(e) {
+      if (window.innerWidth > 768 && !sc.contains(e.target) && e.target !== btn && e.target !== input) {
+        sc.classList.remove("active");
       }
     });
   }
 
-  // ── 6. Language switcher (delegated events, no inline onclick) ──
-  const LANGUAGES = [
-    { code: "en", label: "EN", name: "English",    flag: "🇬🇧" },
-    { code: "no", label: "NO", name: "Norsk",       flag: "🇳🇴" },
-    { code: "da", label: "DA", name: "Dansk",       flag: "🇩🇰" },
-    { code: "pl", label: "PL", name: "Polski",      flag: "🇵🇱" },
-    { code: "sv", label: "SV", name: "Svenska",     flag: "🇸🇪" },
-    { code: "fi", label: "FI", name: "Suomi",       flag: "🇫🇮" },
-    { code: "de", label: "DE", name: "Deutsch",     flag: "🇩🇪" },
-    { code: "nl", label: "NL", name: "Nederlands",  flag: "🇳🇱" },
-    { code: "fr", label: "FR", name: "Français",    flag: "🇫🇷" },
-    { code: "is", label: "IS", name: "Íslenska",    flag: "🇮🇸" },
-  ];
-
-  // Delegated click handler for language options
-  function handleLanguageOptionClick(e) {
-    const option = e.target.closest(".lang-option");
-    if (!option) return;
-
-    const langCode = option.dataset.lang;
-    if (!langCode) return;
-
-    // Call setLanguage if available
-    if (typeof window.setLanguage === "function") {
-      window.setLanguage(langCode);
-    } else if (window.i18n && typeof window.i18n.setLanguage === "function") {
-      window.i18n.setLanguage(langCode);
-    } else {
-      console.warn("[header-loader] setLanguage not ready, retrying...");
-      setTimeout(() => {
-        if (typeof window.setLanguage === "function") window.setLanguage(langCode);
-      }, 200);
+  // ── Apply i18n to newly-injected header + build switcher ───────
+  function applyTranslations() {
+    // applyStaticTranslations handles [data-i18n] elements in the header
+    if (window.i18n && window.i18n.applyStaticTranslations) {
+      window.i18n.applyStaticTranslations();
     }
-
-    // Close dropdown
-    const dropdown = document.getElementById("langDropdown");
-    const btn = document.getElementById("langCurrentBtn");
-    if (dropdown) dropdown.classList.remove("open");
-    if (btn) btn.setAttribute("aria-expanded", "false");
-  }
-
-  // Toggle dropdown when clicking the current language button
-  function handleToggleClick(e) {
-    const btn = e.target.closest("#langCurrentBtn");
-    if (!btn) return;
-    const dropdown = document.getElementById("langDropdown");
-    if (dropdown) {
-      const isOpen = dropdown.classList.toggle("open");
-      btn.setAttribute("aria-expanded", isOpen);
+    // buildSwitcher populates #langSwitcher (now in the DOM after header inject)
+    if (typeof buildSwitcher === "function") {
+      buildSwitcher();
     }
   }
 
-  // Close dropdown when clicking outside
-  function handleOutsideClick(e) {
-    const switcher = document.getElementById("langSwitcher");
-    if (!switcher) return;
-    if (!switcher.contains(e.target)) {
-      const dropdown = document.getElementById("langDropdown");
-      const btn = document.getElementById("langCurrentBtn");
-      if (dropdown) dropdown.classList.remove("open");
-      if (btn) btn.setAttribute("aria-expanded", "false");
-    }
-  }
-
-  function buildSwitcher(container) {
-    const switcherEl = container.querySelector("#langSwitcher");
-    if (!switcherEl) return;
-
-    let activeLang = "en";
-    try { activeLang = localStorage.getItem("pwani_lang") || "en"; } catch (_) {}
-    if (window.i18n) activeLang = window.i18n.getCurrentLang();
-
-    const current = LANGUAGES.find((l) => l.code === activeLang) || LANGUAGES[0];
-
-    switcherEl.innerHTML = `
-      <div class="lang-current" id="langCurrentBtn" role="button" tabindex="0"
-           aria-haspopup="listbox" aria-expanded="false">
-        <span class="lang-flag">${current.flag}</span>
-        <span class="lang-code">${current.label}</span>
-        <span class="lang-arrow">▾</span>
-      </div>
-      <ul class="lang-dropdown" id="langDropdown" role="listbox">
-        ${LANGUAGES.map((lang) => `
-          <li role="option"
-              class="lang-option ${lang.code === activeLang ? "active" : ""}"
-              data-lang="${lang.code}"
-              aria-selected="${lang.code === activeLang}">
-            <span class="lang-flag">${lang.flag}</span>
-            <span class="lang-name">${lang.name}</span>
-          </li>`).join("")}
-      </ul>`;
-
-    // Attach global delegated listeners (only once)
-    if (!window._langSwitcherListenersAttached) {
-      document.addEventListener("click", handleLanguageOptionClick);
-      document.addEventListener("click", handleToggleClick);
-      document.addEventListener("click", handleOutsideClick);
-      window._langSwitcherListenersAttached = true;
-    }
-
-    // Expose rebuild function for i18n.js to call after language change
-    window.buildLangSwitcher = () => {
-      const newActiveLang = window.i18n?.getCurrentLang() || activeLang;
-      const newCurrent = LANGUAGES.find(l => l.code === newActiveLang) || LANGUAGES[0];
-      const flagSpan = switcherEl.querySelector(".lang-flag");
-      const codeSpan = switcherEl.querySelector(".lang-code");
-      if (flagSpan) flagSpan.textContent = newCurrent.flag;
-      if (codeSpan) codeSpan.textContent = newCurrent.label;
-      switcherEl.querySelectorAll(".lang-option").forEach(opt => {
-        opt.classList.toggle("active", opt.dataset.lang === newActiveLang);
-        opt.setAttribute("aria-selected", opt.dataset.lang === newActiveLang);
-      });
-    };
-  }
-
-  // ── 7. Expose a global toggle for compatibility (used by keyboard etc.) ──
-  window.toggleLangDropdown = function () {
-    const dropdown = document.getElementById("langDropdown");
-    const btn = document.getElementById("langCurrentBtn");
-    if (!dropdown) return;
-    const isOpen = dropdown.classList.toggle("open");
-    btn?.setAttribute("aria-expanded", isOpen);
-  };
-
-  // ── 8. Handle incoming ?search= query param on home page ─
+  // ── Handle ?search= param when redirected from other pages ─────
   function handleSearchParam() {
     if (window.location.pathname !== "/" && !window.location.pathname.endsWith("index.html")) return;
-    const params = new URLSearchParams(window.location.search);
-    const term = params.get("search");
+    var term = new URLSearchParams(window.location.search).get("search");
     if (term && typeof window.performKeywordSearch === "function") {
-      // Wait for Supabase to be ready
-      setTimeout(() => window.performKeywordSearch(term), 1000);
+      setTimeout(function() { window.performKeywordSearch(term); }, 1000);
     }
   }
 
-  // ── 9. Main: inject header and initialise everything ─────
-  async function init() {
-    const container = document.getElementById("site-header");
-    if (!container) {
-      console.warn("[header-loader] No #site-header element found on this page.");
-      return;
-    }
-
-    const headerHTML = await fetchHeader();
-    if (!headerHTML) return;
-
-    container.innerHTML = headerHTML;
-
-    // Grab the injected header element
-    const headerEl = container.querySelector("header");
-
-    markActiveLink(container);
-    initMobileMenu(container);
-    initHeaderSearch(container);
-    buildSwitcher(container);
-
-    // Apply i18n translations once i18n.js is ready
-    if (window.i18n) {
-      window.i18n.applyStaticTranslations?.();
-    } else {
-      // Poll briefly in case i18n.js is still detecting language
-      let attempts = 0;
-      const poll = setInterval(() => {
-        attempts++;
-        if (window.i18n) {
-          window.i18n.applyStaticTranslations?.();
-          buildSwitcher(container); // rebuild with detected lang
-          clearInterval(poll);
-        }
-        if (attempts > 20) clearInterval(poll);
-      }, 150);
-    }
-
+  // ── Run ────────────────────────────────────────────────────────
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() {
+      loadHeader();
+      handleSearchParam();
+    });
+  } else {
+    loadHeader();
     handleSearchParam();
   }
 
-  // Run after DOM is ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
 })();

@@ -191,7 +191,7 @@
     const langCode = option.dataset.lang;
     if (!langCode) return;
 
-    // Call setLanguage if available; otherwise wait and retry
+    // Call setLanguage if available
     if (typeof window.setLanguage === "function") {
       window.setLanguage(langCode);
     } else if (window.i18n && typeof window.i18n.setLanguage === "function") {
@@ -268,6 +268,20 @@
       document.addEventListener("click", handleOutsideClick);
       window._langSwitcherListenersAttached = true;
     }
+
+    // Expose rebuild function for i18n.js to call after language change
+    window.buildLangSwitcher = () => {
+      const newActiveLang = window.i18n?.getCurrentLang() || activeLang;
+      const newCurrent = LANGUAGES.find(l => l.code === newActiveLang) || LANGUAGES[0];
+      const flagSpan = switcherEl.querySelector(".lang-flag");
+      const codeSpan = switcherEl.querySelector(".lang-code");
+      if (flagSpan) flagSpan.textContent = newCurrent.flag;
+      if (codeSpan) codeSpan.textContent = newCurrent.label;
+      switcherEl.querySelectorAll(".lang-option").forEach(opt => {
+        opt.classList.toggle("active", opt.dataset.lang === newActiveLang);
+        opt.setAttribute("aria-selected", opt.dataset.lang === newActiveLang);
+      });
+    };
   }
 
   // ── 7. Expose a global toggle for compatibility (used by keyboard etc.) ──

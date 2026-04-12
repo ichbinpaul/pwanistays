@@ -2321,6 +2321,11 @@
             <div class="navbar-right">
                 <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20book%20a%20stay%20or%20get%20more%20information." class="btn-book" data-i18n="nav_book_now">Book Now</a>
                 <div id="langSwitcher" aria-label="Select language"></div>
+                <script>
+                  // Build switcher as soon as this element exists in the DOM
+                  // i18n.js is already loaded (it's in <head>), so buildSwitcher() exists
+                  if (typeof buildSwitcher === "function") buildSwitcher();
+                </script>
             </div>
         </nav>
     </header>

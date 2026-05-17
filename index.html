@@ -3745,7 +3745,7 @@
                                 <div class="swiper-slide">
                                     <img src="" 
                                          alt="${property.title || 'Property'} placeholder image"
-                                         onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                                         onerror="this.src=''">
                                 </div>
                             </div>
                             <div class="swiper-pagination"></div>
@@ -4168,7 +4168,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                     if (property.image_url) {
                         images.push(property.image_url);
                     } else {
-                        images.push('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+                        images.push('');
                     }
                 }
                 
@@ -4181,7 +4181,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                     mainWrapper.innerHTML += `
                         <div class="swiper-slide">
                             <img src="${url}" alt="${property.title || 'Property'} image ${index + 1}" 
-                                 onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                                 onerror="this.src=''">
                         </div>
                     `;
                     
@@ -4189,7 +4189,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                         thumbWrapper.innerHTML += `
                             <div class="swiper-slide">
                                 <img src="${url}" alt="${property.title || 'Property'} thumbnail ${index + 1}"
-                                     onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                                     onerror="this.src=''">
                             </div>
                         `;
                     }

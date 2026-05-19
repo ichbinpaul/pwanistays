@@ -13,6 +13,10 @@
         th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; vertical-align: top; }
         th { background: #0d7a5f; color: white; position: sticky; top: 0; }
         tr:nth-child(even) { background: #f9f9f9; }
+        /* Status colors */
+        .status-complete { background-color: #d4edda; color: #155724; }
+        .status-inprogress { background-color: #fff3cd; color: #856404; }
+        .status-pending { background-color: #f8d7da; color: #721c24; }
         button { background: #0d7a5f; color: white; border: none; padding: 6px 14px; border-radius: 30px; cursor: pointer; font-weight: 500; }
         button:hover { background: #0f9b7a; transform: translateY(-1px); }
         button.danger { background: #dc3545; }
@@ -42,12 +46,10 @@
 <div id="app"></div>
 
 <script>
-    // ----- Supabase configuration (using a unique variable name) -----
     const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ----- Global state -----
     let bookings = [];
     let filterText = "";
     let locationOptions = [];
@@ -57,7 +59,6 @@
     const statusOptions = ["Complete", "In Progress", "Pending"];
     const genderOptions = ["Male", "Female", "Prefer not to say"];
 
-    // ----- Helper functions -----
     function calculateNights(checkIn, checkOut) {
         if (!checkIn || !checkOut) return null;
         const start = new Date(checkIn);
@@ -165,7 +166,6 @@
         populateDropdowns();
     }
 
-    // ----- CRUD -----
     async function loadBookings() {
         const tableContainer = document.getElementById('tableContainer');
         if (tableContainer) tableContainer.innerHTML = '<div class="loading">📋 Loading bookings...</div>';
@@ -188,14 +188,21 @@
         ) : bookings;
         if (filtered.length === 0) { tableContainer.innerHTML = '<p>✨ No bookings found.</p>'; return; }
         const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
-        const headers = ['ID','Guest','Gender','Phone','Unit','Location','Type','Check In','Check Out','Nights','Paid','Host Cost','Charges','Profit','Status','Source','Sub','Month','Host','Notes'];
-        let html = '<div style="overflow-x:auto"><table><thead><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '<th>Actions</th></tr></thead><tbody>';
+        const headers = ['Booking ID','Guest Name','Gender','Phone Number','Unit Name','Location','Unit Type','Check-In','Check-Out','Nights','Guest Paid (KES)','Host Cost (KES)','Charges (KES)','Profit (KES)','Status','Source','Sub-Source','Month','Host','Notes'];
+        let html = '<div style="overflow-x:auto"></td><thead><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '<th>Actions</th></tr></thead><tbody>';
         filtered.forEach(b => {
-            html += '<tr>' + cols.map(col => {
+            let statusClass = '';
+            if (b.status === 'Complete') statusClass = 'status-complete';
+            else if (b.status === 'In Progress') statusClass = 'status-inprogress';
+            else if (b.status === 'Pending') statusClass = 'status-pending';
+            html += '<tr class="' + statusClass + '">';
+            html += cols.map(col => {
                 let val = b[col] ?? '';
                 if (col === 'check_in' || col === 'check_out') val = val ? val.substring(0,10) : '';
                 return `<td>${val}</td>`;
-            }).join('') + `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>` + '</tr>';
+            }).join('');
+            html += `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>`;
+            html += '</tr>';
         });
         html += '</tbody></table></div>';
         tableContainer.innerHTML = html;
@@ -229,7 +236,6 @@
         const data = {};
         const fields = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
         for (let f of fields) { let val = document.getElementById(f).value; if (val === '') val = null; data[f] = val; }
-        // Add new options
         for (let {field, category} of [{field:'location', category:'location'},{field:'unit_type', category:'unit_type'},{field:'source', category:'source'},{field:'sub_source', category:'sub_source'}]) {
             if (data[field] === '__ADD_NEW__') {
                 const newVal = prompt(`Enter new ${category}:`);
@@ -257,23 +263,66 @@
     async function editBooking(id) { const booking = bookings.find(b => b.id === id); if (booking) openModal(booking); }
     async function deleteBooking(id) { if (!confirm('⚠️ Delete this booking permanently?')) return; const { error } = await supabaseClient.from('bookings').delete().eq('id', id); if (error) alert(`Delete failed: ${error.message}`); else loadBookings(); }
 
-    // ----- CSV Import/Export -----
+    // --- CSV Import with flexible column mapping ---
     function importCSV() {
-        const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.csv';
         input.onchange = async (e) => {
             const file = e.target.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onload = async (event) => {
-                const lines = event.target.result.split(/\r?\n/);
-                const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-                if (!headers.includes('id') || !headers.includes('guest_name')) { alert("CSV must have 'id' and 'guest_name' columns"); return; }
+                const csvText = event.target.result;
+                const lines = csvText.split(/\r?\n/);
+                const rawHeaders = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+                // Map friendly headers to database column names
+                const columnMap = {
+                    'Booking ID': 'id',
+                    'Guest Name': 'guest_name',
+                    'Gender': 'gender',
+                    'Phone Number': 'phone',
+                    'Unit Name': 'unit_name',
+                    'Location': 'location',
+                    'Unit Type': 'unit_type',
+                    'Check-In': 'check_in',
+                    'Check-Out': 'check_out',
+                    'Nights': 'nights',
+                    'Guest Paid (KES)': 'guest_paid',
+                    'Host Cost (KES)': 'host_cost',
+                    'Charges (KES)': 'charges',
+                    'Profit (KES)': 'profit',
+                    'Status': 'status',
+                    'Source': 'source',
+                    'Sub-Source': 'sub_source',
+                    'Month': 'month',
+                    'Host': 'host',
+                    'Notes': 'notes'
+                };
+                // Also map lowercase variations
+                const mapHeader = (h) => {
+                    let mapped = columnMap[h];
+                    if (mapped) return mapped;
+                    const lower = h.toLowerCase();
+                    for (let [key, val] of Object.entries(columnMap)) {
+                        if (key.toLowerCase() === lower) return val;
+                    }
+                    return null;
+                };
+                const dbColumns = rawHeaders.map(h => mapHeader(h)).filter(c => c !== null);
+                if (!dbColumns.includes('id') || !dbColumns.includes('guest_name')) {
+                    alert("CSV must contain 'Booking ID' and 'Guest Name' columns (or 'id' and 'guest_name').");
+                    return;
+                }
                 let imported = 0, skipped = 0;
                 for (let i = 1; i < lines.length; i++) {
                     if (!lines[i].trim()) continue;
                     const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
                     const row = {};
-                    headers.forEach((h, idx) => { row[h] = values[idx] || null; });
+                    rawHeaders.forEach((h, idx) => {
+                        const dbCol = mapHeader(h);
+                        if (dbCol) row[dbCol] = values[idx] || null;
+                    });
                     if (!row.id || !row.guest_name) { skipped++; continue; }
                     if (row.check_in) row.check_in = row.check_in.substring(0,10);
                     if (row.check_out) row.check_out = row.check_out.substring(0,10);
@@ -283,7 +332,8 @@
                         const { error } = await supabaseClient.from('bookings').update(row).eq('id', row.id);
                         if (!error) imported++; else skipped++;
                     } else {
-                        row.created_at = new Date().toISOString(); row.updated_at = row.created_at;
+                        row.created_at = new Date().toISOString();
+                        row.updated_at = row.created_at;
                         const { error } = await supabaseClient.from('bookings').insert([row]);
                         if (!error) imported++; else skipped++;
                     }
@@ -303,15 +353,34 @@
             (b.location && b.location.toLowerCase().includes(filterText)) ||
             (b.phone && b.phone.includes(filterText))
         ) : bookings;
-        const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
         const headers = ['Booking ID','Guest Name','Gender','Phone Number','Unit Name','Location','Unit Type','Check-In','Check-Out','Nights','Guest Paid (KES)','Host Cost (KES)','Charges (KES)','Profit (KES)','Status','Source','Sub-Source','Month','Host','Notes'];
-        let csvRows = [headers.join(',')];
+        const csvRows = [headers.join(',')];
         for (let b of filtered) {
-            const row = cols.map(col => {
-                let val = b[col] ?? '';
-                if (typeof val === 'string') val = val.replace(/"/g, '""');
-                if (val.includes(',') || val.includes('"')) val = `"${val}"`;
-                return val;
+            const row = [
+                b.id ?? '',
+                b.guest_name ?? '',
+                b.gender ?? '',
+                b.phone ?? '',
+                b.unit_name ?? '',
+                b.location ?? '',
+                b.unit_type ?? '',
+                b.check_in ? b.check_in.substring(0,10) : '',
+                b.check_out ? b.check_out.substring(0,10) : '',
+                b.nights ?? '',
+                b.guest_paid ?? '',
+                b.host_cost ?? '',
+                b.charges ?? '',
+                b.profit ?? '',
+                b.status ?? '',
+                b.source ?? '',
+                b.sub_source ?? '',
+                b.month ?? '',
+                b.host ?? '',
+                b.notes ?? ''
+            ].map(cell => {
+                if (typeof cell === 'string') cell = cell.replace(/"/g, '""');
+                if (cell.includes(',') || cell.includes('"')) cell = `"${cell}"`;
+                return cell;
             });
             csvRows.push(row.join(','));
         }
@@ -319,7 +388,6 @@
         const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `bookings_${new Date().toISOString().slice(0,19)}.csv`; link.click(); URL.revokeObjectURL(link.href);
     }
 
-    // ----- Authentication & render -----
     async function renderApp() {
         const { data: { session } } = await supabaseClient.auth.getSession();
         const app = document.getElementById('app');

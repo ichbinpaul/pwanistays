@@ -8,7 +8,8 @@
         * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', monospace; }
         body { background: #f0f4f2; margin: 0; padding: 20px; }
         .container { max-width: 1600px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
-        h1 { margin-top: 0; display: flex; justify-content: space-between; align-items: center; color: #0d7a5f; }
+        h1 { margin-top: 0; display: flex; justify-content: center; align-items: center; gap: 15px; color: #0d7a5f; text-align: center; }
+        .logo-img { height: 50px; width: auto; }
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ddd; }
         .tab { padding: 10px 20px; cursor: pointer; background: #f0f0f0; border-radius: 20px 20px 0 0; }
         .tab.active { background: #0d7a5f; color: white; }
@@ -212,6 +213,7 @@
         const headers = ['Select','Booking ID','Guest Name','Gender','Phone','Unit Name','Location','Unit Type','Check In','Check Out','Nights','Guest Paid','Host Cost','Charges','Profit','Status','Source','Sub-Source','Month','Host','Notes'];
         let html = `<div class="actions"><button id="deleteSelectedBtn" class="danger">🗑️ Delete Selected</button>
                     <button id="exportSelectedBtn" class="outline">📎 Export Selected</button>
+                    <button id="exportAllBtn" class="outline">📎 Export All CSV</button>
                     <button id="markCompleteBtn" class="outline">✅ Mark Complete</button>
                     <button id="markProgressBtn" class="outline">⏳ Mark In Progress</button>
                     <button id="markPendingBtn" class="outline">⏰ Mark Pending</button></div>`;
@@ -241,7 +243,8 @@
         const selectAll = document.getElementById('selectAllCheckbox');
         if (selectAll) selectAll.addEventListener('change', (e) => document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = e.target.checked));
         document.getElementById('deleteSelectedBtn')?.addEventListener('click', deleteSelectedBookings);
-        document.getElementById('exportSelectedBtn')?.addEventListener('click', exportSelectedBookings);
+        document.getElementById('exportSelectedBtn')?.addEventListener('click', () => exportSelectedBookings(true));
+        document.getElementById('exportAllBtn')?.addEventListener('click', () => exportSelectedBookings(false));
         document.getElementById('markCompleteBtn')?.addEventListener('click', () => bulkUpdateStatus('Complete'));
         document.getElementById('markProgressBtn')?.addEventListener('click', () => bulkUpdateStatus('In Progress'));
         document.getElementById('markPendingBtn')?.addEventListener('click', () => bulkUpdateStatus('Pending'));
@@ -318,9 +321,15 @@
         else loadBookings();
     }
 
-    function exportSelectedBookings() {
-        const selectedIds = Array.from(document.querySelectorAll('.rowCheckbox:checked')).map(cb => cb.dataset.id);
-        let dataToExport = selectedIds.length ? bookings.filter(b => selectedIds.includes(b.id)) : bookings;
+    function exportSelectedBookings(onlySelected) {
+        let dataToExport;
+        if (onlySelected) {
+            const selectedIds = Array.from(document.querySelectorAll('.rowCheckbox:checked')).map(cb => cb.dataset.id);
+            if (selectedIds.length === 0) { alert('No bookings selected.'); return; }
+            dataToExport = bookings.filter(b => selectedIds.includes(b.id));
+        } else {
+            dataToExport = bookings;
+        }
         if (dataToExport.length === 0) { alert('No bookings to export.'); return; }
         const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
         const headers = ['Booking ID','Guest Name','Gender','Phone Number','Unit Name','Location','Unit Type','Check-In','Check-Out','Nights','Guest Paid (KES)','Host Cost (KES)','Charges (KES)','Profit (KES)','Status','Source','Sub-Source','Month','Host','Notes'];
@@ -475,7 +484,7 @@
         input.click();
     }
 
-    // ----- Analytics with robust null handling -----
+    // ----- Analytics with correct referral from source column -----
     function computeAnalytics() {
         const totalBookings = bookings.length;
         const completed = bookings.filter(b => b.status === 'Complete').length;
@@ -503,14 +512,16 @@
         const sourceProfits = sources.map(s => sourceStats[s].profit);
         const sourceCounts = sources.map(s => sourceStats[s].count);
 
+        // Referral from source column (P)
+        const referralCount = sourceStats['Referral']?.count || 0;
+        const referralProfit = sourceStats['Referral']?.profit || 0;
+
         const subSourceStats = {};
         bookings.forEach(b => { const ss = (b.sub_source || '').trim(); if (ss) { if (!subSourceStats[ss]) subSourceStats[ss] = { count: 0, profit: 0 }; subSourceStats[ss].count++; subSourceStats[ss].profit += (parseFloat(b.profit) || 0); } });
         const retentionLabels = Object.keys(subSourceStats).sort();
         const retentionCounts = retentionLabels.map(l => subSourceStats[l].count);
         const retentionProfits = retentionLabels.map(l => subSourceStats[l].profit);
 
-        const referralCount = subSourceStats['Referral']?.count || 0;
-        const referralProfit = subSourceStats['Referral']?.profit || 0;
         const loyalCount = subSourceStats['Returning']?.count || 0;
         const loyalProfit = subSourceStats['Returning']?.profit || 0;
         const newCount = subSourceStats['New']?.count || 0;
@@ -527,8 +538,9 @@
             locations, locationStats,
             unitTypes, unitTypeStats,
             sources, sourceProfits, sourceCounts, sourceStats,
+            referralCount, referralProfit,
             retentionLabels, retentionCounts, retentionProfits, subSourceStats,
-            referralCount, referralProfit, loyalCount, loyalProfit, newCount, newProfit,
+            loyalCount, loyalProfit, newCount, newProfit,
             genderLabels, genderCounts, genderStats
         };
     }
@@ -541,7 +553,6 @@
             return;
         }
         const data = computeAnalytics();
-        // Helper to safely get value from subSourceStats
         const safeSub = (label) => data.subSourceStats[label] || { count: 0, profit: 0 };
         let html = `
             <div class="kpi-cards">
@@ -559,7 +570,7 @@
             <h3>📍 Location Performance</h3>
             <table class="stats-table"><thead><tr><th>Location</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.locations.map(l => `<tr><td>${l}</td><td>${data.locationStats[l].count}</td><td>${data.locationStats[l].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>🛏 Unit Type Performance</h3>
-            <table class="stats-table"><thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody><table>
+            <table class="stats-table"><thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>📣 Booking Source Performance</h3>
             <table class="stats-table"><thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>🔁 Customer Retention & Loyalty</h3>
@@ -574,7 +585,6 @@
             <table class="stats-table"><thead><tr><th>Gender</th><th>Bookings</th><th>Revenue (KES)</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead><tbody>${data.genderLabels.map(g => `<tr><td>${g}</td><td>${data.genderStats[g].count}</td><td>${data.genderStats[g].revenue.toLocaleString()}</td><td>${data.genderStats[g].profit.toLocaleString()}</td><td>${((data.genderStats[g].profit/data.totalProfit)*100).toFixed(2)}%</td></tr>`).join('')}</tbody></table>
         `;
 
-        // Charts
         html += `<div class="charts-grid">
             <div class="chart-container"><canvas id="profitBySourceChart"></canvas></div>
             <div class="chart-container"><canvas id="profitByMonthChart"></canvas></div>
@@ -697,13 +707,13 @@
         }
         app.innerHTML = `
             <div class="container">
-                <h1>📋 PwaniStays – Booking Manager <button id="logoutBtn" class="logout">🚪 Logout</button></h1>
+                <h1><img src="/logo-header.png" alt="PwaniStays" class="logo-img"> 📋 PwaniStays – Booking Manager <button id="logoutBtn" class="logout">🚪 Logout</button></h1>
                 <div class="tabs">
                     <div class="tab active" id="tabBookings" data-tab="bookings">📋 Bookings</div>
                     <div class="tab" id="tabAnalytics" data-tab="analytics">📊 Analytics</div>
                 </div>
                 <div id="contentBookings" class="tab-content active">
-                    <div class="actions"><button id="addBtn">➕ Add Booking</button><button id="importBtn">📂 Import CSV</button><button id="exportAllBtn">📎 Export All CSV</button></div>
+                    <div class="actions"><button id="addBtn">➕ Add Booking</button><button id="importBtn">📂 Import CSV</button></div>
                     <div class="search"><input type="text" id="searchInput" placeholder="🔍 Search by Guest, Unit, Location, Phone..."></div>
                     <div id="bookingsContainer">Loading bookings...</div>
                 </div>
@@ -739,7 +749,6 @@
         document.getElementById('tabAnalytics').addEventListener('click', () => switchTab('analytics'));
         document.getElementById('addBtn').addEventListener('click', () => openModal());
         document.getElementById('importBtn').addEventListener('click', importCSVWithProgress);
-        document.getElementById('exportAllBtn').addEventListener('click', () => exportSelectedBookings());
         document.getElementById('logoutBtn').addEventListener('click', async () => { await supabaseClient.auth.signOut(); renderApp(); });
         document.getElementById('searchInput').addEventListener('input', (e) => { filterText = e.target.value.toLowerCase(); renderBookingsTable(); });
         document.getElementById('modalCancel').addEventListener('click', closeModal);

@@ -327,7 +327,7 @@
         if (onlySelected) {
             const selectedIds = Array.from(document.querySelectorAll('.rowCheckbox:checked')).map(cb => cb.dataset.id);
             if (selectedIds.length === 0) { alert('No bookings selected.'); return; }
-            dataToExport = bookings.filter(b => selectedIds.includes(b.id));
+            dataToExport = bookings.filter(b => selectedIds.includes(String(b.id)));
         } else {
             dataToExport = bookings;
         }
@@ -338,8 +338,14 @@
         for (let b of dataToExport) {
             const row = cols.map(col => {
                 let val = b[col] ?? '';
-                if (typeof val === 'string') val = val.replace(/"/g, '""');
-                if (val.includes(',') || val.includes('"')) val = `"${val}"`;
+                if ((col === 'check_in' || col === 'check_out') && val) {
+                    val = String(val).substring(0, 10);
+                } else if (['guest_paid','host_cost','charges','profit','nights'].includes(col) && val !== '' && val !== null) {
+                    val = Number(val) % 1 === 0 ? String(Math.round(Number(val))) : String(parseFloat(Number(val).toFixed(2)));
+                }
+                val = String(val);
+                val = val.replace(/"/g, '""');
+                if (val.includes(',') || val.includes('"') || val.includes('\n')) val = `"${val}"`;
                 return val;
             });
             csvRows.push(row.join(','));
@@ -348,7 +354,10 @@
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = `bookings_export_${new Date().toISOString().slice(0,19)}.csv`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
         URL.revokeObjectURL(link.href);
     }
 
@@ -665,7 +674,10 @@
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = `analytics_report_${new Date().toISOString().slice(0,19)}.csv`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
         URL.revokeObjectURL(link.href);
     }
 

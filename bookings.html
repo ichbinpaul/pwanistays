@@ -181,7 +181,6 @@
         populateDropdowns();
     }
 
-    // CRUD
     async function loadBookings() {
         const { data, error } = await supabaseClient.from('bookings').select('*').order('created_at', { ascending: false });
         if (error) { console.error(error); return; }
@@ -340,7 +339,7 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- CSV Import with detailed logging and robust trimming -----
+    // ----- CSV Import with comma stripping and numeric conversion -----
     async function importCSVWithProgress() {
         const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
         input.onchange = async (e) => {
@@ -377,7 +376,6 @@
             }
             const data = results.data;
             if (data.length === 0) { modalDiv.remove(); alert('CSV is empty.'); return; }
-            // Trim headers (remove BOM and spaces)
             const rawKeys = Object.keys(data[0]);
             const cleanKeys = rawKeys.map(k => k.replace(/^\uFEFF/, '').trim());
             const columnMap = {
@@ -397,8 +395,8 @@
                 'Profit (KES)': 'profit',
                 'Status': 'status',
                 'Source': 'source',
-                'Sub-Source': 'sub_source',  // exact column name
-                'Sub Source': 'sub_source',  // alternative
+                'Sub-Source': 'sub_source',
+                'Sub Source': 'sub_source',
                 'Subsource': 'sub_source',
                 'Month': 'month',
                 'Host': 'host',
@@ -424,6 +422,10 @@
                     let val = row[friendly];
                     if (val !== undefined && val !== null && val !== '') {
                         val = val.toString().trim();
+                        // Remove commas from numeric fields
+                        if (['guest_paid', 'host_cost', 'charges', 'profit'].includes(dbCol)) {
+                            val = val.replace(/,/g, '');
+                        }
                         dbRow[dbCol] = val;
                     } else {
                         dbRow[dbCol] = null;
@@ -431,7 +433,6 @@
                 }
                 if (dbRow.id) dbRow.id = dbRow.id.trim();
                 if (dbRow.guest_name) dbRow.guest_name = dbRow.guest_name.trim();
-                // Log skipped rows to console for debugging
                 if (!dbRow.id || !dbRow.guest_name) {
                     skipped++;
                     skippedRows.push(idx+2);
@@ -441,6 +442,11 @@
                 if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
                 if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
                 autoCalculate(dbRow);
+                // Convert numeric fields to numbers (they are strings after comma removal)
+                ['guest_paid', 'host_cost', 'charges', 'profit', 'nights'].forEach(f => {
+                    if (dbRow[f] !== null && dbRow[f] !== '') dbRow[f] = parseFloat(dbRow[f]);
+                    if (isNaN(dbRow[f])) dbRow[f] = null;
+                });
                 const { data: existing } = await supabaseClient.from('bookings').select('id').eq('id', dbRow.id);
                 if (existing && existing.length) {
                     const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
@@ -468,7 +474,7 @@
         input.click();
     }
 
-    // ----- Analytics with tables and charts -----
+    // ----- Analytics with robust object creation -----
     function computeAnalytics() {
         const totalBookings = bookings.length;
         const completed = bookings.filter(b => b.status === 'Complete').length;
@@ -557,7 +563,7 @@
             months, monthlyProfitData,
             locations, locationStats,
             unitTypes, unitTypeStats,
-            sources, sourceProfits, sourceCounts,
+            sources, sourceProfits, sourceCounts, sourceStats,
             retentionLabels, retentionProfits, retentionCounts,
             referralCount, referralProfit, loyalCount, loyalProfit, newCount, newProfit,
             genderLabels, genderCounts, genderProfits, genderStats
@@ -636,7 +642,7 @@
         html += `<div class="actions"><button id="exportReportBtn">📊 Export Analytics Report (CSV)</button></div>`;
         container.innerHTML = html;
 
-        // Initialize charts
+        // Destroy old charts
         Object.values(charts).forEach(ch => ch.destroy());
         charts = {};
         if (data.sources.length) {
@@ -667,7 +673,6 @@
         charts.customer = new Chart(document.getElementById('customerTypeChart'), {
             type: 'pie', data: { labels: data.retentionLabels, datasets: [{ data: data.retentionCounts, backgroundColor: ['#0d7a5f', '#f8b400', '#dc3545'] }] }
         });
-
         document.getElementById('exportReportBtn')?.addEventListener('click', () => exportAnalyticsReport(data));
     }
 

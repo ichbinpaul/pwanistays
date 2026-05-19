@@ -13,10 +13,6 @@
         th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; vertical-align: top; }
         th { background: #0d7a5f; color: white; position: sticky; top: 0; }
         tr:nth-child(even) { background: #f9f9f9; }
-        /* Status colors */
-        .status-complete { background-color: #d4edda; color: #155724; }
-        .status-inprogress { background-color: #fff3cd; color: #856404; }
-        .status-pending { background-color: #f8d7da; color: #721c24; }
         button { background: #0d7a5f; color: white; border: none; padding: 6px 14px; border-radius: 30px; cursor: pointer; font-weight: 500; }
         button:hover { background: #0f9b7a; transform: translateY(-1px); }
         button.danger { background: #dc3545; }
@@ -30,7 +26,7 @@
         .form-field { display: flex; flex-direction: column; }
         label { font-weight: 600; margin-bottom: 5px; font-size: 0.85rem; }
         input, select, textarea { padding: 8px 12px; border-radius: 12px; border: 1px solid #ccc; font-size: 0.85rem; }
-        .actions { margin: 20px 0; display: flex; gap: 12px; flex-wrap: wrap; }
+        .actions { margin: 20px 0; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
         .search { margin-bottom: 20px; display: flex; gap: 12px; }
         .search input { flex: 1; padding: 10px 15px; border-radius: 40px; border: 1px solid #ccc; }
         .loading { text-align: center; padding: 40px; color: #0d7a5f; }
@@ -38,18 +34,25 @@
         .login-container { max-width: 400px; margin: 100px auto; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
         .login-container h2 { margin-top: 0; color: #0d7a5f; }
         .login-container input { width: 100%; margin-bottom: 15px; }
+        .status-complete { background-color: #d4edda !important; color: #155724; }
+        .status-progress { background-color: #fff3cd !important; color: #856404; }
+        .status-pending { background-color: #f8d7da !important; color: #721c24; }
+        .checkbox-col { width: 30px; text-align: center; }
         @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } th, td { font-size: 0.7rem; padding: 4px 6px; } }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 <body>
 <div id="app"></div>
 
 <script>
+    // ----- Supabase configuration (unique variable) -----
     const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // ----- Global state -----
     let bookings = [];
     let filterText = "";
     let locationOptions = [];
@@ -59,6 +62,7 @@
     const statusOptions = ["Complete", "In Progress", "Pending"];
     const genderOptions = ["Male", "Female", "Prefer not to say"];
 
+    // ----- Helper functions -----
     function calculateNights(checkIn, checkOut) {
         if (!checkIn || !checkOut) return null;
         const start = new Date(checkIn);
@@ -166,6 +170,7 @@
         populateDropdowns();
     }
 
+    // ----- CRUD -----
     async function loadBookings() {
         const tableContainer = document.getElementById('tableContainer');
         if (tableContainer) tableContainer.innerHTML = '<div class="loading">📋 Loading bookings...</div>';
@@ -175,6 +180,13 @@
         await loadDistinctOptions();
         populateDropdowns();
         renderTable();
+    }
+
+    function getStatusClass(status) {
+        if (status === 'Complete') return 'status-complete';
+        if (status === 'In Progress') return 'status-progress';
+        if (status === 'Pending') return 'status-pending';
+        return '';
     }
 
     function renderTable() {
@@ -188,26 +200,41 @@
         ) : bookings;
         if (filtered.length === 0) { tableContainer.innerHTML = '<p>✨ No bookings found.</p>'; return; }
         const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
-        const headers = ['Booking ID','Guest Name','Gender','Phone Number','Unit Name','Location','Unit Type','Check-In','Check-Out','Nights','Guest Paid (KES)','Host Cost (KES)','Charges (KES)','Profit (KES)','Status','Source','Sub-Source','Month','Host','Notes'];
-        let html = '<div style="overflow-x:auto"></td><thead><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '<th>Actions</th></tr></thead><tbody>';
+        const headers = ['Select','Booking ID','Guest Name','Gender','Phone','Unit Name','Location','Unit Type','Check In','Check Out','Nights','Guest Paid','Host Cost','Charges','Profit','Status','Source','Sub-Source','Month','Host','Notes'];
+        let html = '<div style="overflow-x:auto">';
+        html += `<div class="actions" style="justify-content: flex-start; margin-top: 10px;"><button id="deleteSelectedBtn" class="danger">🗑️ Delete Selected</button></div>`;
+        html += '<table id="bookingsTable"><thead><tr>';
+        html += '<th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th>';
+        headers.slice(1).forEach(h => html += `<th>${h}</th>`);
+        html += '<th>Actions</th></tr></thead><tbody>';
         filtered.forEach(b => {
-            let statusClass = '';
-            if (b.status === 'Complete') statusClass = 'status-complete';
-            else if (b.status === 'In Progress') statusClass = 'status-inprogress';
-            else if (b.status === 'Pending') statusClass = 'status-pending';
-            html += '<tr class="' + statusClass + '">';
-            html += cols.map(col => {
+            const statusClass = getStatusClass(b.status);
+            html += `<tr class="${statusClass}" data-id="${b.id}">`;
+            html += `<td class="checkbox-col"><input type="checkbox" class="rowCheckbox" data-id="${b.id}"></td>`;
+            cols.forEach(col => {
                 let val = b[col] ?? '';
                 if (col === 'check_in' || col === 'check_out') val = val ? val.substring(0,10) : '';
-                return `<td>${val}</td>`;
-            }).join('');
+                html += `<td>${val}</td>`;
+            });
             html += `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>`;
             html += '</tr>';
         });
         html += '</tbody></table></div>';
         tableContainer.innerHTML = html;
+
+        // Attach events
         document.querySelectorAll('.editBtn').forEach(btn => btn.addEventListener('click', () => editBooking(btn.dataset.id)));
         document.querySelectorAll('.deleteBtn').forEach(btn => btn.addEventListener('click', () => deleteBooking(btn.dataset.id)));
+        const selectAll = document.getElementById('selectAllCheckbox');
+        if (selectAll) {
+            selectAll.addEventListener('change', (e) => {
+                document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = e.target.checked);
+            });
+        }
+        const deleteSelected = document.getElementById('deleteSelectedBtn');
+        if (deleteSelected) {
+            deleteSelected.addEventListener('click', deleteSelectedBookings);
+        }
     }
 
     function openModal(booking = null) {
@@ -236,6 +263,7 @@
         const data = {};
         const fields = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
         for (let f of fields) { let val = document.getElementById(f).value; if (val === '') val = null; data[f] = val; }
+        // Add new options
         for (let {field, category} of [{field:'location', category:'location'},{field:'unit_type', category:'unit_type'},{field:'source', category:'source'},{field:'sub_source', category:'sub_source'}]) {
             if (data[field] === '__ADD_NEW__') {
                 const newVal = prompt(`Enter new ${category}:`);
@@ -263,85 +291,78 @@
     async function editBooking(id) { const booking = bookings.find(b => b.id === id); if (booking) openModal(booking); }
     async function deleteBooking(id) { if (!confirm('⚠️ Delete this booking permanently?')) return; const { error } = await supabaseClient.from('bookings').delete().eq('id', id); if (error) alert(`Delete failed: ${error.message}`); else loadBookings(); }
 
-    // --- CSV Import with flexible column mapping ---
+    async function deleteSelectedBookings() {
+        const selected = Array.from(document.querySelectorAll('.rowCheckbox:checked')).map(cb => cb.dataset.id);
+        if (selected.length === 0) { alert('No bookings selected.'); return; }
+        if (!confirm(`Delete ${selected.length} booking(s) permanently?`)) return;
+        const { error } = await supabaseClient.from('bookings').delete().in('id', selected);
+        if (error) alert(`Delete failed: ${error.message}`);
+        else loadBookings();
+    }
+
+    // ----- CSV Import/Export (using PapaParse for robust parsing) -----
     function importCSV() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.csv';
+        const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
         input.onchange = async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async (event) => {
-                const csvText = event.target.result;
-                const lines = csvText.split(/\r?\n/);
-                const rawHeaders = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-                // Map friendly headers to database column names
-                const columnMap = {
-                    'Booking ID': 'id',
-                    'Guest Name': 'guest_name',
-                    'Gender': 'gender',
-                    'Phone Number': 'phone',
-                    'Unit Name': 'unit_name',
-                    'Location': 'location',
-                    'Unit Type': 'unit_type',
-                    'Check-In': 'check_in',
-                    'Check-Out': 'check_out',
-                    'Nights': 'nights',
-                    'Guest Paid (KES)': 'guest_paid',
-                    'Host Cost (KES)': 'host_cost',
-                    'Charges (KES)': 'charges',
-                    'Profit (KES)': 'profit',
-                    'Status': 'status',
-                    'Source': 'source',
-                    'Sub-Source': 'sub_source',
-                    'Month': 'month',
-                    'Host': 'host',
-                    'Notes': 'notes'
-                };
-                // Also map lowercase variations
-                const mapHeader = (h) => {
-                    let mapped = columnMap[h];
-                    if (mapped) return mapped;
-                    const lower = h.toLowerCase();
-                    for (let [key, val] of Object.entries(columnMap)) {
-                        if (key.toLowerCase() === lower) return val;
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: async (results) => {
+                    const data = results.data;
+                    if (data.length === 0) { alert('CSV is empty.'); return; }
+                    // Map friendly headers to database columns
+                    const columnMap = {
+                        'Booking ID': 'id',
+                        'Guest Name': 'guest_name',
+                        'Gender': 'gender',
+                        'Phone Number': 'phone',
+                        'Unit Name': 'unit_name',
+                        'Location': 'location',
+                        'Unit Type': 'unit_type',
+                        'Check-In': 'check_in',
+                        'Check-Out': 'check_out',
+                        'Nights': 'nights',
+                        'Guest Paid (KES)': 'guest_paid',
+                        'Host Cost (KES)': 'host_cost',
+                        'Charges (KES)': 'charges',
+                        'Profit (KES)': 'profit',
+                        'Status': 'status',
+                        'Source': 'source',
+                        'Sub-Source': 'sub_source',
+                        'Month': 'month',
+                        'Host': 'host',
+                        'Notes': 'notes'
+                    };
+                    let imported = 0, skipped = 0;
+                    for (let row of data) {
+                        const dbRow = {};
+                        for (let [friendly, dbCol] of Object.entries(columnMap)) {
+                            let val = row[friendly];
+                            if (val !== undefined && val !== null && val !== '') dbRow[dbCol] = val;
+                            else dbRow[dbCol] = null;
+                        }
+                        if (!dbRow.id || !dbRow.guest_name) { skipped++; continue; }
+                        // Ensure dates are in YYYY-MM-DD format
+                        if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
+                        if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
+                        autoCalculate(dbRow);
+                        const { data: existing } = await supabaseClient.from('bookings').select('id').eq('id', dbRow.id);
+                        if (existing && existing.length) {
+                            const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
+                            if (!error) imported++; else skipped++;
+                        } else {
+                            dbRow.created_at = new Date().toISOString(); dbRow.updated_at = dbRow.created_at;
+                            const { error } = await supabaseClient.from('bookings').insert([dbRow]);
+                            if (!error) imported++; else skipped++;
+                        }
                     }
-                    return null;
-                };
-                const dbColumns = rawHeaders.map(h => mapHeader(h)).filter(c => c !== null);
-                if (!dbColumns.includes('id') || !dbColumns.includes('guest_name')) {
-                    alert("CSV must contain 'Booking ID' and 'Guest Name' columns (or 'id' and 'guest_name').");
-                    return;
-                }
-                let imported = 0, skipped = 0;
-                for (let i = 1; i < lines.length; i++) {
-                    if (!lines[i].trim()) continue;
-                    const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
-                    const row = {};
-                    rawHeaders.forEach((h, idx) => {
-                        const dbCol = mapHeader(h);
-                        if (dbCol) row[dbCol] = values[idx] || null;
-                    });
-                    if (!row.id || !row.guest_name) { skipped++; continue; }
-                    if (row.check_in) row.check_in = row.check_in.substring(0,10);
-                    if (row.check_out) row.check_out = row.check_out.substring(0,10);
-                    autoCalculate(row);
-                    const { data: existing } = await supabaseClient.from('bookings').select('id').eq('id', row.id);
-                    if (existing && existing.length) {
-                        const { error } = await supabaseClient.from('bookings').update(row).eq('id', row.id);
-                        if (!error) imported++; else skipped++;
-                    } else {
-                        row.created_at = new Date().toISOString();
-                        row.updated_at = row.created_at;
-                        const { error } = await supabaseClient.from('bookings').insert([row]);
-                        if (!error) imported++; else skipped++;
-                    }
-                }
-                alert(`Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`);
-                loadBookings();
-            };
-            reader.readAsText(file);
+                    alert(`Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`);
+                    loadBookings();
+                },
+                error: (err) => { alert(`CSV parsing error: ${err.message}`); }
+            });
         };
         input.click();
     }
@@ -353,34 +374,15 @@
             (b.location && b.location.toLowerCase().includes(filterText)) ||
             (b.phone && b.phone.includes(filterText))
         ) : bookings;
+        const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
         const headers = ['Booking ID','Guest Name','Gender','Phone Number','Unit Name','Location','Unit Type','Check-In','Check-Out','Nights','Guest Paid (KES)','Host Cost (KES)','Charges (KES)','Profit (KES)','Status','Source','Sub-Source','Month','Host','Notes'];
         const csvRows = [headers.join(',')];
         for (let b of filtered) {
-            const row = [
-                b.id ?? '',
-                b.guest_name ?? '',
-                b.gender ?? '',
-                b.phone ?? '',
-                b.unit_name ?? '',
-                b.location ?? '',
-                b.unit_type ?? '',
-                b.check_in ? b.check_in.substring(0,10) : '',
-                b.check_out ? b.check_out.substring(0,10) : '',
-                b.nights ?? '',
-                b.guest_paid ?? '',
-                b.host_cost ?? '',
-                b.charges ?? '',
-                b.profit ?? '',
-                b.status ?? '',
-                b.source ?? '',
-                b.sub_source ?? '',
-                b.month ?? '',
-                b.host ?? '',
-                b.notes ?? ''
-            ].map(cell => {
-                if (typeof cell === 'string') cell = cell.replace(/"/g, '""');
-                if (cell.includes(',') || cell.includes('"')) cell = `"${cell}"`;
-                return cell;
+            const row = cols.map(col => {
+                let val = b[col] ?? '';
+                if (typeof val === 'string') val = val.replace(/"/g, '""');
+                if (val.includes(',') || val.includes('"')) val = `"${val}"`;
+                return val;
             });
             csvRows.push(row.join(','));
         }
@@ -388,6 +390,7 @@
         const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `bookings_${new Date().toISOString().slice(0,19)}.csv`; link.click(); URL.revokeObjectURL(link.href);
     }
 
+    // ----- Authentication & render -----
     async function renderApp() {
         const { data: { session } } = await supabaseClient.auth.getSession();
         const app = document.getElementById('app');

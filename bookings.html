@@ -7,7 +7,7 @@
     <style>
         * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', monospace; }
         body { background: #f0f4f2; margin: 0; padding: 20px; }
-        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
+        .container { max-width: 1600px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
         h1 { margin-top: 0; display: flex; justify-content: space-between; align-items: center; color: #0d7a5f; }
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ddd; }
         .tab { padding: 10px 20px; cursor: pointer; background: #f0f0f0; border-radius: 20px 20px 0 0; }
@@ -44,18 +44,18 @@
         .status-progress { background-color: #fff3cd !important; color: #856404; }
         .status-pending { background-color: #f8d7da !important; color: #721c24; }
         .checkbox-col { width: 30px; text-align: center; }
-        .kpi-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 16px; margin-bottom: 30px; }
+        .kpi-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; margin-bottom: 30px; }
         .card { background: #f8f9fa; border-radius: 16px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .card h3 { margin: 0 0 8px 0; font-size: 0.9rem; color: #555; }
         .card .value { font-size: 1.8rem; font-weight: bold; color: #0d7a5f; }
-        .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px,1fr)); gap: 24px; margin-top: 30px; }
-        .chart-container { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        canvas { max-height: 300px; width: 100%; }
+        .stats-table { width: 100%; margin-top: 30px; border-collapse: collapse; font-size: 0.85rem; }
+        .stats-table th, .stats-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .stats-table th { background: #e9ecef; color: #0d7a5f; }
         .progress-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 2000; }
         .progress-card { background: white; padding: 30px; border-radius: 24px; text-align: center; min-width: 300px; }
         .progress-bar { width: 100%; height: 20px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin: 20px 0; }
         .progress-fill { width: 0%; height: 100%; background: #0d7a5f; transition: width 0.3s; }
-        @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } th, td { font-size: 0.7rem; padding: 4px 6px; } .charts-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } th, td { font-size: 0.7rem; padding: 4px 6px; } }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -217,7 +217,7 @@
         html += '<div class="table-container">';
         html += '<table><thead><tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th>';
         headers.slice(1).forEach(h => html += `<th>${h}</th>`);
-        html += '<th>Actions</th></tr></thead><tbody>';
+        html += '<th>Actions</th><tr></thead><tbody>';
         filtered.forEach(b => {
             const statusClass = getStatusClass(b.status);
             html += `<tr class="${statusClass}" data-id="${b.id}">`;
@@ -338,7 +338,7 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- CSV Import with progress (fixed column trimming) -----
+    // ----- Robust CSV import with trimming and correct mapping -----
     async function importCSVWithProgress() {
         const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
         input.onchange = async (e) => {
@@ -375,7 +375,7 @@
             }
             const data = results.data;
             if (data.length === 0) { modalDiv.remove(); alert('CSV is empty.'); return; }
-            // Get raw headers, trim spaces and BOM
+            // Trim all headers (remove BOM and spaces)
             const rawKeys = Object.keys(data[0]);
             const cleanKeys = rawKeys.map(k => k.replace(/^\uFEFF/, '').trim());
             const columnMap = {
@@ -400,7 +400,6 @@
                 'Host': 'host',
                 'Notes': 'notes'
             };
-            // Build mapping from trimmed header to db column
             let headerMap = {};
             for (let i = 0; i < cleanKeys.length; i++) {
                 const friendly = cleanKeys[i];
@@ -421,15 +420,14 @@
                     let val = row[friendly];
                     if (val !== undefined && val !== null && val !== '') {
                         val = val.toString().trim();
-                        // Remove any extra spaces inside the value? Leave as is.
                         dbRow[dbCol] = val;
                     } else {
                         dbRow[dbCol] = null;
                     }
                 }
-                // Trim id and guest_name again
                 if (dbRow.id) dbRow.id = dbRow.id.trim();
                 if (dbRow.guest_name) dbRow.guest_name = dbRow.guest_name.trim();
+                // Skip if no ID or guest name (row 40)
                 if (!dbRow.id || !dbRow.guest_name) {
                     skipped++;
                     skippedRows.push(idx+2);
@@ -465,7 +463,7 @@
         input.click();
     }
 
-    // ----- Analytics (enhanced) -----
+    // ----- Analytics with all tables and KPIs -----
     function computeAnalytics() {
         const totalBookings = bookings.length;
         const completed = bookings.filter(b => b.status === 'Complete').length;
@@ -474,49 +472,84 @@
         const totalRevenue = bookings.reduce((sum, b) => sum + (parseFloat(b.guest_paid) || 0), 0);
         const totalProfit = bookings.reduce((sum, b) => sum + (parseFloat(b.profit) || 0), 0);
 
-        // Profit by source
-        const sourceProfit = {};
-        bookings.forEach(b => { if (b.source && b.profit) sourceProfit[b.source] = (sourceProfit[b.source] || 0) + b.profit; });
-        const sourceLabels = Object.keys(sourceProfit).sort();
-        const sourceProfits = sourceLabels.map(s => sourceProfit[s]);
+        // Monthly profit trend
+        const monthlyProfit = {};
+        bookings.forEach(b => { if (b.month && b.profit) monthlyProfit[b.month] = (monthlyProfit[b.month] || 0) + b.profit; });
+        const months = Object.keys(monthlyProfit).sort();
+        const monthlyProfitData = months.map(m => monthlyProfit[m]);
 
-        // Profit by month
-        const monthProfit = {};
-        bookings.forEach(b => { if (b.month && b.profit) monthProfit[b.month] = (monthProfit[b.month] || 0) + b.profit; });
-        const monthLabels = Object.keys(monthProfit).sort();
-        const monthProfits = monthLabels.map(m => monthProfit[m]);
+        // Location performance
+        const locationStats = {};
+        bookings.forEach(b => {
+            if (b.location) {
+                if (!locationStats[b.location]) locationStats[b.location] = { count: 0, profit: 0 };
+                locationStats[b.location].count++;
+                locationStats[b.location].profit += (parseFloat(b.profit) || 0);
+            }
+        });
+        const locations = Object.keys(locationStats).sort();
 
-        // Profit by location
-        const locationProfit = {};
-        bookings.forEach(b => { if (b.location && b.profit) locationProfit[b.location] = (locationProfit[b.location] || 0) + b.profit; });
-        const locLabels = Object.keys(locationProfit).sort();
-        const locProfits = locLabels.map(l => locationProfit[l]);
+        // Unit type performance
+        const unitTypeStats = {};
+        bookings.forEach(b => {
+            if (b.unit_type) {
+                if (!unitTypeStats[b.unit_type]) unitTypeStats[b.unit_type] = { count: 0, profit: 0 };
+                unitTypeStats[b.unit_type].count++;
+                unitTypeStats[b.unit_type].profit += (parseFloat(b.profit) || 0);
+            }
+        });
+        const unitTypes = Object.keys(unitTypeStats).sort();
 
-        // Profit by unit type
-        const typeProfit = {};
-        bookings.forEach(b => { if (b.unit_type && b.profit) typeProfit[b.unit_type] = (typeProfit[b.unit_type] || 0) + b.profit; });
-        const typeLabels = Object.keys(typeProfit).sort();
-        const typeProfits = typeLabels.map(t => typeProfit[t]);
+        // Source performance
+        const sourceStats = {};
+        bookings.forEach(b => {
+            if (b.source) {
+                if (!sourceStats[b.source]) sourceStats[b.source] = { count: 0, profit: 0 };
+                sourceStats[b.source].count++;
+                sourceStats[b.source].profit += (parseFloat(b.profit) || 0);
+            }
+        });
+        const sources = Object.keys(sourceStats).sort();
 
-        // Gender
-        const male = bookings.filter(b => b.gender === 'Male').length;
-        const female = bookings.filter(b => b.gender === 'Female').length;
-        const notSay = bookings.filter(b => b.gender === 'Prefer not to say').length;
+        // Customer retention & loyalty (sub_source)
+        const subSourceStats = {};
+        bookings.forEach(b => {
+            const ss = b.sub_source || 'Unspecified';
+            if (!subSourceStats[ss]) subSourceStats[ss] = { count: 0, profit: 0 };
+            subSourceStats[ss].count++;
+            subSourceStats[ss].profit += (parseFloat(b.profit) || 0);
+        });
+        const retentionLabels = Object.keys(subSourceStats).sort();
 
-        // Sub-source (New/Returning/Referral)
-        const newCust = bookings.filter(b => b.sub_source === 'New').length;
-        const returning = bookings.filter(b => b.sub_source === 'Returning').length;
-        const referral = bookings.filter(b => b.sub_source === 'Referral').length;
-        const referralProfit = bookings.filter(b => b.sub_source === 'Referral').reduce((sum, b) => sum + (parseFloat(b.profit) || 0), 0);
+        // Loyal vs New revenue breakdown
+        const loyalProfit = subSourceStats['Returning']?.profit || 0;
+        const referralProfit = subSourceStats['Referral']?.profit || 0;
+        const newProfit = subSourceStats['New']?.profit || 0;
+        const loyalCount = subSourceStats['Returning']?.count || 0;
+        const referralCount = subSourceStats['Referral']?.count || 0;
+        const newCount = subSourceStats['New']?.count || 0;
+
+        // Gender analytics
+        const genderStats = {};
+        bookings.forEach(b => {
+            const g = b.gender || 'Not stated';
+            if (!genderStats[g]) genderStats[g] = { count: 0, profit: 0, revenue: 0 };
+            genderStats[g].count++;
+            genderStats[g].profit += (parseFloat(b.profit) || 0);
+            genderStats[g].revenue += (parseFloat(b.guest_paid) || 0);
+        });
+        const genderLabels = Object.keys(genderStats).sort();
 
         return {
             totalBookings, completed, inProgress, pending, totalRevenue, totalProfit,
-            sourceLabels, sourceProfits,
-            monthLabels, monthProfits,
-            locLabels, locProfits,
-            typeLabels, typeProfits,
-            male, female, notSay,
-            newCust, returning, referral, referralProfit
+            months, monthlyProfitData,
+            locations, locationStats,
+            unitTypes, unitTypeStats,
+            sources, sourceStats,
+            retentionLabels, subSourceStats,
+            loyalProfit, referralProfit, newProfit,
+            loyalCount, referralCount, newCount,
+            genderLabels, genderStats
         };
     }
 
@@ -528,7 +561,7 @@
             return;
         }
         const data = computeAnalytics();
-        container.innerHTML = `
+        let html = `
             <div class="kpi-cards">
                 <div class="card"><h3>Total Bookings</h3><div class="value">${data.totalBookings}</div></div>
                 <div class="card"><h3>Completed</h3><div class="value">${data.completed}</div></div>
@@ -536,44 +569,51 @@
                 <div class="card"><h3>Pending</h3><div class="value">${data.pending}</div></div>
                 <div class="card"><h3>Total Revenue (KES)</h3><div class="value">${data.totalRevenue.toLocaleString()}</div></div>
                 <div class="card"><h3>Total Profit (KES)</h3><div class="value">${data.totalProfit.toLocaleString()}</div></div>
-                <div class="card"><h3>Referral Count</h3><div class="value">${data.referral}</div></div>
+                <div class="card"><h3>Referral Count</h3><div class="value">${data.referralCount}</div></div>
                 <div class="card"><h3>Referral Profit (KES)</h3><div class="value">${data.referralProfit.toLocaleString()}</div></div>
             </div>
-            <div class="charts-grid">
-                <div class="chart-container"><canvas id="profitBySourceChart"></canvas></div>
-                <div class="chart-container"><canvas id="profitByMonthChart"></canvas></div>
-                <div class="chart-container"><canvas id="profitByLocationChart"></canvas></div>
-                <div class="chart-container"><canvas id="profitByTypeChart"></canvas></div>
-                <div class="chart-container"><canvas id="genderChart"></canvas></div>
-                <div class="chart-container"><canvas id="customerTypeChart"></canvas></div>
-            </div>
+            <h3>📈 Monthly Profit Trend</h3>
+            <table class="stats-table">
+                <thead><tr><th>Month</th><th>Profit (KES)</th></tr></thead>
+                <tbody>${data.months.map((m,i) => `<tr><td>${m}</td><td>${data.monthlyProfitData[i].toLocaleString()}</td></tr>`).join('')}</tbody>
+            </table>
+            <h3>📍 Location Performance</h3>
+            <table class="stats-table">
+                <thead><tr><th>Location</th><th>Bookings</th><th>Profit (KES)</th></tr></thead>
+                <tbody>${data.locations.map(l => `<tr><td>${l}</td><td>${data.locationStats[l].count}</td><td>${data.locationStats[l].profit.toLocaleString()}</td></tr>`).join('')}</tbody>
+            </table>
+            <h3>🛏 Unit Type Performance</h3>
+            <table class="stats-table">
+                <thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead>
+                <tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody>
+            </table>
+            <h3>📣 Booking Source Performance</h3>
+            <table class="stats-table">
+                <thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead>
+                <tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></tr>`).join('')}</tbody>
+            </table>
+            <h3>🔁 Customer Retention & Loyalty</h3>
+            <table class="stats-table">
+                <thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead>
+                <tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${data.subSourceStats[ss].count}</td><td>${data.subSourceStats[ss].profit.toLocaleString()}</td></tr>`).join('')}</tbody>
+            </table>
+            <h3>💰 Loyal vs New — Revenue Breakdown</h3>
+            <table class="stats-table">
+                <thead><tr><th>Segment</th><th>Bookings</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead>
+                <tbody>
+                    <tr><td>Returning</td><td>${data.loyalCount}</td><td>${data.loyalProfit.toLocaleString()}</td><td>${((data.loyalProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+                    <tr><td>Referral</td><td>${data.referralCount}</td><td>${data.referralProfit.toLocaleString()}</td><td>${((data.referralProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+                    <tr><td>New</td><td>${data.newCount}</td><td>${data.newProfit.toLocaleString()}</td><td>${((data.newProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+                </tbody>
+            </table>
+            <h3>👤 Gender Analytics</h3>
+            <table class="stats-table">
+                <thead><tr><th>Gender</th><th>Bookings</th><th>Revenue (KES)</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead>
+                <tbody>${data.genderLabels.map(g => `<tr><td>${g}</td><td>${data.genderStats[g].count}</td><td>${data.genderStats[g].revenue.toLocaleString()}</td><td>${data.genderStats[g].profit.toLocaleString()}</td><td>${((data.genderStats[g].profit/data.totalProfit)*100).toFixed(2)}%</td></tr>`).join('')}</tbody>
+            </table>
             <div class="actions"><button id="exportReportBtn">📊 Export Analytics Report (CSV)</button></div>
         `;
-        // Destroy old charts
-        Object.values(charts).forEach(ch => ch.destroy());
-        charts = {};
-        if (data.sourceLabels.length) {
-            charts.source = new Chart(document.getElementById('profitBySourceChart'), {
-                type: 'bar', data: { labels: data.sourceLabels, datasets: [{ label: 'Profit (KES)', data: data.sourceProfits, backgroundColor: '#0f9b7a' }] }
-            });
-        } else { document.getElementById('profitBySourceChart')?.parentElement?.remove(); }
-        if (data.monthLabels.length) {
-            charts.month = new Chart(document.getElementById('profitByMonthChart'), {
-                type: 'bar', data: { labels: data.monthLabels, datasets: [{ label: 'Profit (KES)', data: data.monthProfits, backgroundColor: '#f8b400' }] }
-            });
-        } else { document.getElementById('profitByMonthChart')?.parentElement?.remove(); }
-        charts.location = new Chart(document.getElementById('profitByLocationChart'), {
-            type: 'bar', data: { labels: data.locLabels, datasets: [{ label: 'Profit (KES)', data: data.locProfits, backgroundColor: '#dc3545' }] }
-        });
-        charts.type = new Chart(document.getElementById('profitByTypeChart'), {
-            type: 'bar', data: { labels: data.typeLabels, datasets: [{ label: 'Profit (KES)', data: data.typeProfits, backgroundColor: '#0d7a5f' }] }
-        });
-        charts.gender = new Chart(document.getElementById('genderChart'), {
-            type: 'pie', data: { labels: ['Male', 'Female', 'Prefer not to say'], datasets: [{ data: [data.male, data.female, data.notSay], backgroundColor: ['#0d7a5f', '#f8b400', '#6c757d'] }] }
-        });
-        charts.customer = new Chart(document.getElementById('customerTypeChart'), {
-            type: 'pie', data: { labels: ['New', 'Returning', 'Referral'], datasets: [{ data: [data.newCust, data.returning, data.referral], backgroundColor: ['#0d7a5f', '#f8b400', '#dc3545'] }] }
-        });
+        container.innerHTML = html;
         document.getElementById('exportReportBtn')?.addEventListener('click', () => exportAnalyticsReport(data));
     }
 
@@ -586,30 +626,37 @@
         rows.push(['Pending', data.pending]);
         rows.push(['Total Revenue (KES)', data.totalRevenue]);
         rows.push(['Total Profit (KES)', data.totalProfit]);
-        rows.push(['Referral Count', data.referral]);
+        rows.push(['Referral Count', data.referralCount]);
         rows.push(['Referral Profit (KES)', data.referralProfit]);
         rows.push(['']);
-        rows.push(['Profit by Source','']);
-        data.sourceLabels.forEach((l,i) => rows.push([l, data.sourceProfits[i]]));
+        rows.push(['Monthly Profit','']);
+        data.months.forEach((m,i) => rows.push([m, data.monthlyProfitData[i]]));
         rows.push(['']);
-        rows.push(['Profit by Month','']);
-        data.monthLabels.forEach((m,i) => rows.push([m, data.monthProfits[i]]));
+        rows.push(['Location Performance','','']);
+        rows.push(['Location','Bookings','Profit']);
+        data.locations.forEach(l => rows.push([l, data.locationStats[l].count, data.locationStats[l].profit]));
         rows.push(['']);
-        rows.push(['Profit by Location','']);
-        data.locLabels.forEach((l,i) => rows.push([l, data.locProfits[i]]));
+        rows.push(['Unit Type Performance','','']);
+        rows.push(['Unit Type','Bookings','Profit']);
+        data.unitTypes.forEach(t => rows.push([t, data.unitTypeStats[t].count, data.unitTypeStats[t].profit]));
         rows.push(['']);
-        rows.push(['Profit by Unit Type','']);
-        data.typeLabels.forEach((t,i) => rows.push([t, data.typeProfits[i]]));
+        rows.push(['Source Performance','','']);
+        rows.push(['Source','Bookings','Profit']);
+        data.sources.forEach(s => rows.push([s, data.sourceStats[s].count, data.sourceStats[s].profit]));
         rows.push(['']);
-        rows.push(['Gender Breakdown','']);
-        rows.push(['Male', data.male]);
-        rows.push(['Female', data.female]);
-        rows.push(['Prefer not to say', data.notSay]);
+        rows.push(['Customer Retention & Loyalty','','']);
+        rows.push(['Type','Bookings','Profit']);
+        data.retentionLabels.forEach(ss => rows.push([ss, data.subSourceStats[ss].count, data.subSourceStats[ss].profit]));
         rows.push(['']);
-        rows.push(['Customer Type','']);
-        rows.push(['New', data.newCust]);
-        rows.push(['Returning', data.returning]);
-        rows.push(['Referral', data.referral]);
+        rows.push(['Loyal vs New Breakdown','','']);
+        rows.push(['Segment','Bookings','Profit']);
+        rows.push(['Returning', data.loyalCount, data.loyalProfit]);
+        rows.push(['Referral', data.referralCount, data.referralProfit]);
+        rows.push(['New', data.newCount, data.newProfit]);
+        rows.push(['']);
+        rows.push(['Gender Analytics','','','']);
+        rows.push(['Gender','Bookings','Revenue','Profit']);
+        data.genderLabels.forEach(g => rows.push([g, data.genderStats[g].count, data.genderStats[g].revenue, data.genderStats[g].profit]));
         const csv = rows.map(r => r.join(',')).join('\n');
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');

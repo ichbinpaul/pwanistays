@@ -226,6 +226,9 @@
             cols.forEach(col => {
                 let val = b[col] ?? '';
                 if (col === 'check_in' || col === 'check_out') val = val ? val.substring(0,10) : '';
+                if (col === 'guest_paid' || col === 'host_cost' || col === 'charges' || col === 'profit') {
+                    if (val !== '') val = parseFloat(val).toLocaleString();
+                }
                 html += `<td>${val}</td>`;
             });
             html += `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>`;
@@ -339,7 +342,7 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- CSV Import with comma stripping and numeric conversion -----
+    // ----- CSV Import with comma stripping -----
     async function importCSVWithProgress() {
         const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
         input.onchange = async (e) => {
@@ -422,7 +425,6 @@
                     let val = row[friendly];
                     if (val !== undefined && val !== null && val !== '') {
                         val = val.toString().trim();
-                        // Remove commas from numeric fields
                         if (['guest_paid', 'host_cost', 'charges', 'profit'].includes(dbCol)) {
                             val = val.replace(/,/g, '');
                         }
@@ -442,7 +444,6 @@
                 if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
                 if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
                 autoCalculate(dbRow);
-                // Convert numeric fields to numbers (they are strings after comma removal)
                 ['guest_paid', 'host_cost', 'charges', 'profit', 'nights'].forEach(f => {
                     if (dbRow[f] !== null && dbRow[f] !== '') dbRow[f] = parseFloat(dbRow[f]);
                     if (isNaN(dbRow[f])) dbRow[f] = null;
@@ -474,7 +475,7 @@
         input.click();
     }
 
-    // ----- Analytics with robust object creation -----
+    // ----- Analytics with robust null handling -----
     function computeAnalytics() {
         const totalBookings = bookings.length;
         const completed = bookings.filter(b => b.status === 'Complete').length;
@@ -483,60 +484,30 @@
         const totalRevenue = bookings.reduce((sum, b) => sum + (parseFloat(b.guest_paid) || 0), 0);
         const totalProfit = bookings.reduce((sum, b) => sum + (parseFloat(b.profit) || 0), 0);
 
-        // Monthly profit trend
         const monthlyProfit = {};
         bookings.forEach(b => { if (b.month && b.profit) monthlyProfit[b.month] = (monthlyProfit[b.month] || 0) + b.profit; });
         const months = Object.keys(monthlyProfit).sort();
         const monthlyProfitData = months.map(m => monthlyProfit[m]);
 
-        // Location performance
         const locationStats = {};
-        bookings.forEach(b => {
-            if (b.location) {
-                if (!locationStats[b.location]) locationStats[b.location] = { count: 0, profit: 0 };
-                locationStats[b.location].count++;
-                locationStats[b.location].profit += (parseFloat(b.profit) || 0);
-            }
-        });
+        bookings.forEach(b => { if (b.location) { if (!locationStats[b.location]) locationStats[b.location] = { count: 0, profit: 0 }; locationStats[b.location].count++; locationStats[b.location].profit += (parseFloat(b.profit) || 0); } });
         const locations = Object.keys(locationStats).sort();
 
-        // Unit type performance
         const unitTypeStats = {};
-        bookings.forEach(b => {
-            if (b.unit_type) {
-                if (!unitTypeStats[b.unit_type]) unitTypeStats[b.unit_type] = { count: 0, profit: 0 };
-                unitTypeStats[b.unit_type].count++;
-                unitTypeStats[b.unit_type].profit += (parseFloat(b.profit) || 0);
-            }
-        });
+        bookings.forEach(b => { if (b.unit_type) { if (!unitTypeStats[b.unit_type]) unitTypeStats[b.unit_type] = { count: 0, profit: 0 }; unitTypeStats[b.unit_type].count++; unitTypeStats[b.unit_type].profit += (parseFloat(b.profit) || 0); } });
         const unitTypes = Object.keys(unitTypeStats).sort();
 
-        // Source performance
         const sourceStats = {};
-        bookings.forEach(b => {
-            if (b.source) {
-                if (!sourceStats[b.source]) sourceStats[b.source] = { count: 0, profit: 0 };
-                sourceStats[b.source].count++;
-                sourceStats[b.source].profit += (parseFloat(b.profit) || 0);
-            }
-        });
+        bookings.forEach(b => { if (b.source) { if (!sourceStats[b.source]) sourceStats[b.source] = { count: 0, profit: 0 }; sourceStats[b.source].count++; sourceStats[b.source].profit += (parseFloat(b.profit) || 0); } });
         const sources = Object.keys(sourceStats).sort();
         const sourceProfits = sources.map(s => sourceStats[s].profit);
         const sourceCounts = sources.map(s => sourceStats[s].count);
 
-        // Sub-source (New/Returning/Referral)
         const subSourceStats = {};
-        bookings.forEach(b => {
-            const ss = (b.sub_source || '').trim();
-            if (ss) {
-                if (!subSourceStats[ss]) subSourceStats[ss] = { count: 0, profit: 0 };
-                subSourceStats[ss].count++;
-                subSourceStats[ss].profit += (parseFloat(b.profit) || 0);
-            }
-        });
+        bookings.forEach(b => { const ss = (b.sub_source || '').trim(); if (ss) { if (!subSourceStats[ss]) subSourceStats[ss] = { count: 0, profit: 0 }; subSourceStats[ss].count++; subSourceStats[ss].profit += (parseFloat(b.profit) || 0); } });
         const retentionLabels = Object.keys(subSourceStats).sort();
-        const retentionProfits = retentionLabels.map(l => subSourceStats[l].profit);
         const retentionCounts = retentionLabels.map(l => subSourceStats[l].count);
+        const retentionProfits = retentionLabels.map(l => subSourceStats[l].profit);
 
         const referralCount = subSourceStats['Referral']?.count || 0;
         const referralProfit = subSourceStats['Referral']?.profit || 0;
@@ -545,18 +516,10 @@
         const newCount = subSourceStats['New']?.count || 0;
         const newProfit = subSourceStats['New']?.profit || 0;
 
-        // Gender analytics
         const genderStats = {};
-        bookings.forEach(b => {
-            const g = b.gender || 'Not stated';
-            if (!genderStats[g]) genderStats[g] = { count: 0, profit: 0, revenue: 0 };
-            genderStats[g].count++;
-            genderStats[g].profit += (parseFloat(b.profit) || 0);
-            genderStats[g].revenue += (parseFloat(b.guest_paid) || 0);
-        });
+        bookings.forEach(b => { const g = b.gender || 'Not stated'; if (!genderStats[g]) genderStats[g] = { count: 0, profit: 0, revenue: 0 }; genderStats[g].count++; genderStats[g].profit += (parseFloat(b.profit) || 0); genderStats[g].revenue += (parseFloat(b.guest_paid) || 0); });
         const genderLabels = Object.keys(genderStats).sort();
         const genderCounts = genderLabels.map(g => genderStats[g].count);
-        const genderProfits = genderLabels.map(g => genderStats[g].profit);
 
         return {
             totalBookings, completed, inProgress, pending, totalRevenue, totalProfit,
@@ -564,9 +527,9 @@
             locations, locationStats,
             unitTypes, unitTypeStats,
             sources, sourceProfits, sourceCounts, sourceStats,
-            retentionLabels, retentionProfits, retentionCounts,
+            retentionLabels, retentionCounts, retentionProfits,
             referralCount, referralProfit, loyalCount, loyalProfit, newCount, newProfit,
-            genderLabels, genderCounts, genderProfits, genderStats
+            genderLabels, genderCounts, genderStats
         };
     }
 
@@ -590,47 +553,26 @@
                 <div class="card"><h3>Referral Profit (KES)</h3><div class="value">${data.referralProfit.toLocaleString()}</div></div>
             </div>
             <h3>📈 Monthly Profit Trend</h3>
-            <table class="stats-table">
-                <thead><tr><th>Month</th><th>Profit (KES)</th></tr></thead>
-                <tbody>${data.months.map((m,i) => `<tr><td>${m}</td><td>${data.monthlyProfitData[i].toLocaleString()}</td></tr>`).join('')}</tbody>
-            </table>
+            <table class="stats-table"><thead><tr><th>Month</th><th>Profit (KES)</th></tr></thead><tbody>${data.months.map((m,i) => `<tr><td>${m}</td><td>${data.monthlyProfitData[i].toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>📍 Location Performance</h3>
-            <table class="stats-table">
-                <thead><tr><th>Location</th><th>Bookings</th><th>Profit (KES)</th></tr></thead>
-                <tbody>${data.locations.map(l => `<tr><td>${l}</td><td>${data.locationStats[l].count}</td><td>${data.locationStats[l].profit.toLocaleString()}</td></tr>`).join('')}</tbody>
-            </table>
+            <table class="stats-table"><thead><tr><th>Location</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.locations.map(l => `<tr><td>${l}</td><td>${data.locationStats[l].count}</td><td>${data.locationStats[l].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>🛏 Unit Type Performance</h3>
-            <table class="stats-table">
-                <thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead>
-                <tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody>
-            </table>
+            <table class="stats-table"><thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>📣 Booking Source Performance</h3>
-            <table class="stats-table">
-                <thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead>
-                <tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></tr>`).join('')}</tbody>
-            </table>
+            <table class="stats-table"><thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>🔁 Customer Retention & Loyalty</h3>
-            <table class="stats-table">
-                <thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead>
-                <tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${data.subSourceStats[ss].count}</td><td>${data.subSourceStats[ss].profit.toLocaleString()}</td></tr>`).join('')}</tbody>
-            </table>
+            <table class="stats-table"><thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${data.subSourceStats[ss].count}</td><td>${data.subSourceStats[ss].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>💰 Loyal vs New — Revenue Breakdown</h3>
-            <table class="stats-table">
-                <thead><tr><th>Segment</th><th>Bookings</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead>
-                <tbody>
-                    <tr><td>Returning</td><td>${data.loyalCount}</td><td>${data.loyalProfit.toLocaleString()}</td><td>${((data.loyalProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
-                    <tr><td>Referral</td><td>${data.referralCount}</td><td>${data.referralProfit.toLocaleString()}</td><td>${((data.referralProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
-                    <tr><td>New</td><td>${data.newCount}</td><td>${data.newProfit.toLocaleString()}</td><td>${((data.newProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
-                </tbody>
-            </table>
+            <table class="stats-table"><thead><tr><th>Segment</th><th>Bookings</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead><tbody>
+                <tr><td>Returning</td><td>${data.loyalCount}</td><td>${data.loyalProfit.toLocaleString()}</td><td>${((data.loyalProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+                <tr><td>Referral</td><td>${data.referralCount}</td><td>${data.referralProfit.toLocaleString()}</td><td>${((data.referralProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+                <tr><td>New</td><td>${data.newCount}</td><td>${data.newProfit.toLocaleString()}</td><td>${((data.newProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+            </tbody></table>
             <h3>👤 Gender Analytics</h3>
-            <table class="stats-table">
-                <thead><tr><th>Gender</th><th>Bookings</th><th>Revenue (KES)</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead>
-                <tbody>${data.genderLabels.map(g => `<tr><td>${g}</td><td>${data.genderStats[g].count}</td><td>${data.genderStats[g].revenue.toLocaleString()}</td><td>${data.genderStats[g].profit.toLocaleString()}</td><td>${((data.genderStats[g].profit/data.totalProfit)*100).toFixed(2)}%</td></tr>`).join('')}</tbody>
-            </table>
+            <table class="stats-table"><thead><tr><th>Gender</th><th>Bookings</th><th>Revenue (KES)</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead><tbody>${data.genderLabels.map(g => `<tr><td>${g}</td><td>${data.genderStats[g].count}</td><td>${data.genderStats[g].revenue.toLocaleString()}</td><td>${data.genderStats[g].profit.toLocaleString()}</td><td>${((data.genderStats[g].profit/data.totalProfit)*100).toFixed(2)}%</td></tr>`).join('')}</tbody></table>
         `;
 
-        // Add charts below tables
+        // Charts
         html += `<div class="charts-grid">
             <div class="chart-container"><canvas id="profitBySourceChart"></canvas></div>
             <div class="chart-container"><canvas id="profitByMonthChart"></canvas></div>
@@ -646,33 +588,22 @@
         Object.values(charts).forEach(ch => ch.destroy());
         charts = {};
         if (data.sources.length) {
-            charts.source = new Chart(document.getElementById('profitBySourceChart'), {
-                type: 'bar', data: { labels: data.sources, datasets: [{ label: 'Profit (KES)', data: data.sourceProfits, backgroundColor: '#0f9b7a' }] }
-            });
+            charts.source = new Chart(document.getElementById('profitBySourceChart'), { type: 'bar', data: { labels: data.sources, datasets: [{ label: 'Profit (KES)', data: data.sourceProfits, backgroundColor: '#0f9b7a' }] } });
         }
         if (data.months.length) {
-            charts.month = new Chart(document.getElementById('profitByMonthChart'), {
-                type: 'bar', data: { labels: data.months, datasets: [{ label: 'Profit (KES)', data: data.monthlyProfitData, backgroundColor: '#f8b400' }] }
-            });
+            charts.month = new Chart(document.getElementById('profitByMonthChart'), { type: 'bar', data: { labels: data.months, datasets: [{ label: 'Profit (KES)', data: data.monthlyProfitData, backgroundColor: '#f8b400' }] } });
         }
         if (data.locations.length) {
             const locProfits = data.locations.map(l => data.locationStats[l].profit);
-            charts.location = new Chart(document.getElementById('profitByLocationChart'), {
-                type: 'bar', data: { labels: data.locations, datasets: [{ label: 'Profit (KES)', data: locProfits, backgroundColor: '#dc3545' }] }
-            });
+            charts.location = new Chart(document.getElementById('profitByLocationChart'), { type: 'bar', data: { labels: data.locations, datasets: [{ label: 'Profit (KES)', data: locProfits, backgroundColor: '#dc3545' }] } });
         }
         if (data.unitTypes.length) {
             const unitProfits = data.unitTypes.map(t => data.unitTypeStats[t].profit);
-            charts.unit = new Chart(document.getElementById('profitByUnitTypeChart'), {
-                type: 'bar', data: { labels: data.unitTypes, datasets: [{ label: 'Profit (KES)', data: unitProfits, backgroundColor: '#0d7a5f' }] }
-            });
+            charts.unit = new Chart(document.getElementById('profitByUnitTypeChart'), { type: 'bar', data: { labels: data.unitTypes, datasets: [{ label: 'Profit (KES)', data: unitProfits, backgroundColor: '#0d7a5f' }] } });
         }
-        charts.gender = new Chart(document.getElementById('genderChart'), {
-            type: 'pie', data: { labels: data.genderLabels, datasets: [{ data: data.genderCounts, backgroundColor: ['#0d7a5f', '#f8b400', '#6c757d'] }] }
-        });
-        charts.customer = new Chart(document.getElementById('customerTypeChart'), {
-            type: 'pie', data: { labels: data.retentionLabels, datasets: [{ data: data.retentionCounts, backgroundColor: ['#0d7a5f', '#f8b400', '#dc3545'] }] }
-        });
+        charts.gender = new Chart(document.getElementById('genderChart'), { type: 'pie', data: { labels: data.genderLabels, datasets: [{ data: data.genderCounts, backgroundColor: ['#0d7a5f', '#f8b400', '#6c757d'] }] } });
+        charts.customer = new Chart(document.getElementById('customerTypeChart'), { type: 'pie', data: { labels: data.retentionLabels, datasets: [{ data: data.retentionCounts, backgroundColor: ['#0d7a5f', '#f8b400', '#dc3545'] }] } });
+
         document.getElementById('exportReportBtn')?.addEventListener('click', () => exportAnalyticsReport(data));
     }
 

@@ -8,8 +8,9 @@
         * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', monospace; }
         body { background: #f0f4f2; margin: 0; padding: 20px; }
         .container { max-width: 1600px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
-        h1 { margin-top: 0; display: flex; justify-content: center; align-items: center; gap: 15px; color: #0d7a5f; text-align: center; }
+        h1 { margin-top: 0; display: flex; justify-content: space-between; align-items: center; color: #0d7a5f; text-align: center; }
         .logo-img { height: 50px; width: auto; }
+        .center-text { flex-grow: 1; text-align: center; margin: 0; }
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ddd; }
         .tab { padding: 10px 20px; cursor: pointer; background: #f0f0f0; border-radius: 20px 20px 0 0; }
         .tab.active { background: #0d7a5f; color: white; }
@@ -243,8 +244,8 @@
         const selectAll = document.getElementById('selectAllCheckbox');
         if (selectAll) selectAll.addEventListener('change', (e) => document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = e.target.checked));
         document.getElementById('deleteSelectedBtn')?.addEventListener('click', deleteSelectedBookings);
-        document.getElementById('exportSelectedBtn')?.addEventListener('click', () => exportSelectedBookings(true));
-        document.getElementById('exportAllBtn')?.addEventListener('click', () => exportSelectedBookings(false));
+        document.getElementById('exportSelectedBtn')?.addEventListener('click', () => exportBookings(true));
+        document.getElementById('exportAllBtn')?.addEventListener('click', () => exportBookings(false));
         document.getElementById('markCompleteBtn')?.addEventListener('click', () => bulkUpdateStatus('Complete'));
         document.getElementById('markProgressBtn')?.addEventListener('click', () => bulkUpdateStatus('In Progress'));
         document.getElementById('markPendingBtn')?.addEventListener('click', () => bulkUpdateStatus('Pending'));
@@ -321,7 +322,7 @@
         else loadBookings();
     }
 
-    function exportSelectedBookings(onlySelected) {
+    function exportBookings(onlySelected) {
         let dataToExport;
         if (onlySelected) {
             const selectedIds = Array.from(document.querySelectorAll('.rowCheckbox:checked')).map(cb => cb.dataset.id);
@@ -512,7 +513,7 @@
         const sourceProfits = sources.map(s => sourceStats[s].profit);
         const sourceCounts = sources.map(s => sourceStats[s].count);
 
-        // Referral from source column (P)
+        // Referral from source column
         const referralCount = sourceStats['Referral']?.count || 0;
         const referralProfit = sourceStats['Referral']?.profit || 0;
 
@@ -574,7 +575,7 @@
             <h3>📣 Booking Source Performance</h3>
             <table class="stats-table"><thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>🔁 Customer Retention & Loyalty</h3>
-            <table class="stats-table"><thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${safeSub(ss).count}</td><td>${safeSub(ss).profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
+            <table class="stats-table"><thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${safeSub(ss).count}</td><td>${safeSub(ss).profit.toLocaleString()}</td></tr>`).join('')}</tbody><tr>
             <h3>💰 Loyal vs New — Revenue Breakdown</h3>
             <table class="stats-table"><thead><tr><th>Segment</th><th>Bookings</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead><tbody>
                 <tr><td>Returning</td><td>${data.loyalCount}</td><td>${data.loyalProfit.toLocaleString()}</td><td>${((data.loyalProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
@@ -707,7 +708,11 @@
         }
         app.innerHTML = `
             <div class="container">
-                <h1><img src="/logo-header.png" alt="PwaniStays" class="logo-img"> 📋 PwaniStays – Booking Manager <button id="logoutBtn" class="logout">🚪 Logout</button></h1>
+                <h1>
+                    <img src="/logo-header.png" alt="PwaniStays" class="logo-img">
+                    <span class="center-text">Booking Manager</span>
+                    <button id="logoutBtn" class="logout">🚪 Logout</button>
+                </h1>
                 <div class="tabs">
                     <div class="tab active" id="tabBookings" data-tab="bookings">📋 Bookings</div>
                     <div class="tab" id="tabAnalytics" data-tab="analytics">📊 Analytics</div>

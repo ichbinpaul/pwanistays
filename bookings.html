@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PwaniStays – Bookings Admin</title>
     <style>
+        /* [All the same CSS as before, unchanged] */
         * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', monospace; }
         body { background: #f0f4f2; margin: 0; padding: 20px; }
         .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
@@ -76,7 +77,6 @@
     let activeTab = "bookings";
     let charts = {};
 
-    // Helper functions
     function calculateNights(checkIn, checkOut) {
         if (!checkIn || !checkOut) return null;
         const start = new Date(checkIn), end = new Date(checkOut);
@@ -178,7 +178,6 @@
         populateDropdowns();
     }
 
-    // CRUD
     async function loadBookings() {
         const { data, error } = await supabaseClient.from('bookings').select('*').order('created_at', { ascending: false });
         if (error) { console.error(error); return; }
@@ -226,7 +225,7 @@
                 html += `<td>${val}</td>`;
             });
             html += `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>`;
-            html += '<tr>';
+            html += '</tr>';
         });
         html += '</tbody></table></div>';
         container.innerHTML = html;
@@ -336,13 +335,12 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- CSV Import with progress (fixed) -----
+    // ----- FIXED CSV IMPORT WITH DEBUGGING -----
     async function importCSVWithProgress() {
         const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
         input.onchange = async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-            // Show progress modal
             const modalDiv = document.createElement('div');
             modalDiv.id = 'progressModal';
             modalDiv.className = 'progress-modal';
@@ -359,7 +357,6 @@
             const progressStatus = document.getElementById('progressStatus');
             const progressDetail = document.getElementById('progressDetail');
 
-            // Parse CSV fully first
             const results = await new Promise((resolve) => {
                 Papa.parse(file, {
                     header: true,
@@ -375,92 +372,103 @@
             }
             const data = results.data;
             if (data.length === 0) { modalDiv.remove(); alert('CSV is empty.'); return; }
-            // Remove BOM and map columns
-            const firstRow = data[0];
-            const rawKeys = Object.keys(firstRow);
-            const cleanKeys = rawKeys.map(k => k.replace(/^\uFEFF/, '').trim());
-            const columnMap = {
-                'Booking ID': 'id',
-                'Guest Name': 'guest_name',
-                'Gender': 'gender',
-                'Phone Number': 'phone',
-                'Unit Name': 'unit_name',
-                'Location': 'location',
-                'Unit Type': 'unit_type',
-                'Check-In': 'check_in',
-                'Check-Out': 'check_out',
-                'Nights': 'nights',
-                'Guest Paid (KES)': 'guest_paid',
-                'Host Cost (KES)': 'host_cost',
-                'Charges (KES)': 'charges',
-                'Profit (KES)': 'profit',
-                'Status': 'status',
-                'Source': 'source',
-                'Sub-Source': 'sub_source',
-                'Month': 'month',
-                'Host': 'host',
-                'Notes': 'notes'
-            };
-            let headerMap = {};
-            for (let i = 0; i < cleanKeys.length; i++) {
-                const friendly = cleanKeys[i];
-                if (columnMap[friendly]) headerMap[friendly] = columnMap[friendly];
+            // Detect columns (case-insensitive, trim)
+            const sample = data[0];
+            const colMap = {};
+            for (let key of Object.keys(sample)) {
+                const cleanKey = key.trim().replace(/^\uFEFF/, '');
+                if (cleanKey.toLowerCase() === 'booking id') colMap['Booking ID'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'guest name') colMap['Guest Name'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'gender') colMap['Gender'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'phone number') colMap['Phone Number'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'unit name') colMap['Unit Name'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'location') colMap['Location'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'unit type') colMap['Unit Type'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'check-in') colMap['Check-In'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'check-out') colMap['Check-Out'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'nights') colMap['Nights'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'guest paid (kes)') colMap['Guest Paid (KES)'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'host cost (kes)') colMap['Host Cost (KES)'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'charges (kes)') colMap['Charges (KES)'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'profit (kes)') colMap['Profit (KES)'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'status') colMap['Status'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'source') colMap['Source'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'sub-source') colMap['Sub-Source'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'month') colMap['Month'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'host') colMap['Host'] = cleanKey;
+                else if (cleanKey.toLowerCase() === 'notes') colMap['Notes'] = cleanKey;
             }
-            if (!headerMap['Booking ID'] || !headerMap['Guest Name']) {
+            if (!colMap['Booking ID'] || !colMap['Guest Name']) {
                 modalDiv.remove();
-                alert('CSV must contain "Booking ID" and "Guest Name" columns.');
+                alert('CSV must contain "Booking ID" and "Guest Name" columns. Found: ' + Object.keys(colMap).join(', '));
                 return;
             }
             let imported = 0, skipped = 0;
             let skippedRows = [];
+            let skippedReasons = [];
             const totalRows = data.length;
             for (let idx = 0; idx < totalRows; idx++) {
                 const row = data[idx];
                 const dbRow = {};
-                for (let [friendly, dbCol] of Object.entries(headerMap)) {
-                    let val = row[friendly];
-                    if (val !== undefined && val !== null && val !== '') dbRow[dbCol] = val.toString().trim();
-                    else dbRow[dbCol] = null;
-                }
-                if (dbRow.id) dbRow.id = dbRow.id.trim();
-                if (dbRow.guest_name) dbRow.guest_name = dbRow.guest_name.trim();
+                dbRow.id = row[colMap['Booking ID']] ? row[colMap['Booking ID']].toString().trim() : null;
+                dbRow.guest_name = row[colMap['Guest Name']] ? row[colMap['Guest Name']].toString().trim() : null;
                 if (!dbRow.id || !dbRow.guest_name) {
                     skipped++;
                     skippedRows.push(idx+2);
+                    skippedReasons.push(`Row ${idx+2}: id="${dbRow.id}", guest="${dbRow.guest_name}"`);
                     continue;
                 }
-                if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
-                if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
+                // Map other fields
+                if (colMap['Gender']) dbRow.gender = row[colMap['Gender']]?.toString().trim() || null;
+                if (colMap['Phone Number']) dbRow.phone = row[colMap['Phone Number']]?.toString().trim() || null;
+                if (colMap['Unit Name']) dbRow.unit_name = row[colMap['Unit Name']]?.toString().trim() || null;
+                if (colMap['Location']) dbRow.location = row[colMap['Location']]?.toString().trim() || null;
+                if (colMap['Unit Type']) dbRow.unit_type = row[colMap['Unit Type']]?.toString().trim() || null;
+                if (colMap['Check-In']) dbRow.check_in = row[colMap['Check-In']]?.toString().trim().substring(0,10) || null;
+                if (colMap['Check-Out']) dbRow.check_out = row[colMap['Check-Out']]?.toString().trim().substring(0,10) || null;
+                if (colMap['Nights']) dbRow.nights = parseInt(row[colMap['Nights']]) || null;
+                if (colMap['Guest Paid (KES)']) dbRow.guest_paid = parseFloat(row[colMap['Guest Paid (KES)']]) || 0;
+                if (colMap['Host Cost (KES)']) dbRow.host_cost = parseFloat(row[colMap['Host Cost (KES)']]) || 0;
+                if (colMap['Charges (KES)']) dbRow.charges = parseFloat(row[colMap['Charges (KES)']]) || 0;
+                if (colMap['Profit (KES)']) dbRow.profit = parseFloat(row[colMap['Profit (KES)']]) || null;
+                if (colMap['Status']) dbRow.status = row[colMap['Status']]?.toString().trim() || null;
+                if (colMap['Source']) dbRow.source = row[colMap['Source']]?.toString().trim() || null;
+                if (colMap['Sub-Source']) dbRow.sub_source = row[colMap['Sub-Source']]?.toString().trim() || null;
+                if (colMap['Month']) dbRow.month = row[colMap['Month']]?.toString().trim() || null;
+                if (colMap['Host']) dbRow.host = row[colMap['Host']]?.toString().trim() || null;
+                if (colMap['Notes']) dbRow.notes = row[colMap['Notes']]?.toString().trim() || null;
                 autoCalculate(dbRow);
                 const { data: existing } = await supabaseClient.from('bookings').select('id').eq('id', dbRow.id);
                 if (existing && existing.length) {
                     const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
                     if (!error) imported++;
-                    else { skipped++; skippedRows.push(idx+2); }
+                    else { skipped++; skippedRows.push(idx+2); skippedReasons.push(`Row ${idx+2}: update error`); }
                 } else {
                     dbRow.created_at = new Date().toISOString();
                     dbRow.updated_at = dbRow.created_at;
                     const { error } = await supabaseClient.from('bookings').insert([dbRow]);
                     if (!error) imported++;
-                    else { skipped++; skippedRows.push(idx+2); }
+                    else { skipped++; skippedRows.push(idx+2); skippedReasons.push(`Row ${idx+2}: insert error ${error.message}`); }
                 }
                 const percent = Math.round(((idx+1)/totalRows)*100);
                 progressFill.style.width = `${percent}%`;
                 progressStatus.innerText = `Processing row ${idx+1} of ${totalRows}...`;
                 progressDetail.innerText = `Imported: ${imported}, Skipped: ${skipped}`;
-                // Allow UI to update
                 await new Promise(r => setTimeout(r, 5));
             }
             modalDiv.remove();
             let msg = `Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`;
-            if (skippedRows.length) msg += `\nSkipped rows (approx): ${skippedRows.join(', ')}`;
+            if (skippedRows.length) {
+                msg += `\nSkipped rows (approx): ${skippedRows.join(', ')}`;
+                msg += `\n\nFirst few reasons:\n${skippedReasons.slice(0,5).join('\n')}`;
+            }
             alert(msg);
             loadBookings();
         };
         input.click();
     }
 
-    // ----- Analytics -----
+    // ----- Analytics (unchanged) -----
     function computeAnalytics() {
         const totalBookings = bookings.length;
         const completed = bookings.filter(b => b.status === 'Complete').length;
@@ -522,7 +530,6 @@
             </div>
             <div class="actions"><button id="exportReportBtn">📊 Export Analytics Report (CSV)</button></div>
         `;
-        // Destroy old charts
         Object.values(charts).forEach(ch => ch.destroy());
         charts = {};
         if (data.months.length) {
@@ -591,7 +598,6 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- Tab switching (fixed) -----
     function switchTab(tab) {
         activeTab = tab;
         const tabBookings = document.getElementById('tabBookings');
@@ -613,7 +619,6 @@
         }
     }
 
-    // ----- Authentication & main render -----
     async function renderApp() {
         const { data: { session } } = await supabaseClient.auth.getSession();
         const app = document.getElementById('app');
@@ -668,7 +673,6 @@
                 <div class="form-field full-width"><label>Notes</label><textarea id="notes" rows="2"></textarea></div>
             </form><div style="margin-top:24px; display:flex; justify-content:flex-end; gap:12px;"><button id="modalCancel" class="outline">Cancel</button><button id="modalSave">Save Booking</button></div></div></div>
         `;
-        // Event listeners
         document.getElementById('tabBookings').addEventListener('click', () => switchTab('bookings'));
         document.getElementById('tabAnalytics').addEventListener('click', () => switchTab('analytics'));
         document.getElementById('addBtn').addEventListener('click', () => openModal());

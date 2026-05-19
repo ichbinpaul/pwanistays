@@ -226,7 +226,7 @@
                 html += `<td>${val}</td>`;
             });
             html += `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>`;
-            html += '</tr>';
+            html += '<tr>';
         });
         html += '</tbody></table></div>';
         container.innerHTML = html;
@@ -336,7 +336,7 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- CSV Import with progress -----
+    // ----- CSV Import with progress (fixed) -----
     async function importCSVWithProgress() {
         const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
         input.onchange = async (e) => {
@@ -350,7 +350,7 @@
                 <div class="progress-card">
                     <h3>Importing CSV...</h3>
                     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <p id="progressStatus">Preparing...</p>
+                    <p id="progressStatus">Parsing CSV...</p>
                     <p id="progressDetail"></p>
                 </div>
             `;
@@ -359,97 +359,103 @@
             const progressStatus = document.getElementById('progressStatus');
             const progressDetail = document.getElementById('progressDetail');
 
-            Papa.parse(file, {
-                header: true,
-                skipEmptyLines: true,
-                step: (results, parser) => { parser.pause(); }, // we'll process manually after full parse
-                complete: async (results) => {
-                    const data = results.data;
-                    if (data.length === 0) { alert('CSV is empty.'); modalDiv.remove(); return; }
-                    // Remove BOM from first key if present
-                    const firstRow = data[0];
-                    const rawKeys = Object.keys(firstRow);
-                    const cleanKeys = rawKeys.map(k => k.replace(/^\uFEFF/, '').trim());
-                    const columnMap = {
-                        'Booking ID': 'id',
-                        'Guest Name': 'guest_name',
-                        'Gender': 'gender',
-                        'Phone Number': 'phone',
-                        'Unit Name': 'unit_name',
-                        'Location': 'location',
-                        'Unit Type': 'unit_type',
-                        'Check-In': 'check_in',
-                        'Check-Out': 'check_out',
-                        'Nights': 'nights',
-                        'Guest Paid (KES)': 'guest_paid',
-                        'Host Cost (KES)': 'host_cost',
-                        'Charges (KES)': 'charges',
-                        'Profit (KES)': 'profit',
-                        'Status': 'status',
-                        'Source': 'source',
-                        'Sub-Source': 'sub_source',
-                        'Month': 'month',
-                        'Host': 'host',
-                        'Notes': 'notes'
-                    };
-                    // Map headers to database columns
-                    let headerMap = {};
-                    for (let i = 0; i < cleanKeys.length; i++) {
-                        const friendly = cleanKeys[i];
-                        if (columnMap[friendly]) headerMap[friendly] = columnMap[friendly];
-                    }
-                    if (!headerMap['Booking ID'] || !headerMap['Guest Name']) {
-                        alert('CSV must contain "Booking ID" and "Guest Name" columns.');
-                        modalDiv.remove();
-                        return;
-                    }
-                    let imported = 0, skipped = 0;
-                    let skippedRows = [];
-                    for (let idx = 0; idx < data.length; idx++) {
-                        const row = data[idx];
-                        const dbRow = {};
-                        for (let [friendly, dbCol] of Object.entries(headerMap)) {
-                            let val = row[friendly];
-                            if (val !== undefined && val !== null && val !== '') dbRow[dbCol] = val.toString().trim();
-                            else dbRow[dbCol] = null;
-                        }
-                        // Additional trimming
-                        if (dbRow.id) dbRow.id = dbRow.id.trim();
-                        if (dbRow.guest_name) dbRow.guest_name = dbRow.guest_name.trim();
-                        if (!dbRow.id || !dbRow.guest_name) {
-                            skipped++;
-                            skippedRows.push(idx+2); // +2 for header and 1-index
-                            continue;
-                        }
-                        if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
-                        if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
-                        autoCalculate(dbRow);
-                        const { data: existing } = await supabaseClient.from('bookings').select('id').eq('id', dbRow.id);
-                        if (existing && existing.length) {
-                            const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
-                            if (!error) imported++;
-                            else { skipped++; skippedRows.push(idx+2); }
-                        } else {
-                            dbRow.created_at = new Date().toISOString();
-                            dbRow.updated_at = dbRow.created_at;
-                            const { error } = await supabaseClient.from('bookings').insert([dbRow]);
-                            if (!error) imported++;
-                            else { skipped++; skippedRows.push(idx+2); }
-                        }
-                        const percent = Math.round(((idx+1)/data.length)*100);
-                        progressFill.style.width = `${percent}%`;
-                        progressStatus.innerText = `Processing row ${idx+1} of ${data.length}...`;
-                        progressDetail.innerText = `Imported: ${imported}, Skipped: ${skipped}`;
-                        await new Promise(r => setTimeout(r, 5)); // slight delay to update UI
-                    }
-                    modalDiv.remove();
-                    let msg = `Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`;
-                    if (skippedRows.length) msg += `\nSkipped rows (approx): ${skippedRows.join(', ')}`;
-                    alert(msg);
-                    loadBookings();
-                },
-                error: (err) => { modalDiv.remove(); alert(`CSV parsing error: ${err.message}`); }
+            // Parse CSV fully first
+            const results = await new Promise((resolve) => {
+                Papa.parse(file, {
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: resolve,
+                    error: (err) => resolve({ error: err })
+                });
             });
+            if (results.error) {
+                modalDiv.remove();
+                alert(`CSV parsing error: ${results.error.message}`);
+                return;
+            }
+            const data = results.data;
+            if (data.length === 0) { modalDiv.remove(); alert('CSV is empty.'); return; }
+            // Remove BOM and map columns
+            const firstRow = data[0];
+            const rawKeys = Object.keys(firstRow);
+            const cleanKeys = rawKeys.map(k => k.replace(/^\uFEFF/, '').trim());
+            const columnMap = {
+                'Booking ID': 'id',
+                'Guest Name': 'guest_name',
+                'Gender': 'gender',
+                'Phone Number': 'phone',
+                'Unit Name': 'unit_name',
+                'Location': 'location',
+                'Unit Type': 'unit_type',
+                'Check-In': 'check_in',
+                'Check-Out': 'check_out',
+                'Nights': 'nights',
+                'Guest Paid (KES)': 'guest_paid',
+                'Host Cost (KES)': 'host_cost',
+                'Charges (KES)': 'charges',
+                'Profit (KES)': 'profit',
+                'Status': 'status',
+                'Source': 'source',
+                'Sub-Source': 'sub_source',
+                'Month': 'month',
+                'Host': 'host',
+                'Notes': 'notes'
+            };
+            let headerMap = {};
+            for (let i = 0; i < cleanKeys.length; i++) {
+                const friendly = cleanKeys[i];
+                if (columnMap[friendly]) headerMap[friendly] = columnMap[friendly];
+            }
+            if (!headerMap['Booking ID'] || !headerMap['Guest Name']) {
+                modalDiv.remove();
+                alert('CSV must contain "Booking ID" and "Guest Name" columns.');
+                return;
+            }
+            let imported = 0, skipped = 0;
+            let skippedRows = [];
+            const totalRows = data.length;
+            for (let idx = 0; idx < totalRows; idx++) {
+                const row = data[idx];
+                const dbRow = {};
+                for (let [friendly, dbCol] of Object.entries(headerMap)) {
+                    let val = row[friendly];
+                    if (val !== undefined && val !== null && val !== '') dbRow[dbCol] = val.toString().trim();
+                    else dbRow[dbCol] = null;
+                }
+                if (dbRow.id) dbRow.id = dbRow.id.trim();
+                if (dbRow.guest_name) dbRow.guest_name = dbRow.guest_name.trim();
+                if (!dbRow.id || !dbRow.guest_name) {
+                    skipped++;
+                    skippedRows.push(idx+2);
+                    continue;
+                }
+                if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
+                if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
+                autoCalculate(dbRow);
+                const { data: existing } = await supabaseClient.from('bookings').select('id').eq('id', dbRow.id);
+                if (existing && existing.length) {
+                    const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
+                    if (!error) imported++;
+                    else { skipped++; skippedRows.push(idx+2); }
+                } else {
+                    dbRow.created_at = new Date().toISOString();
+                    dbRow.updated_at = dbRow.created_at;
+                    const { error } = await supabaseClient.from('bookings').insert([dbRow]);
+                    if (!error) imported++;
+                    else { skipped++; skippedRows.push(idx+2); }
+                }
+                const percent = Math.round(((idx+1)/totalRows)*100);
+                progressFill.style.width = `${percent}%`;
+                progressStatus.innerText = `Processing row ${idx+1} of ${totalRows}...`;
+                progressDetail.innerText = `Imported: ${imported}, Skipped: ${skipped}`;
+                // Allow UI to update
+                await new Promise(r => setTimeout(r, 5));
+            }
+            modalDiv.remove();
+            let msg = `Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`;
+            if (skippedRows.length) msg += `\nSkipped rows (approx): ${skippedRows.join(', ')}`;
+            alert(msg);
+            loadBookings();
         };
         input.click();
     }
@@ -492,11 +498,11 @@
     function renderAnalytics() {
         const container = document.getElementById('analyticsContainer');
         if (!container) return;
-        const data = computeAnalytics();
         if (bookings.length === 0) {
             container.innerHTML = '<div class="loading">📊 No booking data yet. Please import or add bookings.</div>';
             return;
         }
+        const data = computeAnalytics();
         container.innerHTML = `
             <div class="kpi-cards">
                 <div class="card"><h3>Total Bookings</h3><div class="value">${data.totalBookings}</div></div>
@@ -516,13 +522,17 @@
             </div>
             <div class="actions"><button id="exportReportBtn">📊 Export Analytics Report (CSV)</button></div>
         `;
+        // Destroy old charts
         Object.values(charts).forEach(ch => ch.destroy());
         charts = {};
         if (data.months.length) {
             charts.monthly = new Chart(document.getElementById('monthlyProfitChart'), {
                 type: 'line', data: { labels: data.months, datasets: [{ label: 'Profit (KES)', data: data.profits, borderColor: '#0d7a5f', fill: false }] }
             });
-        } else { document.getElementById('monthlyProfitChart').style.display = 'none'; }
+        } else {
+            const ctx = document.getElementById('monthlyProfitChart')?.getContext('2d');
+            if (ctx) ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+        }
         charts.location = new Chart(document.getElementById('locationProfitChart'), {
             type: 'bar', data: { labels: data.locLabels, datasets: [{ label: 'Profit (KES)', data: data.locProfits, backgroundColor: '#0f9b7a' }] }
         });
@@ -581,18 +591,24 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- Tab switching -----
+    // ----- Tab switching (fixed) -----
     function switchTab(tab) {
         activeTab = tab;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        const tabBookings = document.getElementById('tabBookings');
+        const tabAnalytics = document.getElementById('tabAnalytics');
+        const contentBookings = document.getElementById('contentBookings');
+        const contentAnalytics = document.getElementById('contentAnalytics');
         if (tab === 'bookings') {
-            document.getElementById('tabBookings').classList.add('active');
-            document.getElementById('contentBookings').classList.add('active');
+            tabBookings.classList.add('active');
+            tabAnalytics.classList.remove('active');
+            contentBookings.classList.add('active');
+            contentAnalytics.classList.remove('active');
             renderBookingsTable();
         } else {
-            document.getElementById('tabAnalytics').classList.add('active');
-            document.getElementById('contentAnalytics').classList.add('active');
+            tabAnalytics.classList.add('active');
+            tabBookings.classList.remove('active');
+            contentAnalytics.classList.add('active');
+            contentBookings.classList.remove('active');
             renderAnalytics();
         }
     }
@@ -616,8 +632,8 @@
             <div class="container">
                 <h1>📋 PwaniStays – Booking Manager <button id="logoutBtn" class="logout">🚪 Logout</button></h1>
                 <div class="tabs">
-                    <div class="tab active" data-tab="bookings">📋 Bookings</div>
-                    <div class="tab" data-tab="analytics">📊 Analytics</div>
+                    <div class="tab active" id="tabBookings" data-tab="bookings">📋 Bookings</div>
+                    <div class="tab" id="tabAnalytics" data-tab="analytics">📊 Analytics</div>
                 </div>
                 <div id="contentBookings" class="tab-content active">
                     <div class="actions"><button id="addBtn">➕ Add Booking</button><button id="importBtn">📂 Import CSV</button><button id="exportAllBtn">📎 Export All CSV</button></div>
@@ -653,9 +669,8 @@
             </form><div style="margin-top:24px; display:flex; justify-content:flex-end; gap:12px;"><button id="modalCancel" class="outline">Cancel</button><button id="modalSave">Save Booking</button></div></div></div>
         `;
         // Event listeners
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-        });
+        document.getElementById('tabBookings').addEventListener('click', () => switchTab('bookings'));
+        document.getElementById('tabAnalytics').addEventListener('click', () => switchTab('analytics'));
         document.getElementById('addBtn').addEventListener('click', () => openModal());
         document.getElementById('importBtn').addEventListener('click', importCSVWithProgress);
         document.getElementById('exportAllBtn').addEventListener('click', () => exportSelectedBookings());

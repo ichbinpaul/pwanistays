@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PwaniStays – Bookings Admin</title>
     <style>
-        /* [All the same CSS as before, unchanged] */
         * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', monospace; }
         body { background: #f0f4f2; margin: 0; padding: 20px; }
         .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
@@ -15,10 +14,11 @@
         .tab.active { background: #0d7a5f; color: white; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; vertical-align: top; }
         th { background: #0d7a5f; color: white; position: sticky; top: 0; }
         tr:nth-child(even) { background: #f9f9f9; }
+        .table-container { overflow-x: auto; max-height: 500px; overflow-y: auto; margin-top: 20px; }
         button { background: #0d7a5f; color: white; border: none; padding: 6px 14px; border-radius: 30px; cursor: pointer; font-weight: 500; }
         button:hover { background: #0f9b7a; transform: translateY(-1px); }
         button.danger { background: #dc3545; }
@@ -77,6 +77,7 @@
     let activeTab = "bookings";
     let charts = {};
 
+    // Helper functions
     function calculateNights(checkIn, checkOut) {
         if (!checkIn || !checkOut) return null;
         const start = new Date(checkIn), end = new Date(checkOut);
@@ -178,6 +179,7 @@
         populateDropdowns();
     }
 
+    // CRUD
     async function loadBookings() {
         const { data, error } = await supabaseClient.from('bookings').select('*').order('created_at', { ascending: false });
         if (error) { console.error(error); return; }
@@ -212,7 +214,8 @@
                     <button id="markCompleteBtn" class="outline">✅ Mark Complete</button>
                     <button id="markProgressBtn" class="outline">⏳ Mark In Progress</button>
                     <button id="markPendingBtn" class="outline">⏰ Mark Pending</button></div>`;
-        html += '<div style="overflow-x:auto"><table><thead><tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th>';
+        html += '<div class="table-container">';
+        html += '<table><thead><tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th>';
         headers.slice(1).forEach(h => html += `<th>${h}</th>`);
         html += '<th>Actions</th></tr></thead><tbody>';
         filtered.forEach(b => {
@@ -335,7 +338,7 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- FIXED CSV IMPORT WITH DEBUGGING -----
+    // ----- CSV Import with progress (fixed column trimming) -----
     async function importCSVWithProgress() {
         const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
         input.onchange = async (e) => {
@@ -372,83 +375,80 @@
             }
             const data = results.data;
             if (data.length === 0) { modalDiv.remove(); alert('CSV is empty.'); return; }
-            // Detect columns (case-insensitive, trim)
-            const sample = data[0];
-            const colMap = {};
-            for (let key of Object.keys(sample)) {
-                const cleanKey = key.trim().replace(/^\uFEFF/, '');
-                if (cleanKey.toLowerCase() === 'booking id') colMap['Booking ID'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'guest name') colMap['Guest Name'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'gender') colMap['Gender'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'phone number') colMap['Phone Number'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'unit name') colMap['Unit Name'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'location') colMap['Location'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'unit type') colMap['Unit Type'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'check-in') colMap['Check-In'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'check-out') colMap['Check-Out'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'nights') colMap['Nights'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'guest paid (kes)') colMap['Guest Paid (KES)'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'host cost (kes)') colMap['Host Cost (KES)'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'charges (kes)') colMap['Charges (KES)'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'profit (kes)') colMap['Profit (KES)'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'status') colMap['Status'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'source') colMap['Source'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'sub-source') colMap['Sub-Source'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'month') colMap['Month'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'host') colMap['Host'] = cleanKey;
-                else if (cleanKey.toLowerCase() === 'notes') colMap['Notes'] = cleanKey;
+            // Get raw headers, trim spaces and BOM
+            const rawKeys = Object.keys(data[0]);
+            const cleanKeys = rawKeys.map(k => k.replace(/^\uFEFF/, '').trim());
+            const columnMap = {
+                'Booking ID': 'id',
+                'Guest Name': 'guest_name',
+                'Gender': 'gender',
+                'Phone Number': 'phone',
+                'Unit Name': 'unit_name',
+                'Location': 'location',
+                'Unit Type': 'unit_type',
+                'Check-In': 'check_in',
+                'Check-Out': 'check_out',
+                'Nights': 'nights',
+                'Guest Paid (KES)': 'guest_paid',
+                'Host Cost (KES)': 'host_cost',
+                'Charges (KES)': 'charges',
+                'Profit (KES)': 'profit',
+                'Status': 'status',
+                'Source': 'source',
+                'Sub-Source': 'sub_source',
+                'Month': 'month',
+                'Host': 'host',
+                'Notes': 'notes'
+            };
+            // Build mapping from trimmed header to db column
+            let headerMap = {};
+            for (let i = 0; i < cleanKeys.length; i++) {
+                const friendly = cleanKeys[i];
+                if (columnMap[friendly]) headerMap[friendly] = columnMap[friendly];
             }
-            if (!colMap['Booking ID'] || !colMap['Guest Name']) {
+            if (!headerMap['Booking ID'] || !headerMap['Guest Name']) {
                 modalDiv.remove();
-                alert('CSV must contain "Booking ID" and "Guest Name" columns. Found: ' + Object.keys(colMap).join(', '));
+                alert('CSV must contain "Booking ID" and "Guest Name" columns.');
                 return;
             }
             let imported = 0, skipped = 0;
             let skippedRows = [];
-            let skippedReasons = [];
             const totalRows = data.length;
             for (let idx = 0; idx < totalRows; idx++) {
                 const row = data[idx];
                 const dbRow = {};
-                dbRow.id = row[colMap['Booking ID']] ? row[colMap['Booking ID']].toString().trim() : null;
-                dbRow.guest_name = row[colMap['Guest Name']] ? row[colMap['Guest Name']].toString().trim() : null;
+                for (let [friendly, dbCol] of Object.entries(headerMap)) {
+                    let val = row[friendly];
+                    if (val !== undefined && val !== null && val !== '') {
+                        val = val.toString().trim();
+                        // Remove any extra spaces inside the value? Leave as is.
+                        dbRow[dbCol] = val;
+                    } else {
+                        dbRow[dbCol] = null;
+                    }
+                }
+                // Trim id and guest_name again
+                if (dbRow.id) dbRow.id = dbRow.id.trim();
+                if (dbRow.guest_name) dbRow.guest_name = dbRow.guest_name.trim();
                 if (!dbRow.id || !dbRow.guest_name) {
                     skipped++;
                     skippedRows.push(idx+2);
-                    skippedReasons.push(`Row ${idx+2}: id="${dbRow.id}", guest="${dbRow.guest_name}"`);
                     continue;
                 }
-                // Map other fields
-                if (colMap['Gender']) dbRow.gender = row[colMap['Gender']]?.toString().trim() || null;
-                if (colMap['Phone Number']) dbRow.phone = row[colMap['Phone Number']]?.toString().trim() || null;
-                if (colMap['Unit Name']) dbRow.unit_name = row[colMap['Unit Name']]?.toString().trim() || null;
-                if (colMap['Location']) dbRow.location = row[colMap['Location']]?.toString().trim() || null;
-                if (colMap['Unit Type']) dbRow.unit_type = row[colMap['Unit Type']]?.toString().trim() || null;
-                if (colMap['Check-In']) dbRow.check_in = row[colMap['Check-In']]?.toString().trim().substring(0,10) || null;
-                if (colMap['Check-Out']) dbRow.check_out = row[colMap['Check-Out']]?.toString().trim().substring(0,10) || null;
-                if (colMap['Nights']) dbRow.nights = parseInt(row[colMap['Nights']]) || null;
-                if (colMap['Guest Paid (KES)']) dbRow.guest_paid = parseFloat(row[colMap['Guest Paid (KES)']]) || 0;
-                if (colMap['Host Cost (KES)']) dbRow.host_cost = parseFloat(row[colMap['Host Cost (KES)']]) || 0;
-                if (colMap['Charges (KES)']) dbRow.charges = parseFloat(row[colMap['Charges (KES)']]) || 0;
-                if (colMap['Profit (KES)']) dbRow.profit = parseFloat(row[colMap['Profit (KES)']]) || null;
-                if (colMap['Status']) dbRow.status = row[colMap['Status']]?.toString().trim() || null;
-                if (colMap['Source']) dbRow.source = row[colMap['Source']]?.toString().trim() || null;
-                if (colMap['Sub-Source']) dbRow.sub_source = row[colMap['Sub-Source']]?.toString().trim() || null;
-                if (colMap['Month']) dbRow.month = row[colMap['Month']]?.toString().trim() || null;
-                if (colMap['Host']) dbRow.host = row[colMap['Host']]?.toString().trim() || null;
-                if (colMap['Notes']) dbRow.notes = row[colMap['Notes']]?.toString().trim() || null;
+                if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
+                if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
                 autoCalculate(dbRow);
                 const { data: existing } = await supabaseClient.from('bookings').select('id').eq('id', dbRow.id);
                 if (existing && existing.length) {
                     const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
                     if (!error) imported++;
-                    else { skipped++; skippedRows.push(idx+2); skippedReasons.push(`Row ${idx+2}: update error`); }
+                    else { skipped++; skippedRows.push(idx+2); }
                 } else {
                     dbRow.created_at = new Date().toISOString();
                     dbRow.updated_at = dbRow.created_at;
                     const { error } = await supabaseClient.from('bookings').insert([dbRow]);
                     if (!error) imported++;
-                    else { skipped++; skippedRows.push(idx+2); skippedReasons.push(`Row ${idx+2}: insert error ${error.message}`); }
+                    else { skipped++; skippedRows.push(idx+2); }
                 }
                 const percent = Math.round(((idx+1)/totalRows)*100);
                 progressFill.style.width = `${percent}%`;
@@ -458,17 +458,14 @@
             }
             modalDiv.remove();
             let msg = `Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`;
-            if (skippedRows.length) {
-                msg += `\nSkipped rows (approx): ${skippedRows.join(', ')}`;
-                msg += `\n\nFirst few reasons:\n${skippedReasons.slice(0,5).join('\n')}`;
-            }
+            if (skippedRows.length) msg += `\nSkipped rows (approx): ${skippedRows.join(', ')}`;
             alert(msg);
             loadBookings();
         };
         input.click();
     }
 
-    // ----- Analytics (unchanged) -----
+    // ----- Analytics (enhanced) -----
     function computeAnalytics() {
         const totalBookings = bookings.length;
         const completed = bookings.filter(b => b.status === 'Complete').length;
@@ -476,31 +473,51 @@
         const pending = bookings.filter(b => b.status === 'Pending').length;
         const totalRevenue = bookings.reduce((sum, b) => sum + (parseFloat(b.guest_paid) || 0), 0);
         const totalProfit = bookings.reduce((sum, b) => sum + (parseFloat(b.profit) || 0), 0);
-        const monthlyProfit = {};
-        bookings.forEach(b => { if (b.month && b.profit) monthlyProfit[b.month] = (monthlyProfit[b.month] || 0) + b.profit; });
-        const months = Object.keys(monthlyProfit).sort();
-        const profits = months.map(m => monthlyProfit[m]);
-        const locationProfit = {};
-        bookings.forEach(b => { if (b.location && b.profit) locationProfit[b.location] = (locationProfit[b.location] || 0) + b.profit; });
-        const locLabels = Object.keys(locationProfit).sort();
-        const locProfits = locLabels.map(l => locationProfit[l]);
-        const typeProfit = {};
-        bookings.forEach(b => { if (b.unit_type && b.profit) typeProfit[b.unit_type] = (typeProfit[b.unit_type] || 0) + b.profit; });
-        const typeLabels = Object.keys(typeProfit).sort();
-        const typeProfits = typeLabels.map(t => typeProfit[t]);
+
+        // Profit by source
         const sourceProfit = {};
         bookings.forEach(b => { if (b.source && b.profit) sourceProfit[b.source] = (sourceProfit[b.source] || 0) + b.profit; });
         const sourceLabels = Object.keys(sourceProfit).sort();
         const sourceProfits = sourceLabels.map(s => sourceProfit[s]);
+
+        // Profit by month
+        const monthProfit = {};
+        bookings.forEach(b => { if (b.month && b.profit) monthProfit[b.month] = (monthProfit[b.month] || 0) + b.profit; });
+        const monthLabels = Object.keys(monthProfit).sort();
+        const monthProfits = monthLabels.map(m => monthProfit[m]);
+
+        // Profit by location
+        const locationProfit = {};
+        bookings.forEach(b => { if (b.location && b.profit) locationProfit[b.location] = (locationProfit[b.location] || 0) + b.profit; });
+        const locLabels = Object.keys(locationProfit).sort();
+        const locProfits = locLabels.map(l => locationProfit[l]);
+
+        // Profit by unit type
+        const typeProfit = {};
+        bookings.forEach(b => { if (b.unit_type && b.profit) typeProfit[b.unit_type] = (typeProfit[b.unit_type] || 0) + b.profit; });
+        const typeLabels = Object.keys(typeProfit).sort();
+        const typeProfits = typeLabels.map(t => typeProfit[t]);
+
+        // Gender
         const male = bookings.filter(b => b.gender === 'Male').length;
         const female = bookings.filter(b => b.gender === 'Female').length;
         const notSay = bookings.filter(b => b.gender === 'Prefer not to say').length;
+
+        // Sub-source (New/Returning/Referral)
         const newCust = bookings.filter(b => b.sub_source === 'New').length;
         const returning = bookings.filter(b => b.sub_source === 'Returning').length;
         const referral = bookings.filter(b => b.sub_source === 'Referral').length;
-        return { totalBookings, completed, inProgress, pending, totalRevenue, totalProfit,
-                 months, profits, locLabels, locProfits, typeLabels, typeProfits,
-                 sourceLabels, sourceProfits, male, female, notSay, newCust, returning, referral };
+        const referralProfit = bookings.filter(b => b.sub_source === 'Referral').reduce((sum, b) => sum + (parseFloat(b.profit) || 0), 0);
+
+        return {
+            totalBookings, completed, inProgress, pending, totalRevenue, totalProfit,
+            sourceLabels, sourceProfits,
+            monthLabels, monthProfits,
+            locLabels, locProfits,
+            typeLabels, typeProfits,
+            male, female, notSay,
+            newCust, returning, referral, referralProfit
+        };
     }
 
     function renderAnalytics() {
@@ -519,35 +536,37 @@
                 <div class="card"><h3>Pending</h3><div class="value">${data.pending}</div></div>
                 <div class="card"><h3>Total Revenue (KES)</h3><div class="value">${data.totalRevenue.toLocaleString()}</div></div>
                 <div class="card"><h3>Total Profit (KES)</h3><div class="value">${data.totalProfit.toLocaleString()}</div></div>
+                <div class="card"><h3>Referral Count</h3><div class="value">${data.referral}</div></div>
+                <div class="card"><h3>Referral Profit (KES)</h3><div class="value">${data.referralProfit.toLocaleString()}</div></div>
             </div>
             <div class="charts-grid">
-                <div class="chart-container"><canvas id="monthlyProfitChart"></canvas></div>
-                <div class="chart-container"><canvas id="locationProfitChart"></canvas></div>
-                <div class="chart-container"><canvas id="typeProfitChart"></canvas></div>
-                <div class="chart-container"><canvas id="sourceProfitChart"></canvas></div>
+                <div class="chart-container"><canvas id="profitBySourceChart"></canvas></div>
+                <div class="chart-container"><canvas id="profitByMonthChart"></canvas></div>
+                <div class="chart-container"><canvas id="profitByLocationChart"></canvas></div>
+                <div class="chart-container"><canvas id="profitByTypeChart"></canvas></div>
                 <div class="chart-container"><canvas id="genderChart"></canvas></div>
                 <div class="chart-container"><canvas id="customerTypeChart"></canvas></div>
             </div>
             <div class="actions"><button id="exportReportBtn">📊 Export Analytics Report (CSV)</button></div>
         `;
+        // Destroy old charts
         Object.values(charts).forEach(ch => ch.destroy());
         charts = {};
-        if (data.months.length) {
-            charts.monthly = new Chart(document.getElementById('monthlyProfitChart'), {
-                type: 'line', data: { labels: data.months, datasets: [{ label: 'Profit (KES)', data: data.profits, borderColor: '#0d7a5f', fill: false }] }
+        if (data.sourceLabels.length) {
+            charts.source = new Chart(document.getElementById('profitBySourceChart'), {
+                type: 'bar', data: { labels: data.sourceLabels, datasets: [{ label: 'Profit (KES)', data: data.sourceProfits, backgroundColor: '#0f9b7a' }] }
             });
-        } else {
-            const ctx = document.getElementById('monthlyProfitChart')?.getContext('2d');
-            if (ctx) ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
-        }
-        charts.location = new Chart(document.getElementById('locationProfitChart'), {
-            type: 'bar', data: { labels: data.locLabels, datasets: [{ label: 'Profit (KES)', data: data.locProfits, backgroundColor: '#0f9b7a' }] }
+        } else { document.getElementById('profitBySourceChart')?.parentElement?.remove(); }
+        if (data.monthLabels.length) {
+            charts.month = new Chart(document.getElementById('profitByMonthChart'), {
+                type: 'bar', data: { labels: data.monthLabels, datasets: [{ label: 'Profit (KES)', data: data.monthProfits, backgroundColor: '#f8b400' }] }
+            });
+        } else { document.getElementById('profitByMonthChart')?.parentElement?.remove(); }
+        charts.location = new Chart(document.getElementById('profitByLocationChart'), {
+            type: 'bar', data: { labels: data.locLabels, datasets: [{ label: 'Profit (KES)', data: data.locProfits, backgroundColor: '#dc3545' }] }
         });
-        charts.type = new Chart(document.getElementById('typeProfitChart'), {
-            type: 'bar', data: { labels: data.typeLabels, datasets: [{ label: 'Profit (KES)', data: data.typeProfits, backgroundColor: '#f8b400' }] }
-        });
-        charts.source = new Chart(document.getElementById('sourceProfitChart'), {
-            type: 'bar', data: { labels: data.sourceLabels, datasets: [{ label: 'Profit (KES)', data: data.sourceProfits, backgroundColor: '#dc3545' }] }
+        charts.type = new Chart(document.getElementById('profitByTypeChart'), {
+            type: 'bar', data: { labels: data.typeLabels, datasets: [{ label: 'Profit (KES)', data: data.typeProfits, backgroundColor: '#0d7a5f' }] }
         });
         charts.gender = new Chart(document.getElementById('genderChart'), {
             type: 'pie', data: { labels: ['Male', 'Female', 'Prefer not to say'], datasets: [{ data: [data.male, data.female, data.notSay], backgroundColor: ['#0d7a5f', '#f8b400', '#6c757d'] }] }
@@ -567,18 +586,20 @@
         rows.push(['Pending', data.pending]);
         rows.push(['Total Revenue (KES)', data.totalRevenue]);
         rows.push(['Total Profit (KES)', data.totalProfit]);
+        rows.push(['Referral Count', data.referral]);
+        rows.push(['Referral Profit (KES)', data.referralProfit]);
         rows.push(['']);
-        rows.push(['Monthly Profit','']);
-        data.months.forEach((m,i) => rows.push([m, data.profits[i]]));
+        rows.push(['Profit by Source','']);
+        data.sourceLabels.forEach((l,i) => rows.push([l, data.sourceProfits[i]]));
+        rows.push(['']);
+        rows.push(['Profit by Month','']);
+        data.monthLabels.forEach((m,i) => rows.push([m, data.monthProfits[i]]));
         rows.push(['']);
         rows.push(['Profit by Location','']);
         data.locLabels.forEach((l,i) => rows.push([l, data.locProfits[i]]));
         rows.push(['']);
         rows.push(['Profit by Unit Type','']);
         data.typeLabels.forEach((t,i) => rows.push([t, data.typeProfits[i]]));
-        rows.push(['']);
-        rows.push(['Profit by Source','']);
-        data.sourceLabels.forEach((s,i) => rows.push([s, data.sourceProfits[i]]));
         rows.push(['']);
         rows.push(['Gender Breakdown','']);
         rows.push(['Male', data.male]);
@@ -598,6 +619,7 @@
         URL.revokeObjectURL(link.href);
     }
 
+    // ----- Tab switching -----
     function switchTab(tab) {
         activeTab = tab;
         const tabBookings = document.getElementById('tabBookings');
@@ -619,6 +641,7 @@
         }
     }
 
+    // ----- Authentication & main render -----
     async function renderApp() {
         const { data: { session } } = await supabaseClient.auth.getSession();
         const app = document.getElementById('app');
@@ -673,6 +696,7 @@
                 <div class="form-field full-width"><label>Notes</label><textarea id="notes" rows="2"></textarea></div>
             </form><div style="margin-top:24px; display:flex; justify-content:flex-end; gap:12px;"><button id="modalCancel" class="outline">Cancel</button><button id="modalSave">Save Booking</button></div></div></div>
         `;
+        // Event listeners
         document.getElementById('tabBookings').addEventListener('click', () => switchTab('bookings'));
         document.getElementById('tabAnalytics').addEventListener('click', () => switchTab('analytics'));
         document.getElementById('addBtn').addEventListener('click', () => openModal());

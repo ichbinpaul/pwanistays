@@ -1,76 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PwaniStays – Bookings Admin</title>
-    <style>
-        body { font-family: system-ui; padding: 20px; background: #f0f4f2; }
-        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; }
-        h1 { display: flex; justify-content: space-between; align-items: center; }
-        button { background: #0d7a5f; color: white; border: none; padding: 6px 14px; border-radius: 30px; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background: #0d7a5f; color: white; }
-        .login-container { max-width: 400px; margin: 100px auto; background: white; padding: 30px; border-radius: 24px; }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
+<html>
+<head><title>Test</title></head>
 <body>
-<div id="app"></div>
+<h1>Test page</h1>
 <script>
-    const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    async function renderApp() {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-            document.getElementById('app').innerHTML = `
-                <div class="login-container">
-                    <h2>Admin Login</h2>
-                    <input type="email" id="email" placeholder="Email" style="width:100%; margin-bottom:10px;">
-                    <input type="password" id="password" placeholder="Password" style="width:100%; margin-bottom:10px;">
-                    <button id="loginBtn">Login</button>
-                </div>
-            `;
-            document.getElementById('loginBtn').onclick = async () => {
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                const { error } = await supabase.auth.signInWithPassword({ email, password });
-                if (error) alert(error.message);
-                else renderApp();
-            };
-            return;
-        }
-        // Load bookings
-        const { data: bookings, error } = await supabase.from('bookings').select('*');
-        if (error) {
-            document.getElementById('app').innerHTML = `<div class="container"><p style="color:red">Error: ${error.message}</p></div>`;
-            return;
-        }
-        let html = `<div class="container"><h1>Bookings <button id="logout">Logout</button></h1>`;
-        if (bookings.length === 0) html += '<p>No bookings yet.</p>';
-        else {
-            html += '<table><thead><tr>';
-            const cols = ['id','guest_name','location','unit_type','check_in','check_out','status'];
-            cols.forEach(c => html += `<th>${c}</th>`);
-            html += '</tr></thead><tbody>';
-            bookings.forEach(b => {
-                html += '<tr>';
-                cols.forEach(c => html += `<td>${b[c] ?? ''}</td>`);
-                html += '</tr>';
-            });
-            html += '</tbody></table>';
-        }
-        html += '</div>';
-        document.getElementById('app').innerHTML = html;
-        document.getElementById('logout').onclick = async () => {
-            await supabase.auth.signOut();
-            renderApp();
-        };
-    }
-    renderApp();
+    document.body.innerHTML += '<p>JavaScript works!</p>';
+    alert('Script loaded');
 </script>
 </body>
 </html>

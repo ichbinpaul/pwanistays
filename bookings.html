@@ -193,99 +193,185 @@
     let currentUser = null;
     let bookings = [];
     let filterText = "";
+    
+    // Options for dropdowns (will be populated from existing data + defaults)
     let locationOptions = [];
     let unitTypeOptions = [];
+    let sourceOptions = [];
+    let subSourceOptions = [];
+    let statusOptions = ["Complete", "In Progress", "Pending"];
+    let genderOptions = ["Male", "Female", "Prefer not to say"];
 
-    // ---------- Helper Functions ----------
+    // Helper: calculate nights between two dates (YYYY-MM-DD)
+    function calculateNights(checkIn, checkOut) {
+        if (!checkIn || !checkOut) return null;
+        const start = new Date(checkIn);
+        const end = new Date(checkOut);
+        if (isNaN(start) || isNaN(end)) return null;
+        const diffTime = Math.abs(end - start);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays;
+    }
+
+    // Helper: calculate month from check-in date (YYYY-MM)
+    function getMonthFromDate(dateStr) {
+        if (!dateStr) return null;
+        const d = new Date(dateStr);
+        if (isNaN(d)) return null;
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    }
+
+    // Auto-calculate derived fields for a booking object (in place)
     function autoCalculate(row) {
         const paid = parseFloat(row.guest_paid) || 0;
         const cost = parseFloat(row.host_cost) || 0;
         const charges = parseFloat(row.charges) || 0;
         row.profit = paid - cost - charges;
+        if (row.check_in && row.check_out) {
+            row.nights = calculateNights(row.check_in, row.check_out);
+        } else {
+            row.nights = null;
+        }
         if (row.check_in) {
-            const date = new Date(row.check_in);
-            if (!isNaN(date)) row.month = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
+            row.month = getMonthFromDate(row.check_in);
+        } else {
+            row.month = null;
         }
         return row;
     }
 
+    // Load distinct options from bookings table (except fixed ones)
     async function loadDistinctOptions() {
-        // Get distinct locations and unit types from existing bookings
-        const { data: locData, error: locErr } = await supabase
-            .from('bookings')
-            .select('location')
-            .not('location', 'is', null);
-        if (!locErr && locData) {
-            const locs = [...new Set(locData.map(b => b.location).filter(l => l && l.trim() !== ''))];
-            locationOptions = locs.sort();
-        } else {
-            locationOptions = [];
+        const tables = [
+            { column: 'location', target: locationOptions },
+            { column: 'unit_type', target: unitTypeOptions },
+            { column: 'source', target: sourceOptions },
+            { column: 'sub_source', target: subSourceOptions }
+        ];
+        for (let t of tables) {
+            const { data, error } = await supabase
+                .from('bookings')
+                .select(t.column)
+                .not(t.column, 'is', null);
+            if (!error && data) {
+                const vals = [...new Set(data.map(row => row[t.column]).filter(v => v && v.trim() !== ''))];
+                t.target.length = 0;
+                t.target.push(...vals.sort());
+            }
         }
-
-        const { data: typeData, error: typeErr } = await supabase
-            .from('bookings')
-            .select('unit_type')
-            .not('unit_type', 'is', null);
-        if (!typeErr && typeData) {
-            const types = [...new Set(typeData.map(b => b.unit_type).filter(t => t && t.trim() !== ''))];
-            unitTypeOptions = types.sort();
-        } else {
-            unitTypeOptions = [];
-        }
+        // Ensure default status and gender are present
+        statusOptions = ["Complete", "In Progress", "Pending"];
+        genderOptions = ["Male", "Female", "Prefer not to say"];
     }
 
     function populateDropdowns() {
-        const locationSelect = document.getElementById('location');
-        const unitTypeSelect = document.getElementById('unit_type');
-        if (locationSelect) {
-            const currentVal = locationSelect.value;
-            locationSelect.innerHTML = '<option value="">Select or add new</option>';
-            locationOptions.forEach(loc => {
+        const locationSel = document.getElementById('location');
+        if (locationSel) {
+            const current = locationSel.value;
+            locationSel.innerHTML = '<option value="">Select or add new</option>';
+            locationOptions.forEach(l => {
                 const opt = document.createElement('option');
-                opt.value = loc;
-                opt.textContent = loc;
-                locationSelect.appendChild(opt);
+                opt.value = l;
+                opt.textContent = l;
+                locationSel.appendChild(opt);
             });
             const addOpt = document.createElement('option');
             addOpt.value = "__ADD_NEW__";
             addOpt.textContent = "+ Add new location";
-            locationSelect.appendChild(addOpt);
-            if (currentVal && locationOptions.includes(currentVal)) locationSelect.value = currentVal;
+            locationSel.appendChild(addOpt);
+            if (current && locationOptions.includes(current)) locationSel.value = current;
         }
-        if (unitTypeSelect) {
-            const currentVal = unitTypeSelect.value;
-            unitTypeSelect.innerHTML = '<option value="">Select or add new</option>';
-            unitTypeOptions.forEach(ut => {
+        const unitTypeSel = document.getElementById('unit_type');
+        if (unitTypeSel) {
+            const current = unitTypeSel.value;
+            unitTypeSel.innerHTML = '<option value="">Select or add new</option>';
+            unitTypeOptions.forEach(t => {
                 const opt = document.createElement('option');
-                opt.value = ut;
-                opt.textContent = ut;
-                unitTypeSelect.appendChild(opt);
+                opt.value = t;
+                opt.textContent = t;
+                unitTypeSel.appendChild(opt);
             });
             const addOpt = document.createElement('option');
             addOpt.value = "__ADD_NEW__";
             addOpt.textContent = "+ Add new unit type";
-            unitTypeSelect.appendChild(addOpt);
-            if (currentVal && unitTypeOptions.includes(currentVal)) unitTypeSelect.value = currentVal;
+            unitTypeSel.appendChild(addOpt);
+            if (current && unitTypeOptions.includes(current)) unitTypeSel.value = current;
+        }
+        const sourceSel = document.getElementById('source');
+        if (sourceSel) {
+            const current = sourceSel.value;
+            sourceSel.innerHTML = '<option value="">Select or add new</option>';
+            sourceOptions.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s;
+                opt.textContent = s;
+                sourceSel.appendChild(opt);
+            });
+            const addOpt = document.createElement('option');
+            addOpt.value = "__ADD_NEW__";
+            addOpt.textContent = "+ Add new source";
+            sourceSel.appendChild(addOpt);
+            if (current && sourceOptions.includes(current)) sourceSel.value = current;
+        }
+        const subSourceSel = document.getElementById('sub_source');
+        if (subSourceSel) {
+            const current = subSourceSel.value;
+            subSourceSel.innerHTML = '<option value="">Select or add new</option>';
+            subSourceOptions.forEach(ss => {
+                const opt = document.createElement('option');
+                opt.value = ss;
+                opt.textContent = ss;
+                subSourceSel.appendChild(opt);
+            });
+            const addOpt = document.createElement('option');
+            addOpt.value = "__ADD_NEW__";
+            addOpt.textContent = "+ Add new sub‑source";
+            subSourceSel.appendChild(addOpt);
+            if (current && subSourceOptions.includes(current)) subSourceSel.value = current;
+        }
+        const genderSel = document.getElementById('gender');
+        if (genderSel) {
+            const current = genderSel.value;
+            genderSel.innerHTML = '';
+            genderOptions.forEach(g => {
+                const opt = document.createElement('option');
+                opt.value = g;
+                opt.textContent = g;
+                genderSel.appendChild(opt);
+            });
+            if (current) genderSel.value = current;
+        }
+        const statusSel = document.getElementById('status');
+        if (statusSel) {
+            const current = statusSel.value;
+            statusSel.innerHTML = '';
+            statusOptions.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s;
+                opt.textContent = s;
+                statusSel.appendChild(opt);
+            });
+            if (current) statusSel.value = current;
         }
     }
 
-    async function addNewOption(type, value) {
+    async function addNewOption(category, value) {
         if (!value || value.trim() === "") return;
-        if (type === 'location') {
-            if (!locationOptions.includes(value)) {
-                locationOptions.push(value);
-                locationOptions.sort();
-            }
-        } else if (type === 'unit_type') {
-            if (!unitTypeOptions.includes(value)) {
-                unitTypeOptions.push(value);
-                unitTypeOptions.sort();
-            }
+        value = value.trim();
+        let arr;
+        if (category === 'location') arr = locationOptions;
+        else if (category === 'unit_type') arr = unitTypeOptions;
+        else if (category === 'source') arr = sourceOptions;
+        else if (category === 'sub_source') arr = subSourceOptions;
+        else return;
+        if (!arr.includes(value)) {
+            arr.push(value);
+            arr.sort();
         }
         populateDropdowns();
     }
 
-    // ---------- CRUD operations ----------
+    // ---------- CRUD ----------
     async function loadBookings() {
         document.getElementById('tableContainer').innerHTML = '<div class="loading">📋 Loading bookings...</div>';
         const { data, error } = await supabase
@@ -297,6 +383,8 @@
             return;
         }
         bookings = data || [];
+        // Recalculate derived fields (in case they're missing)
+        bookings = bookings.map(b => autoCalculate(b));
         await loadDistinctOptions();
         populateDropdowns();
         renderTable();
@@ -319,7 +407,7 @@
         }
         const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
         const headers = ['ID','Guest','Gender','Phone','Unit','Location','Type','Check In','Check Out','Nights','Paid','Host Cost','Charges','Profit','Status','Source','Sub','Month','Host','Notes'];
-        let html = '<div style="overflow-x:auto"><table><thead><tr>';
+        let html = '<div style="overflow-x:auto"></td><thead><tr>';
         headers.forEach(h => html += `<th>${h}</th>`);
         html += '<th>Actions</th></tr></thead><tbody>';
         filtered.forEach(b => {
@@ -353,8 +441,9 @@
             document.getElementById('editId').value = booking.id;
         } else {
             title.innerText = 'Add Booking';
+            // set default check-in to today? optional
         }
-        populateDropdowns(); // ensure fresh options
+        populateDropdowns();
         modal.style.display = 'flex';
     }
 
@@ -369,11 +458,11 @@
             if (val === '') val = null;
             data[f] = val;
         }
-        // Handle "Add new" location/unit_type
+        // Handle "Add new" for dynamic dropdowns
         if (data.location === '__ADD_NEW__') {
-            const newLoc = prompt("Enter new location name:");
-            if (newLoc && newLoc.trim()) {
-                data.location = newLoc.trim();
+            const newVal = prompt("Enter new location name:");
+            if (newVal && newVal.trim()) {
+                data.location = newVal.trim();
                 await addNewOption('location', data.location);
             } else {
                 alert("Location cannot be empty.");
@@ -381,17 +470,38 @@
             }
         }
         if (data.unit_type === '__ADD_NEW__') {
-            const newType = prompt("Enter new unit type (e.g., 1br, studio, 2br):");
-            if (newType && newType.trim()) {
-                data.unit_type = newType.trim();
+            const newVal = prompt("Enter new unit type (e.g., 1br, studio):");
+            if (newVal && newVal.trim()) {
+                data.unit_type = newVal.trim();
                 await addNewOption('unit_type', data.unit_type);
             } else {
                 alert("Unit type cannot be empty.");
                 return;
             }
         }
+        if (data.source === '__ADD_NEW__') {
+            const newVal = prompt("Enter new source (e.g., Instagram, Website):");
+            if (newVal && newVal.trim()) {
+                data.source = newVal.trim();
+                await addNewOption('source', data.source);
+            } else {
+                alert("Source cannot be empty.");
+                return;
+            }
+        }
+        if (data.sub_source === '__ADD_NEW__') {
+            const newVal = prompt("Enter new sub‑source (e.g., New, Returning):");
+            if (newVal && newVal.trim()) {
+                data.sub_source = newVal.trim();
+                await addNewOption('sub_source', data.sub_source);
+            } else {
+                alert("Sub‑source cannot be empty.");
+                return;
+            }
+        }
         autoCalculate(data);
         data.profit = parseFloat(data.profit) || 0;
+        data.nights = data.nights ? parseInt(data.nights) : null;
         
         let error = null;
         if (id) {
@@ -453,19 +563,23 @@
                     const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
                     const row = {};
                     headers.forEach((h, idx) => { row[h] = values[idx] || null; });
-                    // Validate minimal data
                     if (!row.id || !row.guest_name) {
                         skipped++;
                         continue;
                     }
-                    // Check if exists
+                    // Ensure dates are in YYYY-MM-DD format (CSV may have different)
+                    if (row.check_in) row.check_in = row.check_in.substring(0,10);
+                    if (row.check_out) row.check_out = row.check_out.substring(0,10);
+                    autoCalculate(row);
+                    // Check existence
                     const { data: existing } = await supabase.from('bookings').select('id').eq('id', row.id);
                     if (existing && existing.length > 0) {
-                        // Update existing
                         const { error } = await supabase.from('bookings').update(row).eq('id', row.id);
                         if (!error) imported++;
                         else skipped++;
                     } else {
+                        row.created_at = new Date().toISOString();
+                        row.updated_at = row.created_at;
                         const { error } = await supabase.from('bookings').insert([row]);
                         if (!error) imported++;
                         else skipped++;
@@ -518,7 +632,6 @@
     async function renderApp() {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
-            // Show login form
             document.getElementById('app').innerHTML = `
                 <div class="login-container">
                     <h2>🔐 Admin Login</h2>
@@ -539,7 +652,7 @@
             });
             return;
         }
-        // Logged in – show dashboard
+        // Dashboard HTML
         document.getElementById('app').innerHTML = `
             <div class="container">
                 <h1>📋 PwaniStays – Booking Manager
@@ -562,22 +675,22 @@
                         <input type="hidden" id="editId">
                         <div class="form-field"><label>Booking ID</label><input type="text" id="id" placeholder="PS001" required></div>
                         <div class="form-field"><label>Guest Name</label><input type="text" id="guest_name" required></div>
-                        <div class="form-field"><label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+                        <div class="form-field"><label>Gender</label><select id="gender"></select></div>
                         <div class="form-field"><label>Phone Number</label><input type="text" id="phone"></div>
                         <div class="form-field"><label>Unit Name</label><input type="text" id="unit_name"></div>
                         <div class="form-field"><label>Location</label><select id="location"></select></div>
                         <div class="form-field"><label>Unit Type</label><select id="unit_type"></select></div>
                         <div class="form-field"><label>Check‑In</label><input type="date" id="check_in"></div>
                         <div class="form-field"><label>Check‑Out</label><input type="date" id="check_out"></div>
-                        <div class="form-field"><label>Nights</label><input type="number" id="nights" step="1"></div>
+                        <div class="form-field"><label>Nights</label><input type="number" id="nights" step="1" readonly style="background:#e9ecef;"></div>
                         <div class="form-field"><label>Guest Paid (KES)</label><input type="number" id="guest_paid" step="0.01"></div>
                         <div class="form-field"><label>Host Cost (KES)</label><input type="number" id="host_cost" step="0.01"></div>
                         <div class="form-field"><label>Charges (KES)</label><input type="number" id="charges" step="0.01" value="0"></div>
                         <div class="form-field"><label>Profit (KES)</label><input type="number" id="profit" step="0.01" readonly style="background:#e9ecef;"></div>
-                        <div class="form-field"><label>Status</label><select id="status"><option>Complete</option><option>In Progress</option><option>Pending</option></select></div>
-                        <div class="form-field"><label>Source</label><input type="text" id="source"></div>
-                        <div class="form-field"><label>Sub‑Source</label><input type="text" id="sub_source"></div>
-                        <div class="form-field"><label>Month</label><input type="text" id="month" placeholder="YYYY-MM"></div>
+                        <div class="form-field"><label>Status</label><select id="status"></select></div>
+                        <div class="form-field"><label>Source</label><select id="source"></select></div>
+                        <div class="form-field"><label>Sub‑Source</label><select id="sub_source"></select></div>
+                        <div class="form-field"><label>Month</label><input type="text" id="month" placeholder="YYYY-MM" readonly style="background:#e9ecef;"></div>
                         <div class="form-field"><label>Host</label><input type="text" id="host"></div>
                         <div class="form-field full-width"><label>Notes</label><textarea id="notes" rows="2"></textarea></div>
                     </form>
@@ -601,20 +714,43 @@
         document.getElementById('modalCancel').addEventListener('click', closeModal);
         document.getElementById('modalSave').addEventListener('click', saveBooking);
 
-        // Auto-profit calculation
-        const paid = document.getElementById('guest_paid');
-        const cost = document.getElementById('host_cost');
-        const charges = document.getElementById('charges');
-        const profit = document.getElementById('profit');
-        function updateProfit() {
-            const p = parseFloat(paid.value) || 0;
-            const c = parseFloat(cost.value) || 0;
-            const ch = parseFloat(charges.value) || 0;
-            profit.value = p - c - ch;
+        // Auto‑calculate nights and month when check‑in/out change
+        const checkInField = document.getElementById('check_in');
+        const checkOutField = document.getElementById('check_out');
+        const nightsField = document.getElementById('nights');
+        const monthField = document.getElementById('month');
+        function updateDerived() {
+            const checkIn = checkInField.value;
+            const checkOut = checkOutField.value;
+            if (checkIn && checkOut) {
+                const nights = calculateNights(checkIn, checkOut);
+                nightsField.value = nights !== null ? nights : '';
+            } else {
+                nightsField.value = '';
+            }
+            if (checkIn) {
+                monthField.value = getMonthFromDate(checkIn) || '';
+            } else {
+                monthField.value = '';
+            }
         }
-        if (paid) paid.addEventListener('input', updateProfit);
-        if (cost) cost.addEventListener('input', updateProfit);
-        if (charges) charges.addEventListener('input', updateProfit);
+        checkInField.addEventListener('change', updateDerived);
+        checkOutField.addEventListener('change', updateDerived);
+        
+        // Auto‑calculate profit
+        const guestPaid = document.getElementById('guest_paid');
+        const hostCost = document.getElementById('host_cost');
+        const charges = document.getElementById('charges');
+        const profitField = document.getElementById('profit');
+        function updateProfit() {
+            const paid = parseFloat(guestPaid.value) || 0;
+            const cost = parseFloat(hostCost.value) || 0;
+            const ch = parseFloat(charges.value) || 0;
+            profitField.value = paid - cost - ch;
+        }
+        guestPaid.addEventListener('input', updateProfit);
+        hostCost.addEventListener('input', updateProfit);
+        charges.addEventListener('input', updateProfit);
 
         await loadBookings();
     }

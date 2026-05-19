@@ -50,6 +50,10 @@
         .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px,1fr)); gap: 24px; margin-top: 30px; }
         .chart-container { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         canvas { max-height: 300px; width: 100%; }
+        .progress-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+        .progress-box { background: white; padding: 30px; border-radius: 20px; text-align: center; min-width: 300px; }
+        .progress-bar { width: 100%; background: #e0e0e0; border-radius: 10px; margin: 15px 0; height: 20px; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: #0d7a5f; transition: width 0.2s; }
         @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } th, td { font-size: 0.7rem; padding: 4px 6px; } .charts-grid { grid-template-columns: 1fr; } }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -74,8 +78,8 @@
     let subSourceOptions = [];
     const statusOptions = ["Complete", "In Progress", "Pending"];
     const genderOptions = ["Male", "Female", "Prefer not to say"];
-    let activeTab = "bookings"; // 'bookings' or 'analytics'
-    let charts = {}; // store chart instances
+    let activeTab = "bookings";
+    let charts = {};
 
     // ----- Helper functions -----
     function calculateNights(checkIn, checkOut) {
@@ -233,12 +237,11 @@
                 html += `<td>${val}</td>`;
             });
             html += `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>`;
-            html += '</tr>';
+            html += '<tr>';
         });
         html += '</tbody></table></div>';
         container.innerHTML = html;
 
-        // Attach events
         document.querySelectorAll('.editBtn').forEach(btn => btn.addEventListener('click', () => editBooking(btn.dataset.id)));
         document.querySelectorAll('.deleteBtn').forEach(btn => btn.addEventListener('click', () => deleteBooking(btn.dataset.id)));
         const selectAll = document.getElementById('selectAllCheckbox');
@@ -276,7 +279,6 @@
         const data = {};
         const fields = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
         for (let f of fields) { let val = document.getElementById(f).value; if (val === '') val = null; data[f] = val; }
-        // Add new options
         for (let {field, category} of [{field:'location', category:'location'},{field:'unit_type', category:'unit_type'},{field:'source', category:'source'},{field:'sub_source', category:'sub_source'}]) {
             if (data[field] === '__ADD_NEW__') {
                 const newVal = prompt(`Enter new ${category}:`);
@@ -346,19 +348,27 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- CSV Import (fixed) -----
-    function importCSV() {
+    // ----- CSV Import with progress and detailed skip reasons -----
+    async function importCSV() {
         const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
         input.onchange = async (e) => {
             const file = e.target.files[0];
             if (!file) return;
+            // Show progress overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'progress-overlay';
+            overlay.innerHTML = `<div class="progress-box"><h3>Importing CSV...</h3><div class="progress-bar"><div class="progress-fill" id="importProgressFill"></div></div><p id="importStatus">Processing...</p></div>`;
+            document.body.appendChild(overlay);
             Papa.parse(file, {
                 header: true,
                 skipEmptyLines: true,
+                step: (results, parser) => {
+                    // Not used for progress percentage, we'll use complete callback with progress
+                },
                 complete: async (results) => {
                     const data = results.data;
-                    if (data.length === 0) { alert('CSV is empty.'); return; }
-                    // Column mapping
+                    const total = data.length;
+                    let imported = 0, skipped = 0, skippedDetails = [];
                     const columnMap = {
                         'Booking ID': 'id',
                         'Guest Name': 'guest_name',
@@ -381,8 +391,6 @@
                         'Host': 'host',
                         'Notes': 'notes'
                     };
-                    let imported = 0, skipped = 0, skippedRows = [];
-                    // Process rows in order as they appear
                     for (let idx = 0; idx < data.length; idx++) {
                         const row = data[idx];
                         const dbRow = {};
@@ -391,9 +399,12 @@
                             if (val !== undefined && val !== null && val !== '') dbRow[dbCol] = val;
                             else dbRow[dbCol] = null;
                         }
-                        if (!dbRow.id || !dbRow.guest_name) {
+                        let skipReason = null;
+                        if (!dbRow.id) skipReason = 'Missing Booking ID';
+                        else if (!dbRow.guest_name) skipReason = 'Missing Guest Name';
+                        if (skipReason) {
                             skipped++;
-                            skippedRows.push(idx+2); // +2 for header and 1-index
+                            skippedDetails.push(`Row ${idx+2}: ${skipReason}`);
                             continue;
                         }
                         if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
@@ -403,20 +414,29 @@
                         if (existing && existing.length) {
                             const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
                             if (!error) imported++;
-                            else { skipped++; skippedRows.push(idx+2); }
+                            else { skipped++; skippedDetails.push(`Row ${idx+2}: Update error - ${error.message}`); }
                         } else {
                             dbRow.created_at = new Date().toISOString(); dbRow.updated_at = dbRow.created_at;
                             const { error } = await supabaseClient.from('bookings').insert([dbRow]);
                             if (!error) imported++;
-                            else { skipped++; skippedRows.push(idx+2); }
+                            else { skipped++; skippedDetails.push(`Row ${idx+2}: Insert error - ${error.message}`); }
                         }
+                        // Update progress bar
+                        const percent = ((idx+1)/total)*100;
+                        document.getElementById('importProgressFill').style.width = `${percent}%`;
+                        document.getElementById('importStatus').innerText = `Processed ${idx+1} of ${total} rows...`;
+                        await new Promise(r => setTimeout(r, 10)); // allow UI update
                     }
+                    overlay.remove();
                     let msg = `Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`;
-                    if (skippedRows.length) msg += `\nSkipped rows (approx): ${skippedRows.join(', ')}`;
+                    if (skippedDetails.length) {
+                        msg += `\n\nSkipped rows:\n${skippedDetails.slice(0,20).join('\n')}`;
+                        if (skippedDetails.length > 20) msg += `\n... and ${skippedDetails.length-20} more.`;
+                    }
                     alert(msg);
                     loadBookings();
                 },
-                error: (err) => { alert(`CSV parsing error: ${err.message}`); }
+                error: (err) => { overlay.remove(); alert(`CSV parsing error: ${err.message}`); }
             });
         };
         input.click();
@@ -430,53 +450,29 @@
         const pending = bookings.filter(b => b.status === 'Pending').length;
         const totalRevenue = bookings.reduce((sum, b) => sum + (parseFloat(b.guest_paid) || 0), 0);
         const totalProfit = bookings.reduce((sum, b) => sum + (parseFloat(b.profit) || 0), 0);
-        // monthly profit
         const monthlyProfit = {};
-        bookings.forEach(b => {
-            if (b.month && b.profit) {
-                monthlyProfit[b.month] = (monthlyProfit[b.month] || 0) + b.profit;
-            }
-        });
+        bookings.forEach(b => { if (b.month && b.profit) monthlyProfit[b.month] = (monthlyProfit[b.month] || 0) + b.profit; });
         const months = Object.keys(monthlyProfit).sort();
         const profits = months.map(m => monthlyProfit[m]);
-        // profit by location
         const locationProfit = {};
-        bookings.forEach(b => {
-            if (b.location && b.profit) locationProfit[b.location] = (locationProfit[b.location] || 0) + b.profit;
-        });
+        bookings.forEach(b => { if (b.location && b.profit) locationProfit[b.location] = (locationProfit[b.location] || 0) + b.profit; });
         const locLabels = Object.keys(locationProfit).sort();
         const locProfits = locLabels.map(l => locationProfit[l]);
-        // profit by unit type
         const typeProfit = {};
-        bookings.forEach(b => {
-            if (b.unit_type && b.profit) typeProfit[b.unit_type] = (typeProfit[b.unit_type] || 0) + b.profit;
-        });
+        bookings.forEach(b => { if (b.unit_type && b.profit) typeProfit[b.unit_type] = (typeProfit[b.unit_type] || 0) + b.profit; });
         const typeLabels = Object.keys(typeProfit).sort();
         const typeProfits = typeLabels.map(t => typeProfit[t]);
-        // profit by source
         const sourceProfit = {};
-        bookings.forEach(b => {
-            if (b.source && b.profit) sourceProfit[b.source] = (sourceProfit[b.source] || 0) + b.profit;
-        });
+        bookings.forEach(b => { if (b.source && b.profit) sourceProfit[b.source] = (sourceProfit[b.source] || 0) + b.profit; });
         const sourceLabels = Object.keys(sourceProfit).sort();
         const sourceProfits = sourceLabels.map(s => sourceProfit[s]);
-        // gender breakdown
         const male = bookings.filter(b => b.gender === 'Male').length;
         const female = bookings.filter(b => b.gender === 'Female').length;
         const notSay = bookings.filter(b => b.gender === 'Prefer not to say').length;
-        // customer type (sub_source: New, Returning, Referral)
         const newCust = bookings.filter(b => b.sub_source === 'New').length;
         const returning = bookings.filter(b => b.sub_source === 'Returning').length;
         const referral = bookings.filter(b => b.sub_source === 'Referral').length;
-        return {
-            totalBookings, completed, inProgress, pending, totalRevenue, totalProfit,
-            months, profits,
-            locLabels, locProfits,
-            typeLabels, typeProfits,
-            sourceLabels, sourceProfits,
-            male, female, notSay,
-            newCust, returning, referral
-        };
+        return { totalBookings, completed, inProgress, pending, totalRevenue, totalProfit, months, profits, locLabels, locProfits, typeLabels, typeProfits, sourceLabels, sourceProfits, male, female, notSay, newCust, returning, referral };
     }
 
     function renderAnalytics() {
@@ -502,10 +498,9 @@
             </div>
             <div class="actions" style="margin-top:20px;"><button id="exportReportBtn">📊 Export Analytics Report (CSV)</button></div>
         `;
-        // Destroy existing charts
+        // Destroy old charts
         Object.values(charts).forEach(ch => ch.destroy());
         charts = {};
-        // Monthly profit line
         charts.monthly = new Chart(document.getElementById('monthlyProfitChart'), {
             type: 'line', data: { labels: data.months, datasets: [{ label: 'Profit (KES)', data: data.profits, borderColor: '#0d7a5f', fill: false }] },
             options: { responsive: true, maintainAspectRatio: true }
@@ -529,7 +524,6 @@
     }
 
     function exportAnalyticsReport(data) {
-        // CSV of KPIs and profit breakdowns
         const rows = [];
         rows.push(['Metric','Value']);
         rows.push(['Total Bookings', data.totalBookings]);
@@ -539,7 +533,7 @@
         rows.push(['Total Revenue (KES)', data.totalRevenue]);
         rows.push(['Total Profit (KES)', data.totalProfit]);
         rows.push(['']);
-        rows.push(['Monthly Profit', '']);
+        rows.push(['Monthly Profit','']);
         data.months.forEach((m,i) => rows.push([m, data.profits[i]]));
         rows.push(['']);
         rows.push(['Profit by Location','']);
@@ -569,7 +563,7 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // ----- UI Tabs -----
+    // ----- UI Tabs (fixed) -----
     function switchTab(tab) {
         activeTab = tab;
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -604,8 +598,8 @@
             <div class="container">
                 <h1>📋 PwaniStays – Booking Manager <button id="logoutBtn" class="logout">🚪 Logout</button></h1>
                 <div class="tabs">
-                    <div class="tab active" data-tab="bookings">📋 Bookings</div>
-                    <div class="tab" data-tab="analytics">📊 Analytics</div>
+                    <div class="tab active" id="tabBookings" data-tab="bookings">📋 Bookings</div>
+                    <div class="tab" id="tabAnalytics" data-tab="analytics">📊 Analytics</div>
                 </div>
                 <div id="contentBookings" class="tab-content active">
                     <div class="actions"><button id="addBtn">➕ Add Booking</button><button id="importBtn">📂 Import CSV</button><button id="exportAllBtn">📎 Export All CSV</button></div>
@@ -640,13 +634,12 @@
                 <div class="form-field full-width"><label>Notes</label><textarea id="notes" rows="2"></textarea></div>
             </form><div style="margin-top:24px; display:flex; justify-content:flex-end; gap:12px;"><button id="modalCancel" class="outline">Cancel</button><button id="modalSave">Save Booking</button></div></div></div>
         `;
-        // Tabs
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-        });
+        // Tab event listeners
+        document.getElementById('tabBookings').addEventListener('click', () => switchTab('bookings'));
+        document.getElementById('tabAnalytics').addEventListener('click', () => switchTab('analytics'));
         document.getElementById('addBtn').addEventListener('click', () => openModal());
         document.getElementById('importBtn').addEventListener('click', importCSV);
-        document.getElementById('exportAllBtn').addEventListener('click', () => exportSelectedBookings()); // export all
+        document.getElementById('exportAllBtn').addEventListener('click', () => exportSelectedBookings());
         document.getElementById('logoutBtn').addEventListener('click', async () => { await supabaseClient.auth.signOut(); renderApp(); });
         document.getElementById('searchInput').addEventListener('input', (e) => { filterText = e.target.value.toLowerCase(); renderBookingsTable(); });
         document.getElementById('modalCancel').addEventListener('click', closeModal);

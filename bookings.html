@@ -527,7 +527,7 @@
             locations, locationStats,
             unitTypes, unitTypeStats,
             sources, sourceProfits, sourceCounts, sourceStats,
-            retentionLabels, retentionCounts, retentionProfits,
+            retentionLabels, retentionCounts, retentionProfits, subSourceStats,
             referralCount, referralProfit, loyalCount, loyalProfit, newCount, newProfit,
             genderLabels, genderCounts, genderStats
         };
@@ -541,6 +541,8 @@
             return;
         }
         const data = computeAnalytics();
+        // Helper to safely get value from subSourceStats
+        const safeSub = (label) => data.subSourceStats[label] || { count: 0, profit: 0 };
         let html = `
             <div class="kpi-cards">
                 <div class="card"><h3>Total Bookings</h3><div class="value">${data.totalBookings}</div></div>
@@ -557,11 +559,11 @@
             <h3>📍 Location Performance</h3>
             <table class="stats-table"><thead><tr><th>Location</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.locations.map(l => `<tr><td>${l}</td><td>${data.locationStats[l].count}</td><td>${data.locationStats[l].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>🛏 Unit Type Performance</h3>
-            <table class="stats-table"><thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
+            <table class="stats-table"><thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody><table>
             <h3>📣 Booking Source Performance</h3>
             <table class="stats-table"><thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>🔁 Customer Retention & Loyalty</h3>
-            <table class="stats-table"><thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${data.subSourceStats[ss].count}</td><td>${data.subSourceStats[ss].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
+            <table class="stats-table"><thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${safeSub(ss).count}</td><td>${safeSub(ss).profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>💰 Loyal vs New — Revenue Breakdown</h3>
             <table class="stats-table"><thead><tr><th>Segment</th><th>Bookings</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead><tbody>
                 <tr><td>Returning</td><td>${data.loyalCount}</td><td>${data.loyalProfit.toLocaleString()}</td><td>${((data.loyalProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
@@ -636,7 +638,7 @@
         rows.push(['']);
         rows.push(['Customer Retention & Loyalty','','']);
         rows.push(['Type','Bookings','Profit']);
-        data.retentionLabels.forEach(ss => rows.push([ss, data.subSourceStats[ss].count, data.subSourceStats[ss].profit]));
+        data.retentionLabels.forEach(ss => rows.push([ss, data.subSourceStats[ss]?.count || 0, data.subSourceStats[ss]?.profit || 0]));
         rows.push(['']);
         rows.push(['Loyal vs New Breakdown','','']);
         rows.push(['Segment','Bookings','Profit']);

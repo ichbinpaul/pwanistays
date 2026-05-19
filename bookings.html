@@ -151,6 +151,22 @@
         .logout:hover {
             background: #5a6268;
         }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        .login-container h2 {
+            margin-top: 0;
+            color: #0d7a5f;
+        }
+        .login-container input {
+            width: 100%;
+            margin-bottom: 15px;
+        }
         @media (max-width: 700px) {
             .form-grid {
                 grid-template-columns: 1fr;
@@ -167,56 +183,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div class="container" id="app">
-    <h1>📋 PwaniStays – Booking Manager
-        <button id="logoutBtn" class="logout">🚪 Logout</button>
-    </h1>
-    <div class="actions">
-        <button id="addBtn">➕ Add Booking</button>
-        <button id="exportBtn">📎 Export CSV</button>
-    </div>
-    <div class="search">
-        <input type="text" id="searchInput" placeholder="🔍 Search by Guest, Unit, Location, Phone...">
-    </div>
-    <div id="tableContainer">Loading bookings...</div>
-</div>
-
-<!-- Modal for Add/Edit -->
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <h2 id="modalTitle">Add Booking</h2>
-        <form id="bookingForm" class="form-grid">
-            <input type="hidden" id="editId">
-            <div class="form-field"><label>Booking ID</label><input type="text" id="id" placeholder="PS001" required></div>
-            <div class="form-field"><label>Guest Name</label><input type="text" id="guest_name" required></div>
-            <div class="form-field"><label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
-            <div class="form-field"><label>Phone Number</label><input type="text" id="phone"></div>
-            <div class="form-field"><label>Unit Name</label><input type="text" id="unit_name"></div>
-            <div class="form-field"><label>Location</label><input type="text" id="location"></div>
-            <div class="form-field"><label>Unit Type</label><input type="text" id="unit_type"></div>
-            <div class="form-field"><label>Check‑In</label><input type="date" id="check_in"></div>
-            <div class="form-field"><label>Check‑Out</label><input type="date" id="check_out"></div>
-            <div class="form-field"><label>Nights</label><input type="number" id="nights" step="1"></div>
-            <div class="form-field"><label>Guest Paid (KES)</label><input type="number" id="guest_paid" step="0.01"></div>
-            <div class="form-field"><label>Host Cost (KES)</label><input type="number" id="host_cost" step="0.01"></div>
-            <div class="form-field"><label>Charges (KES)</label><input type="number" id="charges" step="0.01" value="0"></div>
-            <div class="form-field"><label>Profit (KES)</label><input type="number" id="profit" step="0.01" readonly style="background:#e9ecef;"></div>
-            <div class="form-field"><label>Status</label><select id="status"><option>Complete</option><option>In Progress</option><option>Pending</option></select></div>
-            <div class="form-field"><label>Source</label><input type="text" id="source"></div>
-            <div class="form-field"><label>Sub‑Source</label><input type="text" id="sub_source"></div>
-            <div class="form-field"><label>Month</label><input type="text" id="month" placeholder="YYYY-MM"></div>
-            <div class="form-field"><label>Host</label><input type="text" id="host"></div>
-            <div class="form-field full-width"><label>Notes</label><textarea id="notes" rows="2"></textarea></div>
-        </form>
-        <div style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
-            <button id="modalCancel" class="outline">Cancel</button>
-            <button id="modalSave">Save Booking</button>
-        </div>
-    </div>
-</div>
+<div id="app"></div>
 
 <script>
-    // ========== SUPABASE CONFIG ==========
     const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -224,8 +193,10 @@
     let currentUser = null;
     let bookings = [];
     let filterText = "";
+    let locationOptions = [];
+    let unitTypeOptions = [];
 
-    // Helper: auto‑calculate profit and month
+    // ---------- Helper Functions ----------
     function autoCalculate(row) {
         const paid = parseFloat(row.guest_paid) || 0;
         const cost = parseFloat(row.host_cost) || 0;
@@ -238,7 +209,83 @@
         return row;
     }
 
-    // Load all bookings from Supabase (order by latest first)
+    async function loadDistinctOptions() {
+        // Get distinct locations and unit types from existing bookings
+        const { data: locData, error: locErr } = await supabase
+            .from('bookings')
+            .select('location')
+            .not('location', 'is', null);
+        if (!locErr && locData) {
+            const locs = [...new Set(locData.map(b => b.location).filter(l => l && l.trim() !== ''))];
+            locationOptions = locs.sort();
+        } else {
+            locationOptions = [];
+        }
+
+        const { data: typeData, error: typeErr } = await supabase
+            .from('bookings')
+            .select('unit_type')
+            .not('unit_type', 'is', null);
+        if (!typeErr && typeData) {
+            const types = [...new Set(typeData.map(b => b.unit_type).filter(t => t && t.trim() !== ''))];
+            unitTypeOptions = types.sort();
+        } else {
+            unitTypeOptions = [];
+        }
+    }
+
+    function populateDropdowns() {
+        const locationSelect = document.getElementById('location');
+        const unitTypeSelect = document.getElementById('unit_type');
+        if (locationSelect) {
+            const currentVal = locationSelect.value;
+            locationSelect.innerHTML = '<option value="">Select or add new</option>';
+            locationOptions.forEach(loc => {
+                const opt = document.createElement('option');
+                opt.value = loc;
+                opt.textContent = loc;
+                locationSelect.appendChild(opt);
+            });
+            const addOpt = document.createElement('option');
+            addOpt.value = "__ADD_NEW__";
+            addOpt.textContent = "+ Add new location";
+            locationSelect.appendChild(addOpt);
+            if (currentVal && locationOptions.includes(currentVal)) locationSelect.value = currentVal;
+        }
+        if (unitTypeSelect) {
+            const currentVal = unitTypeSelect.value;
+            unitTypeSelect.innerHTML = '<option value="">Select or add new</option>';
+            unitTypeOptions.forEach(ut => {
+                const opt = document.createElement('option');
+                opt.value = ut;
+                opt.textContent = ut;
+                unitTypeSelect.appendChild(opt);
+            });
+            const addOpt = document.createElement('option');
+            addOpt.value = "__ADD_NEW__";
+            addOpt.textContent = "+ Add new unit type";
+            unitTypeSelect.appendChild(addOpt);
+            if (currentVal && unitTypeOptions.includes(currentVal)) unitTypeSelect.value = currentVal;
+        }
+    }
+
+    async function addNewOption(type, value) {
+        if (!value || value.trim() === "") return;
+        if (type === 'location') {
+            if (!locationOptions.includes(value)) {
+                locationOptions.push(value);
+                locationOptions.sort();
+            }
+        } else if (type === 'unit_type') {
+            if (!unitTypeOptions.includes(value)) {
+                unitTypeOptions.push(value);
+                unitTypeOptions.sort();
+            }
+        }
+        populateDropdowns();
+    }
+
+    // ---------- CRUD operations ----------
     async function loadBookings() {
         document.getElementById('tableContainer').innerHTML = '<div class="loading">📋 Loading bookings...</div>';
         const { data, error } = await supabase
@@ -250,10 +297,11 @@
             return;
         }
         bookings = data || [];
+        await loadDistinctOptions();
+        populateDropdowns();
         renderTable();
     }
 
-    // Render table with search filter
     function renderTable() {
         let filtered = bookings;
         if (filterText) {
@@ -271,10 +319,9 @@
         }
         const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
         const headers = ['ID','Guest','Gender','Phone','Unit','Location','Type','Check In','Check Out','Nights','Paid','Host Cost','Charges','Profit','Status','Source','Sub','Month','Host','Notes'];
-        let html = '<div style="overflow-x:auto"><tr><thead></tr>';
+        let html = '<div style="overflow-x:auto"><table><thead><tr>';
         headers.forEach(h => html += `<th>${h}</th>`);
-        html += '<th>Actions</th>';
-        html += '</thead><tbody>';
+        html += '<th>Actions</th></tr></thead><tbody>';
         filtered.forEach(b => {
             html += '<tr>';
             cols.forEach(col => {
@@ -287,20 +334,16 @@
         });
         html += '</tbody></table></div>';
         document.getElementById('tableContainer').innerHTML = html;
-
-        // Attach edit/delete events
         document.querySelectorAll('.editBtn').forEach(btn => btn.addEventListener('click', () => editBooking(btn.dataset.id)));
         document.querySelectorAll('.deleteBtn').forEach(btn => btn.addEventListener('click', () => deleteBooking(btn.dataset.id)));
     }
 
-    // Open modal for add/edit
     function openModal(booking = null) {
         const modal = document.getElementById('modal');
         const title = document.getElementById('modalTitle');
         const form = document.getElementById('bookingForm');
         form.reset();
         document.getElementById('editId').value = '';
-        // reset profit auto‑calc listeners will recalc
         if (booking) {
             title.innerText = 'Edit Booking';
             for (let [key, value] of Object.entries(booking)) {
@@ -310,14 +353,13 @@
             document.getElementById('editId').value = booking.id;
         } else {
             title.innerText = 'Add Booking';
-            // set today's date for check_in? optional
         }
+        populateDropdowns(); // ensure fresh options
         modal.style.display = 'flex';
     }
 
     function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
-    // Save (insert or update)
     async function saveBooking() {
         const id = document.getElementById('editId').value;
         const data = {};
@@ -326,6 +368,27 @@
             let val = document.getElementById(f).value;
             if (val === '') val = null;
             data[f] = val;
+        }
+        // Handle "Add new" location/unit_type
+        if (data.location === '__ADD_NEW__') {
+            const newLoc = prompt("Enter new location name:");
+            if (newLoc && newLoc.trim()) {
+                data.location = newLoc.trim();
+                await addNewOption('location', data.location);
+            } else {
+                alert("Location cannot be empty.");
+                return;
+            }
+        }
+        if (data.unit_type === '__ADD_NEW__') {
+            const newType = prompt("Enter new unit type (e.g., 1br, studio, 2br):");
+            if (newType && newType.trim()) {
+                data.unit_type = newType.trim();
+                await addNewOption('unit_type', data.unit_type);
+            } else {
+                alert("Unit type cannot be empty.");
+                return;
+            }
         }
         autoCalculate(data);
         data.profit = parseFloat(data.profit) || 0;
@@ -338,7 +401,6 @@
                 .eq('id', id);
             error = err;
         } else {
-            // new record: add timestamps
             data.created_at = new Date().toISOString();
             data.updated_at = data.created_at;
             const { error: err } = await supabase
@@ -350,7 +412,7 @@
             alert(`❌ Error: ${error.message}`);
         } else {
             closeModal();
-            loadBookings(); // refresh table
+            loadBookings();
         }
     }
 
@@ -366,7 +428,58 @@
         else loadBookings();
     }
 
-    // Export filtered (or all) bookings to CSV
+    // ---------- CSV Import ----------
+    function importCSV() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.csv';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                const csvText = event.target.result;
+                const lines = csvText.split(/\r?\n/);
+                const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+                const requiredCols = ['id','guest_name','check_in','check_out'];
+                const missing = requiredCols.filter(c => !headers.includes(c));
+                if (missing.length) {
+                    alert(`CSV must contain columns: ${missing.join(', ')}`);
+                    return;
+                }
+                let imported = 0, skipped = 0;
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+                    const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+                    const row = {};
+                    headers.forEach((h, idx) => { row[h] = values[idx] || null; });
+                    // Validate minimal data
+                    if (!row.id || !row.guest_name) {
+                        skipped++;
+                        continue;
+                    }
+                    // Check if exists
+                    const { data: existing } = await supabase.from('bookings').select('id').eq('id', row.id);
+                    if (existing && existing.length > 0) {
+                        // Update existing
+                        const { error } = await supabase.from('bookings').update(row).eq('id', row.id);
+                        if (!error) imported++;
+                        else skipped++;
+                    } else {
+                        const { error } = await supabase.from('bookings').insert([row]);
+                        if (!error) imported++;
+                        else skipped++;
+                    }
+                }
+                alert(`Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`);
+                loadBookings();
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
+
+    // ---------- Export CSV ----------
     function exportCSV() {
         let filtered = bookings;
         if (filterText) {
@@ -401,30 +514,94 @@
         URL.revokeObjectURL(url);
     }
 
-    // Authentication helpers
-    async function checkAuth() {
+    // ---------- Authentication ----------
+    async function renderApp() {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
-            const email = prompt("🔐 Admin email:");
-            if (!email) return false;
-            const password = prompt("Password:");
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) {
-                alert("Login failed: " + error.message);
-                return false;
-            }
-            return true;
+            // Show login form
+            document.getElementById('app').innerHTML = `
+                <div class="login-container">
+                    <h2>🔐 Admin Login</h2>
+                    <input type="email" id="loginEmail" placeholder="Email" autocomplete="off">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                    <button id="loginBtn">Login</button>
+                </div>
+            `;
+            document.getElementById('loginBtn').addEventListener('click', async () => {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    alert("Login failed: " + error.message);
+                } else {
+                    renderApp();
+                }
+            });
+            return;
         }
-        return true;
-    }
+        // Logged in – show dashboard
+        document.getElementById('app').innerHTML = `
+            <div class="container">
+                <h1>📋 PwaniStays – Booking Manager
+                    <button id="logoutBtn" class="logout">🚪 Logout</button>
+                </h1>
+                <div class="actions">
+                    <button id="addBtn">➕ Add Booking</button>
+                    <button id="importBtn">📂 Import CSV</button>
+                    <button id="exportBtn">📎 Export CSV</button>
+                </div>
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="🔍 Search by Guest, Unit, Location, Phone...">
+                </div>
+                <div id="tableContainer">Loading bookings...</div>
+            </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <h2 id="modalTitle">Add Booking</h2>
+                    <form id="bookingForm" class="form-grid">
+                        <input type="hidden" id="editId">
+                        <div class="form-field"><label>Booking ID</label><input type="text" id="id" placeholder="PS001" required></div>
+                        <div class="form-field"><label>Guest Name</label><input type="text" id="guest_name" required></div>
+                        <div class="form-field"><label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+                        <div class="form-field"><label>Phone Number</label><input type="text" id="phone"></div>
+                        <div class="form-field"><label>Unit Name</label><input type="text" id="unit_name"></div>
+                        <div class="form-field"><label>Location</label><select id="location"></select></div>
+                        <div class="form-field"><label>Unit Type</label><select id="unit_type"></select></div>
+                        <div class="form-field"><label>Check‑In</label><input type="date" id="check_in"></div>
+                        <div class="form-field"><label>Check‑Out</label><input type="date" id="check_out"></div>
+                        <div class="form-field"><label>Nights</label><input type="number" id="nights" step="1"></div>
+                        <div class="form-field"><label>Guest Paid (KES)</label><input type="number" id="guest_paid" step="0.01"></div>
+                        <div class="form-field"><label>Host Cost (KES)</label><input type="number" id="host_cost" step="0.01"></div>
+                        <div class="form-field"><label>Charges (KES)</label><input type="number" id="charges" step="0.01" value="0"></div>
+                        <div class="form-field"><label>Profit (KES)</label><input type="number" id="profit" step="0.01" readonly style="background:#e9ecef;"></div>
+                        <div class="form-field"><label>Status</label><select id="status"><option>Complete</option><option>In Progress</option><option>Pending</option></select></div>
+                        <div class="form-field"><label>Source</label><input type="text" id="source"></div>
+                        <div class="form-field"><label>Sub‑Source</label><input type="text" id="sub_source"></div>
+                        <div class="form-field"><label>Month</label><input type="text" id="month" placeholder="YYYY-MM"></div>
+                        <div class="form-field"><label>Host</label><input type="text" id="host"></div>
+                        <div class="form-field full-width"><label>Notes</label><textarea id="notes" rows="2"></textarea></div>
+                    </form>
+                    <div style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
+                        <button id="modalCancel" class="outline">Cancel</button>
+                        <button id="modalSave">Save Booking</button>
+                    </div>
+                </div>
+            </div>
+        `;
 
-    async function logout() {
-        await supabase.auth.signOut();
-        window.location.reload();
-    }
+        // Attach event listeners
+        document.getElementById('addBtn').addEventListener('click', () => openModal());
+        document.getElementById('importBtn').addEventListener('click', importCSV);
+        document.getElementById('exportBtn').addEventListener('click', exportCSV);
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            renderApp();
+        });
+        document.getElementById('searchInput').addEventListener('input', (e) => { filterText = e.target.value; renderTable(); });
+        document.getElementById('modalCancel').addEventListener('click', closeModal);
+        document.getElementById('modalSave').addEventListener('click', saveBooking);
 
-    // Auto‑calculate profit on inputs
-    function bindAutoProfit() {
+        // Auto-profit calculation
         const paid = document.getElementById('guest_paid');
         const cost = document.getElementById('host_cost');
         const charges = document.getElementById('charges');
@@ -438,27 +615,11 @@
         if (paid) paid.addEventListener('input', updateProfit);
         if (cost) cost.addEventListener('input', updateProfit);
         if (charges) charges.addEventListener('input', updateProfit);
+
+        await loadBookings();
     }
 
-    // Event listeners after DOM ready
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('addBtn').addEventListener('click', () => openModal());
-        document.getElementById('exportBtn').addEventListener('click', exportCSV);
-        document.getElementById('modalCancel').addEventListener('click', closeModal);
-        document.getElementById('modalSave').addEventListener('click', saveBooking);
-        document.getElementById('searchInput').addEventListener('input', (e) => { filterText = e.target.value; renderTable(); });
-        document.getElementById('logoutBtn').addEventListener('click', logout);
-        bindAutoProfit();
-        // Wait for auth then load data
-        (async () => {
-            const ok = await checkAuth();
-            if (ok) {
-                loadBookings();
-            } else {
-                document.getElementById('tableContainer').innerHTML = '<p>Unable to authenticate. Refresh and try again.</p>';
-            }
-        })();
-    });
+    renderApp();
 </script>
 </body>
 </html>

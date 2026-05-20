@@ -20,6 +20,20 @@
         th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; vertical-align: top; }
         th { background: #0d7a5f; color: white; position: sticky; top: 0; }
         tr:nth-child(even) { background: #f9f9f9; }
+        /* Sticky Booking ID column (second column, after checkbox) */
+        th:nth-child(2), td:nth-child(2) {
+            position: sticky;
+            left: 30px;          /* checkbox column width approx 30px */
+            background-color: white;
+            z-index: 1;
+        }
+        th:nth-child(2) {
+            background-color: #0d7a5f;
+            z-index: 2;
+        }
+        tr:nth-child(even) td:nth-child(2) {
+            background-color: #f9f9f9;
+        }
         .table-container { overflow-x: auto; max-height: 500px; overflow-y: auto; margin-top: 20px; }
         button { background: #0d7a5f; color: white; border: none; padding: 6px 14px; border-radius: 30px; cursor: pointer; font-weight: 500; }
         button:hover { background: #0f9b7a; transform: translateY(-1px); }
@@ -251,6 +265,21 @@
         document.getElementById('markPendingBtn')?.addEventListener('click', () => bulkUpdateStatus('Pending'));
     }
 
+    // Auto-generate next Booking ID
+    async function getNextBookingId() {
+        // Fetch all existing IDs, extract numeric part, find max
+        const { data, error } = await supabaseClient.from('bookings').select('id');
+        if (error) return 'PS001';
+        const ids = data.map(b => b.id).filter(id => id && id.startsWith('PS'));
+        let maxNum = 0;
+        for (const id of ids) {
+            const num = parseInt(id.substring(2), 10);
+            if (!isNaN(num) && num > maxNum) maxNum = num;
+        }
+        const nextNum = maxNum + 1;
+        return `PS${nextNum.toString().padStart(3, '0')}`;
+    }
+
     function openModal(booking = null) {
         const modal = document.getElementById('modal');
         if (!modal) return;
@@ -265,6 +294,14 @@
             document.getElementById('editId').value = booking.id;
         } else {
             document.getElementById('modalTitle').innerText = 'Add Booking';
+            // Auto-generate next ID and prefill, make it read-only but still editable if needed
+            getNextBookingId().then(nextId => {
+                const idField = document.getElementById('id');
+                if (idField) {
+                    idField.value = nextId;
+                    idField.readOnly = true; // optional: prevent accidental change
+                }
+            });
         }
         populateDropdowns();
         modal.style.display = 'flex';
@@ -576,15 +613,15 @@
                 <div class="card"><h3>Referral Profit (KES)</h3><div class="value">${data.referralProfit.toLocaleString()}</div></div>
             </div>
             <h3>📈 Monthly Profit Trend</h3>
-            <table class="stats-table"><thead><tr><th>Month</th><th>Profit (KES)</th></tr></thead><tbody>${data.months.map((m,i) => `<tr><td>${m}</td><td>${data.monthlyProfitData[i].toLocaleString()}</td></tr>`).join('')}</tbody></table>
+            <table class="stats-table"><thead><tr><th>Month</th><th>Profit (KES)</th></tr></thead><tbody>${data.months.map((m,i) => `<tr><td>${m}</td><td>${data.monthlyProfitData[i].toLocaleString()}</td></tr>`).join('')}</tbody></td>
             <h3>📍 Location Performance</h3>
             <table class="stats-table"><thead><tr><th>Location</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.locations.map(l => `<tr><td>${l}</td><td>${data.locationStats[l].count}</td><td>${data.locationStats[l].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>🛏 Unit Type Performance</h3>
             <table class="stats-table"><thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
             <h3>📣 Booking Source Performance</h3>
-            <table class="stats-table"><thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
+            <table class="stats-table"><thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></td>`).join('')}</tbody></table>
             <h3>🔁 Customer Retention & Loyalty</h3>
-            <table class="stats-table"><thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${safeSub(ss).count}</td><td>${safeSub(ss).profit.toLocaleString()}</td></tr>`).join('')}</tbody><tr>
+            <table class="stats-table"><thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${safeSub(ss).count}</td><td>${safeSub(ss).profit.toLocaleString()}</td></tr>`).join('')}</tbody></tr>
             <h3>💰 Loyal vs New — Revenue Breakdown</h3>
             <table class="stats-table"><thead><tr><th>Segment</th><th>Bookings</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead><tbody>
                 <tr><td>Returning</td><td>${data.loyalCount}</td><td>${data.loyalProfit.toLocaleString()}</td><td>${((data.loyalProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>

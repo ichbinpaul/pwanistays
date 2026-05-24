@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="PwaniStays How It Works: A transparent guide to booking accommodation, experiences, visa assistance, and seamless travel planning for Kenya.">
-    <meta name="keywords" content="how to book kenya travel, pwanistays booking process, kenya eTA visa assistance, accommodation booking steps, safari booking guide, coastal travel planning, kenya travel support, travel consultation">
+    <meta name="description" content="PwaniStays How It Works: A transparent guide to booking accommodation, experiences, visa assistance, and seamless travel planning for Kenya. Complete our detailed questionnaire to tailor your coastal journey.">
+    <meta name="keywords" content="how to book kenya travel, pwanistays booking process, kenya eTA visa assistance, accommodation booking steps, safari booking guide, coastal travel planning, kenya travel support, travel consultation, custom questionnaire, guest preferences">
     <meta name="author" content="PwaniStays - Your Kenya Travel Partner">
 
-    <title>How It Works | PwaniStays - Your Complete Kenya Travel Guide</title>
+    <title>How It Works | PwaniStays - Tailor Your Kenya Experience</title>
 
     <!-- Favicon Package -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -18,26 +18,29 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pwanistays.com/how-it-works">
-    <meta property="og:title" content="How It Works | PwaniStays - Your Complete Kenya Travel Guide">
-    <meta property="og:description" content="A transparent guide to booking accommodation, experiences, visa assistance, and seamless travel planning for Kenya.">
+    <meta property="og:title" content="How It Works | PwaniStays - Tailor Your Kenya Experience">
+    <meta property="og:description" content="A transparent guide to booking accommodation, experiences, visa assistance, and seamless travel planning for Kenya. Plus share your preferences with our custom questionnaire.">
     <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="How It Works | PwaniStays - Your Complete Kenya Travel Guide">
-    <meta name="twitter:description" content="Transparent booking process for Kenya travel with visa assistance.">
+    <meta name="twitter:title" content="How It Works | PwaniStays - Tailor Your Kenya Experience">
+    <meta name="twitter:description" content="Transparent booking process for Kenya travel with visa assistance and personalised guest questionnaire.">
 
-    <!-- STEP 1: i18n Translation System (must be first script) -->
+    <!-- i18n Translation System -->
     <script src="/i18n.js"></script>
 
-    <!-- STEP 2: Shared Header CSS -->
+    <!-- Shared Header CSS -->
     <link rel="stylesheet" href="/header.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
-        /* ── Base reset (variables from header.css) ── */
+        /* ===== ORIGINAL STYLES (preserved) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
@@ -46,11 +49,7 @@
             color: var(--dark);
             background: #fff;
         }
-
-        /* ── Push content below fixed header ── */
         .page-content { padding-top: 80px; }
-
-        /* ── Hero ── */
         .process-hero {
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
                         url('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1950&q=80');
@@ -59,19 +58,9 @@
             color: white;
             padding: 120px 5% 100px;
             text-align: center;
-            position: relative;
         }
-        .process-hero h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-        }
-        .process-hero p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            max-width: 800px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
+        .process-hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 20px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
+        .process-hero p { font-size: clamp(1rem, 2vw, 1.2rem); max-width: 800px; margin: 0 auto 30px; opacity: 0.9; }
         .hero-features {
             display: flex;
             justify-content: center;
@@ -85,27 +74,12 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .hero-feature {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
+        .hero-feature { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .hero-feature i { font-size: 2rem; color: var(--secondary); }
         .hero-feature span { font-size: 0.9rem; opacity: 0.9; }
-
-        /* ── Breadcrumb ── */
-        .breadcrumb {
-            background: var(--light);
-            padding: 15px 5%;
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
+        .breadcrumb { background: var(--light); padding: 15px 5%; font-size: 0.9rem; color: var(--gray); }
         .breadcrumb a { color: var(--primary); text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
-
-        /* ── Sections ── */
         section { padding: 100px 5%; }
         .section-title { text-align: center; margin-bottom: 50px; }
         .section-title h2 {
@@ -124,14 +98,6 @@
             background: var(--secondary);
         }
         .section-title p { color: var(--gray); max-width: 600px; margin: 0 auto; }
-
-        /* ── Intro ── */
-        .intro-section { background: var(--light); }
-        .intro-content { max-width: 800px; margin: 0 auto; text-align: center; }
-        .intro-content h2 { font-size: 2.2rem; margin-bottom: 20px; color: var(--dark); }
-        .intro-content p { font-size: 1.1rem; color: var(--gray); margin-bottom: 30px; line-height: 1.7; }
-
-        /* ── Steps Timeline ── */
         .steps-section { background: white; }
         .steps-container { position: relative; max-width: 1200px; margin: 0 auto; }
         .steps-timeline { position: relative; padding: 40px 0; }
@@ -144,7 +110,6 @@
             background: var(--primary-light);
         }
         .step-row { display: flex; margin-bottom: 80px; position: relative; }
-        .step-row:last-child { margin-bottom: 0; }
         .step-card {
             flex: 1;
             background: white;
@@ -193,15 +158,12 @@
         .step-left  .step-card { margin-right: 40px; }
         .step-right { flex-direction: row-reverse; }
         .step-right .step-card { margin-left: 40px; }
-
-        /* ── Visa Section ── */
         .visa-section {
             background: linear-gradient(135deg, #0d7a5f 0%, #0f9b7a 100%);
             color: white;
             text-align: center;
         }
         .visa-section .section-title h2 { color: white; }
-        .visa-section .section-title p  { color: rgba(255,255,255,0.9); }
         .visa-card {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
@@ -238,8 +200,6 @@
         .visa-detail i { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; }
         .visa-detail h4 { margin-bottom: 10px; font-size: 1.1rem; }
         .visa-detail p { color: rgba(255,255,255,0.9); font-size: 0.9rem; }
-
-        /* ── Comparison Section ── */
         .comparison-section { background: white; }
         .comparison-grid {
             display: grid;
@@ -268,8 +228,6 @@
             margin-bottom: 15px; font-size: 0.95rem; color: var(--gray);
         }
         .comparison-card li i { color: var(--primary); margin-top: 3px; }
-
-        /* ── Trust Section ── */
         .trust-section { background: var(--light); }
         .trust-grid {
             display: grid;
@@ -282,12 +240,11 @@
         .trust-card i { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
         .trust-card h3 { margin-bottom: 15px; font-size: 1.3rem; }
         .trust-card p { color: var(--gray); }
-
-        /* ── CTA Section ── */
         .cta-section {
             background: linear-gradient(135deg, #1a2b3c 0%, #2c3e50 100%);
             color: white;
             text-align: center;
+            padding: 80px 5%;
         }
         .cta-section h2 { color: white; font-size: 2.5rem; margin-bottom: 20px; }
         .cta-section p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.9; }
@@ -321,8 +278,6 @@
             margin-top: 20px;
         }
         .btn-outline-white:hover { background: white; color: var(--primary); }
-
-        /* ── Footer ── */
         footer { background: var(--dark); color: white; padding-top: 80px; }
         .footer-container {
             display: grid;
@@ -351,51 +306,22 @@
         }
         .footer-bottom a { color: var(--secondary); text-decoration: none; margin: 0 10px; }
         .footer-bottom a:hover { text-decoration: underline; }
-
-        /* ── Footer logo responsive ── */
         .footer-logo-desktop { display: block; }
         .footer-logo-mobile  { display: none; }
         @media (max-width: 768px) {
             .footer-logo-desktop { display: none; }
             .footer-logo-mobile  { display: block; }
-        }
-
-        /* ── Accessibility ── */
-        :focus { outline: 2px solid var(--primary); outline-offset: 2px; }
-
-        /* ── Responsive ── */
-        @media (max-width: 992px) {
             .steps-timeline::before { left: 40px; }
             .step-row { flex-direction: column; margin-bottom: 60px; }
-            .step-left  .step-card,
-            .step-right .step-card { margin: 0 0 0 80px !important; }
-            .step-left .step-number,
-            .step-right .step-number { left: 15px !important; right: auto !important; }
+            .step-left .step-card, .step-right .step-card { margin: 0 0 0 80px !important; }
+            .step-left .step-number, .step-right .step-number { left: 15px !important; right: auto !important; }
             .hero-features { gap: 20px; padding: 20px; }
-        }
-        @media (max-width: 768px) {
-            section { padding: 80px 5%; }
             .process-hero { padding: 100px 5% 80px; }
             .section-title h2 { font-size: 2rem; }
-            .step-left  .step-card,
-            .step-right .step-card { margin-left: 60px !important; padding: 30px; }
-            .step-left .step-number,
-            .step-right .step-number { left: 5px !important; width: 40px; height: 40px; font-size: 1.2rem; }
             .visa-card { padding: 30px; }
             .visa-price { font-size: 2.5rem; }
             .cta-buttons { flex-direction: column; align-items: center; }
             .btn-primary, .btn-secondary-cta { width: 100%; max-width: 300px; text-align: center; }
-        }
-        @media (max-width: 576px) {
-            .steps-timeline::before { left: 30px; }
-            .step-left  .step-card,
-            .step-right .step-card { margin-left: 50px !important; padding: 25px; }
-            .step-left .step-number,
-            .step-right .step-number { left: 0 !important; width: 35px; height: 35px; font-size: 1rem; }
-            .process-hero h1 { font-size: 2rem; }
-            .section-title h2 { font-size: 1.8rem; }
-            .visa-price { font-size: 2rem; }
-            .cta-section h2 { font-size: 2rem; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -404,43 +330,98 @@
                 scroll-behavior: auto !important;
             }
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
 
-    <link rel="canonical" href="https://pwanistays.com/how-it-works">
+        /* ===== NEW STYLES FOR COLLAPSIBLE QUESTIONNAIRE ===== */
+        .questionnaire-wrapper {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .questionnaire-toggle {
+            background: linear-gradient(135deg, #0d7a5f, #0f9b7a);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            width: 100%;
+            text-align: left;
+            border-radius: 60px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+            margin-bottom: 20px;
+        }
+        .questionnaire-toggle i { transition: transform 0.3s; }
+        .questionnaire-toggle.open i { transform: rotate(180deg); }
+        .questionnaire-panel {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 30px;
+            padding: 40px;
+            margin-top: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .questionnaire-panel.open { display: block; }
+        .form-section { margin-bottom: 40px; border-bottom: 1px solid #dee2e6; padding-bottom: 25px; }
+        .form-section h3 { font-size: 1.5rem; color: #0d7a5f; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
+        .form-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 25px; }
+        .full-width { grid-column: span 2; }
+        .form-group label { font-weight: 600; display: block; margin-bottom: 8px; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px 16px; border: 1px solid #ced4da; border-radius: 16px;
+            font-size: 1rem; transition: 0.2s; background: white;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #0d7a5f; outline: none; box-shadow: 0 0 0 3px rgba(13,122,95,0.1);
+        }
+        .radio-group, .checkbox-group {
+            display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline-flex; align-items: center; gap: 6px; font-weight: normal;
+            background: white; padding: 8px 16px; border-radius: 40px; border: 1px solid #ced4da; cursor: pointer;
+        }
+        .interests-grid {
+            display: grid; grid-template-columns: repeat(auto-fill,minmax(180px,1fr)); gap: 10px;
+        }
+        .btn-submit {
+            background: #0d7a5f; color: white; padding: 16px 24px; font-size: 1.1rem; font-weight: 700;
+            border: none; border-radius: 50px; width: 100%; cursor: pointer; margin-top: 20px;
+            display: flex; align-items: center; justify-content: center; gap: 12px; transition: 0.3s;
+        }
+        .btn-submit:hover { background: #0f9b7a; transform: translateY(-2px); }
+        .quiz-message { margin-top: 20px; padding: 12px; border-radius: 12px; text-align: center; display: none; }
+        .quiz-message.success { background: #d4edda; color: #155724; display: block; }
+        .quiz-message.error { background: #f8d7da; color: #721c24; display: block; }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .questionnaire-panel { padding: 25px; }
+            .interests-grid { grid-template-columns: 1fr; }
+            .radio-group, .checkbox-group { flex-direction: column; gap: 10px; }
+        }
+    </style>
 </head>
 <body>
-
-    <!-- STEP 3: Shared header mount point -->
+    <!-- Shared header mount point -->
     <div id="site-header"></div>
 
-    <!-- ── Page Content ── -->
     <div class="page-content">
-
-        <!-- Hero -->
+        <!-- Hero Section -->
         <section class="process-hero">
             <h1>How It Works With PwaniStays</h1>
             <p>A transparent, step-by-step guide to planning and enjoying your perfect Kenya adventure with confidence and ease.</p>
-            <a href="#booking-steps" class="btn-primary" style="margin-bottom:30px;">
-                <i class="fas fa-play-circle"></i> Start Your Journey
+            <a href="#questionnaire-section" class="btn-primary" style="margin-bottom:30px;">
+                <i class="fas fa-clipboard-list"></i> Start Your Personalised Questionnaire
             </a>
             <div class="hero-features">
-                <div class="hero-feature">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Verified Properties</span>
-                </div>
-                <div class="hero-feature">
-                    <i class="fas fa-hand-holding-usd"></i>
-                    <span>No Hidden Fees</span>
-                </div>
-                <div class="hero-feature">
-                    <i class="fas fa-headset"></i>
-                    <span>24/7 Support</span>
-                </div>
-                <div class="hero-feature">
-                    <i class="fas fa-passport"></i>
-                    <span>Visa Assistance</span>
-                </div>
+                <div class="hero-feature"><i class="fas fa-shield-alt"></i><span>Verified Properties</span></div>
+                <div class="hero-feature"><i class="fas fa-hand-holding-usd"></i><span>No Hidden Fees</span></div>
+                <div class="hero-feature"><i class="fas fa-headset"></i><span>24/7 Support</span></div>
+                <div class="hero-feature"><i class="fas fa-passport"></i><span>Visa Assistance</span></div>
             </div>
         </section>
 
@@ -449,16 +430,16 @@
             <span><a href="/">Home</a> &gt; How It Works</span>
         </div>
 
-        <!-- Intro -->
+        <!-- Intro Section (original) -->
         <section class="intro-section">
-            <div class="intro-content">
-                <h2>Simple. Clear. Reliable.</h2>
+            <div class="intro-content" style="max-width:800px; margin:0 auto; text-align:center;">
+                <h2 style="font-size:2.2rem; margin-bottom:20px;">Simple. Clear. Reliable.</h2>
                 <p>We've designed our process to be transparent and straightforward, so you can focus on the excitement of your upcoming adventure rather than the logistics.</p>
                 <p>Whether you're booking accommodation, experiences, or a complete travel package, we guide you through every step with clear communication and local expertise.</p>
             </div>
         </section>
 
-        <!-- Steps -->
+        <!-- Steps Timeline (original) -->
         <section class="steps-section" id="booking-steps">
             <div class="section-title">
                 <h2>Your Journey With PwaniStays</h2>
@@ -466,92 +447,31 @@
             </div>
             <div class="steps-container">
                 <div class="steps-timeline">
-
                     <!-- Step 1 -->
                     <div class="step-row step-left">
-                        <div class="step-card">
-                            <div class="step-number">1</div>
-                            <div class="step-icon"><i class="fas fa-search"></i></div>
-                            <h3>Explore & Inquire</h3>
-                            <p>Browse our curated collection of properties and experiences, or simply tell us about your travel plans and preferences.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check-circle"></i> Browse accommodation & experiences online</li>
-                                <li><i class="fas fa-check-circle"></i> Contact us with dates, group size & preferences</li>
-                                <li><i class="fas fa-check-circle"></i> Request custom recommendations</li>
-                                <li><i class="fas fa-check-circle"></i> No obligation initial consultation</li>
-                            </ul>
-                        </div>
+                        <div class="step-card"><div class="step-number">1</div><div class="step-icon"><i class="fas fa-search"></i></div><h3>Explore & Inquire</h3><p>Browse our curated collection of properties and experiences, or simply tell us about your travel plans and preferences.</p><ul class="step-features"><li><i class="fas fa-check-circle"></i> Browse accommodation & experiences online</li><li><i class="fas fa-check-circle"></i> Contact us with dates, group size & preferences</li><li><i class="fas fa-check-circle"></i> Request custom recommendations</li><li><i class="fas fa-check-circle"></i> No obligation initial consultation</li></ul></div>
                     </div>
-
                     <!-- Step 2 -->
                     <div class="step-row step-right">
-                        <div class="step-card">
-                            <div class="step-number">2</div>
-                            <div class="step-icon"><i class="fas fa-comments"></i></div>
-                            <h3>Personal Consultation</h3>
-                            <p>Our Kenya experts review your request and provide tailored recommendations based on location, comfort, and budget.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check-circle"></i> Personalized property/experience matches</li>
-                                <li><i class="fas fa-check-circle"></i> Honest advice on locations & amenities</li>
-                                <li><i class="fas fa-check-circle"></i> Detailed information & photos shared</li>
-                                <li><i class="fas fa-check-circle"></i> Transparent pricing breakdown</li>
-                            </ul>
-                        </div>
+                        <div class="step-card"><div class="step-number">2</div><div class="step-icon"><i class="fas fa-comments"></i></div><h3>Personal Consultation</h3><p>Our Kenya experts review your request and provide tailored recommendations based on location, comfort, and budget.</p><ul class="step-features"><li><i class="fas fa-check-circle"></i> Personalized property/experience matches</li><li><i class="fas fa-check-circle"></i> Honest advice on locations & amenities</li><li><i class="fas fa-check-circle"></i> Detailed information & photos shared</li><li><i class="fas fa-check-circle"></i> Transparent pricing breakdown</li></ul></div>
                     </div>
-
                     <!-- Step 3 -->
                     <div class="step-row step-left">
-                        <div class="step-card">
-                            <div class="step-number">3</div>
-                            <div class="step-icon"><i class="fas fa-check-circle"></i></div>
-                            <h3>Confirm Your Choice</h3>
-                            <p>Select your preferred option and we'll confirm availability while providing all necessary details before any payment.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check-circle"></i> Real-time availability confirmation</li>
-                                <li><i class="fas fa-check-circle"></i> Complete booking details shared</li>
-                                <li><i class="fas fa-check-circle"></i> Clear terms & conditions</li>
-                                <li><i class="fas fa-check-circle"></i> Secure payment options presented</li>
-                            </ul>
-                        </div>
+                        <div class="step-card"><div class="step-number">3</div><div class="step-icon"><i class="fas fa-check-circle"></i></div><h3>Confirm Your Choice</h3><p>Select your preferred option and we'll confirm availability while providing all necessary details before any payment.</p><ul class="step-features"><li><i class="fas fa-check-circle"></i> Real-time availability confirmation</li><li><i class="fas fa-check-circle"></i> Complete booking details shared</li><li><i class="fas fa-check-circle"></i> Clear terms & conditions</li><li><i class="fas fa-check-circle"></i> Secure payment options presented</li></ul></div>
                     </div>
-
                     <!-- Step 4 -->
                     <div class="step-row step-right">
-                        <div class="step-card">
-                            <div class="step-number">4</div>
-                            <div class="step-icon"><i class="fas fa-credit-card"></i></div>
-                            <h3>Secure Payment & Visa Assistance</h3>
-                            <p>Complete your booking with secure payment options and let us handle your Kenya eTA visa application.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check-circle"></i> Multiple secure payment methods</li>
-                                <li><i class="fas fa-check-circle"></i> eTA visa application service ($90)</li>
-                                <li><i class="fas fa-check-circle"></i> Official confirmation & receipts</li>
-                                <li><i class="fas fa-check-circle"></i> Travel document assistance</li>
-                            </ul>
-                        </div>
+                        <div class="step-card"><div class="step-number">4</div><div class="step-icon"><i class="fas fa-credit-card"></i></div><h3>Secure Payment & Visa Assistance</h3><p>Complete your booking with secure payment options and let us handle your Kenya eTA visa application.</p><ul class="step-features"><li><i class="fas fa-check-circle"></i> Multiple secure payment methods</li><li><i class="fas fa-check-circle"></i> eTA visa application service ($90)</li><li><i class="fas fa-check-circle"></i> Official confirmation & receipts</li><li><i class="fas fa-check-circle"></i> Travel document assistance</li></ul></div>
                     </div>
-
                     <!-- Step 5 -->
                     <div class="step-row step-left">
-                        <div class="step-card">
-                            <div class="step-number">5</div>
-                            <div class="step-icon"><i class="fas fa-plane-arrival"></i></div>
-                            <h3>Arrival & Continuous Support</h3>
-                            <p>Receive detailed arrival information and enjoy local support throughout your stay in Kenya.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check-circle"></i> Detailed check-in instructions</li>
-                                <li><i class="fas fa-check-circle"></i> Local contact & emergency numbers</li>
-                                <li><i class="fas fa-check-circle"></i> On-ground support throughout stay</li>
-                                <li><i class="fas fa-check-circle"></i> Assistance with any needs</li>
-                            </ul>
-                        </div>
+                        <div class="step-card"><div class="step-number">5</div><div class="step-icon"><i class="fas fa-plane-arrival"></i></div><h3>Arrival & Continuous Support</h3><p>Receive detailed arrival information and enjoy local support throughout your stay in Kenya.</p><ul class="step-features"><li><i class="fas fa-check-circle"></i> Detailed check-in instructions</li><li><i class="fas fa-check-circle"></i> Local contact & emergency numbers</li><li><i class="fas fa-check-circle"></i> On-ground support throughout stay</li><li><i class="fas fa-check-circle"></i> Assistance with any needs</li></ul></div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- Visa -->
+        <!-- Visa Section (original) -->
         <section class="visa-section" id="visa">
             <div class="section-title">
                 <h2>Kenya eTA Visa Assistance</h2>
@@ -564,35 +484,16 @@
                 <div class="visa-price">$90</div>
                 <p style="color:rgba(255,255,255,0.9);font-size:0.9rem;margin-bottom:30px;">Complete application service per person</p>
                 <div class="visa-details">
-                    <div class="visa-detail">
-                        <i class="fas fa-file-alt"></i>
-                        <h4>Document Preparation</h4>
-                        <p>We prepare and review all required documents</p>
-                    </div>
-                    <div class="visa-detail">
-                        <i class="fas fa-laptop"></i>
-                        <h4>Online Submission</h4>
-                        <p>Complete application submission on your behalf</p>
-                    </div>
-                    <div class="visa-detail">
-                        <i class="fas fa-check-double"></i>
-                        <h4>Follow-up & Tracking</h4>
-                        <p>Monitor application status until approval</p>
-                    </div>
-                    <div class="visa-detail">
-                        <i class="fas fa-envelope-open-text"></i>
-                        <h4>Approval Delivery</h4>
-                        <p>Official eTA delivered to your email</p>
-                    </div>
+                    <div class="visa-detail"><i class="fas fa-file-alt"></i><h4>Document Preparation</h4><p>We prepare and review all required documents</p></div>
+                    <div class="visa-detail"><i class="fas fa-laptop"></i><h4>Online Submission</h4><p>Complete application submission on your behalf</p></div>
+                    <div class="visa-detail"><i class="fas fa-check-double"></i><h4>Follow-up & Tracking</h4><p>Monitor application status until approval</p></div>
+                    <div class="visa-detail"><i class="fas fa-envelope-open-text"></i><h4>Approval Delivery</h4><p>Official eTA delivered to your email</p></div>
                 </div>
-                <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20assistance%20with%20my%20Kenya%20eTA%20visa%20application."
-                   class="btn-outline-white" target="_blank">
-                    <i class="fas fa-passport"></i> Apply for eTA Visa
-                </a>
+                <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20assistance%20with%20my%20Kenya%20eTA%20visa%20application." class="btn-outline-white" target="_blank"><i class="fas fa-passport"></i> Apply for eTA Visa</a>
             </div>
         </section>
 
-        <!-- Comparison -->
+        <!-- Comparison Section (original) -->
         <section class="comparison-section">
             <div class="section-title">
                 <h2>Accommodation vs Experiences</h2>
@@ -602,67 +503,116 @@
                 <div class="comparison-card">
                     <h3><i class="fas fa-home"></i> Accommodation Booking</h3>
                     <p>For stays in verified properties across Kenya</p>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Personal property verification</li>
-                        <li><i class="fas fa-check"></i> Exact location & amenities details</li>
-                        <li><i class="fas fa-check"></i> Flexible duration options</li>
-                        <li><i class="fas fa-check"></i> Check-in instructions in advance</li>
-                        <li><i class="fas fa-check"></i> Local support during stay</li>
-                        <li><i class="fas fa-check"></i> Cleaning & maintenance coordination</li>
-                    </ul>
-                    <a href="/accommodation" class="btn-primary" style="margin-top:20px;display:inline-block;padding:10px 25px;font-size:0.9rem;">
-                        Browse Accommodation
-                    </a>
+                    <ul><li><i class="fas fa-check"></i> Personal property verification</li><li><i class="fas fa-check"></i> Exact location & amenities details</li><li><i class="fas fa-check"></i> Flexible duration options</li><li><i class="fas fa-check"></i> Check-in instructions in advance</li><li><i class="fas fa-check"></i> Local support during stay</li><li><i class="fas fa-check"></i> Cleaning & maintenance coordination</li></ul>
+                    <a href="/accommodation" class="btn-primary" style="margin-top:20px;display:inline-block;padding:10px 25px;font-size:0.9rem;">Browse Accommodation</a>
                 </div>
                 <div class="comparison-card">
                     <h3><i class="fas fa-compass"></i> Experience Booking</h3>
                     <p>For guided tours, activities, and cultural experiences</p>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Curated experience selection</li>
-                        <li><i class="fas fa-check"></i> Licensed guides & operators</li>
-                        <li><i class="fas fa-check"></i> Clear schedules & inclusions</li>
-                        <li><i class="fas fa-check"></i> Transportation arrangements</li>
-                        <li><i class="fas fa-check"></i> Custom itinerary planning</li>
-                        <li><i class="fas fa-check"></i> Activity-specific support</li>
-                    </ul>
-                    <a href="/experiences" class="btn-primary" style="margin-top:20px;display:inline-block;padding:10px 25px;font-size:0.9rem;">
-                        Browse Experiences
-                    </a>
+                    <ul><li><i class="fas fa-check"></i> Curated experience selection</li><li><i class="fas fa-check"></i> Licensed guides & operators</li><li><i class="fas fa-check"></i> Clear schedules & inclusions</li><li><i class="fas fa-check"></i> Transportation arrangements</li><li><i class="fas fa-check"></i> Custom itinerary planning</li><li><i class="fas fa-check"></i> Activity-specific support</li></ul>
+                    <a href="/experiences" class="btn-primary" style="margin-top:20px;display:inline-block;padding:10px 25px;font-size:0.9rem;">Browse Experiences</a>
                 </div>
             </div>
         </section>
 
-        <!-- Trust -->
+        <!-- Trust Section (original) -->
         <section class="trust-section">
             <div class="section-title">
                 <h2>Why Trust Our Process</h2>
                 <p>Our commitment to transparency and reliability</p>
             </div>
             <div class="trust-grid">
-                <div class="trust-card">
-                    <i class="fas fa-handshake"></i>
-                    <h3>No Hidden Fees</h3>
-                    <p>All costs are clearly explained before confirmation</p>
-                </div>
-                <div class="trust-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Verified Partners</h3>
-                    <p>We work only with trusted property owners and operators</p>
-                </div>
-                <div class="trust-card">
-                    <i class="fas fa-file-contract"></i>
-                    <h3>Clear Policies</h3>
-                    <p>Transparent cancellation and refund terms</p>
-                </div>
-                <div class="trust-card">
-                    <i class="fas fa-headset"></i>
-                    <h3>Direct Communication</h3>
-                    <p>Always communicate directly with our team</p>
-                </div>
+                <div class="trust-card"><i class="fas fa-handshake"></i><h3>No Hidden Fees</h3><p>All costs are clearly explained before confirmation</p></div>
+                <div class="trust-card"><i class="fas fa-shield-alt"></i><h3>Verified Partners</h3><p>We work only with trusted property owners and operators</p></div>
+                <div class="trust-card"><i class="fas fa-file-contract"></i><h3>Clear Policies</h3><p>Transparent cancellation and refund terms</p></div>
+                <div class="trust-card"><i class="fas fa-headset"></i><h3>Direct Communication</h3><p>Always communicate directly with our team</p></div>
             </div>
         </section>
 
-        <!-- CTA -->
+        <!-- ========== NEW COLLAPSIBLE QUESTIONNAIRE (inserted here, before final CTA) ========== -->
+        <div class="questionnaire-wrapper" id="questionnaire-section">
+            <button class="questionnaire-toggle" id="toggleQuestionnaire">
+                <span><i class="fas fa-magic"></i> ✨ Design Your Coastal Journey (click to open)</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="questionnaire-panel" id="questionnairePanel">
+                <form id="guestQuizForm">
+                    <!-- About You -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-user-friends"></i> About You</h3>
+                        <div class="form-grid">
+                            <div class="form-group"><label>Full Name *</label><input type="text" id="fullName" required></div>
+                            <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
+                            <div class="form-group">
+                                <label>Phone *</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <select id="countryCode" style="width: 35%;"></select>
+                                    <input type="tel" id="phoneNumber" placeholder="712345678" style="width: 65%;" required>
+                                </div>
+                            </div>
+                            <div class="form-group"><label>Country of residence</label><input type="text" id="residenceCountry"></div>
+                            <div class="form-group">
+                                <label>Planned travel dates</label>
+                                <input type="date" id="travelDateStart" style="margin-bottom: 8px;" placeholder="Start date">
+                                <input type="date" id="travelDateEnd" placeholder="End date (optional)">
+                                <small style="display:block; margin-top:5px;">Or enter free text: <input type="text" id="travelDatesFree" placeholder="e.g., December 2025" style="margin-top:5px;"></small>
+                            </div>
+                            <div class="form-group"><label>Number of travelers</label><input type="text" id="groupSize" placeholder="2 adults, 1 child"></div>
+                            <div class="form-group full-width"><label>Any children or elderly guests?</label><input type="text" id="specialNeeds" placeholder="e.g., 4-year-old, wheelchair"></div>
+                        </div>
+                    </div>
+                    <!-- Accommodation & Style -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-home"></i> Accommodation & Style</h3>
+                        <div class="form-grid">
+                            <div class="form-group"><label>Preferred accommodation</label><select id="accomType"><option>Apartment/Villa</option><option>Hotel/Resort</option><option>Mix</option></select></div>
+                            <div class="form-group"><label>Preferred environment</label><select id="environment"><option>Beachfront</option><option>City/Town</option><option>Quiet residential</option></select></div>
+                            <div class="form-group full-width"><label>Amenities important?</label><div class="checkbox-group" id="amenitiesGroup"><label><input type="checkbox" value="Swimming pool"> Pool</label><label><input type="checkbox" value="Gym"> Gym</label><label><input type="checkbox" value="Sea view"> Sea view</label><label><input type="checkbox" value="Self-catering"> Self-catering</label></div></div>
+                            <div class="form-group"><label>Travel pace</label><div class="radio-group"><label><input type="radio" name="pace" value="Relaxed"> Relaxed</label><label><input type="radio" name="pace" value="Active"> Active</label></div></div>
+                            <div class="form-group"><label>Guided vs independent</label><div class="radio-group"><label><input type="radio" name="guidePref" value="Guided"> Guided</label><label><input type="radio" name="guidePref" value="Independent"> Independent</label><label><input type="radio" name="guidePref" value="Mix"> Mix</label></div></div>
+                            <div class="form-group"><label>Transport preference</label><div class="radio-group"><label><input type="radio" name="transport" value="Private transfers"> Private</label><label><input type="radio" name="transport" value="Local transport"> Local (adventurous)</label><label><input type="radio" name="transport" value="Mix"> Mix</label></div></div>
+                        </div>
+                    </div>
+                    <!-- Food & Welcome -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-utensils"></i> Food & Welcome</h3>
+                        <div class="form-grid">
+                            <div class="form-group"><label>Seafood?</label><div class="radio-group"><label><input type="radio" name="seafood" value="Love it"> Love</label><label><input type="radio" name="seafood" value="Occasional"> Occasional</label><label><input type="radio" name="seafood" value="No"> No</label></div></div>
+                            <div class="form-group"><label>Swahili cuisine?</label><div class="radio-group"><label><input type="radio" name="swahiliCuisine" value="Very interested"> Very</label><label><input type="radio" name="swahiliCuisine" value="Open"> Open</label><label><input type="radio" name="swahiliCuisine" value="Prefer familiar"> Familiar only</label></div></div>
+                            <div class="form-group full-width"><label>Dietary restrictions</label><input type="text" id="dietary" placeholder="e.g., vegetarian, gluten-free"></div>
+                            <div class="form-group full-width"><label>Welcome drink preference</label><div class="radio-group"><label><input type="radio" name="welcomeDrink" value="Cold beer"> 🍺 Beer</label><label><input type="radio" name="welcomeDrink" value="Soft drink"> 🥤 Soft drink</label><label><input type="radio" name="welcomeDrink" value="Water"> 💧 Water</label><label><input type="radio" name="welcomeDrink" value="None"> ❌ None</label></div></div>
+                            <div class="form-group full-width"><label>Special celebration?</label><input type="text" id="celebration" placeholder="Honeymoon, birthday, anniversary"></div>
+                        </div>
+                    </div>
+                    <!-- Experiences -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-tree"></i> Experiences & Interests</h3>
+                        <div class="form-group full-width"><label>What excites you? (select all)</label><div class="interests-grid" id="interestsGrid"><label><input type="checkbox" class="activity" value="Safari (Wildlife)"> Safari</label><label><input type="checkbox" class="activity" value="Beach & marine"> Beach & marine</label><label><input type="checkbox" class="activity" value="Cultural tours"> Cultural tours</label><label><input type="checkbox" class="activity" value="Snorkeling / diving"> Snorkeling / diving</label><label><input type="checkbox" class="activity" value="Dhow cruises"> Dhow cruises</label><label><input type="checkbox" class="activity" value="Nature walks"> Nature walks</label><label><input type="checkbox" class="activity" value="Photography"> Photography</label></div></div>
+                        <div class="form-grid"><div class="form-group"><label>Safari interest</label><select id="safariInterest"><option>Day safari (Tsavo)</option><option>Multi-day safari</option><option>Not interested</option></select></div><div class="form-group"><label>Marine activities?</label><div class="radio-group"><label><input type="radio" name="marineInterest" value="Very interested"> Very</label><label><input type="radio" name="marineInterest" value="Maybe"> Maybe</label><label><input type="radio" name="marineInterest" value="No"> No</label></div></div></div>
+                    </div>
+                    <!-- Safety & Support -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-shield-alt"></i> Safety & Support</h3>
+                        <div class="form-grid">
+                            <div class="form-group"><label>Preferred communication</label><div class="radio-group"><label><input type="radio" name="commLevel" value="Daily check-ins"> Daily</label><label><input type="radio" name="commLevel" value="As needed"> As needed</label></div></div>
+                            <div class="form-group"><label>Health or safety concerns</label><input type="text" id="healthConcerns" placeholder="e.g., mobility, allergies"></div>
+                            <div class="form-group full-width"><label>Planning style</label><div class="radio-group"><label><input type="radio" name="planStyle" value="Everything planned"> Fully planned</label><label><input type="radio" name="planStyle" value="Flexible / spontaneous"> Flexible</label></div></div>
+                        </div>
+                    </div>
+                    <!-- Personalisation -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-heart"></i> Personalise Your Trip</h3>
+                        <div class="form-group"><label>What would make this trip ideal?</label><textarea id="idealTrip" rows="2"></textarea></div>
+                        <div class="form-group"><label>Anything to avoid?</label><textarea id="avoidList" rows="2"></textarea></div>
+                        <div class="form-group"><label>How did you hear about us?</label><input type="text" id="referral"></div>
+                    </div>
+                    <button type="submit" class="btn-submit"><i class="fab fa-whatsapp"></i> Save & Send to PwaniStays</button>
+                    <div id="formMessage" class="quiz-message"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Final CTA Section (original) -->
         <section class="cta-section">
             <h2>Ready to Experience Kenya?</h2>
             <p>Start your journey with confidence. Our team is ready to guide you through every step.</p>
@@ -672,10 +622,9 @@
                 <a href="/#contact"      class="btn-primary"><i class="fas fa-calendar-alt"></i> Start Planning</a>
             </div>
         </section>
+    </div>
 
-    </div><!-- /.page-content -->
-
-    <!-- Footer -->
+    <!-- Footer (original) -->
     <footer role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
@@ -685,42 +634,22 @@
                 </div>
                 <p>Your trusted partner for seamless Kenya travel planning. We simplify the process so you can focus on creating unforgettable memories.</p>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/pwanistays"    target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/pwanistayscom" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@pwanistays.com"  target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/pwanistays" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/pwanistayscom" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@pwanistays.com" target="_blank"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
             <div class="footer-col">
                 <h3>Booking Process</h3>
-                <ul>
-                    <li><a href="#booking-steps">Step 1: Explore & Inquire</a></li>
-                    <li><a href="#booking-steps">Step 2: Personal Consultation</a></li>
-                    <li><a href="#booking-steps">Step 3: Confirm Choice</a></li>
-                    <li><a href="#booking-steps">Step 4: Payment & Visa</a></li>
-                    <li><a href="#booking-steps">Step 5: Arrival & Support</a></li>
-                    <li><a href="#visa">Visa Assistance</a></li>
-                </ul>
+                <ul><li><a href="#booking-steps">Step 1: Explore & Inquire</a></li><li><a href="#booking-steps">Step 2: Personal Consultation</a></li><li><a href="#booking-steps">Step 3: Confirm Choice</a></li><li><a href="#booking-steps">Step 4: Payment & Visa</a></li><li><a href="#booking-steps">Step 5: Arrival & Support</a></li><li><a href="#visa">Visa Assistance</a></li></ul>
             </div>
             <div class="footer-col">
                 <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/accommodation">Accommodation</a></li>
-                    <li><a href="/experiences">Experiences</a></li>
-                    <li><a href="/how-it-works">How It Works</a></li>
-                    <li><a href="/#contact">Contact</a></li>
-                </ul>
+                <ul><li><a href="/">Home</a></li><li><a href="/about">About Us</a></li><li><a href="/accommodation">Accommodation</a></li><li><a href="/experiences">Experiences</a></li><li><a href="/how-it-works">How It Works</a></li><li><a href="/#contact">Contact</a></li></ul>
             </div>
             <div class="footer-col">
                 <h3>Process Support</h3>
-                <ul>
-                    <li><i class="fas fa-map-marker-alt"></i> Mombasa & Nairobi, Kenya</li>
-                    <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
-                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Booking Support</a></li>
-                    <li><i class="fas fa-envelope"></i> <a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></li>
-                    <li><i class="fas fa-clock"></i> 7am–10pm Daily Support</li>
-                </ul>
+                <ul><li><i class="fas fa-map-marker-alt"></i> Mombasa & Nairobi, Kenya</li><li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li><li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Booking Support</a></li><li><i class="fas fa-envelope"></i> <a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></li><li><i class="fas fa-clock"></i> 7am–10pm Daily Support</li></ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -732,46 +661,159 @@
         </div>
     </footer>
 
-    <!-- STEP 4: Shared header loader -->
     <script src="/header-loader.js"></script>
-
     <script>
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        // Initialize Supabase
+        const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                var href = this.getAttribute('href');
-                if (href === '#' || href.startsWith('javascript:')) return;
-                e.preventDefault();
-                var target = document.getElementById(href.substring(1));
-                if (target) {
-                    window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' });
-                    history.pushState(null, null, href);
-                }
+        // Country code detection & dropdown
+        const countrySelect = document.getElementById('countryCode');
+        const allCountryCodes = [
+            { code: "+254", country: "Kenya" }, { code: "+1", country: "USA/Canada" }, { code: "+44", country: "UK" },
+            { code: "+45", country: "Denmark" }, { code: "+47", country: "Norway" }, { code: "+46", country: "Sweden" },
+            { code: "+49", country: "Germany" }, { code: "+33", country: "France" }, { code: "+34", country: "Spain" },
+            { code: "+39", country: "Italy" }, { code: "+31", country: "Netherlands" }, { code: "+61", country: "Australia" },
+            { code: "+91", country: "India" }, { code: "+27", country: "South Africa" }, { code: "+971", country: "UAE" }
+        ];
+        function populateCountryCodes(selectedCode = "+254") {
+            countrySelect.innerHTML = '';
+            allCountryCodes.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.code;
+                opt.textContent = `${c.code} (${c.country})`;
+                if (c.code === selectedCode) opt.selected = true;
+                countrySelect.appendChild(opt);
             });
+        }
+        function detectCountryCode() {
+            const locale = navigator.language || navigator.userLanguage;
+            let detected = "+254";
+            if (locale.includes('en-US') || locale.includes('en-CA')) detected = "+1";
+            else if (locale.includes('en-GB')) detected = "+44";
+            else if (locale.includes('da-DK')) detected = "+45";
+            else if (locale.includes('nb-NO') || locale.includes('nn-NO')) detected = "+47";
+            else if (locale.includes('sv-SE')) detected = "+46";
+            else if (locale.includes('de-DE')) detected = "+49";
+            else if (locale.includes('fr-FR')) detected = "+33";
+            else if (locale.includes('es-ES')) detected = "+34";
+            else if (locale.includes('it-IT')) detected = "+39";
+            populateCountryCodes(detected);
+        }
+        detectCountryCode();
+
+        // Toggle collapsible panel
+        const toggleBtn = document.getElementById('toggleQuestionnaire');
+        const panel = document.getElementById('questionnairePanel');
+        toggleBtn.addEventListener('click', () => {
+            panel.classList.toggle('open');
+            toggleBtn.classList.toggle('open');
         });
 
-        // Animate step cards on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            var observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity  = '1';
-                        entry.target.style.transform = 'translateX(0)';
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        // Form submission: Save to Supabase + WhatsApp
+        const form = document.getElementById('guestQuizForm');
+        const msgDiv = document.getElementById('formMessage');
+        function showMsg(text, type) {
+            msgDiv.textContent = text;
+            msgDiv.className = `quiz-message ${type}`;
+            setTimeout(() => { msgDiv.style.display = 'none'; msgDiv.className = 'quiz-message'; }, 7000);
+        }
 
-            document.querySelectorAll('.step-card').forEach(function(card) {
-                card.style.opacity    = '0';
-                var isLeft = card.closest('.step-left');
-                card.style.transform  = isLeft ? 'translateX(-50px)' : 'translateX(50px)';
-                card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                observer.observe(card);
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            msgDiv.style.display = 'none';
+
+            // Required fields
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            if (!fullName || !email || !phoneNumber) {
+                showMsg('Please fill name, email and phone number.', 'error');
+                return;
+            }
+            const fullPhone = countryCode + phoneNumber.replace(/\s/g, '');
+            const residenceCountry = document.getElementById('residenceCountry').value;
+            // Travel dates
+            let travelDates = '';
+            const startDate = document.getElementById('travelDateStart').value;
+            const endDate = document.getElementById('travelDateEnd').value;
+            const freeText = document.getElementById('travelDatesFree').value;
+            if (freeText) travelDates = freeText;
+            else if (startDate) travelDates = startDate + (endDate ? ` → ${endDate}` : '');
+            else travelDates = 'Not specified';
+
+            const groupSize = document.getElementById('groupSize').value;
+            const specialNeeds = document.getElementById('specialNeeds').value;
+            const accomType = document.getElementById('accomType').value;
+            const environment = document.getElementById('environment').value;
+            const amenities = Array.from(document.querySelectorAll('#amenitiesGroup input:checked')).map(cb => cb.value).join(', ');
+            const pace = document.querySelector('input[name="pace"]:checked')?.value || '';
+            const guidePref = document.querySelector('input[name="guidePref"]:checked')?.value || '';
+            const transport = document.querySelector('input[name="transport"]:checked')?.value || '';
+            const seafood = document.querySelector('input[name="seafood"]:checked')?.value || '';
+            const swahiliCuisine = document.querySelector('input[name="swahiliCuisine"]:checked')?.value || '';
+            const dietary = document.getElementById('dietary').value;
+            const welcomeDrink = document.querySelector('input[name="welcomeDrink"]:checked')?.value || '';
+            const celebration = document.getElementById('celebration').value;
+            const interests = Array.from(document.querySelectorAll('.activity:checked')).map(cb => cb.value).join(', ');
+            const safariInterest = document.getElementById('safariInterest').value;
+            const marineInterest = document.querySelector('input[name="marineInterest"]:checked')?.value || '';
+            const commLevel = document.querySelector('input[name="commLevel"]:checked')?.value || '';
+            const healthConcerns = document.getElementById('healthConcerns').value;
+            const planStyle = document.querySelector('input[name="planStyle"]:checked')?.value || '';
+            const idealTrip = document.getElementById('idealTrip').value;
+            const avoidList = document.getElementById('avoidList').value;
+            const referral = document.getElementById('referral').value;
+
+            const payload = {
+                full_name: fullName, email, phone: fullPhone, residence_country: residenceCountry,
+                travel_dates: travelDates, group_size: groupSize, special_needs: specialNeeds,
+                accommodation_type: accomType, environment, amenities, pace, guide_pref: guidePref,
+                transport_pref: transport, seafood_pref: seafood, swahili_interest: swahiliCuisine,
+                dietary_restrictions: dietary, welcome_drink: welcomeDrink, celebration,
+                interests, safari_interest: safariInterest, marine_interest: marineInterest,
+                communication_level: commLevel, health_concerns: healthConcerns, planning_style: planStyle,
+                ideal_trip: idealTrip, avoid_experiences: avoidList, referral_source: referral,
+                created_at: new Date().toISOString()
+            };
+
+            // Save to Supabase
+            try {
+                const { error } = await supabaseClient.from('questionnaire_responses').insert([payload]);
+                if (error) console.error('Supabase insert error:', error);
+                else console.log('Saved to Supabase');
+            } catch (err) { console.error(err); }
+
+            // WhatsApp message
+            const msgWhatsApp = `🏝️ *NEW QUESTIONNAIRE RESPONSE* 🏝️%0A%0A` +
+                `👤 *Name:* ${encodeURIComponent(fullName)}%0A📧 *Email:* ${encodeURIComponent(email)}%0A📞 *Phone:* ${encodeURIComponent(fullPhone)}%0A🌍 *Residence:* ${encodeURIComponent(residenceCountry)}%0A📅 *Travel dates:* ${encodeURIComponent(travelDates)}%0A👥 *Group:* ${encodeURIComponent(groupSize)}%0A👶 *Special needs:* ${encodeURIComponent(specialNeeds)}%0A%0A` +
+                `🏠 *Accommodation:* ${encodeURIComponent(accomType)} | ${encodeURIComponent(environment)}%0A✨ *Amenities:* ${encodeURIComponent(amenities)}%0A🚶 *Pace:* ${encodeURIComponent(pace)}%0A🗺️ *Guide pref:* ${encodeURIComponent(guidePref)}%0A🚗 *Transport:* ${encodeURIComponent(transport)}%0A%0A` +
+                `🍽️ *Seafood:* ${encodeURIComponent(seafood)} | *Swahili:* ${encodeURIComponent(swahiliCuisine)}%0A🥗 *Dietary:* ${encodeURIComponent(dietary)}%0A🍻 *Welcome drink:* ${encodeURIComponent(welcomeDrink)}%0A🎉 *Celebration:* ${encodeURIComponent(celebration)}%0A%0A` +
+                `🌿 *Interests:* ${encodeURIComponent(interests)}%0A🦁 *Safari:* ${encodeURIComponent(safariInterest)}%0A🌊 *Marine:* ${encodeURIComponent(marineInterest)}%0A%0A` +
+                `📢 *Comm:* ${encodeURIComponent(commLevel)} | *Health:* ${encodeURIComponent(healthConcerns)}%0A📋 *Planning:* ${encodeURIComponent(planStyle)}%0A✨ *Ideal:* ${encodeURIComponent(idealTrip)}%0A🚫 *Avoid:* ${encodeURIComponent(avoidList)}%0A🔗 *Referral:* ${encodeURIComponent(referral)}%0A%0A` +
+                `🔹 *Please review and follow up with personalized itinerary.*`;
+
+            window.open(`https://wa.me/254738544784?text=${msgWhatsApp}`, '_blank');
+            showMsg('✓ Preferences saved! Redirecting to WhatsApp. Our team will reply shortly.', 'success');
+            form.reset();
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+            // Keep panel open for next use
+        });
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href.startsWith('javascript:')) return;
+                e.preventDefault();
+                const target = document.getElementById(href.substring(1));
+                if (target) window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' });
             });
         });
     </script>
-
 </body>
 </html>

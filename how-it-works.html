@@ -112,18 +112,6 @@
             text-align: center;
             margin-bottom: 40px;
         }
-        .cust-heading .eyebrow {
-            display: inline-block;
-            background: var(--primary);
-            color: #fff;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            padding: 6px 18px;
-            border-radius: 30px;
-            margin-bottom: 16px;
-        }
         .cust-heading h2 {
             font-size: clamp(1.8rem, 4vw, 2.8rem);
             color: var(--dark);
@@ -420,7 +408,6 @@
     ====================================================== -->
     <section id="customize-experience">
         <div class="cust-heading">
-            <span class="eyebrow"><i class="fas fa-magic"></i>&nbsp; Tailored for You</span>
             <h2>Customize Your Experience</h2>
             <p>Tell us about your dream trip and we'll craft a personalized Kenya journey — from first flight to final farewell.</p>
         </div>
@@ -441,7 +428,7 @@
                         <div class="fgrid">
                             <div class="fgroup"><label>Full Name <span style="color:#e53935">*</span></label><input type="text" id="q_name" placeholder="e.g. Jane Müller" required></div>
                             <div class="fgroup"><label>Email <span style="color:#e53935">*</span></label><input type="email" id="q_email" placeholder="jane@example.com" required></div>
-                            <div class="fgroup"><label>Phone <span style="color:#e53935">*</span></label><div class="phone-row"><select id="q_cc"></select><input type="tel" id="q_phone" placeholder="712 345 678" required></div></div>
+                            <div class="fgroup"><label>Phone <span style="color:#e53935">*</span></label><div class="phone-row"><input type="text" id="q_cc" list="cc_list" placeholder="+254 Kenya" style="width:42%;" autocomplete="off" required><datalist id="cc_list"></datalist><input type="tel" id="q_phone" placeholder="712 345 678" style="width:58%;" required></div></div>
                             <div class="fgroup"><label>Country of residence</label><input type="text" id="q_country" placeholder="e.g. Denmark"></div>
                             <div class="fgroup"><label>First time visiting Kenya?</label>
                                 <div class="pill-group">
@@ -770,21 +757,90 @@ document.querySelectorAll('.act-grid').forEach(function(grid) {
     });
 });
 
-/* ── Country code dropdown ── */
+/* ── Country code searchable datalist (all countries) ── */
 (function() {
-    var sel = document.getElementById('q_cc');
-    if (!sel) return;
-    var codes = [['+254','🇰🇪 Kenya'],['+1','🇺🇸 USA/Canada'],['+44','🇬🇧 UK'],['+45','🇩🇰 Denmark'],['+47','🇳🇴 Norway'],['+46','🇸🇪 Sweden'],['+49','🇩🇪 Germany'],['+33','🇫🇷 France'],['+34','🇪🇸 Spain'],['+39','🇮🇹 Italy'],['+31','🇳🇱 Netherlands'],['+61','🇦🇺 Australia'],['+91','🇮🇳 India'],['+27','🇿🇦 South Africa'],['+971','🇦🇪 UAE']];
-    var locale = navigator.language || '';
-    var map = {'en-us':'+1','en-gb':'+44','da':'+45','nb':'+47','sv':'+46','de':'+49','fr':'+33','es':'+34','it':'+39','nl':'+31','en-au':'+61'};
-    var detected = '+254';
-    for (var k in map) { if (locale.toLowerCase().startsWith(k)) { detected = map[k]; break; } }
-    codes.forEach(function(c) {
+    var inp = document.getElementById('q_cc');
+    var dl  = document.getElementById('cc_list');
+    if (!inp || !dl) return;
+
+    // Full world dial code list [code, name]
+    var ALL = [
+        ['+1','USA'],['+1','Canada'],['+7','Russia'],['+7','Kazakhstan'],
+        ['+20','Egypt'],['+27','South Africa'],['+30','Greece'],['+31','Netherlands'],
+        ['+32','Belgium'],['+33','France'],['+34','Spain'],['+36','Hungary'],
+        ['+39','Italy'],['+40','Romania'],['+41','Switzerland'],['+43','Austria'],
+        ['+44','UK'],['+45','Denmark'],['+46','Sweden'],['+47','Norway'],
+        ['+48','Poland'],['+49','Germany'],['+51','Peru'],['+52','Mexico'],
+        ['+53','Cuba'],['+54','Argentina'],['+55','Brazil'],['+56','Chile'],
+        ['+57','Colombia'],['+58','Venezuela'],['+60','Malaysia'],['+61','Australia'],
+        ['+62','Indonesia'],['+63','Philippines'],['+64','New Zealand'],['+65','Singapore'],
+        ['+66','Thailand'],['+81','Japan'],['+82','South Korea'],['+84','Vietnam'],
+        ['+86','China'],['+90','Turkey'],['+91','India'],['+92','Pakistan'],
+        ['+93','Afghanistan'],['+94','Sri Lanka'],['+95','Myanmar'],['+98','Iran'],
+        ['+212','Morocco'],['+213','Algeria'],['+216','Tunisia'],['+218','Libya'],
+        ['+220','Gambia'],['+221','Senegal'],['+222','Mauritania'],['+223','Mali'],
+        ['+224','Guinea'],['+225','Ivory Coast'],['+226','Burkina Faso'],['+227','Niger'],
+        ['+228','Togo'],['+229','Benin'],['+230','Mauritius'],['+231','Liberia'],
+        ['+232','Sierra Leone'],['+233','Ghana'],['+234','Nigeria'],['+235','Chad'],
+        ['+236','Central African Republic'],['+237','Cameroon'],['+238','Cape Verde'],
+        ['+239','São Tomé and Príncipe'],['+240','Equatorial Guinea'],['+241','Gabon'],
+        ['+242','Republic of the Congo'],['+243','DR Congo'],['+244','Angola'],
+        ['+245','Guinea-Bissau'],['+246','British Indian Ocean Territory'],
+        ['+247','Ascension Island'],['+248','Seychelles'],['+249','Sudan'],
+        ['+250','Rwanda'],['+251','Ethiopia'],['+252','Somalia'],['+253','Djibouti'],
+        ['+254','Kenya'],['+255','Tanzania'],['+256','Uganda'],['+257','Burundi'],
+        ['+258','Mozambique'],['+260','Zambia'],['+261','Madagascar'],['+262','Réunion'],
+        ['+263','Zimbabwe'],['+264','Namibia'],['+265','Malawi'],['+266','Lesotho'],
+        ['+267','Botswana'],['+268','Eswatini'],['+269','Comoros'],['+290','Saint Helena'],
+        ['+291','Eritrea'],['+297','Aruba'],['+298','Faroe Islands'],['+299','Greenland'],
+        ['+350','Gibraltar'],['+351','Portugal'],['+352','Luxembourg'],['+353','Ireland'],
+        ['+354','Iceland'],['+355','Albania'],['+356','Malta'],['+357','Cyprus'],
+        ['+358','Finland'],['+359','Bulgaria'],['+370','Lithuania'],['+371','Latvia'],
+        ['+372','Estonia'],['+373','Moldova'],['+374','Armenia'],['+375','Belarus'],
+        ['+376','Andorra'],['+377','Monaco'],['+378','San Marino'],['+380','Ukraine'],
+        ['+381','Serbia'],['+382','Montenegro'],['+383','Kosovo'],['+385','Croatia'],
+        ['+386','Slovenia'],['+387','Bosnia and Herzegovina'],['+389','North Macedonia'],
+        ['+420','Czech Republic'],['+421','Slovakia'],['+423','Liechtenstein'],
+        ['+500','Falkland Islands'],['+501','Belize'],['+502','Guatemala'],
+        ['+503','El Salvador'],['+504','Honduras'],['+505','Nicaragua'],['+506','Costa Rica'],
+        ['+507','Panama'],['+508','Saint Pierre and Miquelon'],['+509','Haiti'],
+        ['+590','Guadeloupe'],['+591','Bolivia'],['+592','Guyana'],['+593','Ecuador'],
+        ['+594','French Guiana'],['+595','Paraguay'],['+596','Martinique'],['+597','Suriname'],
+        ['+598','Uruguay'],['+599','Netherlands Antilles'],['+670','East Timor'],
+        ['+672','Norfolk Island'],['+673','Brunei'],['+674','Nauru'],['+675','Papua New Guinea'],
+        ['+676','Tonga'],['+677','Solomon Islands'],['+678','Vanuatu'],['+679','Fiji'],
+        ['+680','Palau'],['+681','Wallis and Futuna'],['+682','Cook Islands'],['+683','Niue'],
+        ['+685','Samoa'],['+686','Kiribati'],['+687','New Caledonia'],['+688','Tuvalu'],
+        ['+689','French Polynesia'],['+690','Tokelau'],['+691','Micronesia'],
+        ['+692','Marshall Islands'],['+850','North Korea'],['+852','Hong Kong'],
+        ['+853','Macau'],['+855','Cambodia'],['+856','Laos'],['+880','Bangladesh'],
+        ['+886','Taiwan'],['+960','Maldives'],['+961','Lebanon'],['+962','Jordan'],
+        ['+963','Syria'],['+964','Iraq'],['+965','Kuwait'],['+966','Saudi Arabia'],
+        ['+967','Yemen'],['+968','Oman'],['+970','Palestine'],['+971','UAE'],
+        ['+972','Israel'],['+973','Bahrain'],['+974','Qatar'],['+975','Bhutan'],
+        ['+976','Mongolia'],['+977','Nepal'],['+992','Tajikistan'],['+993','Turkmenistan'],
+        ['+994','Azerbaijan'],['+995','Georgia'],['+996','Kyrgyzstan'],['+998','Uzbekistan']
+    ];
+
+    // Populate datalist
+    ALL.forEach(function(c) {
         var opt = document.createElement('option');
-        opt.value = c[0]; opt.textContent = c[0] + ' ' + c[1];
-        if (c[0] === detected) opt.selected = true;
-        sel.appendChild(opt);
+        opt.value = c[0] + ' ' + c[1];
+        dl.appendChild(opt);
     });
+
+    // Auto-detect based on locale
+    var locale = (navigator.language || '').toLowerCase();
+    var localeMap = {
+        'en-us':'Kenya', 'en-gb':'UK', 'da':'Denmark', 'nb':'Norway',
+        'sv':'Sweden', 'de':'Germany', 'fr':'France', 'es':'Spain',
+        'it':'Italy', 'nl':'Netherlands', 'en-au':'Australia'
+    };
+    var detected = '+254 Kenya';
+    for (var k in localeMap) {
+        if (locale.startsWith(k)) { detected = ALL.find(function(a){ return a[1]===localeMap[k]; }); detected = detected ? detected[0]+' '+detected[1] : '+254 Kenya'; break; }
+    }
+    inp.value = detected;
 })();
 
 /* ── Form submission ── */
@@ -802,7 +858,8 @@ document.getElementById('custForm').addEventListener('submit', async function(e)
         return;
     }
 
-    var cc = document.getElementById('q_cc').value;
+    var ccRaw = document.getElementById('q_cc').value.trim();
+    var cc = ccRaw.match(/^\+\d+/) ? ccRaw.match(/^\+\d+/)[0] : '';
     var fullPhone = cc + phone.replace(/\s/g, '');
 
     function radio(n) { var r = document.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; }

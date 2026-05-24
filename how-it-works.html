@@ -146,7 +146,7 @@
     </section>
     <div class="breadcrumb"><span><a href="/">Home</a> &gt; How It Works</span></div>
 
-    <!-- Original steps (condensed for brevity but preserved) -->
+    <!-- Original steps (condensed but preserved) -->
     <section><div class="section-title"><h2>Your Journey With PwaniStays</h2><p>Follow these simple steps from inquiry to arrival</p></div>
     <div class="steps-timeline">
         <div class="step-row step-left"><div class="step-card"><div class="step-number">1</div><div class="step-icon"><i class="fas fa-search"></i></div><h3>Explore & Inquire</h3><ul class="step-features"><li><i class="fas fa-check-circle"></i> Browse accommodation & experiences</li><li><i class="fas fa-check-circle"></i> Contact us with dates & preferences</li></ul></div></div>
@@ -162,10 +162,10 @@
 
     <section class="trust-section"><div class="section-title"><h2>Why Trust Our Process</h2></div><div class="trust-grid"><div class="trust-card"><i class="fas fa-handshake"></i><h3>No Hidden Fees</h3></div><div class="trust-card"><i class="fas fa-shield-alt"></i><h3>Verified Partners</h3></div><div class="trust-card"><i class="fas fa-headset"></i><h3>24/7 Support</h3></div></div></section>
 
-    <!-- COLLAPSIBLE QUESTIONNAIRE (UPDATED) -->
+    <!-- COLLAPSIBLE QUESTIONNAIRE (FIXED TOGGLE) -->
     <div class="questionnaire-wrapper" id="questionnaire-section">
         <button class="questionnaire-toggle" id="toggleQuestionnaire">
-            <span><i class="fas fa-magic"></i> ✨ Customize Your Journey (click to open)</span>
+            <span><i class="fas fa-magic"></i> ✨ Customize Your Journey</span>
             <i class="fas fa-chevron-down"></i>
         </button>
         <div class="questionnaire-panel" id="questionnairePanel">
@@ -208,7 +208,7 @@
                     </div>
                 </div>
 
-                <!-- Food & Welcome -->
+                <!-- Food & Local Experiences -->
                 <div class="form-section">
                     <h3><i class="fas fa-utensils"></i> Food & Local Experiences</h3>
                     <div class="form-grid">
@@ -276,78 +276,104 @@
 
 <script src="/header-loader.js"></script>
 <script>
-    // Supabase init
+    (function() {
+        // Ensure DOM is fully loaded before attaching event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle panel
+            const toggleBtn = document.getElementById('toggleQuestionnaire');
+            const panel = document.getElementById('questionnairePanel');
+            if (toggleBtn && panel) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    panel.classList.toggle('open');
+                    toggleBtn.classList.toggle('open');
+                });
+            }
+
+            // Country code detection
+            const countrySelect = document.getElementById('countryCode');
+            const allCodes = [{code:"+254",country:"Kenya"},{code:"+1",country:"USA/Canada"},{code:"+44",country:"UK"},{code:"+45",country:"Denmark"},{code:"+47",country:"Norway"},{code:"+46",country:"Sweden"},{code:"+49",country:"Germany"},{code:"+33",country:"France"},{code:"+34",country:"Spain"},{code:"+39",country:"Italy"},{code:"+31",country:"Netherlands"},{code:"+61",country:"Australia"},{code:"+91",country:"India"},{code:"+27",country:"South Africa"},{code:"+971",country:"UAE"}];
+            function populateCodes(selected="+254") {
+                if(!countrySelect) return;
+                countrySelect.innerHTML = '';
+                allCodes.forEach(c=>{let opt=document.createElement('option');opt.value=c.code;opt.textContent=`${c.code} (${c.country})`;if(c.code===selected)opt.selected=true;countrySelect.appendChild(opt);});
+            }
+            const locale = navigator.language; let detected="+254";
+            if(locale.includes('en-US')) detected="+1";
+            else if(locale.includes('en-GB')) detected="+44";
+            else if(locale.includes('da-DK')) detected="+45";
+            else if(locale.includes('nb-NO')) detected="+47";
+            else if(locale.includes('sv-SE')) detected="+46";
+            else if(locale.includes('de-DE')) detected="+49";
+            else if(locale.includes('fr-FR')) detected="+33";
+            else if(locale.includes('es-ES')) detected="+34";
+            else if(locale.includes('it-IT')) detected="+39";
+            populateCodes(detected);
+        });
+    })();
+
+    // Supabase & form submission (runs after DOM)
     const supabase = window.supabase.createClient("https://aanyrtsfeeynykskwxen.supabase.co", "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD");
-    // Country codes
-    const countrySelect = document.getElementById('countryCode');
-    const allCodes = [{code:"+254",country:"Kenya"},{code:"+1",country:"USA/Canada"},{code:"+44",country:"UK"},{code:"+45",country:"Denmark"},{code:"+47",country:"Norway"},{code:"+46",country:"Sweden"},{code:"+49",country:"Germany"},{code:"+33",country:"France"},{code:"+34",country:"Spain"},{code:"+39",country:"Italy"},{code:"+31",country:"Netherlands"},{code:"+61",country:"Australia"},{code:"+91",country:"India"},{code:"+27",country:"South Africa"},{code:"+971",country:"UAE"}];
-    function populateCodes(selected="+254") { countrySelect.innerHTML = ''; allCodes.forEach(c=>{let opt=document.createElement('option');opt.value=c.code;opt.textContent=`${c.code} (${c.country})`;if(c.code===selected)opt.selected=true;countrySelect.appendChild(opt);}); }
-    const locale = navigator.language; let detected="+254"; if(locale.includes('en-US')) detected="+1"; else if(locale.includes('en-GB')) detected="+44"; else if(locale.includes('da-DK')) detected="+45"; else if(locale.includes('nb-NO')) detected="+47"; else if(locale.includes('sv-SE')) detected="+46"; else if(locale.includes('de-DE')) detected="+49"; else if(locale.includes('fr-FR')) detected="+33"; else if(locale.includes('es-ES')) detected="+34"; else if(locale.includes('it-IT')) detected="+39"; populateCodes(detected);
-
-    // Toggle panel
-    const toggleBtn = document.getElementById('toggleQuestionnaire');
-    const panel = document.getElementById('questionnairePanel');
-    toggleBtn.addEventListener('click', () => { panel.classList.toggle('open'); toggleBtn.classList.toggle('open'); });
-
-    // Form submit
     const form = document.getElementById('guestQuizForm');
     const msgDiv = document.getElementById('formMessage');
     function showMsg(text, type) { msgDiv.textContent = text; msgDiv.className = `quiz-message ${type}`; setTimeout(() => { msgDiv.style.display = 'none'; msgDiv.className = 'quiz-message'; }, 7000); }
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        msgDiv.style.display = 'none';
-        const name = document.getElementById('fullName').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phoneRaw = document.getElementById('phoneNumber').value.trim();
-        const countryCode = document.getElementById('countryCode').value;
-        if (!name || !email || !phoneRaw) { showMsg('Please fill name, email and phone number.', 'error'); return; }
-        const fullPhone = countryCode + phoneRaw.replace(/\s/g,'');
-        const residence = document.getElementById('residenceCountry').value;
-        const firstTime = document.querySelector('input[name="firstTime"]:checked')?.value || '';
-        let travelDates = '';
-        const start = document.getElementById('travelDateStart').value;
-        const end = document.getElementById('travelDateEnd').value;
-        const free = document.getElementById('travelDatesFree').value;
-        if (free) travelDates = free;
-        else if (start) travelDates = start + (end ? ` → ${end}` : '');
-        const groupSize = document.getElementById('groupSize').value;
-        const specialNeeds = document.getElementById('specialNeeds').value;
-        const accessibility = document.getElementById('accessibility').value;
-        const flightBooking = document.querySelector('input[name="flightBooking"]:checked')?.value || '';
-        const visaAssist = document.querySelector('input[name="visaAssist"]:checked')?.value || '';
-        const accomType = document.getElementById('accomType').value;
-        const environment = document.getElementById('environment').value;
-        const amenities = Array.from(document.querySelectorAll('#guestQuizForm .checkbox-group input:checked')).map(cb=>cb.value).join(',');
-        const pace = document.querySelector('input[name="pace"]:checked')?.value || '';
-        const guidePref = document.querySelector('input[name="guidePref"]:checked')?.value || '';
-        const transport = document.querySelector('input[name="transport"]:checked')?.value || '';
-        const seafood = document.querySelector('input[name="seafood"]:checked')?.value || '';
-        const swahili = document.querySelector('input[name="swahiliCuisine"]:checked')?.value || '';
-        const dietary = document.getElementById('dietary').value;
-        const localFood = document.querySelector('input[name="localFood"]:checked')?.value || '';
-        const welcomeDrink = document.querySelector('input[name="welcomeDrink"]:checked')?.value || '';
-        const celebration = document.getElementById('celebration').value;
-        const activities = Array.from(document.querySelectorAll('.activity:checked')).map(cb=>cb.value).join(', ');
-        const safariInterest = document.getElementById('safariInterest').value;
-        const marineInterest = document.querySelector('input[name="marineInterest"]:checked')?.value || '';
-        const commLevel = document.querySelector('input[name="commLevel"]:checked')?.value || '';
-        const contactMethod = document.querySelector('input[name="contactMethod"]:checked')?.value || '';
-        const health = document.getElementById('healthConcerns').value;
-        const planStyle = document.querySelector('input[name="planStyle"]:checked')?.value || '';
-        const ideal = document.getElementById('idealTrip').value;
-        const avoid = document.getElementById('avoidList').value;
-        const referral = document.getElementById('referral').value;
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            msgDiv.style.display = 'none';
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phoneRaw = document.getElementById('phoneNumber').value.trim();
+            const countryCode = document.getElementById('countryCode').value;
+            if (!name || !email || !phoneRaw) { showMsg('Please fill name, email and phone number.', 'error'); return; }
+            const fullPhone = countryCode + phoneRaw.replace(/\s/g,'');
+            const residence = document.getElementById('residenceCountry').value;
+            const firstTime = document.querySelector('input[name="firstTime"]:checked')?.value || '';
+            let travelDates = '';
+            const start = document.getElementById('travelDateStart').value;
+            const end = document.getElementById('travelDateEnd').value;
+            const free = document.getElementById('travelDatesFree').value;
+            if (free) travelDates = free;
+            else if (start) travelDates = start + (end ? ` → ${end}` : '');
+            const groupSize = document.getElementById('groupSize').value;
+            const specialNeeds = document.getElementById('specialNeeds').value;
+            const accessibility = document.getElementById('accessibility').value;
+            const flightBooking = document.querySelector('input[name="flightBooking"]:checked')?.value || '';
+            const visaAssist = document.querySelector('input[name="visaAssist"]:checked')?.value || '';
+            const accomType = document.getElementById('accomType').value;
+            const environment = document.getElementById('environment').value;
+            const amenities = Array.from(document.querySelectorAll('#guestQuizForm .checkbox-group input:checked')).map(cb=>cb.value).join(',');
+            const pace = document.querySelector('input[name="pace"]:checked')?.value || '';
+            const guidePref = document.querySelector('input[name="guidePref"]:checked')?.value || '';
+            const transport = document.querySelector('input[name="transport"]:checked')?.value || '';
+            const seafood = document.querySelector('input[name="seafood"]:checked')?.value || '';
+            const swahili = document.querySelector('input[name="swahiliCuisine"]:checked')?.value || '';
+            const dietary = document.getElementById('dietary').value;
+            const localFood = document.querySelector('input[name="localFood"]:checked')?.value || '';
+            const welcomeDrink = document.querySelector('input[name="welcomeDrink"]:checked')?.value || '';
+            const celebration = document.getElementById('celebration').value;
+            const activities = Array.from(document.querySelectorAll('.activity:checked')).map(cb=>cb.value).join(', ');
+            const safariInterest = document.getElementById('safariInterest').value;
+            const marineInterest = document.querySelector('input[name="marineInterest"]:checked')?.value || '';
+            const commLevel = document.querySelector('input[name="commLevel"]:checked')?.value || '';
+            const contactMethod = document.querySelector('input[name="contactMethod"]:checked')?.value || '';
+            const health = document.getElementById('healthConcerns').value;
+            const planStyle = document.querySelector('input[name="planStyle"]:checked')?.value || '';
+            const ideal = document.getElementById('idealTrip').value;
+            const avoid = document.getElementById('avoidList').value;
+            const referral = document.getElementById('referral').value;
 
-        const payload = { full_name:name, email, phone:fullPhone, residence_country:residence, first_time_kenya:firstTime, travel_dates:travelDates, group_size:groupSize, special_needs:specialNeeds, accessibility, flight_booking_assistance:flightBooking, visa_assistance:visaAssist, accommodation_type:accomType, environment, amenities, pace, guide_pref:guidePref, transport_pref:transport, seafood_pref:seafood, swahili_interest:swahili, dietary_restrictions:dietary, local_food_interest:localFood, welcome_drink:welcomeDrink, celebration, interests:activities, safari_interest:safariInterest, marine_interest:marineInterest, communication_level:commLevel, preferred_contact_method:contactMethod, health_concerns:health, planning_style:planStyle, ideal_trip:ideal, avoid_experiences:avoid, referral_source:referral, created_at:new Date().toISOString() };
-        try { await supabase.from('questionnaire_responses').insert([payload]); } catch(err) { console.error(err); }
+            const payload = { full_name:name, email, phone:fullPhone, residence_country:residence, first_time_kenya:firstTime, travel_dates:travelDates, group_size:groupSize, special_needs:specialNeeds, accessibility, flight_booking_assistance:flightBooking, visa_assistance:visaAssist, accommodation_type:accomType, environment, amenities, pace, guide_pref:guidePref, transport_pref:transport, seafood_pref:seafood, swahili_interest:swahili, dietary_restrictions:dietary, local_food_interest:localFood, welcome_drink:welcomeDrink, celebration, interests:activities, safari_interest:safariInterest, marine_interest:marineInterest, communication_level:commLevel, preferred_contact_method:contactMethod, health_concerns:health, planning_style:planStyle, ideal_trip:ideal, avoid_experiences:avoid, referral_source:referral, created_at:new Date().toISOString() };
+            try { await supabase.from('questionnaire_responses').insert([payload]); } catch(err) { console.error(err); }
 
-        const msgWhatsApp = `🏝️ *NEW QUESTIONNAIRE* 🏝️%0A%0A👤 Name: ${encodeURIComponent(name)}%0A📧 Email: ${encodeURIComponent(email)}%0A📞 Phone: ${encodeURIComponent(fullPhone)}%0A🌍 Residence: ${encodeURIComponent(residence)}%0A🆕 First time? ${encodeURIComponent(firstTime)}%0A📅 Dates: ${encodeURIComponent(travelDates)}%0A👥 Group: ${encodeURIComponent(groupSize)}%0A👶 Special needs: ${encodeURIComponent(specialNeeds)}%0A♿ Accessibility: ${encodeURIComponent(accessibility)}%0A%0A✈️ Flight assist: ${encodeURIComponent(flightBooking)}%0A🛂 Visa assist: ${encodeURIComponent(visaAssist)}%0A%0A🏠 Accommodation: ${encodeURIComponent(accomType)} / ${encodeURIComponent(environment)}%0A✨ Amenities: ${encodeURIComponent(amenities)}%0A🚶 Pace: ${encodeURIComponent(pace)}%0A🗺️ Guide: ${encodeURIComponent(guidePref)}%0A🚗 Transport: ${encodeURIComponent(transport)}%0A%0A🍽️ Seafood: ${encodeURIComponent(seafood)} | Swahili: ${encodeURIComponent(swahili)}%0A🥗 Dietary: ${encodeURIComponent(dietary)}%0A🍽️ Local food: ${encodeURIComponent(localFood)}%0A🍻 Welcome drink: ${encodeURIComponent(welcomeDrink)}%0A🎉 Celebration: ${encodeURIComponent(celebration)}%0A%0A🌿 Interests: ${encodeURIComponent(activities)}%0A🦁 Safari: ${encodeURIComponent(safariInterest)}%0A🌊 Marine: ${encodeURIComponent(marineInterest)}%0A%0A📢 Comm: ${encodeURIComponent(commLevel)} | Contact method: ${encodeURIComponent(contactMethod)}%0A❤️ Health: ${encodeURIComponent(health)}%0A📋 Planning: ${encodeURIComponent(planStyle)}%0A✨ Ideal: ${encodeURIComponent(ideal)}%0A🚫 Avoid: ${encodeURIComponent(avoid)}%0A🔗 Referral: ${encodeURIComponent(referral)}`;
-        window.open(`https://wa.me/254738544784?text=${msgWhatsApp}`, '_blank');
-        showMsg('✓ Questionnaire submitted! Redirecting to WhatsApp. Our team will reply shortly.', 'success');
-        form.reset();
-        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(i => i.checked = false);
-    });
+            const msgWhatsApp = `🏝️ *NEW QUESTIONNAIRE* 🏝️%0A%0A👤 Name: ${encodeURIComponent(name)}%0A📧 Email: ${encodeURIComponent(email)}%0A📞 Phone: ${encodeURIComponent(fullPhone)}%0A🌍 Residence: ${encodeURIComponent(residence)}%0A🆕 First time? ${encodeURIComponent(firstTime)}%0A📅 Dates: ${encodeURIComponent(travelDates)}%0A👥 Group: ${encodeURIComponent(groupSize)}%0A👶 Special needs: ${encodeURIComponent(specialNeeds)}%0A♿ Accessibility: ${encodeURIComponent(accessibility)}%0A%0A✈️ Flight assist: ${encodeURIComponent(flightBooking)}%0A🛂 Visa assist: ${encodeURIComponent(visaAssist)}%0A%0A🏠 Accommodation: ${encodeURIComponent(accomType)} / ${encodeURIComponent(environment)}%0A✨ Amenities: ${encodeURIComponent(amenities)}%0A🚶 Pace: ${encodeURIComponent(pace)}%0A🗺️ Guide: ${encodeURIComponent(guidePref)}%0A🚗 Transport: ${encodeURIComponent(transport)}%0A%0A🍽️ Seafood: ${encodeURIComponent(seafood)} | Swahili: ${encodeURIComponent(swahili)}%0A🥗 Dietary: ${encodeURIComponent(dietary)}%0A🍽️ Local food: ${encodeURIComponent(localFood)}%0A🍻 Welcome drink: ${encodeURIComponent(welcomeDrink)}%0A🎉 Celebration: ${encodeURIComponent(celebration)}%0A%0A🌿 Interests: ${encodeURIComponent(activities)}%0A🦁 Safari: ${encodeURIComponent(safariInterest)}%0A🌊 Marine: ${encodeURIComponent(marineInterest)}%0A%0A📢 Comm: ${encodeURIComponent(commLevel)} | Contact method: ${encodeURIComponent(contactMethod)}%0A❤️ Health: ${encodeURIComponent(health)}%0A📋 Planning: ${encodeURIComponent(planStyle)}%0A✨ Ideal: ${encodeURIComponent(ideal)}%0A🚫 Avoid: ${encodeURIComponent(avoid)}%0A🔗 Referral: ${encodeURIComponent(referral)}`;
+            window.open(`https://wa.me/254738544784?text=${msgWhatsApp}`, '_blank');
+            showMsg('✓ Questionnaire submitted! Redirecting to WhatsApp. Our team will reply shortly.', 'success');
+            form.reset();
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(i => i.checked = false);
+        });
+    }
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 </script>
 </body>

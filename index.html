@@ -2930,9 +2930,6 @@
     
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <!-- EmailJS - for sending inquiry emails to info@pwanistays.com -->
-    <!-- SETUP: Go to https://www.emailjs.com, create a free account, then set EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY below -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script>
         // ==========================================
@@ -4421,20 +4418,10 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             }
 
             async function sendInquiryEmail(formData, form, submitBtn) {
-                // ================================================================
-                // EMAILJS SETUP — to receive inquiries at info@pwanistays.com:
-                // 1. Create a free account at https://www.emailjs.com/
-                // 2. Add an Email Service (Gmail / Outlook / etc.)
-                // 3. Create a Template — the "To Email" must be info@pwanistays.com
-                //    Template variables: {{from_name}} {{from_email}} {{phone}}
-                //                        {{country}} {{service}} {{message}}
-                // 4. Replace the three placeholders below with your real IDs
-                // ================================================================
-                const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. 'service_abc123'
-                const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. 'template_xyz789'
-                const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // e.g. 'abc_AbCdEfGhIjKl'
+               
+                const WEB3FORMS_KEY = '2735669d-b583-4635-978e-87c34f729629';
 
-                // Always save inquiry to Supabase as a reliable backup record
+                
                 try {
                     await supabase.from('inquiries').insert([{
                         name:    formData.name,
@@ -4445,41 +4432,89 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                         message: formData.message
                     }]);
                 } catch (dbErr) {
-                    // Table may not exist yet — create it in Supabase with:
-                    // CREATE TABLE inquiries (id SERIAL PRIMARY KEY, name TEXT, email TEXT,
-                    //   phone TEXT, country TEXT, service TEXT, message TEXT,
-                    //   created_at TIMESTAMPTZ DEFAULT NOW());
-                    console.log('Supabase inquiries insert note:', dbErr.message);
+                    console.log('Supabase inquiries note:', dbErr.message);
                 }
 
-                // Send email notification via EmailJS (once you configure above)
-                if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID') {
+                // ── 2. Send email to info@pwanistays.com via Web3Forms ──
+                let emailSent = false;
+                if (WEB3FORMS_KEY !== '2735669d-b583-4635-978e-87c34f729629') {
                     try {
-                        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                            from_name:  formData.name,
-                            from_email: formData.email,
-                            phone:      formData.phone,
-                            country:    formData.country,
-                            service:    formData.service,
-                            message:    formData.message,
-                            to_email:   'info@pwanistays.com'
-                        }, EMAILJS_PUBLIC_KEY);
+                        const serviceLabel = {
+                            stay:      'Accommodation Only',
+                            transfer:  'Accommodation + Transfers',
+                            tour:      'Full Package (Stay + Transfers + Tours)',
+                            corporate: 'Corporate/Group Booking'
+                        }[formData.service] || formData.service;
+
+                        const emailBody = [
+                            `Name:     ${formData.name}`,
+                            `Email:    ${formData.email}`,
+                            `Phone:    ${formData.phone}`,
+                            `Country:  ${formData.country}`,
+                            `Service:  ${serviceLabel}`,
+                            ``,
+                            `Message:`,
+                            formData.message
+                        ].join('\n');
+
+                        const res = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                access_key:   WEB3FORMS_KEY,
+                                subject:      `New PwaniStays Inquiry — ${formData.name} (${formData.country})`,
+                                from_name:    'PwaniStays Website',
+                                replyto:      formData.email,
+                                message:      emailBody,
+                                botcheck:     false
+                            })
+                        });
+
+                        const result = await res.json();
+                        if (result.success) {
+                            emailSent = true;
+                        } else {
+                            console.error('Web3Forms error:', result);
+                        }
                     } catch (mailErr) {
-                        console.error('EmailJS send error:', mailErr);
+                        console.error('Web3Forms fetch error:', mailErr);
                     }
+                } else {
+                    // Key not yet configured — log a reminder in the browser console
+                    console.warn(
+                        '%c📬 PwaniStays — email not sent',
+                        'color:orange;font-weight:bold',
+                        '\nWeb3Forms access key is still set to the placeholder value.',
+                        '\nGo to https://web3forms.com/ to get your free key and paste it',
+                        '\ninto the WEB3FORMS_KEY constant in index.html.'
+                    );
                 }
 
-                alert(`Thank you ${formData.name}! Your inquiry has been received. Our coastal experts will contact you within 24 hours.`);
-                form.reset();
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = 'Send Detailed Inquiry';
+                // ── 3. Show confirmation to the visitor ──
+                const btn = form.querySelector('button[type="submit"]');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Send Detailed Inquiry';
                 }
-                // Reset phone prefix to Kenya default
+                form.reset();
                 const pfx = document.getElementById('phonePrefix');
                 if (pfx) pfx.textContent = '+254';
-                const iCtr = document.getElementById('inquiryCountry');
-                if (iCtr) iCtr.value = '';
+
+                // Replace the raw alert with a nicer inline confirmation
+                const formBox = document.getElementById('book-now');
+                if (formBox) {
+                    const banner = document.createElement('div');
+                    banner.style.cssText = 'background:linear-gradient(135deg,#0d7a5f,#10a37f);color:#fff;padding:18px 22px;border-radius:12px;margin-bottom:18px;text-align:center;font-size:1rem;line-height:1.6;';
+                    banner.innerHTML = `<i class="fas fa-check-circle" style="font-size:1.4rem;margin-bottom:6px;display:block;"></i>
+                        <strong>Thank you, ${formData.name}!</strong><br>
+                        Your inquiry has been received. Our coastal experts will get back to you within 24 hours.`;
+                    formBox.prepend(banner);
+                    setTimeout(() => banner.remove(), 7000);
+                }
+
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 

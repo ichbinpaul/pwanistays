@@ -4418,10 +4418,28 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             }
 
             async function sendInquiryEmail(formData, form, submitBtn) {
-               
+                // ================================================================
+                // WEB3FORMS SETUP (one-time, takes ~2 minutes, completely free):
+                //
+                //  1. Go to  https://web3forms.com/
+                //  2. Enter  info@pwanistays.com  in the email box and click
+                //     "Create Access Key"
+                //  3. Check your inbox for info@pwanistays.com and click the
+                //     confirmation link
+                //  4. Copy the Access Key from the page and paste it below,
+                //     replacing  YOUR_WEB3FORMS_ACCESS_KEY
+                //
+                // That's it — no account, no credit card, no extra setup.
+                // ================================================================
                 const WEB3FORMS_KEY = '2735669d-b583-4635-978e-87c34f729629';
 
-                
+                // ── 1. Save to Supabase (always — gives you a searchable inbox) ──
+                // Run this SQL once in Supabase if the table doesn't exist yet:
+                //   CREATE TABLE inquiries (
+                //     id SERIAL PRIMARY KEY, name TEXT, email TEXT, phone TEXT,
+                //     country TEXT, service TEXT, message TEXT,
+                //     created_at TIMESTAMPTZ DEFAULT NOW()
+                //   );
                 try {
                     await supabase.from('inquiries').insert([{
                         name:    formData.name,
@@ -4437,7 +4455,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
 
                 // ── 2. Send email to info@pwanistays.com via Web3Forms ──
                 let emailSent = false;
-                if (WEB3FORMS_KEY !== '2735669d-b583-4635-978e-87c34f729629') {
+                if (WEB3FORMS_KEY !== 'YOUR_WEB3FORMS_ACCESS_KEY') {
                     try {
                         const serviceLabel = {
                             stay:      'Accommodation Only',

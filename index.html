@@ -2253,6 +2253,120 @@
             .lang-current { padding: 4px 8px; }
         }
 
+        /* === SCROLL TO TOP BUTTON === */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(13, 122, 95, 0.4);
+            z-index: 998;
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .scroll-to-top.visible {
+            display: flex;
+        }
+        .scroll-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(13, 122, 95, 0.55);
+        }
+
+        /* === PHONE INPUT WRAPPER === */
+        .phone-input-wrapper {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .phone-input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 122, 95, 0.1);
+        }
+        .phone-country-code {
+            background: #f0f8f4;
+            color: var(--primary);
+            font-weight: 700;
+            padding: 15px 12px;
+            border-right: 1px solid var(--light-gray);
+            min-width: 62px;
+            text-align: center;
+            font-size: 0.92rem;
+            white-space: nowrap;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .phone-input-wrapper input {
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            flex: 1;
+            padding: 15px;
+        }
+        .phone-input-wrapper input:focus {
+            outline: none;
+            box-shadow: none !important;
+        }
+
+        /* === TESTIMONIAL LOADING STATE === */
+        .testimonial-slider .loading-spinner {
+            position: relative;
+            opacity: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* === COUNTRY SELECT ENHANCED === */
+        .form-group select option[value=""] {
+            color: var(--gray);
+        }
+
+        /* === FEEDBACK PENDING NOTE === */
+        .feedback-pending-note {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-top: 12px;
+            font-style: italic;
+        }
+        .feedback-pending-note i {
+            color: var(--secondary);
+            margin-right: 4px;
+        }
+
+        /* === FOOTER CONTACT LIST (icon + text inline) === */
+        .footer-col .contact-info {
+            list-style: none;
+        }
+        .footer-col .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.9);
+        }
+        .footer-col .contact-info li i {
+            color: var(--secondary);
+            margin-top: 2px;
+            min-width: 16px;
+        }
+
     </style>
     
     <!-- Defer non-critical CSS -->
@@ -2265,6 +2379,11 @@
     <script src="/i18n.js"></script>
 </head>
 <body>
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
     <!-- WhatsApp Float -->
     <a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20need%20help%20with%20a%20booking" 
        class="whatsapp-float" 
@@ -2512,156 +2631,18 @@
         </div>
     </section>
 
-    <!-- Testimonials - FIXED with proper display -->
+    <!-- Testimonials - Loaded from Supabase (approved reviews only) -->
     <section class="testimonials" id="testimonials" role="region" aria-label="Client testimonials">
         <div class="section-title">
             <h2 data-i18n="section_testimonials">What Our Guests Say</h2>
             <p data-i18n="section_testimonials_sub">Real experiences from local and international travelers</p>
         </div>
         <div class="testimonials-container">
-            <div class="testimonial-slider">
-                <!-- Testimonial 1 -->
-                <div class="testimonial-slide active">
-                    <div class="testimonial-content">
-                        <p>"Absolutely stunning villa in Nyali! The PwaniStays team made our family vacation seamless from airport pickup to checkout. The kids loved the private pool!"</p>
-                        <div class="testimonial-author">
-                            <h4>Sarah Johnson</h4>
-                            <p>From London, UK</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"As a local from Nairobi looking for a coastal getaway, PwaniStays provided excellent service. The Bamburi beach apartment was perfect and the rates were very competitive."</p>
-                        <div class="testimonial-author">
-                            <h4>David Mwangi</h4>
-                            <p>From Nairobi, Kenya</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"Our honeymoon in Diani was magical thanks to PwaniStays. They arranged everything from the villa to a romantic dhow cruise. Highly recommended!"</p>
-                        <div class="testimonial-author">
-                            <h4>Maria & Thomas</h4>
-                            <p>From Berlin, Germany</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 4 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"The service was exceptional! From the moment we landed in Mombasa until we left, everything was perfectly organized. The villa in Watamu was breathtaking."</p>
-                        <div class="testimonial-author">
-                            <h4>James Omondi</h4>
-                            <p>From Kampala, Uganda</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 5 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"I've used PwaniStays three times now for business retreats. Their corporate packages are excellent and the team is very professional."</p>
-                        <div class="testimonial-author">
-                            <h4>Fatima Ali</h4>
-                            <p>From Dubai, UAE</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 6 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"The Shanzu apartment was exactly as pictured. Clean, modern, and perfectly located. The local host was incredibly helpful with restaurant recommendations."</p>
-                        <div class="testimonial-author">
-                            <h4>Robert Chen</h4>
-                            <p>From Shanghai, China</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 7 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"Perfect for our large family reunion. The 6-bedroom villa in Diani accommodated all 12 of us comfortably. The chef prepared amazing Swahili dishes!"</p>
-                        <div class="testimonial-author">
-                            <h4>The Patel Family</h4>
-                            <p>From Mumbai, India</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 8 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"As a solo female traveler, I felt completely safe and well taken care of. The PwaniStays team checked in regularly and were always available."</p>
-                        <div class="testimonial-author">
-                            <h4>Sophie Martin</h4>
-                            <p>From Paris, France</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 9 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"We booked last minute and were amazed by how quickly they arranged everything. The transfer was waiting at the airport as promised."</p>
-                        <div class="testimonial-author">
-                            <h4>Michael & Grace</h4>
-                            <p>From Johannesburg, South Africa</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 10 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"The marine experiences they arranged were unforgettable. Snorkeling in Watamu Marine Park was the highlight of our trip."</p>
-                        <div class="testimonial-author">
-                            <h4>Carlos Rodriguez</h4>
-                            <p>From Barcelona, Spain</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 11 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"Excellent value for money. The Nyali villa was luxurious but affordable, especially with the direct booking discount they offered."</p>
-                        <div class="testimonial-author">
-                            <h4>Linda Wang</h4>
-                            <p>From Singapore</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 12 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"We've been coming to the Kenyan coast for years, but this was our first time using PwaniStays. It was by far our best experience yet!"</p>
-                        <div class="testimonial-author">
-                            <h4>The Smith Family</h4>
-                            <p>From Sydney, Australia</p>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
+            <div class="testimonial-slider" id="testimonialSlider">
+                <!-- Reviews loaded from Supabase -->
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p style="margin-top:10px;">Loading reviews...</p>
                 </div>
             </div>
             <button class="testimonial-prev" aria-label="Previous testimonial">‹</button>
@@ -2692,8 +2673,11 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="feedbackCountry">Country</label>
-                    <input type="text" id="feedbackCountry" placeholder="e.g., Kenya, USA">
+                    <label for="feedbackCountry">Country *</label>
+                    <select id="feedbackCountry" required>
+                        <option value="" disabled selected>Select your country *</option>
+                        <!-- Populated by JS -->
+                    </select>
                 </div>
             </div>
             
@@ -2717,6 +2701,10 @@
             <button class="feedback-btn" onclick="submitFeedback()" id="submitFeedbackBtn">
                 Submit Your Review
             </button>
+            
+            <p class="feedback-pending-note">
+                <i class="fas fa-info-circle"></i> Your review will appear after a brief moderation check — usually within 24 hours.
+            </p>
             
             <div id="feedbackMessage" style="margin-top: 20px; text-align: center; display: none;"></div>
         </div>
@@ -2797,14 +2785,6 @@
                     </div>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-envelope" aria-hidden="true"></i>
-                    <div>
-                        <h3>Email Us</h3>
-                        <p><a href="/cdn-cgi/l/email-protection#a2c0cdcdc9cbccc5d1e2d2d5c3cccbd1d6c3dbd18cc1cdcf"><span class="__cf_email__" data-cfemail="99fbf6f6f2f0f7feead9e9eef8f7f0eaedf8e0eab7faf6f4">[email&#160;protected]</span></a></p>
-                        <small>Response within 1 hour</small>
-                    </div>
-                </div>
-                <div class="contact-item">
                     <i class="fas fa-clock" aria-hidden="true"></i>
                     <div>
                         <h3>Operating Hours</h3>
@@ -2823,7 +2803,16 @@
                         <input type="email" placeholder="Email Address *" id="email" required aria-required="true" data-i18n-placeholder="contact_email">
                     </div>
                     <div class="form-group">
-                        <input type="tel" placeholder="Phone Number with Country Code *" id="phone" required aria-required="true" data-i18n-placeholder="contact_phone">
+                        <select id="inquiryCountry" required aria-required="true" onchange="updatePhonePrefix()" style="width:100%;padding:15px;border:1px solid var(--light-gray);border-radius:10px;font-size:1rem;transition:var(--transition);font-family:inherit;background:#fff;">
+                            <option value="" disabled selected>Select Country *</option>
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="phone-input-wrapper">
+                            <span id="phonePrefix" class="phone-country-code">+254</span>
+                            <input type="tel" placeholder="Phone number *" id="phone" required aria-required="true">
+                        </div>
                     </div>
                     <div class="form-group">
                         <select id="service" required aria-required="true">
@@ -2891,13 +2880,18 @@
             <div class="footer-col">
                 <h3>Coastal Destinations</h3>
                 <ul>
-                    <!-- UPDATED: Working location filter links -->
+                    <!-- ALL destinations — each scrolls to hero with filter pre-selected -->
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Mombasa')">Mombasa</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Nyali')">Nyali</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Bamburi')">Bamburi</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Mtwapa')">Mtwapa</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Shanzu')">Shanzu</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Diani')">Diani</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Watamu')">Watamu</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Malindi')">Malindi</a></li>
                     <li><a href="javascript:void(0)" onclick="filterByLocation('Kilifi')">Kilifi</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Kikambala')">Kikambala</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByLocation('Vipingo')">Vipingo</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -2906,7 +2900,6 @@
                     <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
                     <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
                     <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#791b16161210171e0a39090e1817100a0d18000a571a1614"><span class="__cf_email__" data-cfemail="21434e4e4a484f4652615156404f4852554058520f424e4c">[email&#160;protected]</span></a></li>
                     <li><i class="fas fa-clock"></i> 24/7 Customer Support</li>
                 </ul>
             </div>
@@ -2937,6 +2930,9 @@
     
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- EmailJS - for sending inquiry emails to info@pwanistays.com -->
+    <!-- SETUP: Go to https://www.emailjs.com, create a free account, then set EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY below -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script>
         // ==========================================
@@ -3102,8 +3098,30 @@
             };
 
             window.filterByLocation = function(location) {
-                document.getElementById('searchLocation').value = location;
-                searchProperties();
+                // 1. Scroll to the hero search section so the user sees the filter being applied
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // 2. Pre-select the location in the hero search dropdown
+                const locationSelect = document.getElementById('searchLocation');
+                if (locationSelect) {
+                    locationSelect.value = location;
+                    // Brief visual highlight so the user notices the pre-selection
+                    const wrapper = locationSelect.closest('.search-input');
+                    if (wrapper) {
+                        wrapper.style.transition = 'border-color 0.3s';
+                        wrapper.style.borderColor = 'var(--secondary)';
+                        wrapper.style.boxShadow = '0 0 0 3px rgba(248,180,0,0.25)';
+                        setTimeout(() => {
+                            wrapper.style.borderColor = '';
+                            wrapper.style.boxShadow = '';
+                        }, 1400);
+                    }
+                }
+
+                // 3. After the scroll animation completes, trigger the search
+                setTimeout(() => {
+                    searchProperties();
+                }, 900);
             };
 
             window.clearSearch = function() {
@@ -3123,50 +3141,65 @@
                 loadFeaturedProperties();
             };
 
-            window.submitFeedback = function() {
-                const name = document.getElementById('feedbackName').value.trim();
-                const city = document.getElementById('feedbackCity').value.trim();
-                const country = document.getElementById('feedbackCountry').value.trim();
+            window.submitFeedback = async function() {
+                const name    = document.getElementById('feedbackName').value.trim();
+                const city    = document.getElementById('feedbackCity').value.trim();
+                const countryEl = document.getElementById('feedbackCountry');
+                const country = countryEl ? countryEl.value : '';
                 const comment = document.getElementById('feedbackComment').value.trim();
-                
-                // Validation
+
                 if (!name) {
-                    showFeedbackMessage('Please enter your name', 'error');
+                    showFeedbackMessage('Please enter your name.', 'error');
                     return;
                 }
-                
+                if (!country) {
+                    showFeedbackMessage('Please select your country.', 'error');
+                    return;
+                }
                 if (selectedRating === 0) {
-                    showFeedbackMessage('Please select a rating', 'error');
+                    showFeedbackMessage('Please select a rating.', 'error');
                     return;
                 }
-                
                 if (!comment) {
-                    showFeedbackMessage('Please enter your review', 'error');
+                    showFeedbackMessage('Please enter your review.', 'error');
                     return;
                 }
-                
-                // Disable submit button
+
                 const submitBtn = document.getElementById('submitFeedbackBtn');
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-                
-                // Simulate submission
-                setTimeout(() => {
-                    // Show success message
-                    showFeedbackMessage('Thank you for your feedback! Your review has been submitted successfully.', 'success');
-                    
+
+                try {
+                    const { error } = await supabase.from('reviews').insert([{
+                        name:    name,
+                        city:    city || null,
+                        country: country,
+                        rating:  selectedRating,
+                        comment: comment,
+                        approved: false
+                    }]);
+
+                    if (error) throw error;
+
+                    showFeedbackMessage('Thank you for your review! It will appear on the site after a brief approval — usually within 24 hours.', 'success');
+
                     // Reset form
-                    document.getElementById('feedbackName').value = '';
-                    document.getElementById('feedbackCity').value = '';
-                    document.getElementById('feedbackCountry').value = '';
+                    document.getElementById('feedbackName').value  = '';
+                    document.getElementById('feedbackCity').value  = '';
+                    if (countryEl) countryEl.value = '';
                     document.getElementById('feedbackComment').value = '';
                     setRating(0);
-                    
-                    // Re-enable button
+
+                    // Re-detect and restore user's country default
+                    detectUserCountry();
+
+                } catch (err) {
+                    console.error('Error saving review:', err);
+                    showFeedbackMessage('Submission failed. Please check your connection and try again.', 'error');
+                } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = 'Submit Your Review';
-                    
-                }, 1500);
+                }
             };
 
             // ==========================
@@ -3851,53 +3884,105 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             };
 
             // ==========================
-            // Testimonials
+            // Testimonials — loaded from Supabase
+            // Only reviews with approved = true appear here.
+            // Toggle approved in your Supabase dashboard to publish a review.
             // ==========================
             let currentTestimonial = 0;
-            const totalTestimonials = 12;
-            
-            function initTestimonials() {
-                const dotsContainer = document.querySelector('.testimonial-dots');
-                if (!dotsContainer) return;
-                
-                // Create dots
-                for (let i = 0; i < totalTestimonials; i++) {
-                    const dot = document.createElement('button');
-                    dot.className = `testimonial-dot ${i === 0 ? 'active' : ''}`;
-                    dot.setAttribute('aria-label', `View testimonial ${i + 1}`);
-                    dot.addEventListener('click', () => showTestimonial(i));
-                    dotsContainer.appendChild(dot);
+            let totalTestimonials  = 0;
+
+            async function loadTestimonialsFromSupabase() {
+                const slider = document.getElementById('testimonialSlider');
+                if (!slider) return;
+
+                try {
+                    const { data: reviews, error } = await supabase
+                        .from('reviews')
+                        .select('*')
+                        .eq('approved', true)
+                        .order('created_at', { ascending: false });
+
+                    if (error) throw error;
+
+                    if (!reviews || reviews.length === 0) {
+                        slider.innerHTML = '<p style="text-align:center;color:var(--gray);padding:40px 20px;">No reviews yet — be the first to share your experience!</p>';
+                        return;
+                    }
+
+                    // Build slides
+                    slider.innerHTML = '';
+                    reviews.forEach((review, index) => {
+                        const filled = '★'.repeat(review.rating);
+                        const empty  = '☆'.repeat(5 - review.rating);
+                        const loc    = [review.city, review.country].filter(Boolean).join(', ');
+
+                        const slide = document.createElement('div');
+                        slide.className = `testimonial-slide${index === 0 ? ' active' : ''}`;
+                        slide.innerHTML = `
+                            <div class="testimonial-content">
+                                <p>"${review.comment}"</p>
+                                <div class="testimonial-author">
+                                    <h4>${review.name}</h4>
+                                    ${loc ? `<p>From ${loc}</p>` : ''}
+                                    <div class="rating">${filled}${empty}</div>
+                                </div>
+                            </div>`;
+                        slider.appendChild(slide);
+                    });
+
+                    currentTestimonial = 0;
+                    totalTestimonials  = reviews.length;
+
+                    // Build dots
+                    const dotsContainer = document.querySelector('.testimonial-dots');
+                    if (dotsContainer) {
+                        dotsContainer.innerHTML = '';
+                        for (let i = 0; i < reviews.length; i++) {
+                            const dot = document.createElement('button');
+                            dot.className = `testimonial-dot${i === 0 ? ' active' : ''}`;
+                            dot.setAttribute('aria-label', `View testimonial ${i + 1}`);
+                            dot.addEventListener('click', () => showTestimonial(i));
+                            dotsContainer.appendChild(dot);
+                        }
+                    }
+
+                    // Wire navigation (replace old listeners safely)
+                    const prevBtn = document.querySelector('.testimonial-prev');
+                    const nextBtn = document.querySelector('.testimonial-next');
+                    if (prevBtn) { prevBtn.onclick = prevTestimonial; }
+                    if (nextBtn) { nextBtn.onclick = nextTestimonial; }
+
+                    // Auto-rotate
+                    if (window._testimonialInterval) clearInterval(window._testimonialInterval);
+                    window._testimonialInterval = setInterval(nextTestimonial, 5500);
+
+                } catch (err) {
+                    console.error('Error loading testimonials:', err);
+                    const slider2 = document.getElementById('testimonialSlider');
+                    if (slider2) slider2.innerHTML = '<p style="text-align:center;color:var(--gray);padding:40px 20px;">Unable to load reviews right now. Please refresh the page.</p>';
                 }
-                
-                // Navigation buttons
-                const prevBtn = document.querySelector('.testimonial-prev');
-                const nextBtn = document.querySelector('.testimonial-next');
-                
-                if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
-                if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
-                
-                // Auto-rotate
-                setInterval(nextTestimonial, 5000);
             }
-            
+
             function showTestimonial(index) {
                 const slides = document.querySelectorAll('.testimonial-slide');
-                const dots = document.querySelectorAll('.testimonial-dot');
-                
-                slides.forEach(slide => slide.classList.remove('active'));
-                dots.forEach(dot => dot.classList.remove('active'));
-                
+                const dots   = document.querySelectorAll('.testimonial-dot');
+
+                slides.forEach(s => s.classList.remove('active'));
+                dots.forEach(d => d.classList.remove('active'));
+
                 if (slides[index]) slides[index].classList.add('active');
-                if (dots[index]) dots[index].classList.add('active');
+                if (dots[index])   dots[index].classList.add('active');
                 currentTestimonial = index;
             }
-            
+
             function nextTestimonial() {
+                if (totalTestimonials === 0) return;
                 currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
                 showTestimonial(currentTestimonial);
             }
-            
+
             function prevTestimonial() {
+                if (totalTestimonials === 0) return;
                 currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
                 showTestimonial(currentTestimonial);
             }
@@ -4020,8 +4105,8 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             // Initialize calendar
             initCalendarDates();
             
-            // Initialize testimonials
-            initTestimonials();
+            // Initialize testimonials from Supabase
+            loadTestimonialsFromSupabase();
             
             // Initialize star rating
             initStarRating();
@@ -4304,22 +4389,97 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
 
             function handleFormSubmit(e) {
                 e.preventDefault();
-                
+
+                const inquiryCountryEl = document.getElementById('inquiryCountry');
+                const phonePrefix = document.getElementById('phonePrefix') ? document.getElementById('phonePrefix').textContent.trim() : '+254';
+                const phoneNumber = document.getElementById('phone').value.trim();
+                const fullPhone = phoneNumber ? `${phonePrefix} ${phoneNumber}` : '';
+                const selectedCountryOption = inquiryCountryEl ? inquiryCountryEl.options[inquiryCountryEl.selectedIndex] : null;
+                const country = selectedCountryOption ? (selectedCountryOption.dataset.name || selectedCountryOption.textContent.split('(')[0].trim()) : '';
+
                 const formData = {
                     name: document.getElementById('name').value.trim(),
                     email: document.getElementById('email').value.trim(),
-                    phone: document.getElementById('phone').value.trim(),
+                    phone: fullPhone,
+                    country: country,
                     service: document.getElementById('service').value,
                     message: document.getElementById('message').value.trim()
                 };
-                
-                if (!formData.name || !formData.email || !formData.phone || !formData.service || !formData.message) {
+
+                if (!formData.name || !formData.email || !phoneNumber || !inquiryCountryEl?.value || !formData.service || !formData.message) {
                     alert('Please fill all required fields marked with *');
                     return;
                 }
-                
-                alert(`Thank you ${formData.name}! Our coastal experts will contact you within 24 hours.`);
-                e.target.reset();
+
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                }
+
+                sendInquiryEmail(formData, e.target, submitBtn);
+            }
+
+            async function sendInquiryEmail(formData, form, submitBtn) {
+                // ================================================================
+                // EMAILJS SETUP — to receive inquiries at info@pwanistays.com:
+                // 1. Create a free account at https://www.emailjs.com/
+                // 2. Add an Email Service (Gmail / Outlook / etc.)
+                // 3. Create a Template — the "To Email" must be info@pwanistays.com
+                //    Template variables: {{from_name}} {{from_email}} {{phone}}
+                //                        {{country}} {{service}} {{message}}
+                // 4. Replace the three placeholders below with your real IDs
+                // ================================================================
+                const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. 'service_abc123'
+                const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. 'template_xyz789'
+                const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // e.g. 'abc_AbCdEfGhIjKl'
+
+                // Always save inquiry to Supabase as a reliable backup record
+                try {
+                    await supabase.from('inquiries').insert([{
+                        name:    formData.name,
+                        email:   formData.email,
+                        phone:   formData.phone,
+                        country: formData.country,
+                        service: formData.service,
+                        message: formData.message
+                    }]);
+                } catch (dbErr) {
+                    // Table may not exist yet — create it in Supabase with:
+                    // CREATE TABLE inquiries (id SERIAL PRIMARY KEY, name TEXT, email TEXT,
+                    //   phone TEXT, country TEXT, service TEXT, message TEXT,
+                    //   created_at TIMESTAMPTZ DEFAULT NOW());
+                    console.log('Supabase inquiries insert note:', dbErr.message);
+                }
+
+                // Send email notification via EmailJS (once you configure above)
+                if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID') {
+                    try {
+                        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                            from_name:  formData.name,
+                            from_email: formData.email,
+                            phone:      formData.phone,
+                            country:    formData.country,
+                            service:    formData.service,
+                            message:    formData.message,
+                            to_email:   'info@pwanistays.com'
+                        }, EMAILJS_PUBLIC_KEY);
+                    } catch (mailErr) {
+                        console.error('EmailJS send error:', mailErr);
+                    }
+                }
+
+                alert(`Thank you ${formData.name}! Your inquiry has been received. Our coastal experts will contact you within 24 hours.`);
+                form.reset();
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Send Detailed Inquiry';
+                }
+                // Reset phone prefix to Kenya default
+                const pfx = document.getElementById('phonePrefix');
+                if (pfx) pfx.textContent = '+254';
+                const iCtr = document.getElementById('inquiryCountry');
+                if (iCtr) iCtr.value = '';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
@@ -4349,6 +4509,200 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             }
 
         }); // end DOMContentLoaded
+
+        // ==========================
+        // ALL COUNTRIES DATA (dial codes)
+        // Used for inquiry form country+phone and feedback form country dropdown
+        // ==========================
+        const ALL_COUNTRIES = [
+            {name:"Afghanistan",code:"AF",dial:"+93"},{name:"Albania",code:"AL",dial:"+355"},
+            {name:"Algeria",code:"DZ",dial:"+213"},{name:"Andorra",code:"AD",dial:"+376"},
+            {name:"Angola",code:"AO",dial:"+244"},{name:"Antigua and Barbuda",code:"AG",dial:"+1268"},
+            {name:"Argentina",code:"AR",dial:"+54"},{name:"Armenia",code:"AM",dial:"+374"},
+            {name:"Australia",code:"AU",dial:"+61"},{name:"Austria",code:"AT",dial:"+43"},
+            {name:"Azerbaijan",code:"AZ",dial:"+994"},{name:"Bahamas",code:"BS",dial:"+1242"},
+            {name:"Bahrain",code:"BH",dial:"+973"},{name:"Bangladesh",code:"BD",dial:"+880"},
+            {name:"Barbados",code:"BB",dial:"+1246"},{name:"Belarus",code:"BY",dial:"+375"},
+            {name:"Belgium",code:"BE",dial:"+32"},{name:"Belize",code:"BZ",dial:"+501"},
+            {name:"Benin",code:"BJ",dial:"+229"},{name:"Bhutan",code:"BT",dial:"+975"},
+            {name:"Bolivia",code:"BO",dial:"+591"},{name:"Bosnia and Herzegovina",code:"BA",dial:"+387"},
+            {name:"Botswana",code:"BW",dial:"+267"},{name:"Brazil",code:"BR",dial:"+55"},
+            {name:"Brunei",code:"BN",dial:"+673"},{name:"Bulgaria",code:"BG",dial:"+359"},
+            {name:"Burkina Faso",code:"BF",dial:"+226"},{name:"Burundi",code:"BI",dial:"+257"},
+            {name:"Cabo Verde",code:"CV",dial:"+238"},{name:"Cambodia",code:"KH",dial:"+855"},
+            {name:"Cameroon",code:"CM",dial:"+237"},{name:"Canada",code:"CA",dial:"+1"},
+            {name:"Central African Republic",code:"CF",dial:"+236"},{name:"Chad",code:"TD",dial:"+235"},
+            {name:"Chile",code:"CL",dial:"+56"},{name:"China",code:"CN",dial:"+86"},
+            {name:"Colombia",code:"CO",dial:"+57"},{name:"Comoros",code:"KM",dial:"+269"},
+            {name:"Congo (Brazzaville)",code:"CG",dial:"+242"},{name:"Congo (Kinshasa)",code:"CD",dial:"+243"},
+            {name:"Costa Rica",code:"CR",dial:"+506"},{name:"Croatia",code:"HR",dial:"+385"},
+            {name:"Cuba",code:"CU",dial:"+53"},{name:"Cyprus",code:"CY",dial:"+357"},
+            {name:"Czech Republic",code:"CZ",dial:"+420"},{name:"Denmark",code:"DK",dial:"+45"},
+            {name:"Djibouti",code:"DJ",dial:"+253"},{name:"Dominican Republic",code:"DO",dial:"+1809"},
+            {name:"Ecuador",code:"EC",dial:"+593"},{name:"Egypt",code:"EG",dial:"+20"},
+            {name:"El Salvador",code:"SV",dial:"+503"},{name:"Equatorial Guinea",code:"GQ",dial:"+240"},
+            {name:"Eritrea",code:"ER",dial:"+291"},{name:"Estonia",code:"EE",dial:"+372"},
+            {name:"Eswatini",code:"SZ",dial:"+268"},{name:"Ethiopia",code:"ET",dial:"+251"},
+            {name:"Fiji",code:"FJ",dial:"+679"},{name:"Finland",code:"FI",dial:"+358"},
+            {name:"France",code:"FR",dial:"+33"},{name:"Gabon",code:"GA",dial:"+241"},
+            {name:"Gambia",code:"GM",dial:"+220"},{name:"Georgia",code:"GE",dial:"+995"},
+            {name:"Germany",code:"DE",dial:"+49"},{name:"Ghana",code:"GH",dial:"+233"},
+            {name:"Greece",code:"GR",dial:"+30"},{name:"Grenada",code:"GD",dial:"+1473"},
+            {name:"Guatemala",code:"GT",dial:"+502"},{name:"Guinea",code:"GN",dial:"+224"},
+            {name:"Guinea-Bissau",code:"GW",dial:"+245"},{name:"Guyana",code:"GY",dial:"+592"},
+            {name:"Haiti",code:"HT",dial:"+509"},{name:"Honduras",code:"HN",dial:"+504"},
+            {name:"Hungary",code:"HU",dial:"+36"},{name:"Iceland",code:"IS",dial:"+354"},
+            {name:"India",code:"IN",dial:"+91"},{name:"Indonesia",code:"ID",dial:"+62"},
+            {name:"Iran",code:"IR",dial:"+98"},{name:"Iraq",code:"IQ",dial:"+964"},
+            {name:"Ireland",code:"IE",dial:"+353"},{name:"Israel",code:"IL",dial:"+972"},
+            {name:"Italy",code:"IT",dial:"+39"},{name:"Jamaica",code:"JM",dial:"+1876"},
+            {name:"Japan",code:"JP",dial:"+81"},{name:"Jordan",code:"JO",dial:"+962"},
+            {name:"Kazakhstan",code:"KZ",dial:"+7"},{name:"Kenya",code:"KE",dial:"+254"},
+            {name:"Kiribati",code:"KI",dial:"+686"},{name:"Kuwait",code:"KW",dial:"+965"},
+            {name:"Kyrgyzstan",code:"KG",dial:"+996"},{name:"Laos",code:"LA",dial:"+856"},
+            {name:"Latvia",code:"LV",dial:"+371"},{name:"Lebanon",code:"LB",dial:"+961"},
+            {name:"Lesotho",code:"LS",dial:"+266"},{name:"Liberia",code:"LR",dial:"+231"},
+            {name:"Libya",code:"LY",dial:"+218"},{name:"Liechtenstein",code:"LI",dial:"+423"},
+            {name:"Lithuania",code:"LT",dial:"+370"},{name:"Luxembourg",code:"LU",dial:"+352"},
+            {name:"Madagascar",code:"MG",dial:"+261"},{name:"Malawi",code:"MW",dial:"+265"},
+            {name:"Malaysia",code:"MY",dial:"+60"},{name:"Maldives",code:"MV",dial:"+960"},
+            {name:"Mali",code:"ML",dial:"+223"},{name:"Malta",code:"MT",dial:"+356"},
+            {name:"Marshall Islands",code:"MH",dial:"+692"},{name:"Mauritania",code:"MR",dial:"+222"},
+            {name:"Mauritius",code:"MU",dial:"+230"},{name:"Mexico",code:"MX",dial:"+52"},
+            {name:"Micronesia",code:"FM",dial:"+691"},{name:"Moldova",code:"MD",dial:"+373"},
+            {name:"Monaco",code:"MC",dial:"+377"},{name:"Mongolia",code:"MN",dial:"+976"},
+            {name:"Montenegro",code:"ME",dial:"+382"},{name:"Morocco",code:"MA",dial:"+212"},
+            {name:"Mozambique",code:"MZ",dial:"+258"},{name:"Myanmar",code:"MM",dial:"+95"},
+            {name:"Namibia",code:"NA",dial:"+264"},{name:"Nauru",code:"NR",dial:"+674"},
+            {name:"Nepal",code:"NP",dial:"+977"},{name:"Netherlands",code:"NL",dial:"+31"},
+            {name:"New Zealand",code:"NZ",dial:"+64"},{name:"Nicaragua",code:"NI",dial:"+505"},
+            {name:"Niger",code:"NE",dial:"+227"},{name:"Nigeria",code:"NG",dial:"+234"},
+            {name:"North Korea",code:"KP",dial:"+850"},{name:"North Macedonia",code:"MK",dial:"+389"},
+            {name:"Norway",code:"NO",dial:"+47"},{name:"Oman",code:"OM",dial:"+968"},
+            {name:"Pakistan",code:"PK",dial:"+92"},{name:"Palau",code:"PW",dial:"+680"},
+            {name:"Palestine",code:"PS",dial:"+970"},{name:"Panama",code:"PA",dial:"+507"},
+            {name:"Papua New Guinea",code:"PG",dial:"+675"},{name:"Paraguay",code:"PY",dial:"+595"},
+            {name:"Peru",code:"PE",dial:"+51"},{name:"Philippines",code:"PH",dial:"+63"},
+            {name:"Poland",code:"PL",dial:"+48"},{name:"Portugal",code:"PT",dial:"+351"},
+            {name:"Qatar",code:"QA",dial:"+974"},{name:"Romania",code:"RO",dial:"+40"},
+            {name:"Russia",code:"RU",dial:"+7"},{name:"Rwanda",code:"RW",dial:"+250"},
+            {name:"Saint Kitts and Nevis",code:"KN",dial:"+1869"},{name:"Saint Lucia",code:"LC",dial:"+1758"},
+            {name:"Saint Vincent and the Grenadines",code:"VC",dial:"+1784"},
+            {name:"Samoa",code:"WS",dial:"+685"},{name:"San Marino",code:"SM",dial:"+378"},
+            {name:"Sao Tome and Principe",code:"ST",dial:"+239"},{name:"Saudi Arabia",code:"SA",dial:"+966"},
+            {name:"Senegal",code:"SN",dial:"+221"},{name:"Serbia",code:"RS",dial:"+381"},
+            {name:"Seychelles",code:"SC",dial:"+248"},{name:"Sierra Leone",code:"SL",dial:"+232"},
+            {name:"Singapore",code:"SG",dial:"+65"},{name:"Slovakia",code:"SK",dial:"+421"},
+            {name:"Slovenia",code:"SI",dial:"+386"},{name:"Solomon Islands",code:"SB",dial:"+677"},
+            {name:"Somalia",code:"SO",dial:"+252"},{name:"South Africa",code:"ZA",dial:"+27"},
+            {name:"South Korea",code:"KR",dial:"+82"},{name:"South Sudan",code:"SS",dial:"+211"},
+            {name:"Spain",code:"ES",dial:"+34"},{name:"Sri Lanka",code:"LK",dial:"+94"},
+            {name:"Sudan",code:"SD",dial:"+249"},{name:"Suriname",code:"SR",dial:"+597"},
+            {name:"Sweden",code:"SE",dial:"+46"},{name:"Switzerland",code:"CH",dial:"+41"},
+            {name:"Syria",code:"SY",dial:"+963"},{name:"Taiwan",code:"TW",dial:"+886"},
+            {name:"Tajikistan",code:"TJ",dial:"+992"},{name:"Tanzania",code:"TZ",dial:"+255"},
+            {name:"Thailand",code:"TH",dial:"+66"},{name:"Timor-Leste",code:"TL",dial:"+670"},
+            {name:"Togo",code:"TG",dial:"+228"},{name:"Tonga",code:"TO",dial:"+676"},
+            {name:"Trinidad and Tobago",code:"TT",dial:"+1868"},{name:"Tunisia",code:"TN",dial:"+216"},
+            {name:"Turkey",code:"TR",dial:"+90"},{name:"Turkmenistan",code:"TM",dial:"+993"},
+            {name:"Tuvalu",code:"TV",dial:"+688"},{name:"Uganda",code:"UG",dial:"+256"},
+            {name:"Ukraine",code:"UA",dial:"+380"},{name:"United Arab Emirates",code:"AE",dial:"+971"},
+            {name:"United Kingdom",code:"GB",dial:"+44"},{name:"United States",code:"US",dial:"+1"},
+            {name:"Uruguay",code:"UY",dial:"+598"},{name:"Uzbekistan",code:"UZ",dial:"+998"},
+            {name:"Vanuatu",code:"VU",dial:"+678"},{name:"Vatican City",code:"VA",dial:"+39"},
+            {name:"Venezuela",code:"VE",dial:"+58"},{name:"Vietnam",code:"VN",dial:"+84"},
+            {name:"Yemen",code:"YE",dial:"+967"},{name:"Zambia",code:"ZM",dial:"+260"},
+            {name:"Zimbabwe",code:"ZW",dial:"+263"}
+        ];
+
+        // Populate country dropdowns on DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Inquiry form country + phone prefix ---
+            const inquiryCountry = document.getElementById('inquiryCountry');
+            if (inquiryCountry) {
+                ALL_COUNTRIES.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.dial;
+                    opt.dataset.name = c.name;
+                    opt.dataset.code = c.code;
+                    opt.textContent = `${c.name} (${c.dial})`;
+                    if (c.code === 'KE') opt.selected = true;
+                    inquiryCountry.appendChild(opt);
+                });
+                updatePhonePrefix();
+            }
+
+            // --- Feedback form country ---
+            const feedbackCountry = document.getElementById('feedbackCountry');
+            if (feedbackCountry) {
+                ALL_COUNTRIES.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.name;
+                    opt.textContent = c.name;
+                    if (c.code === 'KE') opt.selected = true;
+                    feedbackCountry.appendChild(opt);
+                });
+            }
+
+            // Detect user's location and update both dropdowns accordingly
+            detectUserCountry();
+
+            // Scroll-to-top: show/hide on scroll
+            window.addEventListener('scroll', function() {
+                const btn = document.getElementById('scrollToTop');
+                if (btn) {
+                    btn.classList.toggle('visible', window.scrollY > 300);
+                }
+            });
+
+            // Scroll-to-top: button click
+            const scrollTopBtn = document.getElementById('scrollToTop');
+            if (scrollTopBtn) {
+                scrollTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        });
+
+        // Update the phone prefix display based on selected country
+        window.updatePhonePrefix = function() {
+            const inquiryCountry = document.getElementById('inquiryCountry');
+            const phonePrefix    = document.getElementById('phonePrefix');
+            if (!inquiryCountry || !phonePrefix) return;
+            const sel = inquiryCountry.options[inquiryCountry.selectedIndex];
+            if (sel && sel.value) phonePrefix.textContent = sel.value;
+        };
+
+        // Detect user's country via IP geolocation and set dropdown defaults
+        async function detectUserCountry() {
+            try {
+                const res  = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                if (!data.country_code) return;
+
+                const countryCode = data.country_code.toUpperCase();
+
+                // Set inquiry form country
+                const inquiryCountry = document.getElementById('inquiryCountry');
+                if (inquiryCountry) {
+                    const match = ALL_COUNTRIES.find(c => c.code === countryCode);
+                    if (match) {
+                        inquiryCountry.value = match.dial;
+                        updatePhonePrefix();
+                    }
+                }
+
+                // Set feedback form country
+                const feedbackCountry = document.getElementById('feedbackCountry');
+                if (feedbackCountry) {
+                    const match = ALL_COUNTRIES.find(c => c.code === countryCode);
+                    if (match) feedbackCountry.value = match.name;
+                }
+            } catch (_) {
+                // Silently fail — Kenya remains the default
+            }
+        }
     </script>
 </body>
 </html>

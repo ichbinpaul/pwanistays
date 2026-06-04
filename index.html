@@ -1351,6 +1351,8 @@
             display: flex;
             gap: 25px;
             overflow: hidden;
+            width: 100%;
+            transition: transform 0.4s ease;
         }
 
         .destination-card {
@@ -1358,17 +1360,20 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: var(--transition);
-            min-width: calc(33.333% - 17px);
-            flex-shrink: 0;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            flex: 0 0 calc((100% - 50px) / 3);
+            width: calc((100% - 50px) / 3);
         }
 
         @media (max-width: 900px) {
-            .destination-card { min-width: calc(50% - 13px); }
+            .destination-card {
+                flex: 0 0 calc((100% - 25px) / 2);
+                width: calc((100% - 25px) / 2);
+            }
         }
 
         @media (max-width: 580px) {
-            .destination-card { min-width: 100%; }
+            .destination-card { flex: 0 0 100%; width: 100%; }
             .destinations-slider-wrapper { padding: 0 44px; }
         }
 
@@ -4778,6 +4783,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             if (!track || !prevBtn || !nextBtn) return;
 
             let index = 0;
+            const GAP = 25;
 
             function visibleCount() {
                 if (window.innerWidth <= 580) return 1;
@@ -4785,26 +4791,29 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 return 3;
             }
 
-            function cardWidth() {
-                const card = track.querySelector('.destination-card');
-                return card ? card.offsetWidth + 25 : 0;
-            }
-
             function totalCards() {
                 return track.querySelectorAll('.destination-card').length;
             }
 
+            function stepPx() {
+                const card = track.querySelector('.destination-card');
+                return card ? card.getBoundingClientRect().width + GAP : 0;
+            }
+
+            function maxIndex() {
+                return Math.max(0, totalCards() - visibleCount());
+            }
+
             function update() {
-                track.style.transition = 'transform 0.4s ease';
-                track.style.transform  = `translateX(-${index * cardWidth()}px)`;
+                track.style.transform = `translateX(-${index * stepPx()}px)`;
                 prevBtn.disabled = index === 0;
-                nextBtn.disabled = index >= totalCards() - visibleCount();
+                nextBtn.disabled = index >= maxIndex();
             }
 
             prevBtn.addEventListener('click', () => { if (index > 0) { index--; update(); } });
-            nextBtn.addEventListener('click', () => { if (index < totalCards() - visibleCount()) { index++; update(); } });
+            nextBtn.addEventListener('click', () => { if (index < maxIndex()) { index++; update(); } });
             window.addEventListener('resize', () => {
-                index = Math.min(index, Math.max(0, totalCards() - visibleCount()));
+                index = Math.min(index, maxIndex());
                 update();
             });
 

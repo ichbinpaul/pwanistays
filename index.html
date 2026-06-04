@@ -1347,10 +1347,14 @@
             padding: 0 52px;
         }
 
+        .destinations-clip {
+            overflow: hidden;
+            width: 100%;
+        }
+
         .destinations-container {
             display: flex;
             gap: 25px;
-            overflow: hidden;
             width: 100%;
             transition: transform 0.4s ease;
         }
@@ -1377,9 +1381,7 @@
             .destinations-slider-wrapper { padding: 0 44px; }
         }
 
-        .destination-card:hover {
-            transform: translateY(-8px);
-        }
+        .destination-card:hover { transform: translateY(-8px); }
 
         .destination-image {
             height: 200px;
@@ -2775,7 +2777,8 @@
             <button class="dest-arrow dest-arrow-prev" id="destPrev" aria-label="Previous destinations">
                 <i class="fas fa-chevron-left"></i>
             </button>
-            <div class="destinations-container" id="destinationsTrack">
+            <div class="destinations-clip">
+                <div class="destinations-container" id="destinationsTrack">
                 <div class="destination-card">
                     <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('/images/Old_Town_Mombasa_2025_PwaniStays.jpg') center/cover;">
                         <h3>Mombasa</h3>
@@ -2875,6 +2878,7 @@
                         <a href="#" onclick="event.preventDefault();filterByLocation('Vipingo')" class="btn-small">View Properties</a>
                     </div>
                 </div>
+            </div>
             </div>
             <button class="dest-arrow dest-arrow-next" id="destNext" aria-label="Next destinations">
                 <i class="fas fa-chevron-right"></i>
@@ -4782,8 +4786,8 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             const nextBtn = document.getElementById('destNext');
             if (!track || !prevBtn || !nextBtn) return;
 
-            let index = 0;
             const GAP = 25;
+            let index = 0;
 
             function visibleCount() {
                 if (window.innerWidth <= 580) return 1;

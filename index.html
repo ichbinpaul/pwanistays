@@ -1339,27 +1339,43 @@
         .destinations {
             background: white;
         }
-        
-        .destinations-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+
+        .destinations-slider-wrapper {
+            position: relative;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 52px;
         }
-        
+
+        .destinations-container {
+            display: flex;
+            gap: 25px;
+            overflow: hidden;
+        }
+
         .destination-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            min-width: calc(33.333% - 17px);
+            flex-shrink: 0;
         }
-        
+
+        @media (max-width: 900px) {
+            .destination-card { min-width: calc(50% - 13px); }
+        }
+
+        @media (max-width: 580px) {
+            .destination-card { min-width: 100%; }
+            .destinations-slider-wrapper { padding: 0 44px; }
+        }
+
         .destination-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
         }
-        
+
         .destination-image {
             height: 200px;
             background-size: cover;
@@ -1369,21 +1385,21 @@
             padding: 20px;
             color: white;
         }
-        
+
         .destination-image h3 {
             font-size: 1.5rem;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
-        
+
         .destination-content {
             padding: 25px;
         }
-        
+
         .destination-content p {
             color: var(--gray);
             margin-bottom: 20px;
         }
-        
+
         .btn-small {
             display: inline-block;
             background: var(--primary);
@@ -1395,10 +1411,44 @@
             transition: var(--transition);
             text-decoration: none;
         }
-        
+
         .btn-small:hover {
             background: var(--primary-light);
         }
+
+        .dest-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            font-size: 1.1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .dest-arrow:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .dest-arrow:disabled {
+            opacity: 0.35;
+            cursor: default;
+        }
+
+        .dest-arrow-prev { left: 0; }
+        .dest-arrow-next { right: 0; }
         
         /* Contact Section */
         .contact {
@@ -2584,8 +2634,8 @@
                 </div>
                 <h3 data-i18n="svc_transfers">Seamless Transfers</h3>
                 <p data-i18n="svc_transfers_desc">Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service. Our professional drivers ensure safe, comfortable transfers in air-conditioned vehicles with complimentary bottled water.</p>
-                <button class="service-btn service-whatsapp-btn" onclick="serviceEnquiry('Airport Transfers')">
-                    <i class="fab fa-whatsapp"></i> Book Transfers
+                <button class="service-btn service-whatsapp-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-plane-arrival"></i> Book Transfers
                 </button>
             </div>
             <div class="service-card" role="article">
@@ -2716,47 +2766,114 @@
             <h2>Explore Kenyan Coast Destinations</h2>
             <p>From historic Mombasa to pristine Diani</p>
         </div>
-        <div class="destinations-container">
-            <!-- Mombasa -->
-            <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/Old_Town_Mombasa_2025_PwaniStays.jpg'); background-size: cover; background-position: center;">
-                    <h3>Mombasa</h3>
+        <div class="destinations-slider-wrapper">
+            <button class="dest-arrow dest-arrow-prev" id="destPrev" aria-label="Previous destinations">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="destinations-container" id="destinationsTrack">
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('/images/Old_Town_Mombasa_2025_PwaniStays.jpg') center/cover;">
+                        <h3>Mombasa</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Historic Old Town, Fort Jesus, and vibrant markets. Perfect for culture enthusiasts.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Mombasa')" class="btn-small">View Properties</a>
+                    </div>
                 </div>
-                <div class="destination-content">
-                    <p>Historic Old Town, Fort Jesus, and vibrant markets. Perfect for culture enthusiasts.</p>
-                    <a href="#" onclick="filterByLocation('Mombasa')" class="btn-small">View Properties</a>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('/images/Nyali_beach_PwaniStays.jpg') center/cover;">
+                        <h3>Nyali</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Upscale suburb with pristine beaches, top restaurants, and shopping. A favourite for local travellers.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Nyali')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), linear-gradient(135deg,#1a6b5a,#2d9c7e), url('/images/Bamburi_PwaniStays.jpg') center/cover;">
+                        <h3>Bamburi</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Lively beach strip with family-friendly resorts, beach bars, and water sports right on the shore.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Bamburi')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), linear-gradient(135deg,#0d5c4a,#1a8a6a), url('/images/Mtwapa_PwaniStays.jpg') center/cover;">
+                        <h3>Mtwapa</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Bustling creek town known for seafood, nightlife, and easy access to Mombasa's north coast beaches.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Mtwapa')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), linear-gradient(135deg,#14736b,#22a89e), url('/images/Shanzu_PwaniStays.jpg') center/cover;">
+                        <h3>Shanzu</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Quiet beachfront community with calm waters, ideal for relaxed stays away from the busy city.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Shanzu')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('/images/Diani_Beach_PwaniStays.jpg') center/cover;">
+                        <h3>Diani</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>White sandy beaches, luxury resorts, and world-class water sports. Kenya's top beach destination.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Diani')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('/images/Turtle_Bay_Watamu_Kenya_PwaniStays.jpg') center/cover;">
+                        <h3>Watamu</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Marine National Park, snorkelling, and turtle watching. A paradise for ocean and nature lovers.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Watamu')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), linear-gradient(135deg,#1c5e7a,#2889a8), url('/images/Malindi_PwaniStays.jpg') center/cover;">
+                        <h3>Malindi</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Historic coastal town with beautiful beaches, Gede Ruins, and a lively Italian expat community.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Malindi')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), linear-gradient(135deg,#2d6b4a,#3d9c6a), url('/images/Kilifi_PwaniStays.jpg') center/cover;">
+                        <h3>Kilifi</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Scenic creek estuary, white-sand beaches, and a bohemian atmosphere loved by artists and divers.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Kilifi')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), linear-gradient(135deg,#4a5e2d,#6a8a3d), url('/images/Kikambala_PwaniStays.jpg') center/cover;">
+                        <h3>Kikambala</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Tranquil stretch of undeveloped beach north of Mombasa — serene, spacious, and uncrowded.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Kikambala')" class="btn-small">View Properties</a>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), linear-gradient(135deg,#5e3d2d,#8a5a3d), url('/images/Vipingo_PwaniStays.jpg') center/cover;">
+                        <h3>Vipingo</h3>
+                    </div>
+                    <div class="destination-content">
+                        <p>Secluded coastal retreat with a championship golf course, private beach access, and peaceful surroundings.</p>
+                        <a href="#" onclick="event.preventDefault();filterByLocation('Vipingo')" class="btn-small">View Properties</a>
+                    </div>
                 </div>
             </div>
-            <!-- Diani -->
-            <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/Diani_Beach_PwaniStays.jpg'); background-size: cover; background-position: center;">
-                    <h3>Diani</h3>
-                </div>
-                <div class="destination-content">
-                    <p>White sandy beaches, luxury resorts, and water sports. Ideal for beach lovers.</p>
-                    <a href="#" onclick="filterByLocation('Diani')" class="btn-small">View Properties</a>
-                </div>
-            </div>
-            <!-- Watamu -->
-            <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/Turtle_Bay_Watamu_Kenya_PwaniStays.jpg'); background-size: cover; background-position: center;">
-                    <h3>Watamu</h3>
-                </div>
-                <div class="destination-content">
-                    <p>Marine National Park, snorkeling, and turtle watching. Great for marine adventures.</p>
-                    <a href="#" onclick="filterByLocation('Watamu')" class="btn-small">View Properties</a>
-                </div>
-            </div>
-            <!-- Nyali & Bamburi -->
-            <div class="destination-card">
-                <div class="destination-image" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/Nyali_beach_PwaniStays.jpg'); background-size: cover; background-position: center;">
-                    <h3>Nyali & Bamburi</h3>
-                </div>
-                <div class="destination-content">
-                    <p>Family-friendly beaches, restaurants, and entertainment. Perfect for family vacations.</p>
-                    <a href="#" onclick="filterByLocation('Nyali')" class="btn-small">View Properties</a>
-                </div>
-            </div>
+            <button class="dest-arrow dest-arrow-next" id="destNext" aria-label="Next destinations">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </section>
 
@@ -4653,6 +4770,46 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             } catch (_) {
             }
         }
+
+        (function() {
+            const track   = document.getElementById('destinationsTrack');
+            const prevBtn = document.getElementById('destPrev');
+            const nextBtn = document.getElementById('destNext');
+            if (!track || !prevBtn || !nextBtn) return;
+
+            let index = 0;
+
+            function visibleCount() {
+                if (window.innerWidth <= 580) return 1;
+                if (window.innerWidth <= 900) return 2;
+                return 3;
+            }
+
+            function cardWidth() {
+                const card = track.querySelector('.destination-card');
+                return card ? card.offsetWidth + 25 : 0;
+            }
+
+            function totalCards() {
+                return track.querySelectorAll('.destination-card').length;
+            }
+
+            function update() {
+                track.style.transition = 'transform 0.4s ease';
+                track.style.transform  = `translateX(-${index * cardWidth()}px)`;
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index >= totalCards() - visibleCount();
+            }
+
+            prevBtn.addEventListener('click', () => { if (index > 0) { index--; update(); } });
+            nextBtn.addEventListener('click', () => { if (index < totalCards() - visibleCount()) { index++; update(); } });
+            window.addEventListener('resize', () => {
+                index = Math.min(index, Math.max(0, totalCards() - visibleCount()));
+                update();
+            });
+
+            update();
+        })();
     </script>
 </body>
 </html>

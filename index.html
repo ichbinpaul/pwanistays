@@ -3059,36 +3059,9 @@
 
     <script>
         
-        function getSeasonForDate(date) {
-            const month = date.getMonth() + 1; // 1–12
-            const day = date.getDate();
-
-            if (
-                (month === 12 && day >= 20) ||
-                (month === 1 && day <= 10)
-            ) {
-                return "festive_peak";
-            }
-
-            if (month === 12 && day >= 1 && day <= 19) {
-                return "early_december";
-            }
-
-            if (month >= 4 && month <= 8) {
-                return "april_august";
-            }
-
-            return "low_season";
-        }
-
-        function getNightlyPrice(property, checkInDate) {
-            const seasonKey = getSeasonForDate(checkInDate);
-            
-            const basePrice = property[seasonKey] || property.low_season || 0;
-            
-            const finalPrice = Math.round(basePrice * 1.2);
-            
-            return finalPrice;
+        function calculateDisplayPrice(property) {
+            const price = Math.round((property.price || 0) * 1.2);
+            return price.toLocaleString('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -3601,19 +3574,6 @@
                 return uuid ? uuid.split("-")[0] : '';
             }
 
-            // UPDATED: Calculate display price with seasonal pricing and 20% commission
-            function calculateDisplayPrice(property, checkinDate = null) {
-                const date = checkinDate || new Date();
-                
-                // Get the season-based price with 20% commission
-                const price = getNightlyPrice(property, date);
-                
-                return price.toLocaleString('en-KE', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                });
-            }
-
             async function loadFeaturedProperties() {
                 const container = document.getElementById('featuredProperties');
                 
@@ -3792,8 +3752,7 @@
                 card.id = `property-${shortId}`;
                 
                 // Calculate price based on selected check-in date or current date
-                const checkinDate = selectedCheckin || new Date();
-                const displayPrice = calculateDisplayPrice(property, checkinDate);
+                const displayPrice = calculateDisplayPrice(property);
                 
                 // Get property type display
                 const unitTypeLabels = window.i18n ? {
@@ -3857,6 +3816,7 @@
                         
                         <div class="property-price">
                             Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">${window.i18n ? window.i18n.t('card_night') : '/ night'}</span>
+                            <div style="font-size:0.78rem;color:var(--gray);margin-top:4px;font-style:italic;">Prices vary by season. Contact us for exact rates.</div>
                         </div>
                         
                         <div class="property-footer">

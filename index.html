@@ -2506,6 +2506,16 @@
         </nav>
     </header>
 
+    <!-- Inquiry Property Highlight - shown only when ?property=ID is in the URL -->
+    <section id="inquiryHighlight" style="display:none; padding: 30px 20px 10px;">
+        <div style="max-width: 420px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; padding: 12px 18px; border-radius: 10px 10px 0 0; font-size: 0.9rem; text-align: center;">
+                <i class="fas fa-comment-dots"></i> This is the property your guest inquired about
+            </div>
+            <div id="inquiryPropertyCard" class="stays-container" style="grid-template-columns: 1fr; margin-top: 0;"></div>
+        </div>
+    </section>
+
     <!-- CHANGE 3: Hero Section - NOW A 2-IMAGE CAROUSEL -->
     <section class="hero" id="home" role="region" aria-label="Hero section">
         <!-- Hero Carousel -->
@@ -3574,6 +3584,42 @@
                 return uuid ? uuid.split("-")[0] : '';
             }
 
+            async function loadInquiryProperty() {
+                const params = new URLSearchParams(window.location.search);
+                const propertyId = params.get('property');
+                if (!propertyId) return;
+
+                const section = document.getElementById('inquiryHighlight');
+                const container = document.getElementById('inquiryPropertyCard');
+                if (!section || !container) return;
+
+                try {
+                    const { data, error } = await supabase
+                        .from('properties')
+                        .select('*')
+                        .eq('id', propertyId)
+                        .single();
+
+                    if (error || !data) {
+                        console.log('Inquiry property not found:', propertyId);
+                        return;
+                    }
+
+                    const card = createPropertyCard(data);
+                    container.appendChild(card);
+                    section.style.display = 'block';
+
+                    setTimeout(() => {
+                        loadPropertyImages(data);
+                        if (window.i18n) window.i18n.translatePropertyCards(container);
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+
+                } catch (err) {
+                    console.error('Error loading inquiry property:', err);
+                }
+            }
+
             async function loadFeaturedProperties() {
                 const container = document.getElementById('featuredProperties');
                 
@@ -3870,8 +3916,7 @@
             };
 
             window.openWhatsApp = function(property, checkin, checkout, rate) {
-                const anchorId = shortUUID(property.id);
-                const propertyLink = `https://pwanistays.com/#property-${anchorId}`;
+                const propertyLink = `https://pwanistays.com/?property=${property.id}`;
 
                 const message = `
 Property: ${property.title}
@@ -4113,6 +4158,7 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             
             // Load properties on page load
             loadFeaturedProperties();
+            loadInquiryProperty();
             
             // Close calendar when clicking backdrop
             document.getElementById('calendarBackdrop').addEventListener('click', hideCalendar);

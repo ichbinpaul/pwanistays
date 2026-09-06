@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PwaniStays – Bookings Admin</title>
+    <style>
+        * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', monospace; }
+        body { background: #f0f4f2; margin: 0; padding: 20px; }
+        .container { max-width: 1600px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
+        h1 { margin-top: 0; display: flex; justify-content: space-between; align-items: center; color: #0d7a5f; text-align: center; }
+        .logo-img { height: 50px; width: auto; }
+        .center-text { flex-grow: 1; text-align: center; margin: 0; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ddd; }
+        .tab { padding: 10px 20px; cursor: pointer; background: #f0f0f0; border-radius: 20px 20px 0 0; }
+        .tab.active { background: #0d7a5f; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; vertical-align: top; }
+        th { background: #0d7a5f; color: white; position: sticky; top: 0; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        /* Sticky Booking ID column (second column, after checkbox) */
+        th:nth-child(2), td:nth-child(2) {
+            position: sticky;
+            left: 30px;          /* checkbox column width approx 30px */
+            background-color: white;
+            z-index: 1;
+        }
+        th:nth-child(2) {
+            background-color: #0d7a5f;
+            z-index: 2;
+        }
+        tr:nth-child(even) td:nth-child(2) {
+            background-color: #f9f9f9;
+        }
+        .table-container { overflow-x: auto; max-height: 500px; overflow-y: auto; margin-top: 20px; }
+        button { background: #0d7a5f; color: white; border: none; padding: 6px 14px; border-radius: 30px; cursor: pointer; font-weight: 500; }
+        button:hover { background: #0f9b7a; transform: translateY(-1px); }
+        button.danger { background: #dc3545; }
+        button.danger:hover { background: #c82333; }
+        button.outline { background: transparent; border: 1px solid #0d7a5f; color: #0d7a5f; }
+        button.outline:hover { background: #0d7a5f10; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 28px; border-radius: 24px; width: 90%; max-width: 900px; max-height: 90vh; overflow-y: auto; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .full-width { grid-column: span 2; }
+        .form-field { display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 5px; font-size: 0.85rem; }
+        input, select, textarea { padding: 8px 12px; border-radius: 12px; border: 1px solid #ccc; font-size: 0.85rem; }
+        .actions { margin: 20px 0; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .search { margin-bottom: 20px; display: flex; gap: 12px; }
+        .search input { flex: 1; padding: 10px 15px; border-radius: 40px; border: 1px solid #ccc; }
+        .loading { text-align: center; padding: 40px; color: #0d7a5f; }
+        .logout { background: #6c757d; }
+        .login-container { max-width: 400px; margin: 100px auto; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .login-container h2 { margin-top: 0; color: #0d7a5f; }
+        .login-container input { width: 100%; margin-bottom: 15px; }
+        .status-complete { background-color: #d4edda !important; color: #155724; }
+        .status-progress { background-color: #fff3cd !important; color: #856404; }
+        .status-pending { background-color: #f8d7da !important; color: #721c24; }
+        .checkbox-col { width: 30px; text-align: center; }
+        .kpi-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; margin-bottom: 30px; }
+        .card { background: #f8f9fa; border-radius: 16px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .card h3 { margin: 0 0 8px 0; font-size: 0.9rem; color: #555; }
+        .card .value { font-size: 1.8rem; font-weight: bold; color: #0d7a5f; }
+        .stats-table { width: 100%; margin-top: 30px; border-collapse: collapse; font-size: 0.85rem; }
+        .stats-table th, .stats-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .stats-table th { background: #e9ecef; color: #0d7a5f; }
+        .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px,1fr)); gap: 24px; margin-top: 40px; margin-bottom: 30px; }
+        .chart-container { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        canvas { max-height: 300px; width: 100%; }
+        .progress-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+        .progress-card { background: white; padding: 30px; border-radius: 24px; text-align: center; min-width: 300px; }
+        .progress-bar { width: 100%; height: 20px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin: 20px 0; }
+        .progress-fill { width: 0%; height: 100%; background: #0d7a5f; transition: width 0.3s; }
+        @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } th, td { font-size: 0.7rem; padding: 4px 6px; } .charts-grid { grid-template-columns: 1fr; } }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+    const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let bookings = [];
+    let filterText = "";
+    let locationOptions = [], unitTypeOptions = [], sourceOptions = [], subSourceOptions = [];
+    const statusOptions = ["Complete", "In Progress", "Pending"];
+    const genderOptions = ["Male", "Female", "Prefer not to say"];
+    let activeTab = "bookings";
+    let charts = {};
+
+    function calculateNights(checkIn, checkOut) {
+        if (!checkIn || !checkOut) return null;
+        const start = new Date(checkIn), end = new Date(checkOut);
+        if (isNaN(start) || isNaN(end)) return null;
+        return Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24));
+    }
+    function getMonthFromDate(dateStr) {
+        if (!dateStr) return null;
+        const d = new Date(dateStr);
+        if (isNaN(d)) return null;
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    }
+    function autoCalculate(row) {
+        const paid = parseFloat(row.guest_paid) || 0;
+        const cost = parseFloat(row.host_cost) || 0;
+        const charges = parseFloat(row.charges) || 0;
+        row.profit = paid - cost - charges;
+        row.nights = (row.check_in && row.check_out) ? calculateNights(row.check_in, row.check_out) : null;
+        row.month = row.check_in ? getMonthFromDate(row.check_in) : null;
+        return row;
+    }
+
+    async function loadDistinctOptions() {
+        const tables = [
+            { column: 'location', target: locationOptions },
+            { column: 'unit_type', target: unitTypeOptions },
+            { column: 'source', target: sourceOptions },
+            { column: 'sub_source', target: subSourceOptions }
+        ];
+        for (let t of tables) {
+            const { data, error } = await supabaseClient.from('bookings').select(t.column).not(t.column, 'is', null);
+            if (!error && data) {
+                const vals = [...new Set(data.map(row => row[t.column]).filter(v => v && v.trim() !== ''))];
+                t.target.length = 0;
+                t.target.push(...vals.sort());
+            }
+        }
+    }
+
+    function populateDropdowns() {
+        const locationSel = document.getElementById('location');
+        if (locationSel) {
+            const current = locationSel.value;
+            locationSel.innerHTML = '<option value="">Select or add new</option>';
+            locationOptions.forEach(l => { const opt = document.createElement('option'); opt.value = l; opt.textContent = l; locationSel.appendChild(opt); });
+            const addOpt = document.createElement('option'); addOpt.value = "__ADD_NEW__"; addOpt.textContent = "+ Add new location"; locationSel.appendChild(addOpt);
+            if (current && locationOptions.includes(current)) locationSel.value = current;
+        }
+        const unitTypeSel = document.getElementById('unit_type');
+        if (unitTypeSel) {
+            const current = unitTypeSel.value;
+            unitTypeSel.innerHTML = '<option value="">Select or add new</option>';
+            unitTypeOptions.forEach(t => { const opt = document.createElement('option'); opt.value = t; opt.textContent = t; unitTypeSel.appendChild(opt); });
+            const addOpt = document.createElement('option'); addOpt.value = "__ADD_NEW__"; addOpt.textContent = "+ Add new unit type"; unitTypeSel.appendChild(addOpt);
+            if (current && unitTypeOptions.includes(current)) unitTypeSel.value = current;
+        }
+        const sourceSel = document.getElementById('source');
+        if (sourceSel) {
+            const current = sourceSel.value;
+            sourceSel.innerHTML = '<option value="">Select or add new</option>';
+            sourceOptions.forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.textContent = s; sourceSel.appendChild(opt); });
+            const addOpt = document.createElement('option'); addOpt.value = "__ADD_NEW__"; addOpt.textContent = "+ Add new source"; sourceSel.appendChild(addOpt);
+            if (current && sourceOptions.includes(current)) sourceSel.value = current;
+        }
+        const subSourceSel = document.getElementById('sub_source');
+        if (subSourceSel) {
+            const current = subSourceSel.value;
+            subSourceSel.innerHTML = '<option value="">Select or add new</option>';
+            subSourceOptions.forEach(ss => { const opt = document.createElement('option'); opt.value = ss; opt.textContent = ss; subSourceSel.appendChild(opt); });
+            const addOpt = document.createElement('option'); addOpt.value = "__ADD_NEW__"; addOpt.textContent = "+ Add new sub‑source"; subSourceSel.appendChild(addOpt);
+            if (current && subSourceOptions.includes(current)) subSourceSel.value = current;
+        }
+        const genderSel = document.getElementById('gender');
+        if (genderSel) {
+            const current = genderSel.value;
+            genderSel.innerHTML = '';
+            genderOptions.forEach(g => { const opt = document.createElement('option'); opt.value = g; opt.textContent = g; genderSel.appendChild(opt); });
+            if (current) genderSel.value = current;
+        }
+        const statusSel = document.getElementById('status');
+        if (statusSel) {
+            const current = statusSel.value;
+            statusSel.innerHTML = '';
+            statusOptions.forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.textContent = s; statusSel.appendChild(opt); });
+            if (current) statusSel.value = current;
+        }
+    }
+
+    async function addNewOption(category, value) {
+        if (!value || !value.trim()) return;
+        value = value.trim();
+        let arr;
+        if (category === 'location') arr = locationOptions;
+        else if (category === 'unit_type') arr = unitTypeOptions;
+        else if (category === 'source') arr = sourceOptions;
+        else if (category === 'sub_source') arr = subSourceOptions;
+        else return;
+        if (!arr.includes(value)) { arr.push(value); arr.sort(); }
+        populateDropdowns();
+    }
+
+    async function loadBookings() {
+        const { data, error } = await supabaseClient.from('bookings').select('*').order('created_at', { ascending: false });
+        if (error) { console.error(error); return; }
+        bookings = (data || []).map(b => autoCalculate(b));
+        await loadDistinctOptions();
+        populateDropdowns();
+        if (activeTab === 'bookings') renderBookingsTable();
+        else renderAnalytics();
+    }
+
+    function getStatusClass(status) {
+        if (status === 'Complete') return 'status-complete';
+        if (status === 'In Progress') return 'status-progress';
+        if (status === 'Pending') return 'status-pending';
+        return '';
+    }
+
+    function renderBookingsTable() {
+        const container = document.getElementById('bookingsContainer');
+        if (!container) return;
+        let filtered = filterText ? bookings.filter(b =>
+            (b.guest_name && b.guest_name.toLowerCase().includes(filterText)) ||
+            (b.unit_name && b.unit_name.toLowerCase().includes(filterText)) ||
+            (b.location && b.location.toLowerCase().includes(filterText)) ||
+            (b.phone && b.phone.includes(filterText))
+        ) : bookings;
+        if (filtered.length === 0) { container.innerHTML = '<p>✨ No bookings found.</p>'; return; }
+        const statusOrder = { 'Pending': 0, 'In Progress': 1, 'Complete': 2 };
+        filtered = filtered.slice().sort((a, b) => (statusOrder[a.status] ?? 3) - (statusOrder[b.status] ?? 3));
+        const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
+        const headers = ['Select','Booking ID','Guest Name','Gender','Phone','Unit Name','Location','Unit Type','Check In','Check Out','Nights','Guest Paid','Host Cost','Charges','Profit','Status','Source','Sub-Source','Month','Host','Notes'];
+        let html = `<div class="actions"><button id="deleteSelectedBtn" class="danger">🗑️ Delete Selected</button>
+                    <button id="exportSelectedBtn" class="outline">📎 Export Selected</button>
+                    <button id="exportAllBtn" class="outline">📎 Export All CSV</button>
+                    <button id="markCompleteBtn" class="outline">✅ Mark Complete</button>
+                    <button id="markProgressBtn" class="outline">⏳ Mark In Progress</button>
+                    <button id="markPendingBtn" class="outline">⏰ Mark Pending</button></div>`;
+        html += '<div class="table-container">';
+        html += '<table><thead><tr><th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th>';
+        headers.slice(1).forEach(h => html += `<th>${h}</th>`);
+        html += '<th>Actions</th></tr></thead><tbody>';
+        filtered.forEach(b => {
+            const statusClass = getStatusClass(b.status);
+            html += `<tr class="${statusClass}" data-id="${b.id}">`;
+            html += `<td class="checkbox-col"><input type="checkbox" class="rowCheckbox" data-id="${b.id}"></td>`;
+            cols.forEach(col => {
+                let val = b[col] ?? '';
+                if (col === 'check_in' || col === 'check_out') val = val ? val.substring(0,10) : '';
+                if (col === 'guest_paid' || col === 'host_cost' || col === 'charges' || col === 'profit') {
+                    if (val !== '') val = parseFloat(val).toLocaleString();
+                }
+                html += `<td>${val}</td>`;
+            });
+            html += `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>`;
+            html += '</tr>';
+        });
+        html += '</tbody></table></div>';
+        container.innerHTML = html;
+        document.querySelectorAll('.editBtn').forEach(btn => btn.addEventListener('click', () => editBooking(btn.dataset.id)));
+        document.querySelectorAll('.deleteBtn').forEach(btn => btn.addEventListener('click', () => deleteBooking(btn.dataset.id)));
+        const selectAll = document.getElementById('selectAllCheckbox');
+        if (selectAll) selectAll.addEventListener('change', (e) => document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = e.target.checked));
+        document.getElementById('deleteSelectedBtn')?.addEventListener('click', deleteSelectedBookings);
+        document.getElementById('exportSelectedBtn')?.addEventListener('click', () => exportBookings(true));
+        document.getElementById('exportAllBtn')?.addEventListener('click', () => exportBookings(false));
+        document.getElementById('markCompleteBtn')?.addEventListener('click', () => bulkUpdateStatus('Complete'));
+        document.getElementById('markProgressBtn')?.addEventListener('click', () => bulkUpdateStatus('In Progress'));
+        document.getElementById('markPendingBtn')?.addEventListener('click', () => bulkUpdateStatus('Pending'));
+    }
+
+    // Auto-generate next Booking ID
+    async function getNextBookingId() {
+        // Fetch all existing IDs, extract numeric part, find max
+        const { data, error } = await supabaseClient.from('bookings').select('id');
+        if (error) return 'PS001';
+        const ids = data.map(b => b.id).filter(id => id && id.startsWith('PS'));
+        let maxNum = 0;
+        for (const id of ids) {
+            const num = parseInt(id.substring(2), 10);
+            if (!isNaN(num) && num > maxNum) maxNum = num;
+        }
+        const nextNum = maxNum + 1;
+        return `PS${nextNum.toString().padStart(3, '0')}`;
+    }
+
+    function openModal(booking = null) {
+        const modal = document.getElementById('modal');
+        if (!modal) return;
+        document.getElementById('bookingForm').reset();
+        document.getElementById('editId').value = '';
+        if (booking) {
+            document.getElementById('modalTitle').innerText = 'Edit Booking';
+            for (let [key, value] of Object.entries(booking)) {
+                const field = document.getElementById(key);
+                if (field) field.value = value ?? '';
+            }
+            document.getElementById('editId').value = booking.id;
+        } else {
+            document.getElementById('modalTitle').innerText = 'Add Booking';
+            // Auto-generate next ID and prefill, make it read-only but still editable if needed
+            getNextBookingId().then(nextId => {
+                const idField = document.getElementById('id');
+                if (idField) {
+                    idField.value = nextId;
+                    idField.readOnly = true; // optional: prevent accidental change
+                }
+            });
+        }
+        populateDropdowns();
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() { const modal = document.getElementById('modal'); if (modal) modal.style.display = 'none'; }
+
+    async function saveBooking() {
+        const id = document.getElementById('editId').value;
+        const data = {};
+        const fields = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
+        for (let f of fields) { let val = document.getElementById(f).value; if (val === '') val = null; data[f] = val; }
+        for (let {field, category} of [{field:'location', category:'location'},{field:'unit_type', category:'unit_type'},{field:'source', category:'source'},{field:'sub_source', category:'sub_source'}]) {
+            if (data[field] === '__ADD_NEW__') {
+                const newVal = prompt(`Enter new ${category}:`);
+                if (newVal && newVal.trim()) { data[field] = newVal.trim(); await addNewOption(category, data[field]); }
+                else { alert(`${category} cannot be empty.`); return; }
+            }
+        }
+        autoCalculate(data);
+        data.profit = parseFloat(data.profit) || 0;
+        data.nights = data.nights ? parseInt(data.nights) : null;
+        let error = null;
+        if (id) {
+            const { error: err } = await supabaseClient.from('bookings').update(data).eq('id', id);
+            error = err;
+        } else {
+            data.created_at = new Date().toISOString();
+            data.updated_at = data.created_at;
+            const { error: err } = await supabaseClient.from('bookings').insert([data]);
+            error = err;
+        }
+        if (error) alert(`❌ Error: ${error.message}`);
+        else { closeModal(); loadBookings(); }
+    }
+
+    async function editBooking(id) { const booking = bookings.find(b => b.id === id); if (booking) openModal(booking); }
+    async function deleteBooking(id) { if (!confirm('⚠️ Delete this booking permanently?')) return; const { error } = await supabaseClient.from('bookings').delete().eq('id', id); if (error) alert(`Delete failed: ${error.message}`); else loadBookings(); }
+
+    async function deleteSelectedBookings() {
+        const selected = Array.from(document.querySelectorAll('.rowCheckbox:checked')).map(cb => cb.dataset.id);
+        if (selected.length === 0) { alert('No bookings selected.'); return; }
+        if (!confirm(`Delete ${selected.length} booking(s) permanently?`)) return;
+        const { error } = await supabaseClient.from('bookings').delete().in('id', selected);
+        if (error) alert(`Delete failed: ${error.message}`);
+        else loadBookings();
+    }
+
+    async function bulkUpdateStatus(newStatus) {
+        const selected = Array.from(document.querySelectorAll('.rowCheckbox:checked')).map(cb => cb.dataset.id);
+        if (selected.length === 0) { alert('No bookings selected.'); return; }
+        if (!confirm(`Update ${selected.length} booking(s) to "${newStatus}"?`)) return;
+        const { error } = await supabaseClient.from('bookings').update({ status: newStatus }).in('id', selected);
+        if (error) alert(`Update failed: ${error.message}`);
+        else loadBookings();
+    }
+
+    function exportBookings(onlySelected) {
+        let dataToExport;
+        if (onlySelected) {
+            const selectedIds = Array.from(document.querySelectorAll('.rowCheckbox:checked')).map(cb => cb.dataset.id);
+            if (selectedIds.length === 0) { alert('No bookings selected.'); return; }
+            dataToExport = bookings.filter(b => selectedIds.includes(String(b.id)));
+        } else {
+            dataToExport = bookings;
+        }
+        if (dataToExport.length === 0) { alert('No bookings to export.'); return; }
+        const cols = ['id','guest_name','gender','phone','unit_name','location','unit_type','check_in','check_out','nights','guest_paid','host_cost','charges','profit','status','source','sub_source','month','host','notes'];
+        const headers = ['Booking ID','Guest Name','Gender','Phone Number','Unit Name','Location','Unit Type','Check-In','Check-Out','Nights','Guest Paid (KES)','Host Cost (KES)','Charges (KES)','Profit (KES)','Status','Source','Sub-Source','Month','Host','Notes'];
+        const csvRows = [headers.join(',')];
+        for (let b of dataToExport) {
+            const row = cols.map(col => {
+                let val = b[col] ?? '';
+                if ((col === 'check_in' || col === 'check_out') && val) {
+                    val = String(val).substring(0, 10);
+                } else if (['guest_paid','host_cost','charges','profit','nights'].includes(col) && val !== '' && val !== null) {
+                    val = Number(val) % 1 === 0 ? String(Math.round(Number(val))) : String(parseFloat(Number(val).toFixed(2)));
+                }
+                val = String(val);
+                val = val.replace(/"/g, '""');
+                if (val.includes(',') || val.includes('"') || val.includes('\n')) val = `"${val}"`;
+                return val;
+            });
+            csvRows.push(row.join(','));
+        }
+        const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `bookings_export_${new Date().toISOString().slice(0,19)}.csv`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }
+
+    // ----- CSV Import with comma stripping -----
+    async function importCSVWithProgress() {
+        const input = document.createElement('input'); input.type = 'file'; input.accept = '.csv';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const modalDiv = document.createElement('div');
+            modalDiv.id = 'progressModal';
+            modalDiv.className = 'progress-modal';
+            modalDiv.innerHTML = `
+                <div class="progress-card">
+                    <h3>Importing CSV...</h3>
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p id="progressStatus">Parsing CSV...</p>
+                    <p id="progressDetail"></p>
+                </div>
+            `;
+            document.body.appendChild(modalDiv);
+            const progressFill = document.getElementById('progressFill');
+            const progressStatus = document.getElementById('progressStatus');
+            const progressDetail = document.getElementById('progressDetail');
+
+            const results = await new Promise((resolve) => {
+                Papa.parse(file, {
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: resolve,
+                    error: (err) => resolve({ error: err })
+                });
+            });
+            if (results.error) {
+                modalDiv.remove();
+                alert(`CSV parsing error: ${results.error.message}`);
+                return;
+            }
+            const data = results.data;
+            if (data.length === 0) { modalDiv.remove(); alert('CSV is empty.'); return; }
+            const rawKeys = Object.keys(data[0]);
+            const cleanKeys = rawKeys.map(k => k.replace(/^\uFEFF/, '').trim());
+            const columnMap = {
+                'Booking ID': 'id',
+                'Guest Name': 'guest_name',
+                'Gender': 'gender',
+                'Phone Number': 'phone',
+                'Unit Name': 'unit_name',
+                'Location': 'location',
+                'Unit Type': 'unit_type',
+                'Check-In': 'check_in',
+                'Check-Out': 'check_out',
+                'Nights': 'nights',
+                'Guest Paid (KES)': 'guest_paid',
+                'Host Cost (KES)': 'host_cost',
+                'Charges (KES)': 'charges',
+                'Profit (KES)': 'profit',
+                'Status': 'status',
+                'Source': 'source',
+                'Sub-Source': 'sub_source',
+                'Sub Source': 'sub_source',
+                'Subsource': 'sub_source',
+                'Month': 'month',
+                'Host': 'host',
+                'Notes': 'notes'
+            };
+            let headerMap = {};
+            for (let i = 0; i < cleanKeys.length; i++) {
+                const friendly = cleanKeys[i];
+                if (columnMap[friendly]) headerMap[friendly] = columnMap[friendly];
+            }
+            if (!headerMap['Booking ID'] || !headerMap['Guest Name']) {
+                modalDiv.remove();
+                alert('CSV must contain "Booking ID" and "Guest Name" columns.');
+                return;
+            }
+            let imported = 0, skipped = 0;
+            let skippedRows = [];
+            const totalRows = data.length;
+            for (let idx = 0; idx < totalRows; idx++) {
+                const row = data[idx];
+                const dbRow = {};
+                for (let [friendly, dbCol] of Object.entries(headerMap)) {
+                    let val = row[friendly];
+                    if (val !== undefined && val !== null && val !== '') {
+                        val = val.toString().trim();
+                        if (['guest_paid', 'host_cost', 'charges', 'profit'].includes(dbCol)) {
+                            val = val.replace(/,/g, '');
+                        }
+                        dbRow[dbCol] = val;
+                    } else {
+                        dbRow[dbCol] = null;
+                    }
+                }
+                if (dbRow.id) dbRow.id = dbRow.id.trim();
+                if (dbRow.guest_name) dbRow.guest_name = dbRow.guest_name.trim();
+                if (!dbRow.id || !dbRow.guest_name) {
+                    skipped++;
+                    skippedRows.push(idx+2);
+                    console.log(`Row ${idx+2} skipped: id="${dbRow.id}", guest_name="${dbRow.guest_name}"`);
+                    continue;
+                }
+                if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
+                if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
+                autoCalculate(dbRow);
+                ['guest_paid', 'host_cost', 'charges', 'profit', 'nights'].forEach(f => {
+                    if (dbRow[f] !== null && dbRow[f] !== '') dbRow[f] = parseFloat(dbRow[f]);
+                    if (isNaN(dbRow[f])) dbRow[f] = null;
+                });
+                const { data: existing } = await supabaseClient.from('bookings').select('id').eq('id', dbRow.id);
+                if (existing && existing.length) {
+                    const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
+                    if (!error) imported++;
+                    else { skipped++; skippedRows.push(idx+2); console.log(`Row ${idx+2} update error: ${error?.message}`); }
+                } else {
+                    dbRow.created_at = new Date().toISOString();
+                    dbRow.updated_at = dbRow.created_at;
+                    const { error } = await supabaseClient.from('bookings').insert([dbRow]);
+                    if (!error) imported++;
+                    else { skipped++; skippedRows.push(idx+2); console.log(`Row ${idx+2} insert error: ${error?.message}`); }
+                }
+                const percent = Math.round(((idx+1)/totalRows)*100);
+                progressFill.style.width = `${percent}%`;
+                progressStatus.innerText = `Processing row ${idx+1} of ${totalRows}...`;
+                progressDetail.innerText = `Imported: ${imported}, Skipped: ${skipped}`;
+                await new Promise(r => setTimeout(r, 5));
+            }
+            modalDiv.remove();
+            let msg = `Import completed: ${imported} imported/updated, ${skipped} skipped/errors.`;
+            if (skippedRows.length) msg += `\nSkipped rows (approx): ${skippedRows.join(', ')}. Check console for details.`;
+            alert(msg);
+            loadBookings();
+        };
+        input.click();
+    }
+
+    // ----- Analytics with correct referral from source column -----
+    function computeAnalytics() {
+        const totalBookings = bookings.length;
+        const completed = bookings.filter(b => b.status === 'Complete').length;
+        const inProgress = bookings.filter(b => b.status === 'In Progress').length;
+        const pending = bookings.filter(b => b.status === 'Pending').length;
+        const totalRevenue = bookings.reduce((sum, b) => sum + (parseFloat(b.guest_paid) || 0), 0);
+        const totalProfit = bookings.reduce((sum, b) => sum + (parseFloat(b.profit) || 0), 0);
+
+        const monthlyProfit = {};
+        bookings.forEach(b => { if (b.month && b.profit) monthlyProfit[b.month] = (monthlyProfit[b.month] || 0) + b.profit; });
+        const months = Object.keys(monthlyProfit).sort();
+        const monthlyProfitData = months.map(m => monthlyProfit[m]);
+
+        const locationStats = {};
+        bookings.forEach(b => { if (b.location) { if (!locationStats[b.location]) locationStats[b.location] = { count: 0, profit: 0 }; locationStats[b.location].count++; locationStats[b.location].profit += (parseFloat(b.profit) || 0); } });
+        const locations = Object.keys(locationStats).sort();
+
+        const unitTypeStats = {};
+        bookings.forEach(b => { if (b.unit_type) { if (!unitTypeStats[b.unit_type]) unitTypeStats[b.unit_type] = { count: 0, profit: 0 }; unitTypeStats[b.unit_type].count++; unitTypeStats[b.unit_type].profit += (parseFloat(b.profit) || 0); } });
+        const unitTypes = Object.keys(unitTypeStats).sort();
+
+        const sourceStats = {};
+        bookings.forEach(b => { if (b.source) { if (!sourceStats[b.source]) sourceStats[b.source] = { count: 0, profit: 0 }; sourceStats[b.source].count++; sourceStats[b.source].profit += (parseFloat(b.profit) || 0); } });
+        const sources = Object.keys(sourceStats).sort();
+        const sourceProfits = sources.map(s => sourceStats[s].profit);
+        const sourceCounts = sources.map(s => sourceStats[s].count);
+
+        // Referral from source column
+        const referralCount = sourceStats['Referral']?.count || 0;
+        const referralProfit = sourceStats['Referral']?.profit || 0;
+
+        const subSourceStats = {};
+        bookings.forEach(b => { const ss = (b.sub_source || '').trim(); if (ss) { if (!subSourceStats[ss]) subSourceStats[ss] = { count: 0, profit: 0 }; subSourceStats[ss].count++; subSourceStats[ss].profit += (parseFloat(b.profit) || 0); } });
+        const retentionLabels = Object.keys(subSourceStats).sort();
+        const retentionCounts = retentionLabels.map(l => subSourceStats[l].count);
+        const retentionProfits = retentionLabels.map(l => subSourceStats[l].profit);
+
+        const loyalCount = subSourceStats['Returning']?.count || 0;
+        const loyalProfit = subSourceStats['Returning']?.profit || 0;
+        const newCount = subSourceStats['New']?.count || 0;
+        const newProfit = subSourceStats['New']?.profit || 0;
+
+        const genderStats = {};
+        bookings.forEach(b => { const g = b.gender || 'Not stated'; if (!genderStats[g]) genderStats[g] = { count: 0, profit: 0, revenue: 0 }; genderStats[g].count++; genderStats[g].profit += (parseFloat(b.profit) || 0); genderStats[g].revenue += (parseFloat(b.guest_paid) || 0); });
+        const genderLabels = Object.keys(genderStats).sort();
+        const genderCounts = genderLabels.map(g => genderStats[g].count);
+
+        return {
+            totalBookings, completed, inProgress, pending, totalRevenue, totalProfit,
+            months, monthlyProfitData,
+            locations, locationStats,
+            unitTypes, unitTypeStats,
+            sources, sourceProfits, sourceCounts, sourceStats,
+            referralCount, referralProfit,
+            retentionLabels, retentionCounts, retentionProfits, subSourceStats,
+            loyalCount, loyalProfit, newCount, newProfit,
+            genderLabels, genderCounts, genderStats
+        };
+    }
+
+    function renderAnalytics() {
+        const container = document.getElementById('analyticsContainer');
+        if (!container) return;
+        if (bookings.length === 0) {
+            container.innerHTML = '<div class="loading">📊 No booking data yet. Please import or add bookings.</div>';
+            return;
+        }
+        const data = computeAnalytics();
+        const safeSub = (label) => data.subSourceStats[label] || { count: 0, profit: 0 };
+        let html = `
+            <div class="kpi-cards">
+                <div class="card"><h3>Total Bookings</h3><div class="value">${data.totalBookings}</div></div>
+                <div class="card"><h3>Completed</h3><div class="value">${data.completed}</div></div>
+                <div class="card"><h3>In Progress</h3><div class="value">${data.inProgress}</div></div>
+                <div class="card"><h3>Pending</h3><div class="value">${data.pending}</div></div>
+                <div class="card"><h3>Total Revenue (KES)</h3><div class="value">${data.totalRevenue.toLocaleString()}</div></div>
+                <div class="card"><h3>Total Profit (KES)</h3><div class="value">${data.totalProfit.toLocaleString()}</div></div>
+                <div class="card"><h3>Referral Count</h3><div class="value">${data.referralCount}</div></div>
+                <div class="card"><h3>Referral Profit (KES)</h3><div class="value">${data.referralProfit.toLocaleString()}</div></div>
+            </div>
+            <h3>📈 Monthly Profit Trend</h3>
+            <table class="stats-table"><thead><tr><th>Month</th><th>Profit (KES)</th></tr></thead><tbody>${data.months.map((m,i) => `<tr><td>${m}</td><td>${data.monthlyProfitData[i].toLocaleString()}</td></tr>`).join('')}</tbody></td>
+            <h3>📍 Location Performance</h3>
+            <table class="stats-table"><thead><tr><th>Location</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.locations.map(l => `<tr><td>${l}</td><td>${data.locationStats[l].count}</td><td>${data.locationStats[l].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
+            <h3>🛏 Unit Type Performance</h3>
+            <table class="stats-table"><thead><tr><th>Unit Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.unitTypes.map(t => `<tr><td>${t}</td><td>${data.unitTypeStats[t].count}</td><td>${data.unitTypeStats[t].profit.toLocaleString()}</td></tr>`).join('')}</tbody></table>
+            <h3>📣 Booking Source Performance</h3>
+            <table class="stats-table"><thead><tr><th>Source</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.sources.map(s => `<tr><td>${s}</td><td>${data.sourceStats[s].count}</td><td>${data.sourceStats[s].profit.toLocaleString()}</td></td>`).join('')}</tbody></table>
+            <h3>🔁 Customer Retention & Loyalty</h3>
+            <table class="stats-table"><thead><tr><th>Type</th><th>Bookings</th><th>Profit (KES)</th></tr></thead><tbody>${data.retentionLabels.map(ss => `<tr><td>${ss}</td><td>${safeSub(ss).count}</td><td>${safeSub(ss).profit.toLocaleString()}</td></tr>`).join('')}</tbody></tr>
+            <h3>💰 Loyal vs New — Revenue Breakdown</h3>
+            <table class="stats-table"><thead><tr><th>Segment</th><th>Bookings</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead><tbody>
+                <tr><td>Returning</td><td>${data.loyalCount}</td><td>${data.loyalProfit.toLocaleString()}</td><td>${((data.loyalProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+                <tr><td>Referral</td><td>${data.referralCount}</td><td>${data.referralProfit.toLocaleString()}</td><td>${((data.referralProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+                <tr><td>New</td><td>${data.newCount}</td><td>${data.newProfit.toLocaleString()}</td><td>${((data.newProfit/data.totalProfit)*100).toFixed(2)}%</td></tr>
+            </tbody></table>
+            <h3>👤 Gender Analytics</h3>
+            <table class="stats-table"><thead><tr><th>Gender</th><th>Bookings</th><th>Revenue (KES)</th><th>Profit (KES)</th><th>% of Profit</th></tr></thead><tbody>${data.genderLabels.map(g => `<tr><td>${g}</td><td>${data.genderStats[g].count}</td><td>${data.genderStats[g].revenue.toLocaleString()}</td><td>${data.genderStats[g].profit.toLocaleString()}</td><td>${((data.genderStats[g].profit/data.totalProfit)*100).toFixed(2)}%</td></tr>`).join('')}</tbody></table>
+        `;
+
+        html += `<div class="charts-grid">
+            <div class="chart-container"><canvas id="profitBySourceChart"></canvas></div>
+            <div class="chart-container"><canvas id="profitByMonthChart"></canvas></div>
+            <div class="chart-container"><canvas id="profitByLocationChart"></canvas></div>
+            <div class="chart-container"><canvas id="profitByUnitTypeChart"></canvas></div>
+            <div class="chart-container"><canvas id="genderChart"></canvas></div>
+            <div class="chart-container"><canvas id="customerTypeChart"></canvas></div>
+        </div>`;
+        html += `<div class="actions"><button id="exportReportBtn">📊 Export Analytics Report (CSV)</button></div>`;
+        container.innerHTML = html;
+
+        // Destroy old charts
+        Object.values(charts).forEach(ch => ch.destroy());
+        charts = {};
+        if (data.sources.length) {
+            charts.source = new Chart(document.getElementById('profitBySourceChart'), { type: 'bar', data: { labels: data.sources, datasets: [{ label: 'Profit (KES)', data: data.sourceProfits, backgroundColor: '#0f9b7a' }] } });
+        }
+        if (data.months.length) {
+            charts.month = new Chart(document.getElementById('profitByMonthChart'), { type: 'bar', data: { labels: data.months, datasets: [{ label: 'Profit (KES)', data: data.monthlyProfitData, backgroundColor: '#f8b400' }] } });
+        }
+        if (data.locations.length) {
+            const locProfits = data.locations.map(l => data.locationStats[l].profit);
+            charts.location = new Chart(document.getElementById('profitByLocationChart'), { type: 'bar', data: { labels: data.locations, datasets: [{ label: 'Profit (KES)', data: locProfits, backgroundColor: '#dc3545' }] } });
+        }
+        if (data.unitTypes.length) {
+            const unitProfits = data.unitTypes.map(t => data.unitTypeStats[t].profit);
+            charts.unit = new Chart(document.getElementById('profitByUnitTypeChart'), { type: 'bar', data: { labels: data.unitTypes, datasets: [{ label: 'Profit (KES)', data: unitProfits, backgroundColor: '#0d7a5f' }] } });
+        }
+        charts.gender = new Chart(document.getElementById('genderChart'), { type: 'pie', data: { labels: data.genderLabels, datasets: [{ data: data.genderCounts, backgroundColor: ['#0d7a5f', '#f8b400', '#6c757d'] }] } });
+        charts.customer = new Chart(document.getElementById('customerTypeChart'), { type: 'pie', data: { labels: data.retentionLabels, datasets: [{ data: data.retentionCounts, backgroundColor: ['#0d7a5f', '#f8b400', '#dc3545'] }] } });
+
+        document.getElementById('exportReportBtn')?.addEventListener('click', () => exportAnalyticsReport(data));
+    }
+
+    function exportAnalyticsReport(data) {
+        const rows = [];
+        rows.push(['Metric','Value']);
+        rows.push(['Total Bookings', data.totalBookings]);
+        rows.push(['Completed', data.completed]);
+        rows.push(['In Progress', data.inProgress]);
+        rows.push(['Pending', data.pending]);
+        rows.push(['Total Revenue (KES)', data.totalRevenue]);
+        rows.push(['Total Profit (KES)', data.totalProfit]);
+        rows.push(['Referral Count', data.referralCount]);
+        rows.push(['Referral Profit (KES)', data.referralProfit]);
+        rows.push(['']);
+        rows.push(['Monthly Profit','']);
+        data.months.forEach((m,i) => rows.push([m, data.monthlyProfitData[i]]));
+        rows.push(['']);
+        rows.push(['Location Performance','','']);
+        rows.push(['Location','Bookings','Profit']);
+        data.locations.forEach(l => rows.push([l, data.locationStats[l].count, data.locationStats[l].profit]));
+        rows.push(['']);
+        rows.push(['Unit Type Performance','','']);
+        rows.push(['Unit Type','Bookings','Profit']);
+        data.unitTypes.forEach(t => rows.push([t, data.unitTypeStats[t].count, data.unitTypeStats[t].profit]));
+        rows.push(['']);
+        rows.push(['Source Performance','','']);
+        rows.push(['Source','Bookings','Profit']);
+        data.sources.forEach(s => rows.push([s, data.sourceStats[s].count, data.sourceStats[s].profit]));
+        rows.push(['']);
+        rows.push(['Customer Retention & Loyalty','','']);
+        rows.push(['Type','Bookings','Profit']);
+        data.retentionLabels.forEach(ss => rows.push([ss, data.subSourceStats[ss]?.count || 0, data.subSourceStats[ss]?.profit || 0]));
+        rows.push(['']);
+        rows.push(['Loyal vs New Breakdown','','']);
+        rows.push(['Segment','Bookings','Profit']);
+        rows.push(['Returning', data.loyalCount, data.loyalProfit]);
+        rows.push(['Referral', data.referralCount, data.referralProfit]);
+        rows.push(['New', data.newCount, data.newProfit]);
+        rows.push(['']);
+        rows.push(['Gender Analytics','','','']);
+        rows.push(['Gender','Bookings','Revenue','Profit']);
+        data.genderLabels.forEach(g => rows.push([g, data.genderStats[g].count, data.genderStats[g].revenue, data.genderStats[g].profit]));
+        const csv = rows.map(r => r.join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `analytics_report_${new Date().toISOString().slice(0,19)}.csv`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }
+
+    // ----- Tab switching -----
+    function switchTab(tab) {
+        activeTab = tab;
+        const tabBookings = document.getElementById('tabBookings');
+        const tabAnalytics = document.getElementById('tabAnalytics');
+        const contentBookings = document.getElementById('contentBookings');
+        const contentAnalytics = document.getElementById('contentAnalytics');
+        if (tab === 'bookings') {
+            tabBookings.classList.add('active');
+            tabAnalytics.classList.remove('active');
+            contentBookings.classList.add('active');
+            contentAnalytics.classList.remove('active');
+            renderBookingsTable();
+        } else {
+            tabAnalytics.classList.add('active');
+            tabBookings.classList.remove('active');
+            contentAnalytics.classList.add('active');
+            contentBookings.classList.remove('active');
+            renderAnalytics();
+        }
+    }
+
+    // ----- Authentication & main render -----
+    async function renderApp() {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        const app = document.getElementById('app');
+        if (!session) {
+            app.innerHTML = `<div class="login-container"><h2>🔐 Admin Login</h2><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPassword" placeholder="Password"><button id="loginBtn">Login</button></div>`;
+            document.getElementById('loginBtn').addEventListener('click', async () => {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) alert("Login failed: " + error.message);
+                else renderApp();
+            });
+            return;
+        }
+        app.innerHTML = `
+            <div class="container">
+                <h1>
+                    <img src="/logo-header.png" alt="PwaniStays" class="logo-img">
+                    <span class="center-text">Booking Manager</span>
+                    <button id="logoutBtn" class="logout">🚪 Logout</button>
+                </h1>
+                <div class="tabs">
+                    <div class="tab active" id="tabBookings" data-tab="bookings">📋 Bookings</div>
+                    <div class="tab" id="tabAnalytics" data-tab="analytics">📊 Analytics</div>
+                </div>
+                <div id="contentBookings" class="tab-content active">
+                    <div class="actions"><button id="addBtn">➕ Add Booking</button><button id="importBtn">📂 Import CSV</button></div>
+                    <div class="search"><input type="text" id="searchInput" placeholder="🔍 Search by Guest, Unit, Location, Phone..."></div>
+                    <div id="bookingsContainer">Loading bookings...</div>
+                </div>
+                <div id="contentAnalytics" class="tab-content">
+                    <div id="analyticsContainer">Loading analytics...</div>
+                </div>
+            </div>
+            <div id="modal" class="modal"><div class="modal-content"><h2 id="modalTitle">Add Booking</h2><form id="bookingForm" class="form-grid">
+                <input type="hidden" id="editId">
+                <div class="form-field"><label>Booking ID</label><input type="text" id="id" placeholder="PS001" required></div>
+                <div class="form-field"><label>Guest Name</label><input type="text" id="guest_name" required></div>
+                <div class="form-field"><label>Gender</label><select id="gender"></select></div>
+                <div class="form-field"><label>Phone Number</label><input type="text" id="phone"></div>
+                <div class="form-field"><label>Unit Name</label><input type="text" id="unit_name"></div>
+                <div class="form-field"><label>Location</label><select id="location"></select></div>
+                <div class="form-field"><label>Unit Type</label><select id="unit_type"></select></div>
+                <div class="form-field"><label>Check‑In</label><input type="date" id="check_in"></div>
+                <div class="form-field"><label>Check‑Out</label><input type="date" id="check_out"></div>
+                <div class="form-field"><label>Nights</label><input type="number" id="nights" step="1" readonly style="background:#e9ecef;"></div>
+                <div class="form-field"><label>Guest Paid (KES)</label><input type="number" id="guest_paid" step="0.01"></div>
+                <div class="form-field"><label>Host Cost (KES)</label><input type="number" id="host_cost" step="0.01"></div>
+                <div class="form-field"><label>Charges (KES)</label><input type="number" id="charges" step="0.01" value="0"></div>
+                <div class="form-field"><label>Profit (KES)</label><input type="number" id="profit" step="0.01" readonly style="background:#e9ecef;"></div>
+                <div class="form-field"><label>Status</label><select id="status"></select></div>
+                <div class="form-field"><label>Source</label><select id="source"></select></div>
+                <div class="form-field"><label>Sub‑Source</label><select id="sub_source"></select></div>
+                <div class="form-field"><label>Month</label><input type="text" id="month" placeholder="YYYY-MM" readonly style="background:#e9ecef;"></div>
+                <div class="form-field"><label>Host</label><input type="text" id="host"></div>
+                <div class="form-field full-width"><label>Notes</label><textarea id="notes" rows="2"></textarea></div>
+            </form><div style="margin-top:24px; display:flex; justify-content:flex-end; gap:12px;"><button id="modalCancel" class="outline">Cancel</button><button id="modalSave">Save Booking</button></div></div></div>
+        `;
+        document.getElementById('tabBookings').addEventListener('click', () => switchTab('bookings'));
+        document.getElementById('tabAnalytics').addEventListener('click', () => switchTab('analytics'));
+        document.getElementById('addBtn').addEventListener('click', () => openModal());
+        document.getElementById('importBtn').addEventListener('click', importCSVWithProgress);
+        document.getElementById('logoutBtn').addEventListener('click', async () => { await supabaseClient.auth.signOut(); renderApp(); });
+        document.getElementById('searchInput').addEventListener('input', (e) => { filterText = e.target.value.toLowerCase(); renderBookingsTable(); });
+        document.getElementById('modalCancel').addEventListener('click', closeModal);
+        document.getElementById('modalSave').addEventListener('click', saveBooking);
+        const checkIn = document.getElementById('check_in'), checkOut = document.getElementById('check_out'), nights = document.getElementById('nights'), month = document.getElementById('month');
+        const updateDerived = () => {
+            if (checkIn.value && checkOut.value) nights.value = calculateNights(checkIn.value, checkOut.value) || '';
+            else nights.value = '';
+            if (checkIn.value) month.value = getMonthFromDate(checkIn.value) || '';
+            else month.value = '';
+        };
+        checkIn.addEventListener('change', updateDerived);
+        checkOut.addEventListener('change', updateDerived);
+        const guestPaid = document.getElementById('guest_paid'), hostCost = document.getElementById('host_cost'), charges = document.getElementById('charges'), profit = document.getElementById('profit');
+        const updateProfit = () => { profit.value = (parseFloat(guestPaid.value)||0) - (parseFloat(hostCost.value)||0) - (parseFloat(charges.value)||0); };
+        guestPaid.addEventListener('input', updateProfit);
+        hostCost.addEventListener('input', updateProfit);
+        charges.addEventListener('input', updateProfit);
+
+        // Immediately handle "Add new" selection on the 4 dynamic dropdowns
+        function setupAddNewListener(selId, label, optionsArr) {
+            const sel = document.getElementById(selId);
+            if (!sel) return;
+            sel.addEventListener('change', function() {
+                if (this.value !== '__ADD_NEW__') return;
+                const newVal = prompt(`Enter new ${label}:`);
+                if (newVal && newVal.trim()) {
+                    const trimmed = newVal.trim();
+                    if (!optionsArr.includes(trimmed)) { optionsArr.push(trimmed); optionsArr.sort(); }
+                    populateDropdowns();
+                    document.getElementById(selId).value = trimmed;
+                } else {
+                    document.getElementById(selId).value = '';
+                }
+            });
+        }
+        setupAddNewListener('location', 'location', locationOptions);
+        setupAddNewListener('unit_type', 'unit type', unitTypeOptions);
+        setupAddNewListener('source', 'source', sourceOptions);
+        setupAddNewListener('sub_source', 'sub-source', subSourceOptions);
+
+        await loadBookings();
+    }
+    renderApp();
+</script>
+</body>
+</html>

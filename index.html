@@ -77,13 +77,11 @@
         "addressRegion": "Coast",
         "addressCountry": "KE"
       },
-      "openingHours": "24/7",
       "sameAs": [
         "https://www.facebook.com/pwanistays",
         "https://www.instagram.com/pwanistays",
         "https://www.tiktok.com/@pwani.stays"
       ],
-      "priceRange": "$$",
       "currenciesAccepted": "KES, USD, EUR, GBP",
       "makesOffer": [
         {
@@ -437,11 +435,11 @@
             border-radius: 15px;
             padding: 30px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-top: 30px;
-            max-width: 900px;
+            max-width: 1100px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -479,7 +477,7 @@
         
         /* UPDATED: Button container spans all 3 columns */
         .search-btn-container {
-            grid-column: span 3;
+            grid-column: 1 / -1;
             display: flex;
             justify-content: center;
             margin-top: 10px;
@@ -710,6 +708,9 @@
             text-decoration: underline;
         }
         
+        .property-title { overflow-wrap:anywhere; }
+        .property-rate-note { color: #315f52; background:#eff8f2; font-size:.9rem; padding:12px 14px; border-radius:9px; margin:10px 0; }
+        .property-card .btn-primary { display:inline-flex;align-items:center;justify-content:center;gap:7px;text-decoration:none; }
         .property-price {
             font-size: 1.5rem;
             font-weight: 600;
@@ -2455,7 +2456,7 @@
         <nav class="navbar" aria-label="Main navigation">
             <!-- UPDATED HEADER LOGO -->
             <a href="/" class="logo-link">
-                <img src="/logo-header.png" 
+                <img src="/logo-header.png"
                      alt="PwaniStays - Curated Coastal Stays" 
                      class="logo-desktop"
                      style="height: 50px; width: auto;">
@@ -2469,20 +2470,21 @@
             </button>
             <ul class="nav-links" role="menubar">
                 <li role="none"><a href="#home" class="active" role="menuitem" data-i18n="nav_home">Home</a></li>
-                <li role="none"><a href="about" role="menuitem" data-i18n="nav_about">About Us</a></li>
-                <li role="none"><a href="accommodation" role="menuitem" data-i18n="nav_accommodation">Accommodation</a></li>
+                <li role="none"><a href="about.html" role="menuitem" data-i18n="nav_about">About Us</a></li>
+                <li role="none"><a href="accommodation.html" role="menuitem" data-i18n="nav_accommodation">Accommodation</a></li>
                 
                 <!-- Experiences Dropdown -->
                 <li role="none" class="dropdown">
-                    <a href="experiences" role="menuitem" class="dropdown-toggle" data-i18n="nav_experiences">Experiences ▾</a>
+                    <a href="experiences.html" role="menuitem" class="dropdown-toggle" data-i18n="nav_experiences">Experiences ▾</a>
                     <ul class="dropdown-menu">
-                        <li><a href="nairobi" data-i18n="nav_nairobi">Nairobi & Inland</a></li>
-                        <li><a href="safari" data-i18n="nav_safari">Safari</a></li>
-                        <li><a href="coastal-cultural" data-i18n="nav_coastal">Coastal & Cultural</a></li>
+                        <li><a href="nairobi.html" data-i18n="nav_nairobi">Nairobi & Inland</a></li>
+                        <li><a href="safari.html" data-i18n="nav_safari">Safari</a></li>
+                        <li><a href="coastal-cultural.html" data-i18n="nav_coastal">Coastal & Cultural</a></li>
                     </ul>
                 </li>
                 
-                <li role="none"><a href="how-it-works" role="menuitem" data-i18n="nav_how_it_works">How It Works</a></li>
+                <li role="none"><a href="how-it-works.html" role="menuitem" data-i18n="nav_how_it_works">How It Works</a></li>
+                <li role="none"><a href="/partners.html" role="menuitem">List Your Property</a></li>
                 <li role="none"><a href="#contact" role="menuitem" data-i18n="nav_contact">Contact</a></li>
                 
                 <!-- Header Search -->
@@ -2524,11 +2526,11 @@
                 <div class="swiper-wrapper">
                     <!-- Slide 1: Ocean-facing balcony / exterior (NEW IMAGE - NO DIVER) -->
                     <div class="swiper-slide">
-                        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                        <div class="hero-slide" style="background-image: url('/images/Nyali_beach_PwaniStays.jpg');"></div>
                     </div>
                     <!-- Slide 2: Bright interior with coastal feel -->
                     <div class="swiper-slide">
-                        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                        <div class="hero-slide" style="background-image: url('/images/Villa_Malindi_PwaniStays.jpg');"></div>
                     </div>
                 </div>
             </div>
@@ -2538,7 +2540,7 @@
             <h1 class="sr-only">PwaniStays - Curated Coastal Stays & Experiences</h1>
             <!-- UPDATED: Changed from "Experience Luxury on the Kenyan Coast" to "Curated Stays & Coastal Experiences" -->
             <h2 data-i18n="hero_heading">Curated Stays & Coastal Experiences</h2>
-            <p data-i18n="hero_subheading">Curated beachfront stays and guided coastal experiences across Mombasa, Diani, Watamu, Nyali, Bamburi & Shanzu — with safaris, marine adventures, and seamless airport transfers.</p>
+            <p data-i18n="hero_subheading">Find apartments, villas and beachfront stays along the Kenyan coast. Select your dates, explore properties and request a clear quotation from our local team.</p>
             
             <!-- UPDATED: Search Box with 3 inputs - ADDED VILLA OPTION -->
             <div class="search-box" role="search">
@@ -2575,6 +2577,17 @@
                         <option value="4br" data-i18n="type_4br">4 Bedrooms</option>
                         <option value="5br" data-i18n="type_5br">5 Bedrooms</option>
                         <option value="villa" data-i18n="type_villa">Villa</option>
+                    </select>
+                </div>
+                <div class="search-input">
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                    <select id="guestCount" aria-label="Number of guests">
+                        <option value="1">1 Guest</option><option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option><option value="4">4 Guests</option>
+                        <option value="5">5 Guests</option><option value="6">6 Guests</option>
+                        <option value="7">7 Guests</option><option value="8">8 Guests</option>
+                        <option value="9">9 Guests</option><option value="10">10 Guests</option>
+                        <option value="11">11 Guests</option><option value="12">12 Guests</option>
                     </select>
                 </div>
                 <div class="search-btn-container">
@@ -2678,17 +2691,17 @@
             <div class="feature" role="article">
                 <i class="fas fa-award" aria-hidden="true"></i>
                 <h3 data-i18n="why_specialists">Coastal Specialists</h3>
-                <p data-i18n="why_specialists_desc">Deep local knowledge of Kenya's coastline with verified partnerships across all major coastal destinations.</p>
+                <p data-i18n="why_specialists_desc">Local coastal knowledge and personally assisted accommodation recommendations.</p>
             </div>
             <div class="feature" role="article">
                 <i class="fas fa-shield-alt" aria-hidden="true"></i>
                 <h3 data-i18n="why_vetting">Property Vetting</h3>
-                <p data-i18n="why_vetting_desc">Every property personally inspected for safety, cleanliness, and guest satisfaction.</p>
+                <p data-i18n="why_vetting_desc">We work with property owners and review available property information to help you choose confidently.</p>
             </div>
             <div class="feature" role="article">
                 <i class="fas fa-handshake" aria-hidden="true"></i>
-                <h3 data-i18n="why_rates">Direct Owner Rates</h3>
-                <p data-i18n="why_rates_desc">We work directly with property owners to offer you the best rates without middlemen fees.</p>
+                <h3 data-i18n="why_rates">Transparent Quotations</h3>
+                <p data-i18n="why_rates_desc">We confirm availability, total costs and applicable terms with you before any booking is final.</p>
             </div>
             <div class="feature" role="article">
                 <i class="fas fa-globe-europe" aria-hidden="true"></i>
@@ -2896,6 +2909,14 @@
         </div>
     </section>
 
+    <section class="partners-promo" style="padding:65px 6%;background:#f1f8f4;text-align:center;">
+        <div style="max-width:840px;margin:auto;">
+            <h2 style="color:#0b634e;margin-bottom:12px;">Own a furnished apartment or villa?</h2>
+            <p style="color:#415c53;line-height:1.7;margin-bottom:22px;">PwaniStays helps owners reach guests and handles accommodation inquiries. We are also open to tailored property management partnerships.</p>
+            <a href="/partners.html" style="display:inline-block;background:#0d7a5f;color:white;border-radius:9px;padding:13px 24px;text-decoration:none;font-weight:700;">Partner with PwaniStays</a>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="contact" id="contact" role="region" aria-label="Contact us">
         <div class="section-title">
@@ -2908,7 +2929,7 @@
                     <i class="fas fa-phone-alt" aria-hidden="true"></i>
                     <div>
                         <h3>Call Us Direct</h3>
-                        <p><a href="tel:+254738544784">+254 738 544 784</a></p>
+                        <p><a href="tel:+254738544784">+254 738 544 784</a> / <a href="tel:+254715875933">+254 715 875 933</a></p>
                         <small>Local & International calls</small>
                     </div>
                 </div>
@@ -2917,15 +2938,15 @@
                     <div>
                         <h3>WhatsApp Chat</h3>
                         <p><a href="https://wa.me/254738544784">+254 738 544 784</a></p>
-                        <small>Instant response guaranteed</small>
+                        <small>Message us for prompt assistance</small>
                     </div>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-clock" aria-hidden="true"></i>
                     <div>
                         <h3>Operating Hours</h3>
-                        <p>24/7 - 365 Days</p>
-                        <small>We're always available for you</small>
+                        <p>WhatsApp &amp; phone inquiries</p>
+                        <small>We will respond as soon as we can</small>
                     </div>
                 </div>
             </div>
@@ -3011,6 +3032,7 @@
                     <li><a href="#testimonials">Guest Reviews</a></li>
                     <li><a href="#leave-feedback">Leave Feedback</a></li>
                     <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="/partners.html">List Your Property</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -3036,22 +3058,24 @@
                     <li><i class="fas fa-map-marker-alt"></i> Mombasa, Coastal Kenya</li>
                     <li><i class="fas fa-phone"></i> <a href="tel:+254738544784">+254 738 544 784</a></li>
                     <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254738544784">WhatsApp Chat</a></li>
-                    <li><i class="fas fa-clock"></i> 24/7 Customer Support</li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:bookings@pwanistays.com">bookings@pwanistays.com</a></li>
+                    <li><i class="fas fa-clock"></i> WhatsApp &amp; Phone Support</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
             <!-- MODIFIED: Added "a Pwanira Ventures brand" to copyright line -->
             <p>&copy; <span id="currentYear"></span> PwaniStays — a Pwanira Ventures brand. Curated Coastal Stays & Experiences. All rights reserved. | 
-               <a href="/privacy">Privacy Policy</a> | 
-               <a href="/terms">Terms of Service</a> | 
-               <a href="/cancellation">Cancellation Policy</a>
+               <a href="/privacy.html">Privacy Policy</a> |
+               <a href="/terms.html">Terms of Service</a> |
+               <a href="/cancellation.html">Cancellation Policy</a>
             </p>
         </div>
     </footer>
 
+    <script src="/listing-utils.js"></script>
     <!-- Supabase JS - Initialize Supabase ONE TIME ONLY -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
@@ -3068,13 +3092,10 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        
-        function calculateDisplayPrice(property) {
-            const price = Math.round((property.price || 0) * 1.2);
-            return price.toLocaleString('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
+        // Public listing fields never include private rates or commissions.
+        const PUBLIC_PROPERTY_FIELDS = window.PwaniListings.FIELDS;
+        const escapeHtml = window.PwaniListings.escapeHtml;
+document.addEventListener("DOMContentLoaded", () => {
             
             const supabase = window.supabaseClient;
             
@@ -3135,8 +3156,8 @@
                     : 'All Properties';
                 
                 datesCriteria.textContent = (selectedCheckin && selectedCheckout) 
-                    ? `Dates: ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)}`
-                    : 'Flexible dates';
+                    ? `Dates requested: ${formatDate(selectedCheckin)} to ${formatDate(selectedCheckout)} · ${document.getElementById('guestCount').value} guests · Availability will be confirmed`
+                    : `${document.getElementById('guestCount').value} guests · Select dates on the property page to request a quote`;
                 
                 resultsHeader.style.display = 'block';
                 
@@ -3161,6 +3182,8 @@
                 // Clear any filters
                 document.getElementById('searchLocation').value = '';
                 document.getElementById('propertyType').value = '';
+                document.getElementById('guestCount').value = '2';
+                selectedCheckin = null; selectedCheckout = null;
                 updateDateRangeInput();
                 
                 const resultsHeader = document.getElementById('resultsHeader');
@@ -3252,7 +3275,7 @@
 
                     if (error) throw error;
 
-                    showFeedbackMessage('Thank you for your review! It will appear on the site after a brief approval — usually within 24 hours.', 'success');
+                    showFeedbackMessage('Thank you for your review! It will be considered for publication after moderation.', 'success');
 
                     document.getElementById('feedbackName').value  = '';
                     document.getElementById('feedbackCity').value  = '';
@@ -3328,16 +3351,20 @@
                 await searchByKeyword(keyword);
             }
 
+            window.performKeywordSearch = performKeywordSearch;
+
             async function searchByKeyword(keyword) {
+                // Quote PostgREST filter values so search text cannot inject filter clauses.
+                const pattern = '"%' + keyword.replace(/[\\"%_]/g, c => '\\' + c) + '%"';
                 const container = document.getElementById('propertyList');
                 container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Searching properties...</div>';
                 
                 try {
                     let query = supabase
                         .from("properties")
-                        .select("*")
+                        .select(PUBLIC_PROPERTY_FIELDS)
                         .eq("is_active", true)
-                        .or(`title.ilike.%${keyword}%,location.ilike.%${keyword}%,description.ilike.%${keyword}%`)
+                        .or(`title.ilike.${pattern},location.ilike.${pattern},description.ilike.${pattern}`)
                         .order('created_at', { ascending: false });
                     
                     const { data, error } = await query;
@@ -3349,7 +3376,7 @@
                     }
                     
                     if (!data || data.length === 0) {
-                        container.innerHTML = `<div class="no-properties"><i class="fas fa-search"></i><p>No properties found for "${keyword}".</p><p>Try different keywords or browse all properties.</p></div>`;
+                        container.innerHTML = `<div class="no-properties"><i class="fas fa-search"></i><p>No properties found for "${escapeHtml(keyword)}".</p><p>Try different keywords or browse all properties.</p></div>`;
                         return;
                     }
                     
@@ -3376,8 +3403,8 @@
                     container.appendChild(fragment);
                     
                     setTimeout(() => {
-                        cards.forEach(({ property }) => {
-                            loadPropertyImages(property);
+                        cards.forEach(({ property, card }) => {
+                            loadPropertyImages(property, card);
                         });
                         if (window.i18n) window.i18n.translatePropertyCards(container);
                     }, 300);
@@ -3584,39 +3611,11 @@
                 return uuid ? uuid.split("-")[0] : '';
             }
 
-            async function loadInquiryProperty() {
+            function loadInquiryProperty() {
                 const params = new URLSearchParams(window.location.search);
                 const propertyId = params.get('property');
-                if (!propertyId) return;
-
-                const section = document.getElementById('inquiryHighlight');
-                const container = document.getElementById('inquiryPropertyCard');
-                if (!section || !container) return;
-
-                try {
-                    const { data, error } = await supabase
-                        .from('properties')
-                        .select('*')
-                        .eq('id', propertyId)
-                        .single();
-
-                    if (error || !data) {
-                        console.log('Inquiry property not found:', propertyId);
-                        return;
-                    }
-
-                    const card = createPropertyCard(data);
-                    container.appendChild(card);
-                    section.style.display = 'block';
-
-                    setTimeout(() => {
-                        loadPropertyImages(data);
-                        if (window.i18n) window.i18n.translatePropertyCards(container);
-                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
-
-                } catch (err) {
-                    console.error('Error loading inquiry property:', err);
+                if (propertyId && window.PwaniListings.UUID.test(propertyId)) {
+                    window.location.replace(window.PwaniListings.link(propertyId));
                 }
             }
 
@@ -3627,7 +3626,7 @@
                     // First try to get featured properties
                     let query = supabase
                         .from("properties")
-                        .select("*")
+                        .select(PUBLIC_PROPERTY_FIELDS)
                         .eq("is_active", true)
                         .eq("is_featured", true)
                         .order("created_at", { ascending: false })
@@ -3639,7 +3638,7 @@
                         // If no featured properties, get recent ones
                         query = supabase
                             .from("properties")
-                            .select("*")
+                            .select(PUBLIC_PROPERTY_FIELDS)
                             .eq("is_active", true)
                             .order("created_at", { ascending: false })
                             .limit(6);
@@ -3678,7 +3677,7 @@
                 try {
                     const { data, error } = await supabase
                         .from("properties")
-                        .select("*")
+                        .select(PUBLIC_PROPERTY_FIELDS)
                         .eq("is_active", true)
                         .order("created_at", { ascending: false });
                     
@@ -3709,8 +3708,8 @@
                     container.appendChild(fragment);
                     
                     setTimeout(() => {
-                        cards.forEach(({ property }) => {
-                            loadPropertyImages(property);
+                        cards.forEach(({ property, card }) => {
+                            loadPropertyImages(property, card);
                         });
                         if (window.i18n) window.i18n.translatePropertyCards(container);
                     }, 300);
@@ -3728,7 +3727,7 @@
                 try {
                     let query = supabase
                         .from("properties")
-                        .select("*")
+                        .select(PUBLIC_PROPERTY_FIELDS)
                         .eq("is_active", true);
                     
                     // Apply location filter
@@ -3779,8 +3778,8 @@
                     container.appendChild(fragment);
                     
                     setTimeout(() => {
-                        cards.forEach(({ property }) => {
-                            loadPropertyImages(property);
+                        cards.forEach(({ property, card }) => {
+                            loadPropertyImages(property, card);
                         });
                         if (window.i18n) window.i18n.translatePropertyCards(container);
                     }, 300);
@@ -3797,8 +3796,6 @@
                 const shortId = shortUUID(property.id);
                 card.id = `property-${shortId}`;
                 
-                // Calculate price based on selected check-in date or current date
-                const displayPrice = calculateDisplayPrice(property);
                 
                 // Get property type display
                 const unitTypeLabels = window.i18n ? {
@@ -3824,9 +3821,11 @@
                 const bedsCount = property.beds || 1;
                 const bedLabel = window.i18n ? (bedsCount === 1 ? window.i18n.t('card_bed') : window.i18n.t('card_beds')) : (bedsCount === 1 ? 'Bed' : 'Beds');
                 const bedsDisplay = `${bedsCount} ${bedLabel}`;
-                
-                // Escape special characters for safety
-                const safeTitle = property.title ? property.title.replace(/'/g, "\\'") : 'Property';
+                const propertyUrl = window.PwaniListings.link(property.id, {
+                    checkin: window.PwaniListings.localISO(selectedCheckin),
+                    checkout: window.PwaniListings.localISO(selectedCheckout),
+                    guests: document.getElementById('guestCount')?.value || '2'
+                });
                 
                 // REMOVED: Season badge from the property card
                 card.innerHTML = `
@@ -3834,9 +3833,9 @@
                         <div class="swiper mainSwiper" id="main-${property.id}">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <img src="" 
-                                         alt="${property.title || 'Property'} placeholder image"
-                                         onerror="this.src=''">
+                                    <img src="/logo-header.png"
+                                         alt="${escapeHtml(property.title || 'Property')} placeholder image"
+                                         onerror="this.onerror=null;this.src='/logo-header.png'">
                                 </div>
                             </div>
                             <div class="swiper-pagination"></div>
@@ -3847,23 +3846,20 @@
                     </div>
                     
                     <div class="property-content">
-                        <h3 class="property-title">${property.title || 'Premium Property'}</h3>
+                        <h3 class="property-title"><a href="${escapeHtml(propertyUrl)}" style="color:inherit;text-decoration:none">${escapeHtml(property.title || 'Premium Property')}</a></h3>
                         <div class="property-meta">
                             <span class="property-location">
-                                <i class="fas fa-map-marker-alt"></i> ${property.location || 'Coastal Kenya'}
+                                <i class="fas fa-map-marker-alt"></i> ${escapeHtml(property.location || 'Coastal Kenya')}
                             </span>
-                            <span class="property-type">${propertyTypeDisplay}</span>
+                            <span class="property-type">${escapeHtml(propertyTypeDisplay)}</span>
                         </div>
                         
-                        <ul class="property-desc" id="desc-${property.id}" data-full="${property.description || ''}">
+                        <ul class="property-desc" id="desc-${property.id}" data-full="${escapeHtml(property.description || '')}">
                         </ul>
-                        <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}')" style="display: none;">
+                        <button class="view-more-btn" id="toggle-${property.id}" onclick="toggleAmenities('${property.id}', this)" style="display: none;">
                         </button>
                         
-                        <div class="property-price">
-                            Ksh ${displayPrice} <span style="font-size: 0.9rem; color: var(--gray);">${window.i18n ? window.i18n.t('card_night') : '/ night'}</span>
-                            <div style="font-size:0.78rem;color:var(--gray);margin-top:4px;font-style:italic;">Prices vary by season. Contact us for exact rates.</div>
-                        </div>
+                        <p class="property-rate-note"><i class="fas fa-info-circle" aria-hidden="true"></i> Rates vary by date. Ask for a personalised quotation.</p>
                         
                         <div class="property-footer">
                             <div class="property-info">
@@ -3871,69 +3867,27 @@
                                     <i class="fas fa-bed"></i> ${bedsDisplay}
                                 </div>
                             </div>
-                            <button class="btn-primary" onclick="checkAvailability('${property.id}', '${safeTitle}')">
-                                <i class="fas fa-calendar-alt"></i> ${window.i18n ? window.i18n.t('card_check_availability') : 'Check Availability'}
-                            </button>
+                            <a class="btn-primary" href="${escapeHtml(propertyUrl)}" aria-label="View details and request a quotation for ${escapeHtml(property.title || 'property')}">
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i> ${window.i18n ? window.i18n.t('card_check_availability') : 'View Details & Enquire'}
+                            </a>
                         </div>
                     </div>
                 `;
                 
                 // Render amenities after card is created
                 setTimeout(() => {
-                    renderAmenities(property.id, property.description, false);
+                    renderAmenities(property.id, property.description, false, card);
                 }, 0);
                 
                 return card;
             }
 
-            window.checkAvailability = function(propertyId, propertyTitle) {
-                // Get property element
-                let propertyElement = document.getElementById(`property-${shortUUID(propertyId)}`);
-                if (!propertyElement) {
-                    propertyElement = document.getElementById(`property-${propertyId}`);
-                    if (!propertyElement) {
-                        console.log(`Could not find property element for ID: ${propertyId}`);
-                        return;
-                    }
-                }
-                
-                // Get price
-                const priceElement = propertyElement.querySelector('.property-price');
-                const price = priceElement ? priceElement.textContent.replace('Ksh ', '').replace(' / night', '').split(' ')[0] : 'Price on request';
-                
-                // Get dates
-                const checkinDate = selectedCheckin ? formatDate(selectedCheckin) : 'Not selected';
-                const checkoutDate = selectedCheckout ? formatDate(selectedCheckout) : 'Not selected';
-                
-                // Create property object
-                const property = {
-                    id: propertyId,
-                    title: propertyTitle
-                };
-                
-                // Open WhatsApp
-                openWhatsApp(property, checkinDate, checkoutDate, price);
-            };
-
-            window.openWhatsApp = function(property, checkin, checkout, rate) {
-                const propertyLink = `https://pwanistays.com/?property=${property.id}`;
-
-                const message = `
-Property: ${property.title}
-Link: ${propertyLink}
-Dates: ${checkin} → ${checkout}
-Rate: KES ${rate}/night
-
-Hello PwaniStays! I am interested in this property. Is it available for the selected dates?
-`.trim();
-
-                const whatsappNumber = "254738544784";
-                const encodedMessage = encodeURIComponent(message);
-
-                window.open(
-                    `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
-                    "_blank"
-                );
+            window.checkAvailability = function(propertyId) {
+                window.location.href = window.PwaniListings.link(propertyId, {
+                    checkin: window.PwaniListings.localISO(selectedCheckin),
+                    checkout: window.PwaniListings.localISO(selectedCheckout),
+                    guests: document.getElementById('guestCount')?.value || '2'
+                });
             };
 
             let currentTestimonial = 0;
@@ -3959,18 +3913,19 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
 
                     slider.innerHTML = '';
                     reviews.forEach((review, index) => {
-                        const filled = '★'.repeat(review.rating);
-                        const empty  = '☆'.repeat(5 - review.rating);
+                        const rating = Math.max(1, Math.min(5, Number(review.rating) || 1));
+                        const filled = '★'.repeat(rating);
+                        const empty  = '☆'.repeat(5 - rating);
                         const loc    = [review.city, review.country].filter(Boolean).join(', ');
 
                         const slide = document.createElement('div');
                         slide.className = `testimonial-slide${index === 0 ? ' active' : ''}`;
                         slide.innerHTML = `
                             <div class="testimonial-content">
-                                <p>"${review.comment}"</p>
+                                <p>"${escapeHtml(review.comment)}"</p>
                                 <div class="testimonial-author">
-                                    <h4>${review.name}</h4>
-                                    ${loc ? `<p>From ${loc}</p>` : ''}
+                                    <h4>${escapeHtml(review.name)}</h4>
+                                    ${loc ? `<p>From ${escapeHtml(loc)}</p>` : ''}
                                     <div class="rating">${filled}${empty}</div>
                                 </div>
                             </div>`;
@@ -4159,6 +4114,17 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
             // Load properties on page load
             loadFeaturedProperties();
             loadInquiryProperty();
+            const entryParams = new URLSearchParams(window.location.search);
+            const initialSearch = entryParams.get('search');
+            const initialLocation = entryParams.get('location');
+            if (!entryParams.has('property')) {
+                if (initialSearch) performKeywordSearch(initialSearch.slice(0, 200));
+                else if (initialLocation && Array.from(document.getElementById('searchLocation').options).some(o => o.value === initialLocation)) {
+                    document.getElementById('searchLocation').value = initialLocation;
+                    searchProperties();
+                }
+            }
+
             
             // Close calendar when clicking backdrop
             document.getElementById('calendarBackdrop').addEventListener('click', hideCalendar);
@@ -4238,8 +4204,8 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 container.appendChild(fragment);
                 
                 setTimeout(() => {
-                    cards.forEach(({ property }) => {
-                        loadPropertyImages(property);
+                    cards.forEach(({ property, card }) => {
+                        loadPropertyImages(property, card);
                     });
                     // Translate dynamic Supabase content
                     if (window.i18n) {
@@ -4252,54 +4218,19 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 }, 300);
             }
 
-            async function loadPropertyImages(property) {
+            async function loadPropertyImages(property, cardRoot = null) {
                 await new Promise(resolve => setTimeout(resolve, 100));
                 
                 const shortId = shortUUID(property.id);
-                const card = document.querySelector(`#property-${shortId}`);
+                const card = cardRoot || document.querySelector(`#property-${shortId}`);
                 if (!card) return;
                 
                 const mainWrapper = card.querySelector(`#main-${property.id} .swiper-wrapper`);
                 if (!mainWrapper) return;
                 
-                let images = [];
-                
-                try {
-                    const { data: files, error } = await supabase
-                        .storage
-                        .from('property_images')
-                        .list(property.id);
-                    
-                    if (!error && files && files.length > 0) {
-                        files.sort((a, b) => {
-                            const numA = parseInt(a.name.match(/\d+/)?.[0]) || 0;
-                            const numB = parseInt(b.name.match(/\d+/)?.[0]) || 0;
-                            return numA - numB;
-                        });
-                        
-                        files.forEach(file => {
-                            const { data } = supabase
-                                .storage
-                                .from('property_images')
-                                .getPublicUrl(`${property.id}/${file.name}`);
-                            
-                            if (data && data.publicUrl) {
-                                images.push(data.publicUrl);
-                            }
-                        });
-                    }
-                } catch (error) {
-                    console.log(`Error loading storage images for property ${property.id}:`, error);
-                }
-                
-                if (images.length === 0) {
-                    if (property.image_url) {
-                        images.push(property.image_url);
-                    } else {
-                        images.push('');
-                    }
-                }
-                
+                const images = await window.PwaniListings.images(supabase, property);
+                if (!images.length) images.push('/logo-header.png');
+
                 mainWrapper.innerHTML = '';
                 
                 const thumbWrapper = card.querySelector(`#thumb-${property.id} .swiper-wrapper`);
@@ -4308,29 +4239,29 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 images.forEach((url, index) => {
                     mainWrapper.innerHTML += `
                         <div class="swiper-slide">
-                            <img src="${url}" alt="${property.title || 'Property'} image ${index + 1}" 
-                                 onerror="this.src=''">
+                            <img src="${escapeHtml(url)}" loading="lazy" alt="${escapeHtml(property.title || 'Property')} image ${index + 1}"
+                                 onerror="this.onerror=null;this.src='/logo-header.png'">
                         </div>
                     `;
                     
                     if (thumbWrapper && images.length > 1) {
                         thumbWrapper.innerHTML += `
                             <div class="swiper-slide">
-                                <img src="${url}" alt="${property.title || 'Property'} thumbnail ${index + 1}"
-                                     onerror="this.src=''">
+                                <img src="${escapeHtml(url)}" loading="lazy" alt="${escapeHtml(property.title || 'Property')} thumbnail ${index + 1}"
+                                     onerror="this.onerror=null;this.src='/logo-header.png'">
                             </div>
                         `;
                     }
                 });
                 
                 setTimeout(() => {
-                    initializePropertySwiper(property.id, images);
+                    initializePropertySwiper(property.id, images, card);
                 }, 200);
             }
 
-            function initializePropertySwiper(propertyId, images) {
-                const mainSwiperElement = document.querySelector(`#main-${propertyId}`);
-                const thumbSwiperElement = document.querySelector(`#thumb-${propertyId}`);
+            function initializePropertySwiper(propertyId, images, cardRoot = document) {
+                const mainSwiperElement = cardRoot.querySelector(`[id="main-${propertyId}"]`);
+                const thumbSwiperElement = cardRoot.querySelector(`[id="thumb-${propertyId}"]`);
                 
                 if (!mainSwiperElement) return null;
                 
@@ -4385,16 +4316,16 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 return mainSwiper;
             }
 
-            function renderAmenities(propertyId, description, expanded = false) {
-                const container = document.getElementById(`desc-${propertyId}`);
-                const toggleBtn = document.getElementById(`toggle-${propertyId}`);
+            function renderAmenities(propertyId, description, expanded = false, cardRoot = document) {
+                const container = cardRoot.querySelector(`[id="desc-${propertyId}"]`);
+                const toggleBtn = cardRoot.querySelector(`[id="toggle-${propertyId}"]`);
 
                 if (!container || !description) return;
 
                 const amenities = description.split('\n').filter(line => line.trim().length > 0);
                 const visible = expanded ? amenities : amenities.slice(0, 4);
 
-                container.innerHTML = visible.map(amenity => `<li>${amenity.trim()}</li>`).join('');
+                container.innerHTML = visible.map(amenity => `<li>${escapeHtml(amenity.trim())}</li>`).join('');
 
                 if (amenities.length > 4) {
                     toggleBtn.style.display = 'inline-block';
@@ -4412,8 +4343,9 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 }
             }
 
-            window.toggleAmenities = function(propertyId) {
-                const container = document.getElementById(`desc-${propertyId}`);
+            window.toggleAmenities = function(propertyId, btn) {
+                const card = btn?.closest('.property-card') || document;
+                const container = card.querySelector(`[id="desc-${propertyId}"]`);
                 const isExpanded = container.classList.toggle('expanded');
                 
                 const fullDescription = container.dataset.full || '';
@@ -4421,7 +4353,8 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
                 renderAmenities(
                     propertyId,
                     fullDescription,
-                    isExpanded
+                    isExpanded,
+                    card
                 );
             };
 
@@ -4460,105 +4393,49 @@ Hello PwaniStays! I am interested in this property. Is it available for the sele
 
             async function sendInquiryEmail(formData, form, submitBtn) {
                 const WEB3FORMS_KEY = '2735669d-b583-4635-978e-87c34f729629';
-
+                let savedToDatabase = false;
                 try {
-                    await supabase.from('inquiries').insert([{
-                        name:    formData.name,
-                        email:   formData.email,
-                        phone:   formData.phone,
-                        country: formData.country,
-                        service: formData.service,
-                        message: formData.message
-                    }]);
+                    const { error } = await supabase.from('inquiries').insert([formData]);
+                    if (error) throw error;
+                    savedToDatabase = true;
                 } catch (dbErr) {
-                    console.log('Supabase inquiries note:', dbErr.message);
+                    console.warn('Inquiry database delivery failed:', dbErr);
                 }
-
+                let emailSent = false;
                 try {
-                    const serviceLabel = {
-                        stay:      'Accommodation Only',
-                        transfer:  'Accommodation + Transfers',
-                        tour:      'Full Package (Stay + Transfers + Tours)',
-                        corporate: 'Corporate/Group Booking'
-                    }[formData.service] || formData.service;
-
-                    const emailBody = [
-                        `Name:     ${formData.name}`,
-                        `Email:    ${formData.email}`,
-                        `Phone:    ${formData.phone}`,
-                        `Country:  ${formData.country}`,
-                        `Service:  ${serviceLabel}`,
-                        ``,
-                        `Message:`,
-                        formData.message
-                    ].join('\n');
-
+                    const serviceLabel = ({stay:'Accommodation Only',transfer:'Accommodation + Transfers',tour:'Full Package',corporate:'Corporate/Group Booking'})[formData.service] || formData.service;
                     const res = await fetch('https://api.web3forms.com/submit', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        headers: {'Content-Type':'application/json','Accept':'application/json'},
                         body: JSON.stringify({
                             access_key: WEB3FORMS_KEY,
-                            subject:    `New PwaniStays Inquiry — ${formData.name} (${formData.country})`,
-                            from_name:  'PwaniStays Website',
-                            replyto:    formData.email,
-                            message:    emailBody,
-                            botcheck:   false
+                            subject: `New PwaniStays Inquiry — ${formData.name}`,
+                            from_name: 'PwaniStays Website', replyto:formData.email,
+                            message: `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nCountry: ${formData.country}\nService: ${serviceLabel}\n\nMessage:\n${formData.message}`
                         })
                     });
-
                     const result = await res.json();
-                    if (!result.success) console.error('Web3Forms error:', result);
-                } catch (mailErr) {
-                    console.error('Web3Forms error:', mailErr);
+                    emailSent = res.ok && result.success === true;
+                } catch (mailErr) { console.warn('Inquiry email delivery failed:',mailErr); }
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Detailed Inquiry'; }
+                const existingStatus = document.getElementById('formDeliveryStatus');
+                if (existingStatus) existingStatus.remove();
+                const feedback = document.createElement('p');
+                feedback.id = 'formDeliveryStatus'; feedback.setAttribute('role','status');
+                feedback.style.cssText = 'margin:14px 0;padding:14px;border-radius:8px;line-height:1.55;background:#eff8f2;color:#164b3f;';
+                if (emailSent) {
+                    feedback.textContent = 'Thank you! Your inquiry was submitted successfully. We will respond after checking the details.';
+                    form.reset();
+                    const pfx = document.getElementById('phonePrefix'); if (pfx) pfx.textContent = '+254';
+                } else {
+                    feedback.style.cssText += 'background:#fff4ec;color:#75351e;';
+                    feedback.textContent = savedToDatabase
+                        ? 'Your inquiry was saved, but we could not confirm email delivery. For the fastest follow-up, please message us on WhatsApp.'
+                        : 'We could not confirm delivery of your inquiry. Please try again or contact us on WhatsApp at +254 738 544 784.';
+                    const a = document.createElement('a'); a.href='https://wa.me/254738544784?text='+encodeURIComponent('Hello PwaniStays! I tried sending an inquiry on your website. Please assist.');
+                    a.textContent=' Open WhatsApp'; a.target='_blank'; a.rel='noopener noreferrer'; feedback.appendChild(a);
                 }
-
-                const btn = form.querySelector('button[type="submit"]');
-                if (btn) { btn.disabled = false; btn.innerHTML = 'Send Detailed Inquiry'; }
-
-                form.reset();
-                const pfx = document.getElementById('phonePrefix');
-                if (pfx) pfx.textContent = '+254';
-
-                const formBox = document.getElementById('book-now');
-                if (formBox) {
-                    const originalContent = formBox.innerHTML;
-                    formBox.innerHTML = `
-                        <div style="text-align:center;padding:40px 20px;">
-                            <div style="width:70px;height:70px;background:linear-gradient(135deg,#0d7a5f,#10a37f);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
-                                <i class="fas fa-check" style="color:#fff;font-size:2rem;"></i>
-                            </div>
-                            <h3 style="color:var(--primary);margin-bottom:12px;">Inquiry Sent Successfully!</h3>
-                            <p style="color:var(--gray);font-size:1rem;line-height:1.7;margin-bottom:8px;">
-                                Thank you, <strong>${formData.name}</strong>. Your inquiry has been received and a copy sent to our team at <strong>info@pwanistays.com</strong>.
-                            </p>
-                            <p style="color:var(--gray);font-size:0.95rem;margin-bottom:28px;">
-                                Our coastal experts will get back to you within <strong>24 hours</strong>. You can also reach us directly on WhatsApp for a faster response.
-                            </p>
-                            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-                                <a href="https://wa.me/254738544784" target="_blank"
-                                   style="background:#25D366;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;">
-                                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
-                                </a>
-                                <button onclick="this.closest('#book-now').innerHTML = arguments[0]"
-                                    style="background:transparent;border:2px solid var(--primary);color:var(--primary);padding:12px 24px;border-radius:8px;cursor:pointer;font-weight:600;"
-                                    data-original="">
-                                    Send Another Inquiry
-                                </button>
-                            </div>
-                        </div>`;
-
-                    // Wire the "Send Another Inquiry" button to restore the form
-                    const restoreBtn = formBox.querySelector('button[data-original]');
-                    if (restoreBtn) {
-                        restoreBtn.addEventListener('click', () => {
-                            formBox.innerHTML = originalContent;
-                            document.getElementById('inquiryForm').addEventListener('submit', handleFormSubmit);
-                            populateInquiryCountry();
-                        });
-                    }
-
-                    formBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+                form.prepend(feedback);
             }
 
             function showFeedbackMessage(message, type) {

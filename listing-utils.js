@@ -24,7 +24,7 @@
     return Math.round((end - start) / 86400000);
   }
   function link(id, dates) {
-    if (!UUID.test(id || '')) return '/accommodation.html';
+    if (!UUID.test(id || '')) return '/#stays';
     const params = new URLSearchParams({id});
     if (dates && validISO(dates.checkin)) params.set('checkin', dates.checkin);
     if (dates && validISO(dates.checkout)) params.set('checkout', dates.checkout);

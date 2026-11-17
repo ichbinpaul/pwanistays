@@ -68,7 +68,7 @@
         /* ── Hero ── */
         .page-hero {
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-                        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+                        url('/images/Diani_Beach_PwaniStays.jpg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -256,6 +256,24 @@
             .custom-package h2 { font-size: 1.8rem; }
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    
+        /* PWANISTAYS EDITORIAL REFRESH — unified destination design */
+        .page-hero { background-position:center 46%; background-size:cover; }
+        .page-hero h1 { font-weight:780; letter-spacing:-.035em; max-width:1000px; margin-left:auto; margin-right:auto; }
+        .page-hero p { line-height:1.72; max-width:760px; }
+        .experience-card,.safari-card,.package-card,.category-card { border:1px solid #e5ebe7; border-radius:19px; overflow:hidden; box-shadow:0 10px 30px rgba(24,52,44,.08); transition:transform .2s ease,box-shadow .2s ease; }
+        .experience-card:hover,.safari-card:hover,.package-card:hover,.category-card:hover { transform:translateY(-3px); box-shadow:0 18px 38px rgba(24,52,44,.13); }
+        .experience-image,.safari-image,.package-image { background-size:cover; background-position:center; }
+        .experience-footer,.safari-footer,.package-footer { display:flex; align-items:center; gap:12px; justify-content:space-between; flex-wrap:wrap; }
+        .pwani-quote-label { display:inline-flex; gap:8px; align-items:center; color:#0c765b; font-size:.94rem; font-weight:750; }
+        .btn-whatsapp { border-radius:12px; }
+        .pwani-quote-banner { max-width:1180px; display:flex; gap:18px; align-items:center; margin:34px auto 22px; padding:17px 22px; background:#f4faf6; border:1px solid #d3e8da; border-radius:18px; color:#1b4434; box-shadow:0 6px 17px rgba(9,64,39,.04); line-height:1.55; }
+        .pwani-quote-banner > i { font-size:1.4rem; color:#0c765b; }
+        .pwani-quote-banner span { flex:1; }
+        .pwani-quote-banner a { display:inline-flex; padding:12px 20px; border-radius:100px; background:#0c765b; color:white; text-decoration:none; font-weight:700; white-space:nowrap; }
+        .pwani-quote-banner a:hover { background:#095640; }
+        @media(max-width:760px){ .pwani-quote-banner { margin:20px 5%; flex-wrap:wrap; } .pwani-quote-banner a { justify-content:center; width:100%; } }
+
     </style>
 
     <link rel="canonical" href="https://pwanistays.com/coastal-cultural">
@@ -277,6 +295,7 @@
             </a>
         </section>
 
+<div class="pwani-quote-banner" role="note"><i class="fas fa-comment-dots" aria-hidden="true"></i><span><strong>Rates are personalized.</strong> Share your dates and number of guests to receive current availability and a tailored price.</span><a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20Please%20share%20availability%20and%20a%20current%20quote%20for%20an%20experience." target="_blank" rel="noopener noreferrer">Request a Quote</a></div>
         <!-- Breadcrumb -->
         <div class="breadcrumb">
             <span><a href="/">Home</a> &gt; <a href="/experiences.html">Experiences</a> &gt; Coastal & Cultural</span>
@@ -304,7 +323,7 @@
 
                 <!-- 1: Nguuni & Haller Park -->
                 <div class="package-card" data-category="wildlife">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('/images/Haller_Park_PwaniStays.jpg');">
                         <div class="package-badge">Wildlife & Conservation</div>
                     </div>
                     <div class="package-content">
@@ -337,15 +356,15 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Families, eco-tourists, animal lovers, school groups</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 8,500</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(1)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(1)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 2: Mamba Village + Marine Park -->
                 <div class="package-card" data-category="marine wildlife">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('/images/Haller_Park_PwaniStays.jpg');">
                         <div class="package-badge">Marine & Wildlife</div>
                     </div>
                     <div class="package-content">
@@ -378,15 +397,15 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Adventure seekers, kids & families</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 9,200</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(2)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(2)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 3: Mombasa Old Town -->
                 <div class="package-card" data-category="cultural">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('/images/Old_Town_Mombasa_2025_PwaniStays.jpg');">
                         <div class="package-badge">Cultural Immersion</div>
                     </div>
                     <div class="package-content">
@@ -419,15 +438,15 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Culture lovers, history buffs, photographers</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 7,800</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(3)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(3)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 4: Diani Beach -->
                 <div class="package-card" data-category="marine">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('/images/Diani_Beach_PwaniStays.jpg');">
                         <div class="package-badge">Beach Relaxation</div>
                     </div>
                     <div class="package-content">
@@ -460,15 +479,15 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Couples, honeymooners, leisure travelers, beach lovers</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 6,500</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(4)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(4)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 5: Kisite–Wasini -->
                 <div class="package-card" data-category="marine wildlife">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1600&q=82');">
                         <div class="package-badge">Marine Safari</div>
                     </div>
                     <div class="package-content">
@@ -501,15 +520,15 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Nature lovers, marine enthusiasts, food explorers</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 12,500</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(5)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(5)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 6: Shimba Hills -->
                 <div class="package-card" data-category="wildlife adventure">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('/images/Kilifi_PwaniStays.jpg');">
                         <div class="package-badge">Nature & Hiking</div>
                     </div>
                     <div class="package-content">
@@ -542,15 +561,15 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Nature lovers, photographers, hikers</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 9,800</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(6)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(6)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 7: Coastal Outdoor & Active -->
                 <div class="package-card" data-category="adventure">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1511994717241-8e4e484dfa8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('/images/Nyali_beach_PwaniStays.jpg');">
                         <div class="package-badge">Adventure Activities</div>
                     </div>
                     <div class="package-content">
@@ -583,15 +602,15 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Active travelers, young adventurers, fitness enthusiasts</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 11,200</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(7)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(7)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 8: Tsavo East + Train -->
                 <div class="package-card" data-category="safari wildlife">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1600&q=82');">
                         <div class="package-badge">Big Safari Experience</div>
                     </div>
                     <div class="package-content">
@@ -625,15 +644,15 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Safari enthusiasts, international travelers, multi-day planners</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 35,000</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(8)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(8)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 9: Cultural & Community Immersion -->
                 <div class="package-card" data-category="cultural">
-                    <div class="package-image" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                    <div class="package-image" style="background-image:url('/images/Fort_Jesus,_2025_PwaniStays.jpg');">
                         <div class="package-badge">Community & Education</div>
                     </div>
                     <div class="package-content">
@@ -666,8 +685,8 @@
                             <p><i class="fas fa-users"></i> <strong>Best for:</strong> Responsible travelers, culture lovers, educational groups</p>
                         </div>
                         <div class="package-footer">
-                            <div class="package-price"><span class="price-amount">Ksh 8,900</span><span class="price-person">per person</span></div>
-                            <button class="btn-whatsapp" onclick="enquirePackage(9)"><i class="fab fa-whatsapp"></i> Enquire Now</button>
+                            <div class="pwani-quote-label"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</div>
+                            <button class="btn-whatsapp" onclick="enquirePackage(9)"><i class="fab fa-whatsapp"></i> Request a Quote</button>
                         </div>
                     </div>
                 </div>
@@ -760,21 +779,22 @@
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
         var packageData = {
-            1: { title: "Nguuni Nature Sanctuary & Haller Park Day Expedition", price: "Ksh 8,500"  },
-            2: { title: "Mamba Village + Mombasa Marine Park Adventure",        price: "Ksh 9,200"  },
-            3: { title: "Mombasa Old Town & Cultural Day",                      price: "Ksh 7,800"  },
-            4: { title: "Diani Beach & Leisure Day",                            price: "Ksh 6,500"  },
-            5: { title: "Kisite–Wasini Marine Safari",                          price: "Ksh 12,500" },
-            6: { title: "Shimba Hills Nature & Waterfall Experience",           price: "Ksh 9,800"  },
-            7: { title: "Coastal Outdoor & Active Experience",                  price: "Ksh 11,200" },
-            8: { title: "Tsavo East Game Safari with Train-to-Voi + Overnight", price: "Ksh 35,000" },
-            9: { title: "Cultural & Community Immersion",                       price: "Ksh 8,900"  }
+            1: { title: "Nguuni Nature Sanctuary & Haller Park Day Expedition"  },
+            2: { title: "Mamba Village + Mombasa Marine Park Adventure"  },
+            3: { title: "Mombasa Old Town & Cultural Day"  },
+            4: { title: "Diani Beach & Leisure Day"  },
+            5: { title: "Kisite–Wasini Marine Safari" },
+            6: { title: "Shimba Hills Nature & Waterfall Experience"  },
+            7: { title: "Coastal Outdoor & Active Experience" },
+            8: { title: "Tsavo East Game Safari with Train-to-Voi + Overnight" },
+            9: { title: "Cultural & Community Immersion"  }
         };
 
         function enquirePackage(id) {
-            var p = packageData[id];
-            var msg = 'Hello PwaniStays! I\'m interested in the "' + p.title + '" experience.\nPrice: ' + p.price + ' per person\n\nPlease provide more information about availability, group discounts, and booking process.';
-            window.open('https://wa.me/254738544784?text=' + encodeURIComponent(msg), '_blank');
+            var item = packageData[id];
+            if (!item) return;
+            var msg = 'Hello PwaniStays! I would like a quotation for "' + item.title + '".\nPlease confirm availability and the current total price for my preferred dates and group size. Thank you!';
+            window.open('https://wa.me/254738544784?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
         }
 
         function filterPackages(category) {

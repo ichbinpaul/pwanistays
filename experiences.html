@@ -256,7 +256,7 @@
         /* Experiences Hero */
         .experiences-hero {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                        url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+                        url('https://images.unsplash.com/photo-1691161510065-298039a5b51b?auto=format&fit=crop&w=1600&q=82');
             background-size: cover;
             background-position: center;
             color: white;
@@ -1001,6 +1001,23 @@
                 font-size: 1.8rem;
             }
         }
+    
+        /* PWANISTAYS EDITORIAL REFRESH — authentic Kenyan travel imagery, no fixed rates */
+        .experiences-hero { background-position:center 44%; background-size:cover; }
+        .categories-grid, .featured-grid { max-width:1240px; margin-left:auto; margin-right:auto; }
+        .category-card, .featured-card { border:1px solid #e5ece8; border-radius:20px; overflow:hidden; box-shadow:0 12px 32px rgba(18,50,42,.09); transition:transform .22s ease, box-shadow .22s ease; }
+        .category-card:hover, .featured-card:hover { transform:translateY(-5px); box-shadow:0 20px 45px rgba(18,50,42,.15); }
+        .category-image, .featured-image { background-position:center; background-size:cover; }
+        .category-content, .featured-content { background:#fff; }
+        .category-quote, .featured-quote { display:inline-flex; align-items:center; gap:8px; font-size:.92rem; font-weight:700; color:#0d755b; letter-spacing:.015em; }
+        .featured-quote { font-size:.9rem; }
+        .pwani-rate-note { max-width:1160px; margin:38px auto 0; padding:18px 23px; display:flex; align-items:center; gap:17px; border:1px solid #d9e9e0; background:#f5faf6; color:#193e31; border-radius:17px; line-height:1.5; box-shadow:0 6px 16px rgba(6,65,42,.05); }
+        .pwani-rate-note > i { font-size:1.3rem; color:#0d755b; }
+        .pwani-rate-note span { flex:1; }
+        .pwani-rate-note a { display:inline-flex; align-items:center; gap:8px; color:white; background:#0d755b; padding:12px 18px; border-radius:100px; text-decoration:none; font-weight:700; white-space:nowrap; }
+        .pwani-rate-note a:hover { background:#095841; }
+        @media(max-width:720px){ .pwani-rate-note { margin:22px 5% 0; flex-wrap:wrap; } .pwani-rate-note a { width:100%; justify-content:center; } }
+
     </style>
 </head>
 <body>
@@ -1054,7 +1071,7 @@
                 </li>
                 
                 <!-- Book Now button - Opens WhatsApp -->
-                <li role="none"><a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20I%20would%20like%20to%20book%20a%20stay%20or%20get%20more%20information." class="btn-book" role="menuitem">Book Now</a></li>
+                <li role="none"><a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20Please%20share%20availability%20and%20a%20current%20quotation%20for%20an%20experience." class="btn-book" role="menuitem">Request a Quote</a></li>
             </ul>
         </nav>
     </header>
@@ -1093,6 +1110,8 @@
               Travel Experiences</span>
     </div>
 
+    <div class="pwani-rate-note" role="note"><i class="fas fa-message" aria-hidden="true"></i><span><strong>Every journey is quoted individually.</strong> Tell us your preferred dates and group size, and we will confirm availability and a current price.</span><a href="https://wa.me/254738544784?text=Hello%20PwaniStays!%20Please%20send%20me%20a%20quote%20for%20an%20experience." target="_blank" rel="noopener noreferrer">Request a Quote <i class="fab fa-whatsapp" aria-hidden="true"></i></a></div>
+
     <!-- Experience Categories -->
     <section id="experience-categories">
         <div class="section-title">
@@ -1103,12 +1122,12 @@
         <div class="categories-grid">
             <!-- Coastal & Cultural - UPDATED LINK -->
             <a href="coastal-cultural.html" class="category-card">
-                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="category-image" style="background-image: url('/images/Diani_Beach_PwaniStays.jpg');">
                     <div class="category-overlay">
                         <h3>Coastal & Cultural</h3>
                         <div class="category-count">
                             <i class="fas fa-umbrella-beach"></i>
-                            <span>10+ packages from Ksh 6,500</span>
+                            <span>Coastal journeys • customized quotes</span>
                         </div>
                     </div>
                 </div>
@@ -1123,7 +1142,7 @@
                     </div>
                     
                     <div class="category-cta">
-                        <span class="category-price">From Ksh 6,500</span>
+                        <span class="category-quote"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</span>
                         <!-- UPDATED: Link to coastal-cultural.html -->
                         <span class="btn-view-all">View All Packages →</span>
                     </div>
@@ -1132,12 +1151,12 @@
 
             <!-- Safari - UPDATED LINK -->
             <a href="safari.html" class="category-card">
-                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1517384161621-5773b87f4cd4?auto=format&fit=crop&w=1600&q=82');">
                     <div class="category-overlay">
                         <h3>Safari Adventures</h3>
                         <div class="category-count">
                             <i class="fas fa-binoculars"></i>
-                            <span>8+ packages from $280</span>
+                            <span>Wildlife journeys • customized quotes</span>
                         </div>
                     </div>
                 </div>
@@ -1152,7 +1171,7 @@
                     </div>
                     
                     <div class="category-cta">
-                        <span class="category-price">From $280</span>
+                        <span class="category-quote"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</span>
                         <!-- UPDATED: Link to safari.html -->
                         <span class="btn-view-all">View All Safaris →</span>
                     </div>
@@ -1161,12 +1180,12 @@
 
             <!-- Nairobi & Inland - UPDATED LINK -->
             <a href="nairobi.html" class="category-card">
-                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1611348524140-53c9a25263d6?auto=format&fit=crop&w=1600&q=82');">
                     <div class="category-overlay">
                         <h3>Nairobi & Inland</h3>
                         <div class="category-count">
                             <i class="fas fa-city"></i>
-                            <span>8+ packages from Ksh 6,500</span>
+                            <span>City & nature • customized quotes</span>
                         </div>
                     </div>
                 </div>
@@ -1181,7 +1200,7 @@
                     </div>
                     
                     <div class="category-cta">
-                        <span class="category-price">From Ksh 6,500</span>
+                        <span class="category-quote"><i class="fas fa-comment-dots" aria-hidden="true"></i> Rates on request</span>
                         <!-- UPDATED: Link to nairobi.html -->
                         <span class="btn-view-all">View All Experiences →</span>
                     </div>
@@ -1200,7 +1219,7 @@
         <div class="featured-grid">
             <!-- Featured 1: Kisite Marine Safari -->
             <div class="featured-card">
-                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1651860282131-e3257674ccd1?auto=format&fit=crop&w=1600&q=82');">
                     <div class="featured-badge">Coastal</div>
                 </div>
                 <div class="featured-content">
@@ -1210,7 +1229,7 @@
                     </div>
                     <p class="featured-desc">An all-day marine adventure with snorkeling, dolphin spotting, and seafood lunch on Wasini Island.</p>
                     <div class="featured-meta">
-                        <span class="featured-price">Ksh 12,500</span>
+                        <span class="featured-quote">Personalized quote</span>
                         <!-- UPDATED: Link to coastal-cultural.html -->
                         <a href="coastal-cultural.html" class="btn-details">Details</a>
                     </div>
@@ -1219,7 +1238,7 @@
 
             <!-- Featured 2: Masai Mara Classic -->
             <div class="featured-card">
-                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1738508798495-32d5de3f2eda?auto=format&fit=crop&w=1600&q=82');">
                     <div class="featured-badge">Safari</div>
                 </div>
                 <div class="featured-content">
@@ -1229,7 +1248,7 @@
                     </div>
                     <p class="featured-desc">4-day luxury safari witnessing the Great Migration with expert guides and premium accommodations.</p>
                     <div class="featured-meta">
-                        <span class="featured-price">$1,850</span>
+                        <span class="featured-quote">Personalized quote</span>
                         <!-- UPDATED: Link to safari.html -->
                         <a href="safari.html" class="btn-details">Details</a>
                     </div>
@@ -1238,7 +1257,7 @@
 
             <!-- Featured 3: Nairobi Wildlife Conservation -->
             <div class="featured-card">
-                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1535083475219-aed59281b9aa?auto=format&fit=crop&w=1600&q=82');">
                     <div class="featured-badge">Nairobi</div>
                 </div>
                 <div class="featured-content">
@@ -1248,7 +1267,7 @@
                     </div>
                     <p class="featured-desc">Full-day experience combining Nairobi National Park with elephant orphanage and giraffe center visits.</p>
                     <div class="featured-meta">
-                        <span class="featured-price">Ksh 12,500</span>
+                        <span class="featured-quote">Personalized quote</span>
                         <!-- UPDATED: Link to nairobi.html -->
                         <a href="nairobi.html" class="btn-details">Details</a>
                     </div>

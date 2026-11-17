@@ -61,5 +61,37 @@
     if (!validISO(s)) return 'Not selected';
     return new Date(s + 'T12:00:00').toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'});
   }
-  window.PwaniListings = {FIELDS, UUID, escapeHtml, localISO, validISO, nights, link, client, images, formatDate};
+
+  // Display amenity lines only; exclude prose from older caption imports.
+  function amenities(value) {
+    const rows = String(value ?? '').split(/\r?\n/);
+    const headingText = line => String(line).trim()
+      .replace(/^[^\p{L}\p{N}]+/gu, '').replace(/[:\s]+$/g, '').toLowerCase();
+    const amenitiesHeading = /^(?:(?:key|main|top|apartment|property|house|room|unit)\s+)?(?:amenities|facilities|features|highlights|inclusions|what you(?:'ll| will) (?:love|enjoy))(?:\s*(?:&|and|\/)\s*(?:amenities|facilities|features|highlights))?$/;
+    const otherHeading = /^(?:location|contacts?|bookings?|reservations?|rates?|prices?|payments?|terms?|house rules|check[ -]?in(?:\/out)?|check[ -]?out|availability|cancellation|notes?|important|nearby|how to book)$/;
+    const clean = line => String(line).trim().replace(/^(?:[-*•]\s+|\d+[.)]\s+)/, '').trim();
+    let inSection = false;
+    let foundSection = false;
+    const items = [];
+    for (const row of rows) {
+      const text = row.trim();
+      if (!text) continue;
+      const heading = headingText(text);
+      if (amenitiesHeading.test(heading)) {
+        foundSection = true;
+        inSection = true;
+        continue;
+      }
+      if (otherHeading.test(heading) || /^(?:dm|book|call|whatsapp|contact|inbox|message us)\b/.test(heading)) {
+        inSection = false;
+        continue;
+      }
+      if (inSection) items.push(clean(text));
+    }
+    if (foundSection) return items.filter(Boolean);
+    // v4 importer prefixes amenities with bullets; never guess from prose.
+    return rows.filter(row => /^\s*•\s+/.test(row)).map(clean).filter(Boolean);
+  }
+
+  window.PwaniListings = {FIELDS, UUID, escapeHtml, localISO, validISO, nights, link, client, images, formatDate, amenities};
 })();

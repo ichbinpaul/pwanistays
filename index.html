@@ -3818,7 +3818,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const propertyTypeDisplay = unitTypeLabels[property.unit_type] || property.unit_type || 'Property';
                 
                 // Show beds from property.beds
-                const bedsCount = property.beds || 1;
+                const bedsCount = Number(property.beds) || 0;
                 const bedLabel = window.i18n ? (bedsCount === 1 ? window.i18n.t('card_bed') : window.i18n.t('card_beds')) : (bedsCount === 1 ? 'Bed' : 'Beds');
                 const bedsDisplay = `${bedsCount} ${bedLabel}`;
                 const propertyUrl = window.PwaniListings.link(property.id, {
@@ -3863,9 +3863,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         <div class="property-footer">
                             <div class="property-info">
-                                <div class="property-beds">
-                                    <i class="fas fa-bed"></i> ${bedsDisplay}
-                                </div>
+                                ${bedsCount > 0 ? '<div class="property-beds"><i class="fas fa-bed"></i> ' + bedsDisplay + '</div>' : ''}
                             </div>
                             <a class="btn-primary" href="${escapeHtml(propertyUrl)}" aria-label="View details and request a quotation for ${escapeHtml(property.title || 'property')}">
                                 <i class="fas fa-arrow-right" aria-hidden="true"></i> ${window.i18n ? window.i18n.t('card_check_availability') : 'View Details & Enquire'}
@@ -4322,7 +4320,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!container || !description) return;
 
-                const amenities = description.split('\n').filter(line => line.trim().length > 0);
+                const amenities = window.PwaniListings.amenities(description);
                 const visible = expanded ? amenities : amenities.slice(0, 4);
 
                 container.innerHTML = visible.map(amenity => `<li>${escapeHtml(amenity.trim())}</li>`).join('');

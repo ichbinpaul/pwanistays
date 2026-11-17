@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /bookings.html
+
+# Let crawlers fetch noindex directives on administrative and template pages.
 Sitemap: https://pwanistays.com/sitemap.xml

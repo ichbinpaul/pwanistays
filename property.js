@@ -50,7 +50,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const types = {'studio':'Studio','1br':'1 bedroom','2br':'2 bedrooms','3br':'3 bedrooms','4br':'4 bedrooms','5br':'5 bedrooms','villa':'Villa'};
     document.getElementById('propertyType').textContent = types[data.unit_type] || (data.unit_type || 'Holiday accommodation');
     if (data.beds && Number(data.beds) > 0) document.getElementById('propertyBeds').textContent = '🛏 ' + Number(data.beds) + ' bed' + (Number(data.beds) === 1 ? '' : 's');
-    document.getElementById('propertyDescription').textContent = data.description && data.description.trim() ? data.description : 'Please contact PwaniStays for more information about the layout, amenities and house rules.';
+    // The database's legacy "description" column can contain a full caption.
+    // Render only its amenities, never its introductory promotional paragraph.
+    const amenitiesList = document.getElementById('propertyAmenities');
+    const items = u.amenities(data.description || '');
+    for (const text of (items.length ? items : ['Please contact PwaniStays to confirm the property amenities.'])) {
+      const li = document.createElement('li');
+      li.textContent = text;
+      amenitiesList.appendChild(li);
+    }
     const urls = await u.images(db, data);
     const main = document.getElementById('pwMainImage');
     const thumbs = document.getElementById('pwThumbs');

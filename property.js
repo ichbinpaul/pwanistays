@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       ``, `Property: ${property.title}`, `Location: ${property.location || 'Coastal Kenya'}`,
       `Link: ${propertyLink}`, `Check-in: ${u.formatDate(checkin.value)}`,
       `Check-out: ${u.formatDate(checkout.value)}`, `Nights: ${n}`, `Guests: ${guests.value}`,
-      ``, `Please confirm availability, the total price, any additional charges and the applicable cancellation terms. Thank you!`].join('\n');
+      ``, `Please confirm availability and the total price. Thank you!`].join('\n');
     location.href = `https://wa.me/254738544784?text=${encodeURIComponent(message)}`;
   });
 });

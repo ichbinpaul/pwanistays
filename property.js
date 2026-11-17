@@ -41,9 +41,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (error) throw error;
     if (!data) { status.textContent = 'This property is not currently listed. Browse other available accommodation.'; return; }
     property = data;
-    document.title = `${data.title || 'Coastal accommodation'} | PwaniStays`;
+    const canonicalUrl = 'https://pwanistays.com/property.html?id=' + encodeURIComponent(id);
+    const pageTitle = `${data.title || 'Coastal accommodation'} | PwaniStays`;
+    const pageDescription = `Explore ${data.title || 'this stay'} in ${data.location || 'coastal Kenya'}. View amenities and photos, then request current rates and availability from PwaniStays.`;
+    document.title = pageTitle;
     const descMeta = document.querySelector('meta[name="description"]');
-    if (descMeta) descMeta.content = `Explore ${data.title || 'this stay'} in ${data.location || 'coastal Kenya'}. Request current rates and availability from PwaniStays.`;
+    if (descMeta) descMeta.content = pageDescription;
+    // A single stable canonical URL for each property, regardless of dates or guests.
+    let canonicalMeta = document.querySelector('link[rel="canonical"]');
+    if (!canonicalMeta) {
+      canonicalMeta = document.createElement('link');
+      canonicalMeta.rel = 'canonical';
+      document.head.appendChild(canonicalMeta);
+    }
+    canonicalMeta.href = canonicalUrl;
+    for (const [selector, value] of [
+      ['meta[property="og:url"]', canonicalUrl],
+      ['meta[property="og:title"]', pageTitle],
+      ['meta[property="og:description"]', pageDescription]
+    ]) {
+      let tag = document.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('property', selector.match(/meta\[property="([^"]+)"/)[1]);
+        document.head.appendChild(tag);
+      }
+      tag.content = value;
+    }
+    // Descriptive structured data only, without unverified prices or availability.
+    const structured = document.createElement('script');
+    structured.type = 'application/ld+json';
+    structured.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: pageTitle,
+      description: pageDescription,
+      url: canonicalUrl,
+      isPartOf: { '@type': 'WebSite', name: 'PwaniStays', url: 'https://pwanistays.com/' }
+    });
+    document.head.appendChild(structured);
     document.getElementById('breadcrumbTitle').textContent = data.title || 'Property details';
     document.getElementById('propertyTitle').textContent = data.title || 'Coastal accommodation';
     document.getElementById('propertyLocation').textContent = '📍 ' + (data.location || 'Coastal Kenya');

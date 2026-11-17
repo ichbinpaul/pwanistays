@@ -41,14 +41,27 @@
     const result = [];
     if (UUID.test(property.id || '')) {
       try {
-        const {data, error} = await db.storage.from('property_images').list(property.id, {limit: 100});
+        // PWANI_GALLERY_REVISIONS_V1: allow atomic gallery switching while
+        // preserving the property UUID and retaining the previous photo set.
+        // Only recognize revision subfolders under this SAME property's public bucket.
+        let galleryPrefix = property.id;
+        const base = `${SUPABASE_URL}/storage/v1/object/public/property_images/${property.id}/`;
+        const imageUrl = String(property.image_url || '');
+        if (imageUrl.startsWith(base)) {
+          try {
+            const remainder = decodeURIComponent(imageUrl.slice(base.length).split(/[?#]/)[0]);
+            const dirname = remainder.includes('/') ? remainder.slice(0, remainder.lastIndexOf('/')) : '';
+            if (/^_pwani_v6_[a-f0-9]{16}$/.test(dirname)) galleryPrefix += '/' + dirname;
+          } catch (_) { /* use legacy gallery safely */ }
+        }
+        const {data, error} = await db.storage.from('property_images').list(galleryPrefix, {limit: 100});
         if (!error && data) {
           const sorted = data.filter(f => f.name && allowedImage.test(f.name)).sort((a,b) => {
             const x = +(a.name.match(/\d+/) || [0])[0], y = +(b.name.match(/\d+/) || [0])[0];
             return x-y || a.name.localeCompare(b.name);
           });
           for (const file of sorted) {
-            const {data: url} = db.storage.from('property_images').getPublicUrl(property.id+'/'+file.name);
+            const {data: url} = db.storage.from('property_images').getPublicUrl(galleryPrefix+'/'+file.name);
             if (url && url.publicUrl && /^https:\/\//.test(url.publicUrl)) result.push(url.publicUrl);
           }
         }

@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+"""Generate a public property sitemap from active PwaniStays Supabase listings.
+
+Only reads public UUIDs via the same publishable client configuration as the
+website. No service-role key is used, and no database records are modified.
+
+Usage: python3 scripts/build_property_sitemap.py
+Returns nonzero on API errors, leaving the existing sitemap intact.
+"""
+from __future__ import annotations
+
+import json
+import re
+import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+import uuid
+from pathlib import Path
+from xml.etree import ElementTree as ET
+
+ROOT = Path(__file__).resolve().parents[1]
+CONFIG = ROOT / "listing-utils.js"
+OUTPUT = ROOT / "property-sitemap.xml"
+ROBOTS = ROOT / "robots.txt"
+SITE_BASE = "https://pwanistays.com"
+SITEMAP_URL = SITE_BASE + "/property-sitemap.xml"
+NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
+MAX_ITEMS = 1000
+MAX_PAGES = 1000
+
+
+def public_config() -> tuple[str, str]:
+    source = CONFIG.read_text(encoding="utf-8")
+    url_match = re.search(r"const\s+SUPABASE_URL\s*=\s*['\"](https://[^'\"]+)['\"]", source)
+    key_match = re.search(r"const\s+PUBLISHABLE_KEY\s*=\s*['\"]([^'\"]+)['\"]", source)
+    if not url_match or not key_match:
+        raise ValueError("Missing public Supabase URL/key in listing-utils.js")
+    url = url_match.group(1).rstrip("/")
+    if not url.endswith(".supabase.co"):
+        raise ValueError("Unexpected Supabase host; refusing to fetch")
+    return url, key_match.group(1)
+
+
+def fetch_active_ids(base_url: str, public_key: str) -> list[str]:
+    ids: set[str] = set()
+    for page in range(MAX_PAGES):
+        params = urllib.parse.urlencode({
+            "select": "id", "is_active": "eq.true", "order": "id.asc",
+            "limit": MAX_ITEMS, "offset": page * MAX_ITEMS
+        })
+        req = urllib.request.Request(
+            f"{base_url}/rest/v1/properties?{params}",
+            headers={"apikey": public_key, "Accept": "application/json",
+                     "User-Agent": "PwaniStays-Sitemap-Bot/1.0"}
+        )
+        with urllib.request.urlopen(req, timeout=35) as response:
+            if response.status not in (200, 206):
+                raise RuntimeError(f"Unexpected Supabase HTTP status {response.status}")
+            rows = json.load(response)
+        if not isinstance(rows, list):
+            raise ValueError("Supabase response was not a JSON list")
+        for row in rows:
+            if not isinstance(row, dict):
+                raise ValueError("Malformed listing row")
+            property_id = str(uuid.UUID(str(row["id"])))
+            if property_id in ids:
+                raise ValueError("Duplicate property UUID across API pages")
+            ids.add(property_id)
+        if len(rows) < MAX_ITEMS:
+            return sorted(ids)
+    raise RuntimeError("Too many listing pages; refusing incomplete sitemap")
+
+
+def render_sitemap(ids: list[str]) -> bytes:
+    ET.register_namespace("", NS)
+    urlset = ET.Element(f"{{{NS}}}urlset")
+    for property_id in ids:
+        node = ET.SubElement(urlset, f"{{{NS}}}url")
+        ET.SubElement(node, f"{{{NS}}}loc").text = (
+            f"{SITE_BASE}/property.html?id={property_id}"
+        )
+    ET.indent(urlset, space="  ")
+    return ET.tostring(urlset, encoding="utf-8", xml_declaration=True) + b"\n"
+
+
+def update_robots() -> None:
+    current = ROBOTS.read_text(encoding="utf-8")
+    directive = f"Sitemap: {SITEMAP_URL}"
+    if directive not in current:
+        ROBOTS.write_text(current.rstrip() + "\n" + directive + "\n", encoding="utf-8")
+
+
+def main() -> int:
+    try:
+        base_url, key = public_config()
+        ids = fetch_active_ids(base_url, key)
+        # An empty response could reflect a broken policy or a transient
+        # configuration issue. Do not erase a previously working sitemap.
+        if not ids:
+            raise RuntimeError("No active listings returned; refusing empty sitemap")
+        xml = render_sitemap(ids)
+        if not OUTPUT.exists() or OUTPUT.read_bytes() != xml:
+            OUTPUT.write_bytes(xml)
+        update_robots()
+        print(f"Generated sitemap for {len(ids)} active property IDs")
+        return 0
+    except Exception as exc:
+        print(f"SITEMAP ERROR: {exc}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

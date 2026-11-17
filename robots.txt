@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /*.html$
+Disallow: /bookings.html
 Sitemap: https://pwanistays.com/sitemap.xml

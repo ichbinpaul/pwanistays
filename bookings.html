@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PwaniStays – Bookings Admin</title>
+    <meta name="robots" content="noindex,nofollow">
     <style>
         * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', monospace; }
         body { background: #f0f4f2; margin: 0; padding: 20px; }
@@ -89,6 +90,9 @@
     const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Escape user-provided booking fields before inserting into HTML tables/search panels.
+    function escapeHtml(value) { return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+
 
     let bookings = [];
     let filterText = "";
@@ -242,17 +246,17 @@
         html += '<th>Actions</th></tr></thead><tbody>';
         filtered.forEach(b => {
             const statusClass = getStatusClass(b.status);
-            html += `<tr class="${statusClass}" data-id="${b.id}">`;
-            html += `<td class="checkbox-col"><input type="checkbox" class="rowCheckbox" data-id="${b.id}"></td>`;
+            html += `<tr class="${statusClass}" data-id="${escapeHtml(b.id)}">`;
+            html += `<td class="checkbox-col"><input type="checkbox" class="rowCheckbox" data-id="${escapeHtml(b.id)}"></td>`;
             cols.forEach(col => {
                 let val = b[col] ?? '';
                 if (col === 'check_in' || col === 'check_out') val = val ? val.substring(0,10) : '';
                 if (col === 'guest_paid' || col === 'host_cost' || col === 'charges' || col === 'profit') {
                     if (val !== '') val = parseFloat(val).toLocaleString();
                 }
-                html += `<td>${val}</td>`;
+                html += `<td>${escapeHtml(val)}</td>`;
             });
-            html += `<td><button class="editBtn" data-id="${b.id}">✏️ Edit</button> <button class="deleteBtn" data-id="${b.id}">🗑️ Delete</button></td>`;
+            html += `<td><button class="editBtn" data-id="${escapeHtml(b.id)}">✏️ Edit</button> <button class="deleteBtn" data-id="${escapeHtml(b.id)}">🗑️ Delete</button></td>`;
             html += '</tr>';
         });
         html += '</tbody></table></div>';
@@ -908,8 +912,8 @@
 
             rgsResults.innerHTML = matches.map((b, i) => `
                 <div class="guest-result" data-idx="${i}" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f0f0f0;font-size:0.85rem;">
-                    <strong>${b.guest_name || ''}</strong>${b.phone ? ' · ' + b.phone : ''}
-                    <span style="color:#888;margin-left:6px;">${[b.location, b.unit_type].filter(Boolean).join(' · ')}</span>
+                    <strong>${escapeHtml(b.guest_name || '')}</strong>${b.phone ? ' · ' + escapeHtml(b.phone) : ''}
+                    <span style="color:#888;margin-left:6px;">${escapeHtml([b.location, b.unit_type].filter(Boolean).join(' · '))}</span>
                 </div>
             `).join('');
 

@@ -255,6 +255,18 @@ class TransportTests(unittest.TestCase):
         self.assertIn("code=190", str(raised.exception))
         self.assertNotIn("configured-token", str(raised.exception))
 
+    def test_quoted_credentials_and_c1_controls_are_redacted(self):
+        graph = mod.Graph("configured-token", "v26.0")
+        secret = "0123456789abcdef0123456789abcdef"
+        for credential in ['"client_secret": "' + secret + '"',
+                           "'access_token': '" + secret + "'",
+                           "appsecret_proof=" + secret]:
+            with self.subTest(credential=credential):
+                text = graph.safe_message("Invalid parameter " + credential + "\x9b Details")
+                self.assertNotIn(secret, text)
+                self.assertNotIn("\x9b", text)
+                self.assertIn("Details", text)
+
     def test_bearer_header_and_encoded_nested_payload_no_token_in_url(self):
         graph = mod.Graph("test-private-token", "v26.0")
         graph.opener = Mock()

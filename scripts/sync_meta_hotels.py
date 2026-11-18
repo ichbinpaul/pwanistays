@@ -120,11 +120,11 @@ class Graph:
         text = str(value).replace(self.token, "[REDACTED]")
         text = re.sub(r"https?://[^\s<>\"']+", "[URL REDACTED]", text, flags=re.I)
         text = re.sub(r"\bBearer\s+[^\s,;\"']+", "Bearer [REDACTED]", text, flags=re.I)
-        text = re.sub(r"\b(?:access_token|appsecret_proof|client_secret)\s*[:=]\s*[^\s,;]+",
+        text = re.sub(r"""\b(?:access_token|appsecret_proof|client_secret)["']?\s*[:=]\s*(?:"[^"]*"|'[^']*'|[^\s,;]+)""",
                       "credential=[REDACTED]", text, flags=re.I)
         text = re.sub(r"\bEAA[A-Za-z0-9_-]{12,}\b", "[REDACTED]", text)
         text = re.sub(r"\b[A-Za-z0-9_-]{40,}\b", "[REDACTED]", text)
-        text = re.sub(r"[\x00-\x1f\x7f]", " ", text)
+        text = re.sub(r"[\x00-\x1f\x7f-\x9f]", " ", text)
         return " ".join(text.split())[:limit]
 
     def failure(self, method, path, status, payload):

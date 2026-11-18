@@ -49,6 +49,7 @@ class PlanTests(unittest.TestCase):
         first = mod.payloads(snapshot())
         self.assertEqual(first, mod.payloads(snapshot()))
         self.assertEqual(first[0]["hotel_id"], mod.PREFIX + ID)
+        self.assertEqual(first[0]["url"], "https://pwanistays.com/stays/" + ID + "/")
         self.assertEqual(first[0]["images"], [{"image_url": "https://example.com/cover.jpg"}])
         self.assertEqual(set(first[0]), {"hotel_id", "name", "description", "brand", "url", "images"})
         self.assertNotIn("confidential", json.dumps(first))

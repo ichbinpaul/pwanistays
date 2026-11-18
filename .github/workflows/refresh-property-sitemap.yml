@@ -2,9 +2,8 @@ name: Refresh active property sitemap
 
 on:
   workflow_dispatch:
-  schedule:
-    # Daily 07:00 East Africa Time / 04:00 UTC
-    - cron: '0 4 * * *'
+  # The hourly catalogue workflow refreshes pages + sitemap together.
+  # Retain this manual job for sitemap-only maintenance.
 
 permissions:
   contents: write

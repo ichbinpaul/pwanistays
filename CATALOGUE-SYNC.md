@@ -46,7 +46,7 @@ python3 scripts/build_whatsapp_catalogue.py
 
 `--check` fetches and validates the source without writing output files. A normal
 run refreshes the generated files. Unchanged property content retains the prior
-timestamp so the daily schedule does not create timestamp-only commits. A failed
+timestamp so the schedule does not create timestamp-only commits. A failed
 refresh must return nonzero and retain the last successful files; do not publish
 an incomplete response as a replacement catalogue. Check command output and the
 workflow result rather than treating an existing file as proof of a fresh run.
@@ -57,10 +57,11 @@ needed for this export. The publishable source configuration already exists in
 
 ## Scheduled refresh
 
-`.github/workflows/refresh-whatsapp-catalogue.yml` runs daily at 04:15 UTC
-(07:15 East Africa Time) and supports **Run workflow** in GitHub Actions. The
+`.github/workflows/refresh-whatsapp-catalogue.yml` refreshes source and property
+preview pages hourly at minute 15 and supports **Run workflow** in GitHub Actions. The
 workflow runs the catalogue tests before generating output, then commits only
-the two catalogue JSON files to `main` when their content changes. It uses a
+catalogue JSON files, generated property preview pages, and their matching sitemap
+to `main` when their content changes. It uses a
 normal push and fails on conflicting branch updates; it never force-pushes or
 overwrites unrelated work. Inspect failed Actions runs before retrying.
 
@@ -176,9 +177,10 @@ new IDs. This is an upsert identity guarantee, not an all-or-nothing Meta transa
 
 ### Scheduled API activation
 
-The daily workflow always validates the payload plan offline. Scheduled live API
+The hourly workflow always validates the payload plan offline. Scheduled live API
 sync is disabled unless the repository variable `META_CATALOGUE_SYNC_ENABLED`
-is exactly `true`. Manual runs default to `source_only`, even if the schedule is
+is exactly `true`, and still runs only at 04:15 UTC (07:15 East Africa Time).
+Manual runs default to `source_only`, even if the schedule is
 enabled. Select `test_one_property` to upsert just the first active property,
 or `sync` to explicitly apply the full snapshot. Single-property tests never prune.
 

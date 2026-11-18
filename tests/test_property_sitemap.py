@@ -1,6 +1,9 @@
 """Unit tests that do not need Supabase credentials or internet."""
 import importlib.util
 import unittest
+import json
+import tempfile
+from unittest.mock import patch
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -18,14 +21,31 @@ class SitemapTests(unittest.TestCase):
         ns = {"s": mod.NS}
         urls = [x.text for x in root.findall("s:url/s:loc", ns)]
         self.assertEqual(urls, [
-            "https://pwanistays.com/property.html?id=" + a,
-            "https://pwanistays.com/property.html?id=" + b
+            "https://pwanistays.com/stays/" + a + "/",
+            "https://pwanistays.com/stays/" + b + "/"
         ])
 
     def test_public_config(self):
         base_url, key = mod.public_config()
         self.assertTrue(base_url.endswith(".supabase.co"))
         self.assertTrue(key.startswith("sb_publishable_"))
+
+    def test_snapshot_keeps_sitemap_in_step_with_generated_pages(self):
+        property_id = "2f4578c5-e189-47dc-ad03-4a21e7c347b3"
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source, output, robots = root / "source.json", root / "sitemap.xml", root / "robots.txt"
+            source.write_text(json.dumps({"version": 1, "properties": [{"id": property_id}]}))
+            robots.write_text("User-agent: *\nAllow: /\n")
+            with patch.object(mod, "OUTPUT", output), patch.object(mod, "ROBOTS", robots), \
+                    patch.object(mod, "fetch_active_ids") as live:
+                self.assertEqual(mod.main(["--source", str(source)]), 0)
+                live.assert_not_called()
+                before = output.read_bytes()
+                self.assertIn(("/stays/" + property_id + "/").encode(), before)
+                source.write_text(json.dumps({"version": 1, "properties": []}))
+                self.assertEqual(mod.main(["--source", str(source)]), 1)
+                self.assertEqual(output.read_bytes(), before)
 
 
 if __name__ == "__main__":

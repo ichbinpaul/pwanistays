@@ -10,6 +10,7 @@ Returns nonzero on API errors, leaving the existing sitemap intact.
 from __future__ import annotations
 
 import json
+import argparse
 import re
 import sys
 import urllib.error
@@ -78,7 +79,7 @@ def render_sitemap(ids: list[str]) -> bytes:
     for property_id in ids:
         node = ET.SubElement(urlset, f"{{{NS}}}url")
         ET.SubElement(node, f"{{{NS}}}loc").text = (
-            f"{SITE_BASE}/property.html?id={property_id}"
+            f"{SITE_BASE}/stays/{property_id}/"
         )
     ET.indent(urlset, space="  ")
     return ET.tostring(urlset, encoding="utf-8", xml_declaration=True) + b"\n"
@@ -91,10 +92,23 @@ def update_robots() -> None:
         ROBOTS.write_text(current.rstrip() + "\n" + directive + "\n", encoding="utf-8")
 
 
-def main() -> int:
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, help="Use the same public snapshot as generated property pages")
+    args = parser.parse_args(argv)
     try:
-        base_url, key = public_config()
-        ids = fetch_active_ids(base_url, key)
+        if args.source:
+            snapshot = json.loads(args.source.read_text(encoding="utf-8"))
+            rows = snapshot.get("properties")
+            if snapshot.get("version") != 1 or not isinstance(rows, list):
+                raise ValueError("Invalid public property snapshot")
+            ids = [str(uuid.UUID(row["id"])) for row in rows]
+            if len(set(ids)) != len(ids):
+                raise ValueError("Duplicate property UUID in snapshot")
+            ids.sort()
+        else:
+            base_url, key = public_config()
+            ids = fetch_active_ids(base_url, key)
         # An empty response could reflect a broken policy or a transient
         # configuration issue. Do not erase a previously working sitemap.
         if not ids:

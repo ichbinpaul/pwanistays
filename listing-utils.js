@@ -23,13 +23,17 @@
     const end = Date.parse(b + 'T12:00:00Z');
     return Math.round((end - start) / 86400000);
   }
+  function permalink(id) {
+    if (!UUID.test(id || '')) return '/#stays';
+    return '/stays/' + id.toLowerCase() + '/';
+  }
   function link(id, dates) {
     if (!UUID.test(id || '')) return '/#stays';
-    const params = new URLSearchParams({id});
+    const params = new URLSearchParams();
     if (dates && validISO(dates.checkin)) params.set('checkin', dates.checkin);
     if (dates && validISO(dates.checkout)) params.set('checkout', dates.checkout);
     if (dates && Number.isInteger(+dates.guests) && +dates.guests >= 1 && +dates.guests <= 16) params.set('guests', String(dates.guests));
-    return '/property.html?' + params.toString();
+    return permalink(id) + (params.size ? '?' + params.toString() : '');
   }
   function client() {
     if (!window.supabase) throw new Error('Unable to connect to our listings right now.');
@@ -106,5 +110,5 @@
     return rows.filter(row => /^\s*•\s+/.test(row)).map(clean).filter(Boolean);
   }
 
-  window.PwaniListings = {FIELDS, UUID, escapeHtml, localISO, validISO, nights, link, client, images, formatDate, amenities};
+  window.PwaniListings = {FIELDS, UUID, escapeHtml, localISO, validISO, nights, permalink, link, client, images, formatDate, amenities};
 })();

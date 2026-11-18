@@ -10,10 +10,14 @@
 
 # PwaniStays — upgraded website (GitHub Pages + Supabase)
 
+Property sharing now uses generated `/stays/PROPERTY-UUID/` pages with unit-specific
+Open Graph images in the initial HTML. See [PROPERTY-PREVIEWS.md](PROPERTY-PREVIEWS.md)
+for generation, refresh scheduling, and the limitations of older query-string links.
+
 ## What changed
 
 - Public accommodation cards no longer show nightly pricing. The original `public.properties.price` and `commission_rate` columns are **unchanged** in Supabase.
-- Cards open shareable detail URLs such as `https://pwanistays.com/property.html?id=YOUR-PROPERTY-UUID`.
+- Cards open shareable detail URLs such as `https://pwanistays.com/stays/YOUR-PROPERTY-UUID/`.
 - New property details show current gallery/description and request check-in, check-out and guest count before generating a WhatsApp quotation inquiry (including nights and a property URL).
 - Date selection represents **requested dates**, **not verified live availability**. The system does **not** book instantly or collect payment on the website.
 - New owner partnerships, privacy, booking terms and cancellation pages; links in the header/footer and sitemap. The payment/cancellation pages state the standard 50% non-refundable-on-guest-cancellation deposit and 50% check-in balance.
@@ -50,7 +54,7 @@ git push origin main
 
 - [ ] `https://pwanistays.com/` loads on desktop/mobile and displays actual properties.
 - [ ] No accommodation card displays a KES/night rate, and Network requests do not retrieve `price`/`commission_rate` after migration.
-- [ ] Clicking **View Details & Enquire** opens `/property.html?id=...` with the correct title, description and images.
+- [ ] Clicking **View Details & Enquire** opens `/stays/PROPERTY-UUID/` with the correct title, description and images.
 - [ ] Check-in/check-out reject invalid or reversed dates; guests selection and number of nights make it into WhatsApp.
 - [ ] WhatsApp quotation uses the expected number +254 738 544 784 and does not suggest availability is confirmed.
 - [ ] Existing deep links of the form `/?property=UUID` redirect to the new property page.
@@ -65,7 +69,7 @@ git push origin main
 
 - **No live access to your Supabase data or RLS policies was provided.** The code and migration were built from the schema and original source, and have not been deployed or tested end-to-end against your live database. Run the preflight and verify access before exposing the changes publicly.
 - `bookings` uses a different free-text `unit_name` rather than linking to `properties.id`, so real-time availability cannot be determined reliably without additional inventory/owner synchronization. Do not label the date selector as a live calendar.
-- The individual property URLs are **shareable** but render from Supabase in the browser. GitHub Pages alone cannot generate unique SEO/WhatsApp social share preview metadata for every property without an additional build step or backend. The current social preview remains a generic PwaniStays preview. If you later export permitted public listing records, we can generate static unique paths and rich metadata per listing.
+- The generated `/stays/PROPERTY-UUID/` pages contain unique preview metadata before JavaScript runs. Page content still reads current Supabase data in the browser. Automated builds refresh metadata hourly; platform preview caching can delay image changes. Older `/property.html?id=...` links remain usable but cannot serve query-specific initial HTML on GitHub Pages. Share the new URLs for property-specific previews.
 - Most existing site internationalisation remains in place, but new property/legal pages are initially English. Translate and review legal content with appropriate care before promising all-language coverage.
 - Images remain served from the existing `property_images` Supabase storage bucket. Ensure bucket policies permit public reads for intended property photos only.
 - Website security headers in `netlify.toml` do not automatically apply to GitHub Pages. Configure compatible security controls through your delivery layer if necessary.

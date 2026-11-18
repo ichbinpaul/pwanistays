@@ -3,8 +3,7 @@
     'use strict';
 
     window.createPropertyShareLink = function (property) {
-        const propertyUrl = new URL('https://pwanistays.com/property.html');
-        propertyUrl.searchParams.set('id', property.id);
+        const propertyUrl = new URL(window.PwaniListings.permalink(property.id), 'https://pwanistays.com');
         const message = `${property.title || 'PwaniStays property'}\nView photos and property details: ${propertyUrl.href}`;
         const whatsappUrl = new URL('https://wa.me/');
         whatsappUrl.searchParams.set('text', message);

@@ -2,7 +2,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const u = window.PwaniListings;
   const params = new URLSearchParams(location.search);
-  const id = params.get('id');
+  // Generated pages embed their own identity; a query cannot switch units.
+  // Keep older /property.html?id=... links usable for existing conversations.
+  const id = document.documentElement.dataset.propertyId || params.get('id');
   const status = document.getElementById('propertyStatus');
   const content = document.getElementById('propertyContent');
   const checkin = document.getElementById('checkin');
@@ -41,7 +43,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (error) throw error;
     if (!data) { status.textContent = 'This property is not currently listed. Browse other available accommodation.'; return; }
     property = data;
-    const canonicalUrl = 'https://pwanistays.com/property.html?id=' + encodeURIComponent(id);
+    const canonicalUrl = 'https://pwanistays.com' + u.permalink(id);
+    if (!document.documentElement.dataset.propertyId) {
+      history.replaceState(null, '', u.link(id, {
+        checkin: inParam, checkout: outParam, guests: params.get('guests')
+      }));
+    }
     const pageTitle = `${data.title || 'Coastal accommodation'} | PwaniStays`;
     const pageDescription = `Explore ${data.title || 'this stay'} in ${data.location || 'coastal Kenya'}. View amenities and photos, then request current rates and availability from PwaniStays.`;
     document.title = pageTitle;
@@ -96,6 +103,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       amenitiesList.appendChild(li);
     }
     const urls = await u.images(db, data);
+    if (urls.length) {
+      for (const selector of ['meta[property="og:image"]', 'meta[property="og:image:secure_url"]', 'meta[name="twitter:image"]']) {
+        const tag = document.querySelector(selector);
+        if (tag) tag.content = urls[0];
+      }
+    }
     const main = document.getElementById('pwMainImage');
     const thumbs = document.getElementById('pwThumbs');
     if (!urls.length) document.getElementById('pwNoPhoto').hidden = false;
@@ -123,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     status.textContent = 'We could not load this property right now. Please try again, or message PwaniStays directly.';
     return;
   }
-  const propertyLink = 'https://pwanistays.com/property.html?id=' + encodeURIComponent(id);
+  const propertyLink = 'https://pwanistays.com' + u.permalink(id);
   document.getElementById('emailInquiry').addEventListener('click', (e) => {
     e.currentTarget.href = `mailto:bookings@pwanistays.com?subject=${encodeURIComponent('PwaniStays quotation — '+property.title)}&body=${encodeURIComponent('Hello PwaniStays,\n\nPlease send me the current rate and availability for:\nProperty: '+property.title+'\nLink: '+propertyLink+'\nCheck-in: '+(checkin.value || 'To be confirmed')+'\nCheck-out: '+(checkout.value || 'To be confirmed')+'\nGuests: '+guests.value+'\n\nThank you.')}`;
   });

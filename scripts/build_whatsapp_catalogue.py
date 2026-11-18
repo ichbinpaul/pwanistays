@@ -163,7 +163,7 @@ def export_property(base: str, key: str, row: dict) -> dict:
     description += " View photos and property details; contact PwaniStays for current rates and availability."
     return {"id": row["id"], "title": title, "location": location,
             "unit_type": row.get("unit_type") or "",
-            "url": "https://pwanistays.com/property.html?id=" + row["id"],
+            "url": "https://pwanistays.com/stays/" + row["id"] + "/",
             "description": description, "images": photos}
 
 

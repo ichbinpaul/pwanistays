@@ -152,7 +152,7 @@ class SnapshotTests(unittest.TestCase):
                    description="Secret internal price 87654321; book via private contact")
         with patch.object(mod, "fetch_gallery", return_value=[image("01.jpeg")]):
             result = mod.export_property(BASE, KEY, data)
-        self.assertEqual(result["url"], "https://pwanistays.com/property.html?id=" + ID)
+        self.assertEqual(result["url"], "https://pwanistays.com/stays/" + ID + "/")
         self.assertEqual(set(result), {"id", "title", "location", "unit_type", "url", "description", "images"})
         self.assertNotIn("87654321", json.dumps(result))
         self.assertNotIn("Secret", result["description"])

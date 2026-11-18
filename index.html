@@ -3088,6 +3088,20 @@
         }
     </script>
     
+    <script src="/property-sharing.js"></script>
+    <style>
+        .property-share-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: var(--primary, #075e54);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .property-share-link:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 4px;
+        }
+    </style>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
@@ -3872,6 +3886,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `;
                 
+                card.querySelector('.property-content').appendChild(createPropertyShareLink(property));
+
                 // Render amenities after card is created
                 setTimeout(() => {
                     renderAmenities(property.id, property.description, false, card);

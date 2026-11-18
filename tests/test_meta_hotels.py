@@ -206,6 +206,55 @@ class SyncTests(unittest.TestCase):
 
 
 class TransportTests(unittest.TestCase):
+    def test_http_error_explains_endpoint_and_code_without_leaking_credentials(self):
+        token = "test-private-token"
+        graph = mod.Graph(token, "v26.0")
+        graph.opener = Mock()
+        body = {"error": {"code": 100, "error_subcode": 33, "type": "GraphMethodException",
+                          "message": "Unsupported get request. Check permissions. " + token +
+                          " https://example.com/?access_token=other-secret"},
+                "request_headers": {"Authorization": "Bearer " + token},
+                "debug": "must-not-be-logged"}
+        graph.opener.open.side_effect = HTTPError(
+            "https://example.com/", 400, "Bad Request", {}, io.BytesIO(json.dumps(body).encode()))
+        with self.assertRaises(mod.SyncError) as raised:
+            graph.request("GET", CATALOGUE, {"fields": "id,name,vertical"})
+        error = str(raised.exception)
+        for expected in ["GET " + CATALOGUE, "HTTP 400", "code=100", "error_subcode=33",
+                         "GraphMethodException", "Check permissions"]:
+            self.assertIn(expected, error)
+        for secret in [token, "other-secret", "must-not-be-logged", "Authorization"]:
+            self.assertNotIn(secret, error)
+
+    def test_unstructured_http_body_is_not_logged(self):
+        graph = mod.Graph("test-private-token", "v26.0")
+        graph.opener = Mock()
+        graph.opener.open.side_effect = HTTPError(
+            "https://example.com/", 400, "Bad Request", {}, io.BytesIO(b"private-token-and-debug-html"))
+        with self.assertRaises(mod.SyncError) as raised:
+            graph.request("POST", CATALOGUE + "/hotels", {})
+        self.assertIn("POST " + CATALOGUE + "/hotels", str(raised.exception))
+        self.assertIn("no structured error details", str(raised.exception))
+        self.assertNotIn("private-token-and-debug-html", str(raised.exception))
+
+    def test_redaction_removes_other_tokens_and_control_characters(self):
+        graph = mod.Graph("configured-token", "v26.0")
+        result = graph.safe_message("Error\nBearer other-secret client_secret=app-secret "
+                                    "EAAotherTokenValue1234567890 " + "x" * 60)
+        for secret in ["other-secret", "app-secret", "EAAotherTokenValue1234567890", "x" * 60, "\n"]:
+            self.assertNotIn(secret, result)
+        self.assertIn("Error", result)
+
+    def test_json_error_in_success_status_is_explained_and_redacted(self):
+        graph = mod.Graph("configured-token", "v26.0")
+        graph.opener = Mock()
+        graph.opener.open.return_value = io.BytesIO(json.dumps({"error": {
+            "code": 190, "message": "Invalid access token configured-token"}}).encode())
+        with self.assertRaises(mod.SyncError) as raised:
+            graph.request("GET", CATALOGUE)
+        self.assertIn("code=190", str(raised.exception))
+        self.assertNotIn("configured-token", str(raised.exception))
+
     def test_bearer_header_and_encoded_nested_payload_no_token_in_url(self):
         graph = mod.Graph("test-private-token", "v26.0")
         graph.opener = Mock()

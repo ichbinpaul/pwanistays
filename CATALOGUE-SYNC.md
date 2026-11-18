@@ -154,7 +154,11 @@ WhatsApp account's linked catalogues, and lists existing hotel identities. It
 refuses incomplete pagination, duplicate identities, an empty source, invalid
 images, and unsupported targets before hotel writes. Tokens use a bearer header;
 redirects are disabled, pagination follows validated cursors on Meta's own host,
-and errors omit response bodies and credentials.
+and errors omit raw response bodies, request headers, and credentials. Failed
+requests report the operation/object ID, HTTP status, and selected Meta error
+code, subcode, type and message with token/URL redaction. This distinguishes
+missing permissions, invalid identifiers, and hotel schema rejections without
+requiring another token or exposing the credential.
 
 `--apply` alone requires the intended catalogue to be linked already. Optional
 `--apply --connect` can link it through `POST /<WhatsApp-account-ID>/product_catalogs`

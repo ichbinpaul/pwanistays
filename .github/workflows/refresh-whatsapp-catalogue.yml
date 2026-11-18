@@ -121,7 +121,8 @@ jobs:
                   path.write_text(details, encoding="utf-8")
                   path.chmod(0o600)
                   args.extend(["--details", str(path)])
-              subprocess.run(args, check=True)
+              result = subprocess.run(args, check=False)
+              raise SystemExit(result.returncode)
           PY
       - name: Explain export boundary
         run: |

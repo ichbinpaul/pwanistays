@@ -115,6 +115,34 @@ class Graph:
         self.token, self.base = token, "https://graph.facebook.com/" + version
         self.opener = build_opener(NoRedirect())
 
+    def safe_message(self, value, limit=500):
+        # Log only selected error fields, never raw bodies, headers or request URLs.
+        text = str(value).replace(self.token, "[REDACTED]")
+        text = re.sub(r"https?://[^\s<>\"']+", "[URL REDACTED]", text, flags=re.I)
+        text = re.sub(r"\bBearer\s+[^\s,;\"']+", "Bearer [REDACTED]", text, flags=re.I)
+        text = re.sub(r"\b(?:access_token|appsecret_proof|client_secret)\s*[:=]\s*[^\s,;]+",
+                      "credential=[REDACTED]", text, flags=re.I)
+        text = re.sub(r"\bEAA[A-Za-z0-9_-]{12,}\b", "[REDACTED]", text)
+        text = re.sub(r"\b[A-Za-z0-9_-]{40,}\b", "[REDACTED]", text)
+        text = re.sub(r"[\x00-\x1f\x7f]", " ", text)
+        return " ".join(text.split())[:limit]
+
+    def failure(self, method, path, status, payload):
+        message = f"Meta {method} {self.safe_message(path, 100)} rejected (HTTP {status})"
+        error = payload.get("error") if isinstance(payload, dict) else None
+        if not isinstance(error, dict):
+            return message + "; no structured error details returned"
+        parts = []
+        for key in ("code", "error_subcode"):
+            value = error.get(key)
+            if type(value) is int:
+                parts.append(f"{key}={value}")
+        if isinstance(error.get("type"), str):
+            parts.append("type=" + self.safe_message(error["type"], 80))
+        if isinstance(error.get("message"), str):
+            parts.append(self.safe_message(error["message"]))
+        return message + ("; " + "; ".join(parts) if parts else "; no structured error details returned")
+
     def request(self, method, path, params=None):
         params = params or {}
         encoded = urlencode({key: json.dumps(value) if isinstance(value, (dict, list)) else value
@@ -131,10 +159,19 @@ class Graph:
             with self.opener.open(req, timeout=35) as response:
                 result = json.load(response)
         except HTTPError as exc:
-            raise SyncError(f"Meta request rejected (HTTP {exc.code}); inspect permissions/schema securely") from None
+            try:
+                # Bound parsing; an invalid/oversized body is never printed as fallback.
+                payload = json.loads(exc.read(32768))
+            except (OSError, ValueError, TypeError):
+                payload = None
+            finally:
+                exc.close()
+            raise SyncError(self.failure(method, path, exc.code, payload)) from None
         except (URLError, OSError, ValueError):
             raise SyncError("Meta connection failed or returned invalid JSON") from None
-        if not isinstance(result, dict) or "error" in result:
+        if isinstance(result, dict) and "error" in result:
+            raise SyncError(self.failure(method, path, 200, result))
+        if not isinstance(result, dict):
             raise SyncError("Meta returned an unsuccessful response")
         return result
 

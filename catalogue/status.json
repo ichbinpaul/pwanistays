@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "status": "source_export_only",
+  "meta_connected": false,
+  "generated_at": "2026-11-18T14:50:45+00:00",
+  "property_count": 132,
+  "image_count": 1209,
+  "max_images_per_property": 10,
+  "selection": "existing_cover_then_numbered_gallery",
+  "activation": "Pending Meta import schema validation and WhatsApp catalogue connection"
+}

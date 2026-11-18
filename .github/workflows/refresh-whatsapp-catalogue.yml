@@ -1,0 +1,112 @@
+name: Refresh WhatsApp catalogue source
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Daily 07:15 East Africa Time / 04:15 UTC.
+    - cron: '15 4 * * *'
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: public-whatsapp-catalogue-source
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test public catalogue extraction
+        run: python3 -m unittest discover -s tests -v
+      - name: Refresh source from active public properties and galleries
+        run: python3 scripts/build_whatsapp_catalogue.py
+      - name: Validate hotel payloads without contacting Meta
+        run: python3 scripts/sync_meta_hotels.py
+      - name: Commit source files only when changed
+        id: commit
+        run: |
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+          git add -- catalogue/properties.json catalogue/status.json
+          if git diff --cached --quiet; then
+            echo "Catalogue source is unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Refresh public WhatsApp catalogue source" -- catalogue/properties.json catalogue/status.json
+          # Normal push: a concurrent main-branch update must fail rather than be overwritten.
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Request branch-based GitHub Pages publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          build_type="$(gh api "repos/$GH_REPO/pages" --jq '.build_type')"
+          case "$build_type" in
+            legacy)
+              # Also recover a previous publication failure when data is unchanged.
+              latest_commit="$(gh api "repos/$GH_REPO/pages/builds/latest" --jq 'if .status == "built" then .commit else "" end')"
+              if [ "$latest_commit" = "$(git rev-parse HEAD)" ]; then
+                echo "The current commit already has a successful Pages build."
+                exit 0
+              fi
+              gh api --method POST "repos/$GH_REPO/pages/builds"
+              echo "Requested a GitHub Pages build. Check its result before treating the hosted feed as refreshed." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            workflow)
+              echo "::error::This site uses workflow-based Pages deployment. Catalogue source was committed, but publication needs the site's explicit Pages deployment workflow. No hosted refresh is claimed."
+              exit 1
+              ;;
+            *)
+              echo "::error::Unsupported or unknown Pages build type. Catalogue source was committed; hosted publication has not been established."
+              exit 1
+              ;;
+          esac
+      - name: Sync the approved destination catalogue
+        # A Pages error must not suppress an independently configured API sync.
+        # Source/test/commit failures still prevent all catalogue writes.
+        if: ${{ !cancelled() && steps.commit.outcome == 'success' && vars.META_CATALOGUE_SYNC_ENABLED == 'true' }}
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_CATALOGUE_ID: ${{ vars.META_CATALOGUE_ID }}
+          META_WHATSAPP_BUSINESS_ACCOUNT_ID: ${{ vars.META_WHATSAPP_BUSINESS_ACCOUNT_ID }}
+          META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
+          META_HOTEL_DETAILS_JSON: ${{ secrets.META_HOTEL_DETAILS_JSON }}
+          META_CATALOGUE_CONNECT_ENABLED: ${{ vars.META_CATALOGUE_CONNECT_ENABLED }}
+          META_CATALOGUE_PRUNE_ENABLED: ${{ vars.META_CATALOGUE_PRUNE_ENABLED }}
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import subprocess
+          import tempfile
+
+          args = ["python3", "scripts/sync_meta_hotels.py", "--apply"]
+          for option in ("connect", "prune"):
+              if os.environ.get(f"META_CATALOGUE_{option.upper()}_ENABLED") == "true":
+                  args.append("--" + option)
+          with tempfile.TemporaryDirectory() as directory:
+              details = os.environ.get("META_HOTEL_DETAILS_JSON")
+              if details:
+                  path = Path(directory) / "hotel-details.json"
+                  path.write_text(details, encoding="utf-8")
+                  path.chmod(0o600)
+                  args.extend(["--details", str(path)])
+              subprocess.run(args, check=True)
+          PY
+      - name: Explain export boundary
+        run: |
+          echo "### Public catalogue source refreshed" >> "$GITHUB_STEP_SUMMARY"
+          echo "Source export is separate from Meta activation. The optional API sync runs only when META_CATALOGUE_SYNC_ENABLED is true and its account configuration is supplied. No messages are sent." >> "$GITHUB_STEP_SUMMARY"
+          echo "For branch-based Pages, this workflow checks publication and requests a build if needed. Build completion and served content must still be checked." >> "$GITHUB_STEP_SUMMARY"

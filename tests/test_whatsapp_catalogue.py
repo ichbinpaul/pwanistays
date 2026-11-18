@@ -57,7 +57,7 @@ class ListingTests(unittest.TestCase):
             self.assertEqual(params["order"], ["id.asc"])
             fields = set(params["select"][0].split(","))
             self.assertNotIn("*", fields)
-            self.assertFalse(fields & {"price", "commission_rate", "description"})
+            self.assertFalse(fields & {"price", "commission_rate"})
 
     def test_rejects_zero_duplicate_invalid_and_inactive_records(self):
         cases = [[], [row(), row()], [row(property_id="not-a-uuid")],
@@ -147,13 +147,18 @@ class GalleryTests(unittest.TestCase):
 
 
 class SnapshotTests(unittest.TestCase):
+    def test_amenities_are_extracted_without_legacy_prices_or_contact_captions(self):
+        caption = "Private promotional intro\nAmenities:\n• WiFi\n• Swimming pool\n• KES 6000 per night\n• Call +254738544784\nRates:\nKES 9000\nContact:\nbookings@example.com"
+        self.assertEqual(mod.public_amenities(caption), ["WiFi", "Swimming pool"])
+        self.assertEqual(mod.public_amenities("Plain prose\n• WiFi\n• WhatsApp us\n• Ksh 5000\n• WiFi"), ["WiFi"])
+        self.assertEqual(mod.public_amenities("• Ksh6500\n• 12,000 per night\n• $100\n• 6000/=\n• Parking"), ["Parking"])
     def test_export_has_canonical_link_and_no_private_fields_or_raw_caption(self):
         data = row(price=87654321, commission_rate=0.2,
                    description="Secret internal price 87654321; book via private contact")
         with patch.object(mod, "fetch_gallery", return_value=[image("01.jpeg")]):
             result = mod.export_property(BASE, KEY, data)
         self.assertEqual(result["url"], "https://pwanistays.com/stays/" + ID + "/")
-        self.assertEqual(set(result), {"id", "title", "location", "unit_type", "url", "description", "images"})
+        self.assertEqual(set(result), {"id", "title", "location", "unit_type", "url", "description", "images", "beds", "amenities"})
         self.assertNotIn("87654321", json.dumps(result))
         self.assertNotIn("Secret", result["description"])
 

@@ -87,6 +87,7 @@
     const amenitiesHeading = /^(?:(?:key|main|top|apartment|property|house|room|unit)\s+)?(?:amenities|facilities|features|highlights|inclusions|what you(?:'ll| will) (?:love|enjoy))(?:\s*(?:&|and|\/)\s*(?:amenities|facilities|features|highlights))?$/;
     const otherHeading = /^(?:location|contacts?|bookings?|reservations?|rates?|prices?|payments?|terms?|house rules|check[ -]?in(?:\/out)?|check[ -]?out|availability|cancellation|notes?|important|nearby|how to book)$/;
     const clean = line => String(line).trim().replace(/^(?:[-*•]\s+|\d+[.)]\s+)/, '').trim();
+    const publicLine = line => !/\b(?:ksh|kes|usd|eur|gbp|commission|prices?|rates?|deposit|payments?|bookings?|contact|whatsapp)\b|\b(?:ksh|kes|usd|eur|gbp)\s*\.?\s*\d|[$€£]|\bper\s+(?:night|day|week|month)\b|\/\s*(?:night|day|week|month)\b|\b\d[\d,.]*\s*\/=|https?:\/\/|[\w.+-]+@[\w.-]+|\+?\d[\d\s().-]{7,}/i.test(line);
     let inSection = false;
     let foundSection = false;
     const items = [];
@@ -105,9 +106,9 @@
       }
       if (inSection) items.push(clean(text));
     }
-    if (foundSection) return items.filter(Boolean);
+    if (foundSection) return items.filter(Boolean).filter(publicLine);
     // v4 importer prefixes amenities with bullets; never guess from prose.
-    return rows.filter(row => /^\s*•\s+/.test(row)).map(clean).filter(Boolean);
+    return rows.filter(row => /^\s*•\s+/.test(row)).map(clean).filter(Boolean).filter(publicLine);
   }
 
   window.PwaniListings = {FIELDS, UUID, escapeHtml, localISO, validISO, nights, permalink, link, client, images, formatDate, amenities};

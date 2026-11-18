@@ -45,22 +45,24 @@ jobs:
         run: python3 scripts/build_whatsapp_catalogue.py
       - name: Generate per-property preview pages and matching sitemap
         run: |
+          python3 scripts/cache_property_covers.py
           python3 scripts/build_property_previews.py
-          python3 scripts/build_property_sitemap.py --source catalogue/properties.json
+          python3 scripts/build_stay_directory.py
+          python3 scripts/build_property_sitemap.py --source catalogue/properties.json --covers catalogue/cover-images.json
       - name: Validate hotel payloads without contacting Meta
         run: python3 scripts/sync_meta_hotels.py
       - name: Commit source files only when changed
         id: commit
         run: |
           echo "changed=false" >> "$GITHUB_OUTPUT"
-          git add -- catalogue/properties.json catalogue/status.json stays property-sitemap.xml robots.txt
+          git add -- catalogue/properties.json catalogue/status.json catalogue/cover-images.json images/property-covers stays stays.html property-sitemap.xml robots.txt
           if git diff --cached --quiet; then
             echo "Catalogue source is unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Refresh public property previews and catalogue source" -- catalogue/properties.json catalogue/status.json stays property-sitemap.xml robots.txt
+          git commit -m "Refresh public property previews and catalogue source" -- catalogue/properties.json catalogue/status.json catalogue/cover-images.json images/property-covers stays stays.html property-sitemap.xml robots.txt
           # Normal push: a concurrent main-branch update must fail rather than be overwritten.
           git push origin HEAD:main
           echo "changed=true" >> "$GITHUB_OUTPUT"

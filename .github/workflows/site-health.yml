@@ -1,0 +1,42 @@
+name: Check live site health
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['pages build and deployment']
+    types: [completed]
+  schedule:
+    # Daily 07:45 East Africa Time, after the usual property refresh.
+    - cron: '45 4 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-site-health
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify checker without network access
+        run: python3 -m unittest discover -s tests -p 'test_live_site.py' -v
+      - name: Check live pages, assets, cover images, redirects and true 404s
+        run: python3 scripts/check_live_site.py --check-redirects --check-cover-images --report "$RUNNER_TEMP/site-health.json"
+      - name: Retain live HTTP evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-health
+          path: ${{ runner.temp }}/site-health.json
+          if-no-files-found: warn
+          retention-days: 14

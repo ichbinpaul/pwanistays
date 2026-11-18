@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/i18n.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="/listing-utils.js?v=2" defer></script>
-  <script src="/property.js?v=2" defer></script>
+  <script src="/listing-utils.js?v=3" defer></script>
+  <script src="/property.js?v=3" defer></script>
 </head>
 <body>
   <div id="site-header"></div>
@@ -23,7 +23,7 @@
       <div class="pw-details"><span id="propertyLocation"></span><span id="propertyType"></span><span id="propertyBeds"></span></div>
       <div class="pw-grid">
         <div class="pw-stack">
-          <div class="pw-gallery" aria-label="Property photo gallery"><img class="pw-main-photo" id="pwMainImage" alt="" hidden><div class="pw-thumbs" id="pwThumbs" hidden></div><div id="pwNoPhoto" class="pw-loading" hidden>Photos are being updated. Please contact us for the latest images.</div></div>
+          <div class="pw-gallery" aria-label="Property photo gallery"><img class="pw-main-photo" id="pwMainImage" alt="" fetchpriority="high" decoding="async" hidden><div class="pw-thumbs" id="pwThumbs" hidden></div><div id="pwNoPhoto" class="pw-loading" hidden>Photos are being updated. Please contact us for the latest images.</div></div>
           <section class="pw-card pw-pad"><h2>Amenities</h2><ul id="propertyAmenities" class="pw-desc" style="padding-left:22px;white-space:normal"></ul><p class="pw-small pw-muted">Amenities and property-specific house rules will be confirmed with your quotation. Images show the listed accommodation where provided by the host.</p></section>
           <section class="pw-card pw-pad"><h2>How booking works</h2><ol class="pw-steps"><li>Select your check-in, check-out, and number of guests.</li><li>Send your request to PwaniStays. We confirm the current rate, property availability, and any extra charges.</li><li>Review your written quotation. The standard arrangement is a 50% non-refundable reservation deposit, with the remaining 50% payable once you have checked in and accessed the property. Read the cancellation terms, including legally required exceptions, before paying.</li></ol><div class="pw-links"><a href="/how-it-works.html">How it works</a><a href="/cancellation.html">Cancellation policy</a><a href="/terms.html">Booking terms</a></div></section>
         </div>
@@ -36,7 +36,7 @@
             <div class="pw-field"><label for="guests">Number of guests</label><select id="guests" required><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option><option value="7">7 guests</option><option value="8">8 guests</option><option value="9">9 guests</option><option value="10">10 guests</option><option value="11">11 guests</option><option value="12">12 guests</option><option value="13">13 guests</option><option value="14">14 guests</option><option value="15">15 guests</option><option value="16">16 guests</option></select><span class="pw-small pw-muted">Final occupancy limit is subject to confirmation.</span></div>
             <p id="nightsSummary" class="pw-small pw-muted" aria-live="polite">Select both dates to see your number of nights.</p>
             <p id="quoteError" class="pw-status" role="alert" aria-live="assertive"></p>
-            <button type="submit" class="pw-btn"><i class="fab fa-whatsapp" aria-hidden="true"></i> Request quotation on WhatsApp</button>
+            <button type="submit" class="pw-btn" disabled><i class="fab fa-whatsapp" aria-hidden="true"></i> Request quotation on WhatsApp</button>
             <a id="emailInquiry" class="pw-btn pw-btn-outline" href="mailto:bookings@pwanistays.com">Prefer email? Ask about this stay</a>
           </form>
           <p class="pw-notice" style="margin-top:20px">Submitting an inquiry does not reserve the property. We only confirm a booking after rates, availability, terms, and payment arrangements have been agreed in writing.</p>

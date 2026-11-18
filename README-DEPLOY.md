@@ -13,6 +13,9 @@
 Property sharing now uses generated `/stays/PROPERTY-UUID/` pages with unit-specific
 Open Graph images in the initial HTML. See [PROPERTY-PREVIEWS.md](PROPERTY-PREVIEWS.md)
 for generation, refresh scheduling, and the limitations of older query-string links.
+Unit content is also prerendered for crawlers, and `/stays.html` links all active
+units. See [SEO-AUDIT.md](SEO-AUDIT.md) for verified local findings and remaining
+live/GSC work, and [SEO-SEARCH-CONSOLE.md](SEO-SEARCH-CONSOLE.md) for owner setup steps.
 
 ## What changed
 

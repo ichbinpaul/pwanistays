@@ -60,3 +60,11 @@ test('ordinary missing pages and invalid unit paths retain the 404 page', () => 
         assert.equal(redirected, false);
     }
 });
+
+test('public amenities omit rates and contact captions', () => {
+    const context = {window: {}, URLSearchParams, Date};
+    load('listing-utils.js', context);
+    const caption = 'Introductory caption\nAmenities:\n• WiFi\n• Swimming pool\n• KES 6000 per night\n• WhatsApp +254738544784\nRates:\nKES 9000';
+    assert.deepEqual(Array.from(context.window.PwaniListings.amenities(caption)), ['WiFi', 'Swimming pool']);
+    assert.deepEqual(Array.from(context.window.PwaniListings.amenities('• Ksh6500\n• 12,000 per night\n• $100\n• 6000/=\n• Parking')), ['Parking']);
+});

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://pwanistays.com/</loc></url>
+  <url><loc>https://pwanistays.com/stays.html</loc></url>
   <url><loc>https://pwanistays.com/about.html</loc></url>
   <url><loc>https://pwanistays.com/experiences.html</loc></url>
   <url><loc>https://pwanistays.com/how-it-works.html</loc></url>
@@ -11,6 +12,6 @@
   <url><loc>https://pwanistays.com/privacy.html</loc></url>
   <url><loc>https://pwanistays.com/terms.html</loc></url>
   <url><loc>https://pwanistays.com/cancellation.html</loc></url>
-  <!-- A separate property-sitemap.xml is maintained by the daily GitHub Action.
-       Its active property URLs are advertised in robots.txt after the first successful run. -->
+  <!-- property-sitemap.xml is maintained alongside the hourly property pages.
+       Both sitemap URLs are advertised in robots.txt. -->
 </urlset>

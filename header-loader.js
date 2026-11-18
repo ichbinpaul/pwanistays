@@ -44,6 +44,7 @@
     var slug = window.location.pathname
       .replace(/\/$/, "").replace(/\.html$/, "")
       .split("/").filter(Boolean).pop() || "home";
+    if (window.location.pathname === "/stays.html" || /^\/stays\//.test(window.location.pathname)) slug = "accommodation";
 
     mount.querySelectorAll("[data-nav-page]").forEach(function(el) {
       var match = el.getAttribute("data-nav-page") === slug ||

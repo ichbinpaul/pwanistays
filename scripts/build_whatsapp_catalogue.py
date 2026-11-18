@@ -23,7 +23,7 @@ import uuid
 from build_property_sitemap import public_config
 
 ROOT = Path(__file__).resolve().parents[1]
-FIELDS = "id,title,location,unit_type,image_url,is_active"
+FIELDS = "id,title,location,unit_type,image_url,is_active,beds,description"
 PAGE_SIZE = 100
 MAX_PAGES = 1000
 MAX_IMAGES = 10
@@ -67,6 +67,10 @@ def fetch_properties(base: str, key: str) -> list[dict]:
             for field in ("location", "unit_type", "image_url"):
                 if row.get(field) is not None and not isinstance(row[field], str):
                     raise SourceError(f"Property {property_id} has an invalid {field}")
+            if row.get("beds") is not None and (type(row["beds"]) is not int or row["beds"] < 0):
+                raise SourceError(f"Property {property_id} has invalid bed information")
+            if row.get("description") is not None and not isinstance(row["description"], str):
+                raise SourceError(f"Property {property_id} has an invalid description")
             rows.append(row)
             seen.add(property_id)
         if len(batch) < PAGE_SIZE:
@@ -153,6 +157,37 @@ def select_photos(base: str, row: dict, files: list[dict]) -> list[str]:
     return urls[:MAX_IMAGES]
 
 
+def public_amenities(value: str | None) -> list[str]:
+    """Keep host amenity lines, excluding legacy promotional/rate/contact captions."""
+    heading = re.compile(r"^(?:(?:key|main|top|apartment|property|house|room|unit)\s+)?"
+                         r"(?:amenities|facilities|features|highlights|inclusions|what you(?:'ll| will) (?:love|enjoy))"
+                         r"(?:\s*(?:&|and|/)\s*(?:amenities|facilities|features|highlights))?$", re.I)
+    stop = re.compile(r"^(?:location|contacts?|bookings?|reservations?|rates?|prices?|payments?|terms?|house rules|"
+                      r"check[ -]?in(?:/out)?|check[ -]?out|availability|cancellation|notes?|important|nearby|how to book)$", re.I)
+    sensitive = re.compile(r"\b(?:ksh|kes|usd|eur|gbp|commission|prices?|rates?|deposit|payments?|bookings?|contact|whatsapp)\b"
+                           r"|\b(?:ksh|kes|usd|eur|gbp)\s*\.?\s*\d|[$€£]|\bper\s+(?:night|day|week|month)\b"
+                           r"|/\s*(?:night|day|week|month)\b|\b\d[\d,.]*\s*/="
+                           r"|https?://|[\w.+-]+@[\w.-]+|\+?\d[\d\s().-]{7,}", re.I)
+    selected, bullets, in_section, found = [], [], False, False
+    for raw in (value or "").splitlines():
+        text = raw.strip()
+        normalized = re.sub(r"^[\W_]+", "", text).rstrip(": ").casefold()
+        if heading.fullmatch(normalized):
+            in_section, found = True, True
+            continue
+        if stop.fullmatch(normalized) or re.match(r"^(?:dm|book|call|whatsapp|contact|inbox|message us)\b", normalized):
+            in_section = False
+            continue
+        cleaned = re.sub(r"^(?:[-*•]\s+|\d+[.)]\s+)", "", text).strip()
+        if cleaned and not sensitive.search(cleaned):
+            if in_section:
+                selected.append(cleaned)
+            if re.match(r"^\s*•\s+", raw):
+                bullets.append(cleaned)
+    # dict preserves the source's ordering while avoiding repeated amenity lines.
+    return list(dict.fromkeys(selected if found else bullets))[:40]
+
+
 def export_property(base: str, key: str, row: dict) -> dict:
     files = fetch_gallery(base, key, gallery_prefix(base, row))
     photos = select_photos(base, row, files)
@@ -163,6 +198,7 @@ def export_property(base: str, key: str, row: dict) -> dict:
     description += " View photos and property details; contact PwaniStays for current rates and availability."
     return {"id": row["id"], "title": title, "location": location,
             "unit_type": row.get("unit_type") or "",
+            "beds": row.get("beds"), "amenities": public_amenities(row.get("description")),
             "url": "https://pwanistays.com/stays/" + row["id"] + "/",
             "description": description, "images": photos}
 

@@ -30,6 +30,13 @@ class SitemapTests(unittest.TestCase):
         self.assertTrue(base_url.endswith(".supabase.co"))
         self.assertTrue(key.startswith("sb_publishable_"))
 
+    def test_crawlable_owned_image_is_associated_with_its_property(self):
+        property_id = "2f4578c5-e189-47dc-ad03-4a21e7c347b3"
+        photo = "https://pwanistays.com/images/property-covers/" + property_id + "-0123456789abcdef.jpg"
+        root = ET.fromstring(mod.render_sitemap([property_id], {property_id: photo}))
+        ns = {"s": mod.NS, "image": mod.IMAGE_NS}
+        self.assertEqual(root.find("s:url/image:image/image:loc", ns).text, photo)
+
     def test_snapshot_keeps_sitemap_in_step_with_generated_pages(self):
         property_id = "2f4578c5-e189-47dc-ad03-4a21e7c347b3"
         with tempfile.TemporaryDirectory() as folder:

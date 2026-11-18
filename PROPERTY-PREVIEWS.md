@@ -6,11 +6,32 @@ Each HTML response includes that unit's real designated cover photo, title,
 description, canonical URL, Open Graph tags and large-image Twitter card before
 JavaScript runs. Chat crawlers can read the photo without running the booking app.
 
-The full property page still loads its current gallery, requested dates and
+The HTML body also contains the real unit title, public description, location,
+accommodation type, bed count when provided, designated photo with meaningful alt
+text, and privacy-safe amenities. Unit content is visible before JavaScript runs,
+so crawlers and visitors with JavaScript disabled can read it. A `noscript`
+WhatsApp contact link lets visitors request rates without the scripted form.
+Accommodation navigation links to the static `/stays.html` directory.
+
+The full property page still refreshes its current gallery, requested dates and
 quotation form through `property.js`. Its HTML root embeds `data-property-id` so
-the browser knows which unit to load. Photos remain at their existing public
-Supabase URLs; no manual photo uploads or copied stock photos are needed. No image
-dimensions are invented in preview metadata.
+the browser knows which unit to load. The same form IDs and booking selectors are
+preserved. The generated snapshot is refreshed by automation; the browser's live
+property lookup remains responsible for detecting a newly inactive unit.
+Gallery photos retain their existing public Supabase URLs. When the validated
+cover cache is available, the SEO image and initial main photo use an automatic
+original-byte copy on the website's own domain. This avoids depending on a
+storage response's restrictive image-indexing headers. No manual uploads, stock
+photo replacements, image edits or invented dimensions are involved.
+
+Each active page includes one static JSON-LD graph under
+`id="property-structured-data"`, containing `WebPage` and `BreadcrumbList` with
+its real title, URL and image. The breadcrumb links through `/stays.html`.
+Inherited structured data is replaced to avoid duplicate generic property graphs.
+Script content is JSON escaped to prevent a property title or amenity from
+closing the script tag. No prices, ratings, reviews, availability promises or
+coordinates are fabricated. Structured data helps describe the page; it does not
+guarantee Google rich results or indexing.
 
 ```bash
 cd /workspace/pwanistays
@@ -24,6 +45,29 @@ The generator uses `catalogue/properties.json` and writes `stays/<UUID>/index.ht
 `--source` and `--output-dir` select alternate locations. `--check` performs source,
 template, rendering and ownership checks without writing files or directories.
 Unchanged pages keep the same content, with no timestamp-only changes.
+Public source records can optionally provide `beds` as a nonnegative integer or
+null and `amenities` as a list of nonempty text strings. Older records without
+these fields use safe empty/fallback content. Raw imported promotional captions,
+private rates, guest information and internal booking data are not used.
+
+## Owned-domain cover images
+
+The cover-cache process writes immutable content-hashed images under
+`images/property-covers/` and `catalogue/cover-images.json`. The generator loads
+that manifest automatically when present, or accepts an explicit `--covers PATH`.
+Legacy workflows without a manifest continue using the original source cover.
+Once a manifest is supplied, every active property must have a source-matching
+entry and an existing regular image file whose byte count and full SHA-256 match
+the manifest. Missing/stale mappings, foreign URLs, wrong-property image paths,
+incorrect hashes and symbolic paths stop generation before existing pages change.
+
+Only render-time row copies gain `seo_image` and `seo_source`; source gallery URLs
+are not rewritten. The main image carries `data-seo-image` and `data-seo-source`
+so browser hydration can keep the cached local cover while the live designated
+cover is unchanged. Changed gallery revisions get a new content-hashed URL and
+new static metadata on refresh. Verify the delivered website image response and
+headers after publication; a cache file alone does not guarantee Google Images
+indexing or a particular chat preview.
 
 The complete active source is validated before any page is updated. Existing
 output must consist only of strict UUID directories containing a marker-owned

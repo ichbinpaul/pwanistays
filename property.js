@@ -13,7 +13,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const errorEl = document.getElementById('quoteError');
   const summary = document.getElementById('nightsSummary');
   const form = document.getElementById('quoteForm');
+  const submit = form.querySelector('button[type="submit"]');
+  if (submit) submit.disabled = true;
   if (!u.UUID.test(id || '')) {
+    status.hidden = false;
+    content.hidden = true;
     status.textContent = 'This property link is invalid. Browse our current accommodation listings instead.';
     return;
   }
@@ -41,7 +45,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const db = u.client();
     const {data, error} = await db.from('properties').select(u.FIELDS).eq('id', id).eq('is_active',true).maybeSingle();
     if (error) throw error;
-    if (!data) { status.textContent = 'This property is not currently listed. Browse other available accommodation.'; return; }
+    if (!data) {
+      content.hidden = true;
+      status.hidden = false;
+      status.textContent = 'This property is not currently listed. Browse other available accommodation.';
+      const robots = document.querySelector('meta[name="robots"]');
+      if (robots) robots.content = 'noindex,follow';
+      return;
+    }
     property = data;
     const canonicalUrl = 'https://pwanistays.com' + u.permalink(id);
     if (!document.documentElement.dataset.propertyId) {
@@ -76,26 +87,31 @@ document.addEventListener('DOMContentLoaded', async () => {
       tag.content = value;
     }
     // Descriptive structured data only, without unverified prices or availability.
-    const structured = document.createElement('script');
-    structured.type = 'application/ld+json';
-    structured.textContent = JSON.stringify({
+    if (!document.getElementById('property-structured-data')) {
+      const structured = document.createElement('script');
+      structured.id = 'property-structured-data';
+      structured.type = 'application/ld+json';
+      structured.textContent = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       name: pageTitle,
       description: pageDescription,
       url: canonicalUrl,
       isPartOf: { '@type': 'WebSite', name: 'PwaniStays', url: 'https://pwanistays.com/' }
-    });
-    document.head.appendChild(structured);
+      });
+      document.head.appendChild(structured);
+    }
     document.getElementById('breadcrumbTitle').textContent = data.title || 'Property details';
     document.getElementById('propertyTitle').textContent = data.title || 'Coastal accommodation';
     document.getElementById('propertyLocation').textContent = '📍 ' + (data.location || 'Coastal Kenya');
     const types = {'studio':'Studio','1br':'1 bedroom','2br':'2 bedrooms','3br':'3 bedrooms','4br':'4 bedrooms','5br':'5 bedrooms','villa':'Villa'};
     document.getElementById('propertyType').textContent = types[data.unit_type] || (data.unit_type || 'Holiday accommodation');
-    if (data.beds && Number(data.beds) > 0) document.getElementById('propertyBeds').textContent = '🛏 ' + Number(data.beds) + ' bed' + (Number(data.beds) === 1 ? '' : 's');
+    document.getElementById('propertyBeds').textContent = Number(data.beds) > 0
+      ? '🛏 ' + Number(data.beds) + ' bed' + (Number(data.beds) === 1 ? '' : 's') : '';
     // The database's legacy "description" column can contain a full caption.
     // Render only its amenities, never its introductory promotional paragraph.
     const amenitiesList = document.getElementById('propertyAmenities');
+    amenitiesList.replaceChildren();
     const items = u.amenities(data.description || '');
     for (const text of (items.length ? items : ['Please contact PwaniStays to confirm the property amenities.'])) {
       const li = document.createElement('li');
@@ -103,17 +119,20 @@ document.addEventListener('DOMContentLoaded', async () => {
       amenitiesList.appendChild(li);
     }
     const urls = await u.images(db, data);
+    const main = document.getElementById('pwMainImage');
+    const ownedCover = main.dataset.seoSource === String(data.image_url || '').trim()
+      ? main.dataset.seoImage : null;
+    const cover = ownedCover || urls[0];
     if (urls.length) {
       for (const selector of ['meta[property="og:image"]', 'meta[property="og:image:secure_url"]', 'meta[name="twitter:image"]']) {
         const tag = document.querySelector(selector);
-        if (tag) tag.content = urls[0];
+        if (tag) tag.content = cover;
       }
     }
-    const main = document.getElementById('pwMainImage');
     const thumbs = document.getElementById('pwThumbs');
     if (!urls.length) document.getElementById('pwNoPhoto').hidden = false;
     else {
-      main.src = urls[0]; main.alt = `${data.title || 'Accommodation'} — photo 1`; main.hidden = false;
+      main.src = cover; main.alt = `${data.title || 'Accommodation'} — photo 1`; main.hidden = false;
       if (urls.length > 1) {
         thumbs.hidden = false;
         urls.slice(0,18).forEach((src,i) => {
@@ -133,6 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     status.hidden = true; content.hidden = false;
   } catch (err) {
     console.error('Unable to load property:',err);
+    status.hidden = false;
     status.textContent = 'We could not load this property right now. Please try again, or message PwaniStays directly.';
     return;
   }
@@ -155,4 +175,5 @@ document.addEventListener('DOMContentLoaded', async () => {
       ``, `Please confirm availability and the total price. Thank you!`].join('\n');
     location.href = `https://wa.me/254738544784?text=${encodeURIComponent(message)}`;
   });
+  if (submit) submit.disabled = false;
 });

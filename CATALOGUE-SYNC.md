@@ -18,8 +18,10 @@ writes:
 - `catalogue/status.json`: export status, counts, and pending integration work.
   The status is `source_export_only`, not a claim that Meta accepted an import.
 
-Each property contains `id`, `title`, `location`, `unit_type`, `url`,
-`description`, and `images`. IDs remain stable across refreshes. The property URL
+Each property contains `id`, `title`, `location`, `unit_type`, public `beds`,
+selected `amenities`, `url`, `description`, and `images`. Legacy caption prose,
+rate/contact lines and internal price/commission columns are excluded from the
+published source. IDs remain stable across refreshes. The property URL
 opens its existing website details and gallery. The image list contains at most
 ten HTTPS URLs: the designated cover first, then the numbered gallery order with
 duplicates removed. This is deterministic selection, not AI analysis of room
@@ -60,7 +62,8 @@ needed for this export. The publishable source configuration already exists in
 `.github/workflows/refresh-whatsapp-catalogue.yml` refreshes source and property
 preview pages hourly at minute 15 and supports **Run workflow** in GitHub Actions. The
 workflow runs the catalogue tests before generating output, then commits only
-catalogue JSON files, generated property preview pages, and their matching sitemap
+catalogue JSON files, validated website-owned covers, generated property preview
+pages, the HTML directory, and their matching sitemap
 to `main` when their content changes. It uses a
 normal push and fails on conflicting branch updates; it never force-pushes or
 overwrites unrelated work. Inspect failed Actions runs before retrying.

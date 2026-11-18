@@ -27,6 +27,7 @@ ROBOTS = ROOT / "robots.txt"
 SITE_BASE = "https://pwanistays.com"
 SITEMAP_URL = SITE_BASE + "/property-sitemap.xml"
 NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
+IMAGE_NS = "http://www.google.com/schemas/sitemap-image/1.1"
 MAX_ITEMS = 1000
 MAX_PAGES = 1000
 
@@ -73,14 +74,18 @@ def fetch_active_ids(base_url: str, public_key: str) -> list[str]:
     raise RuntimeError("Too many listing pages; refusing incomplete sitemap")
 
 
-def render_sitemap(ids: list[str]) -> bytes:
+def render_sitemap(ids: list[str], images: dict[str, str] | None = None) -> bytes:
     ET.register_namespace("", NS)
+    ET.register_namespace("image", IMAGE_NS)
     urlset = ET.Element(f"{{{NS}}}urlset")
     for property_id in ids:
         node = ET.SubElement(urlset, f"{{{NS}}}url")
         ET.SubElement(node, f"{{{NS}}}loc").text = (
             f"{SITE_BASE}/stays/{property_id}/"
         )
+        if images and property_id in images:
+            image = ET.SubElement(node, f"{{{IMAGE_NS}}}image")
+            ET.SubElement(image, f"{{{IMAGE_NS}}}loc").text = images[property_id]
     ET.indent(urlset, space="  ")
     return ET.tostring(urlset, encoding="utf-8", xml_declaration=True) + b"\n"
 
@@ -95,8 +100,10 @@ def update_robots() -> None:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, help="Use the same public snapshot as generated property pages")
+    parser.add_argument("--covers", type=Path, help="Include validated website-owned cover image URLs")
     args = parser.parse_args(argv)
     try:
+        images = None
         if args.source:
             snapshot = json.loads(args.source.read_text(encoding="utf-8"))
             rows = snapshot.get("properties")
@@ -106,14 +113,20 @@ def main(argv=None) -> int:
             if len(set(ids)) != len(ids):
                 raise ValueError("Duplicate property UUID in snapshot")
             ids.sort()
+            if args.covers:
+                from build_property_previews import load_cover_images
+                enriched = load_cover_images(snapshot, args.covers)
+                images = {row["id"]: row["seo_image"] for row in enriched["properties"]}
         else:
+            if args.covers:
+                raise ValueError("A cover image sitemap requires its complete public source snapshot")
             base_url, key = public_config()
             ids = fetch_active_ids(base_url, key)
         # An empty response could reflect a broken policy or a transient
         # configuration issue. Do not erase a previously working sitemap.
         if not ids:
             raise RuntimeError("No active listings returned; refusing empty sitemap")
-        xml = render_sitemap(ids)
+        xml = render_sitemap(ids, images)
         if not OUTPUT.exists() or OUTPUT.read_bytes() != xml:
             OUTPUT.write_bytes(xml)
         update_robots()

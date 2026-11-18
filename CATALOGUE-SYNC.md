@@ -172,15 +172,47 @@ new IDs. This is an upsert identity guarantee, not an all-or-nothing Meta transa
 
 ### Scheduled API activation
 
-The daily workflow always validates the payload plan offline. Live API sync is
-disabled by default. Its optional step runs only when the GitHub repository
-variable `META_CATALOGUE_SYNC_ENABLED` is exactly `true`. Configure
-`META_ACCESS_TOKEN` as an Actions secret and the three IDs/version above as
-Actions variables. If approved hotel address data is needed, put its JSON in the
+The daily workflow always validates the payload plan offline. Scheduled live API
+sync is disabled unless the repository variable `META_CATALOGUE_SYNC_ENABLED`
+is exactly `true`. Manual runs default to `source_only`, even if the schedule is
+enabled. Select `test_one_property` to upsert just the first active property,
+or `sync` to explicitly apply the full snapshot. Single-property tests never prune.
+
+The workflow is prefilled with the supplied target identifiers:
+
+- New hotel catalogue: `1686254389800444`.
+- Business portfolio: `588596394915147` (context only, not an API credential).
+- WhatsApp asset/account candidate: `470793059453050`, from the manager URL;
+  the API preflight must still verify that it is an accessible WhatsApp account.
+- Explicit Graph version: `v26.0`.
+
+The `META_CATALOGUE_ID`, `META_WHATSAPP_BUSINESS_ACCOUNT_ID`, and
+`META_GRAPH_VERSION` Actions variables can override these defaults. Local CLI
+runs still need the environment variables listed above.
+
+Configure `META_ACCESS_TOKEN` as a repository Actions secret. In Meta Business
+Settings for the intended portfolio, use **Users → System users** to assign a
+system user the intended catalogue, WhatsApp account, and business-owned developer
+app. Generate a token for that app with the applicable `catalog_management` and
+`whatsapp_business_management` permissions. If no app is available, a suitable
+business-owned Meta developer app must first be created/associated; Business Suite
+access alone does not supply API authorization. Enter the token directly at
+GitHub **Settings → Secrets and variables → Actions → New repository secret**,
+named `META_ACCESS_TOKEN`. Do not put it in chat, source files, or URLs.
+
+After adding the secret, open the **Refresh WhatsApp catalogue source** workflow,
+choose **Run workflow → operation: test_one_property**, and request the connection
+checkbox only if this is the intended new catalogue. The adapter refuses to replace
+a different existing link. Only after one property is accepted and visible should
+you run the `sync` operation and enable the daily variable. Token permissions,
+business/app access, and account-specific required hotel address fields still need
+real API validation; prefilled IDs do not establish a successful connection.
+
+If approved hotel address data is needed, put its JSON in the
 `META_HOTEL_DETAILS_JSON` Actions secret; the workflow writes it to a restricted
 temporary file and passes `--details`.
 
-`META_CATALOGUE_CONNECT_ENABLED=true` adds the explicit connection option.
+`META_CATALOGUE_CONNECT_ENABLED=true` (or the manual connection checkbox) adds the explicit connection option.
 `META_CATALOGUE_PRUNE_ENABLED=true` enables managed-item removal. Both are off by
 default. Enable these only for the intended target and after validating a
 representative import. No Meta credentials or activation variables were supplied

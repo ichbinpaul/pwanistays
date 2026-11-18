@@ -26,7 +26,7 @@ jobs:
       - name: Verify sitemap formatting and public configuration
         run: python3 -m unittest discover -s tests -p 'test_property_sitemap.py' -v
       - name: Generate property sitemap from active public records
-        run: python3 scripts/build_property_sitemap.py
+        run: python3 scripts/build_property_sitemap.py --source catalogue/properties.json --covers catalogue/cover-images.json
       - name: Commit sitemap only if URLs changed
         run: |
           git add property-sitemap.xml robots.txt

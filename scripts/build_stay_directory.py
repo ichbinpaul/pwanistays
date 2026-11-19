@@ -11,6 +11,7 @@ import sys
 from build_property_previews import ROOT, SITE, validate_source, load_cover_images
 from build_whatsapp_catalogue import atomic_write
 from property_routes import canonical_url
+from site_chrome import SITE_FOOTER
 
 MARKER = "<!-- PWANISTAYS_STAY_DIRECTORY_V1 -->"
 TYPES = {"studio": "Studio", "villa": "Villa", **{
@@ -61,11 +62,11 @@ def render(snapshot):
   <meta property="og:description" content="Browse coastal accommodation by location and view each unit’s photos and amenities.">
   <meta property="og:image" content="{escape(rows[0].get('seo_image') or rows[0]['images'][0], quote=True)}">
   <link rel="icon" href="/favicon-32x32.png"><link rel="stylesheet" href="/header.css"><link rel="stylesheet" href="/new-pages.css">
-  <link rel="stylesheet" href="/stay-directory.css">
+  <link rel="stylesheet" href="/stay-directory.css?v=2"><link rel="stylesheet" href="/experiences.css?v=1"><link rel="stylesheet" href="/experience-trips.css?v=1">
   <script src="/i18n.js" defer></script><script src="/header-loader.js" defer></script>
   <script type="application/ld+json">{structured}</script>
 </head>
-<body>
+<body class="experiences-page directory-page">
   <div id="site-header"></div>
   <main class="pw-main pw-container">
     <nav class="pw-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Accommodation</nav>
@@ -77,7 +78,7 @@ def render(snapshot):
     {''.join(sections)}
     <p><a href="/how-it-works.html">How booking works</a> · <a href="/experiences.html">Explore experiences</a> · <a href="/#contact">Contact PwaniStays</a></p>
   </main>
-  <footer class="pw-footer"><div class="pw-container"><strong>PwaniStays</strong> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Booking terms</a> · <a href="/cancellation.html">Cancellations</a></div></footer>
+  {SITE_FOOTER}
 </body></html>
 '''
 

@@ -1,0 +1,817 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "slug": "coastal-cultural",
+      "title": "Coastal & Cultural",
+      "items": [
+        {
+          "title": "Nguuni Nature Sanctuary & Haller Park Day Expedition",
+          "category": [
+            "wildlife"
+          ],
+          "location": "Mombasa – Bamburi – Klembeni",
+          "duration": "8–9 hours",
+          "description": "Explore two of the coast's best wildlife sanctuaries without leaving the Mombasa area. Perfect for families and eco-tourists.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Nature walk at Nguuni with giraffes, waterbuck & 250+ bird species",
+                "Picnic lunch & sundowner viewpoints above sanctuary plains",
+                "Visit Haller Park ecological rehabilitation project",
+                "Conservation storytelling and guided walks"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Pick-up from Mombasa accommodation",
+                "Transport to both sanctuaries",
+                "All entrance fees",
+                "Professional guide and refreshments"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Mamba Village + Mombasa Marine Park Adventure",
+          "category": [
+            "marine",
+            "wildlife"
+          ],
+          "location": "Nyali – Mombasa Marine National Park",
+          "duration": "7–8 hours",
+          "description": "A land-and-sea experience combining crocodile farm visits with marine park exploration for adventurous visitors.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Mamba Village Crocodile Farm — East Africa's largest",
+                "Crocodile feeding displays & optional camel/horse riding",
+                "Mombasa Marine National Park snorkeling & boat rides",
+                "Beachside lunch & relaxation along Nyali or Bamburi"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Transport from your location",
+                "Entrance to Mamba Village",
+                "Boat & snorkel access at Marine Park",
+                "Guide and lunch stop"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Mombasa Old Town & Cultural Day",
+          "category": [
+            "cultural"
+          ],
+          "location": "Mombasa Island",
+          "duration": "6–7 hours",
+          "description": "Cultural immersion into the historic heart of the coast, exploring centuries of Swahili heritage.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Explore Mombasa Old Town on foot — narrow streets & spice markets",
+                "Visit Fort Jesus — UNESCO 16th-century fort and museum",
+                "Lunch at a local café with coastal Swahili cuisine",
+                "Optional visit to Bombolulu Workshops or Mama Ngina Waterfront"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Round-trip transport",
+                "Guided historical tour",
+                "Fort Jesus museum entrance",
+                "Local lunch experience"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Diani Beach & Leisure Day",
+          "category": [
+            "marine"
+          ],
+          "location": "Diani Beach (Kwale)",
+          "duration": "8–10 hours",
+          "description": "A full day of sun, sand and ocean escapades on one of Kenya's premier beaches.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Scenic coastal transfer to Diani Beach",
+                "Free time for swimming, sunbathing, water sports",
+                "Optional snorkeling/paddleboarding",
+                "Lunch at a beachfront café/resort"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Comfortable transport to/from Diani",
+                "Beach access and facilities",
+                "Guide/assistant throughout the day",
+                "Beach equipment (umbrella, chairs)"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Kisite–Wasini Marine Safari",
+          "category": [
+            "marine",
+            "wildlife"
+          ],
+          "location": "Shimoni – Kisite Marine Park – Wasini Island",
+          "duration": "9–10 hours",
+          "description": "An all-day marine adventure with snorkeling, wildlife, local food and scenic boat routes.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Boat to Kisite Mpunguti Marine Park — coral reef snorkeling",
+                "Spot dolphins, turtles, and reef fish",
+                "Wasini Island visit with local seafood lunch",
+                "Village walk and natural tidal pools exploration"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Pickup & return from accommodation",
+                "Boat fees & marine guide",
+                "Snorkeling equipment",
+                "Seafood lunch on Wasini Island"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Shimba Hills Nature & Waterfall Experience",
+          "category": [
+            "wildlife",
+            "adventure"
+          ],
+          "location": "Shimba Hills National Reserve",
+          "duration": "8–9 hours",
+          "description": "Explore lush coastal forest and wildlife in a relaxed inland setting with hiking and waterfall views.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Forest cruiser through Shimba Hills",
+                "Visit Sheldrick Falls overlook",
+                "Wildlife viewing (rare sable antelope, elephants, birds)",
+                "Picnic lunch in scenic location"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Transport from lodge/house",
+                "Park & reserve fees",
+                "Guided nature walk",
+                "Picnic lunch with refreshments"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Coastal Outdoor & Active Experience",
+          "category": [
+            "adventure"
+          ],
+          "location": "Diani / Bamburi / Nyali",
+          "duration": "7–8 hours",
+          "description": "An active day combining outdoor thrills with coastal sightseeing and water sports.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Mountain biking trails near beach forests",
+                "Kayaking through mangroves (optional)",
+                "Stand-up paddleboarding",
+                "Guided natural trails and coastal exploration"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "All gear & equipment rental",
+                "Professional instructor/guide",
+                "Transport between activities",
+                "Snacks and refreshments"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Tsavo East Game Safari with Train-to-Voi + Overnight",
+          "category": [
+            "safari",
+            "wildlife"
+          ],
+          "location": "Mombasa → Voi → Tsavo East National Park",
+          "duration": "2 Days",
+          "description": "A premium safari experience combining scenic train travel with wildlife viewing in Kenya's largest national park.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Scenic train ride to Voi on coastal railway",
+                "Game drives in Tsavo East NP — elephants, lions, giraffes",
+                "Visit Aruba Dam and Kanderi Swamp wildlife points",
+                "Overnight stay in Voi (lodge or safari tent)"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Train tickets Mombasa–Voi return",
+                "All park fees and game drives",
+                "Overnight accommodation",
+                "Meals (lunch, dinner, breakfast)",
+                "Professional safari guide"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Cultural & Community Immersion",
+          "category": [
+            "cultural"
+          ],
+          "location": "Ukunda / Kaya Forests / Local Villages",
+          "duration": "7–8 hours",
+          "description": "A day connecting with local heritage and community conservation initiatives along the coast.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Guided walk in Kaya Forests — sacred Digo heritage site",
+                "Visit Colobus Conservation Centre",
+                "Lunch with local family/community business",
+                "Craft shopping & cultural storytelling"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Transport to all sites",
+                "Local community guide",
+                "Conservation center entrance",
+                "Authentic local lunch"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "safari",
+      "title": "Safari Adventures",
+      "items": [
+        {
+          "title": "Masai Mara Classic Safari",
+          "category": [
+            "luxury",
+            "midrange"
+          ],
+          "location": "Masai Mara National Reserve",
+          "duration": "Best: July–October (Migration)",
+          "description": "Experience the world-famous Masai Mara, home to the Great Migration and abundant wildlife. Stay in luxury tented camps with stunning savannah views.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Witness the Great Migration (seasonal)",
+                "Multiple game drives including early morning and sunset",
+                "Visit a traditional Maasai village",
+                "Hot air balloon safari (optional add-on)",
+                "Expert guides with 10+ years experience"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "All park fees and conservation charges",
+                "Luxury tented camp accommodation",
+                "All meals (breakfast, lunch, dinner)",
+                "Professional safari guide and driver",
+                "Game drives in 4×4 safari vehicle",
+                "Return flights from Nairobi (optional)"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Amboseli Elephant Experience",
+          "category": [
+            "midrange",
+            "budget"
+          ],
+          "location": "Amboseli National Park",
+          "duration": "Year-round destination",
+          "description": "Famous for its large elephant herds and stunning views of Mount Kilimanjaro. Perfect for elephant lovers and landscape photographers.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Close encounters with large elephant herds",
+                "Photograph elephants with Kilimanjaro backdrop",
+                "Visit Observation Hill for panoramic views",
+                "Morning and afternoon game drives",
+                "Cultural visit to Maasai community"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Park entry fees and vehicle fees",
+                "Lodge accommodation with views",
+                "All meals and drinking water",
+                "Professional English-speaking guide",
+                "Transport in custom safari minibus",
+                "Hotel pickup/dropoff in Nairobi"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Tsavo Wilderness Adventure",
+          "category": [
+            "budget",
+            "adventure"
+          ],
+          "location": "Tsavo East & West National Parks",
+          "duration": "Dry seasons: Jan–Mar, Jun–Oct",
+          "description": "Explore Kenya's largest national park, famous for its red elephants, maneless lions, and dramatic landscapes including Mzima Springs.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "See the famous \"red elephants\" of Tsavo",
+                "Visit Mzima Springs with underwater hippo viewing",
+                "Explore lava flows at Shetani Lava",
+                "Bird watching at Aruba Dam",
+                "Night game drive (optional)"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Camping accommodation or basic lodge",
+                "All park fees and camping fees",
+                "Meals as per itinerary",
+                "Transport in 4×4 safari vehicle",
+                "Professional driver/guide",
+                "Camping equipment (if camping)"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Samburu Special 5 Safari",
+          "category": [
+            "midrange",
+            "luxury"
+          ],
+          "location": "Samburu National Reserve",
+          "duration": "Best: June–October, Jan–Feb",
+          "description": "Discover the unique wildlife of northern Kenya, home to the \"Samburu Special Five\" — rare species found only in this arid ecosystem.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Search for the Samburu Special Five",
+                "Camel safari experience with Samburu guides",
+                "Visit to a Samburu cultural village",
+                "Game drives along the Ewaso Ng'iro river",
+                "Bird watching for dry country species"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Tented camp accommodation",
+                "All park and reserve fees",
+                "Full board accommodation",
+                "Game drives in 4×4 vehicle",
+                "Camel safari experience",
+                "Cultural village visit"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Lake Nakuru Flamingo Safari",
+          "category": [
+            "budget",
+            "family"
+          ],
+          "location": "Lake Nakuru National Park",
+          "duration": "Year-round (flamingos seasonal)",
+          "description": "A short safari perfect for bird watchers and those with limited time. Famous for its flamingo populations and rhino sanctuary.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Spectacular flocks of pink flamingos",
+                "Visit the rhino sanctuary (black & white rhinos)",
+                "Baboon cliff viewpoint",
+                "Game drive around the lake shore",
+                "Over 450 bird species"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Lodge accommodation",
+                "Park entry fees",
+                "All meals",
+                "Game drives",
+                "Transport from Nairobi",
+                "Professional guide"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Aberdare Mountain Forest Safari",
+          "category": [
+            "midrange",
+            "luxury"
+          ],
+          "location": "Aberdare National Park",
+          "duration": "Dry seasons: Jan–Feb, Jun–Sep",
+          "description": "Experience mountain forest wildlife viewing from the unique tree lodges and ark-style accommodations overlooking waterholes.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Stay at famous tree lodges (The Ark or Treetops)",
+                "Night wildlife viewing from lodge balconies",
+                "Mountain forest walks with armed guard",
+                "Visit waterfalls and scenic viewpoints",
+                "See rare mountain forest species"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Tree lodge accommodation",
+                "All park fees and conservation charges",
+                "Full board accommodation",
+                "Guided forest walks",
+                "Transport from Nairobi",
+                "All game viewing activities"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Meru National Park Adventure",
+          "category": [
+            "midrange",
+            "adventure"
+          ],
+          "location": "Meru National Park",
+          "duration": "Dry season: June–October",
+          "description": "Explore the wilderness that inspired Joy Adamson's \"Born Free\". Less crowded than other parks with diverse landscapes and wildlife.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Visit Elsa's Kopje (lioness memorial site)",
+                "Game drives across diverse habitats",
+                "Bird watching along 13 permanent rivers",
+                "See the park's rhino sanctuary",
+                "Optional fishing in Tana River"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Tented camp accommodation",
+                "All park fees and activities",
+                "Full board meals",
+                "Professional guide and driver",
+                "Transport in 4×4 vehicle",
+                "Rhino sanctuary visit"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Hell's Gate & Lake Naivasha Adventure",
+          "category": [
+            "budget",
+            "adventure"
+          ],
+          "location": "Hell's Gate National Park & Lake Naivasha",
+          "duration": "Year-round destination",
+          "description": "The only Kenyan national park where you can walk, cycle, or rock climb among wildlife. Perfect for active travelers.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Cycling safari through Hell's Gate",
+                "Rock climbing at Fischer's Tower",
+                "Boat ride on Lake Naivasha",
+                "Walking safari among wildlife",
+                "Visit geothermal power plant"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Lodge accommodation at Lake Naivasha",
+                "All park entry fees",
+                "Bicycle rental for cycling safari",
+                "Boat ride on Lake Naivasha",
+                "All meals",
+                "Professional guide"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "nairobi",
+      "title": "Nairobi & Inland",
+      "items": [
+        {
+          "title": "Nairobi Wildlife Conservation Experience",
+          "category": [
+            "wildlife",
+            "cultural"
+          ],
+          "location": "Nairobi National Park & Animal Orphanages",
+          "duration": "7–8 hours (Best: Morning visits)",
+          "description": "A comprehensive wildlife day combining Nairobi National Park with visits to world-renowned animal conservation centers.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Game drive in Nairobi National Park (the world's only wildlife capital)",
+                "Visit David Sheldrick Elephant Orphanage (11am feeding time)",
+                "Giraffe Centre experience — feed Rothschild giraffes",
+                "Animal Orphanage visit with rescued animals",
+                "Learn about Kenya's conservation efforts"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "All park and conservation center entry fees",
+                "Professional wildlife guide",
+                "Transport in comfortable vehicle",
+                "Bottled water throughout",
+                "Lunch at a selected restaurant",
+                "Giraffe feeding pellets"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Karen Blixen & Cultural Heritage Tour",
+          "category": [
+            "cultural",
+            "historical"
+          ],
+          "location": "Karen, Nairobi",
+          "duration": "6–7 hours",
+          "description": "Step into colonial Kenya's history and experience traditional Kenyan culture at its most authentic.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Visit Karen Blixen Museum (Out of Africa author's home)",
+                "Explore Nairobi Railway Museum",
+                "Bomas of Kenya cultural show and traditional villages",
+                "Lunch at historical restaurant",
+                "Visit Kazuri Beads women's cooperative"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "All museum and cultural center entry fees",
+                "Professional cultural guide",
+                "Traditional dance performance",
+                "Lunch at selected restaurant",
+                "Transport between sites",
+                "Bottled water"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Karura Forest Adventure & City Views",
+          "category": [
+            "adventure",
+            "nature"
+          ],
+          "location": "Karura Forest & Nairobi Viewpoints",
+          "duration": "4–5 hours (Morning or Afternoon)",
+          "description": "An active day combining forest adventures with panoramic city views and urban exploration.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Cycling or walking through Karura Forest (35km trails)",
+                "Visit waterfalls and caves within the forest",
+                "Picnic lunch at scenic forest spot",
+                "Panoramic city views from KICC Helipad or similar",
+                "Optional forest zip-lining (extra cost)"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Forest entry fees",
+                "Bicycle rental (or walking guide)",
+                "Picnic lunch with refreshments",
+                "Professional adventure guide",
+                "Transport to/from forest",
+                "Safety equipment"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Nairobi Food & Market Exploration",
+          "category": [
+            "urban",
+            "cultural"
+          ],
+          "location": "Various Nairobi Locations",
+          "duration": "8–9 hours (Food-focused day)",
+          "description": "A culinary journey through Nairobi's diverse food scene, from street markets to fine dining with local experiences.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Explore City Market and Maasai Market for crafts",
+                "Street food tour in downtown Nairobi",
+                "Cooking class with local chef (prepare traditional dishes)",
+                "Visit a coffee roastery or tea factory",
+                "Fine dining experience at top Nairobi restaurant"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "All food tastings and meals",
+                "Cooking class with ingredients",
+                "Market visits and shopping guidance",
+                "Foodie guide with local knowledge",
+                "Transport between locations",
+                "Recipe cards to take home"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Lake Naivasha & Crescent Island",
+          "category": [
+            "nature",
+            "wildlife"
+          ],
+          "location": "Lake Naivasha (2 hours from Nairobi)",
+          "duration": "10–12 hours (Day trip from Nairobi)",
+          "description": "A scenic escape to one of Kenya's most beautiful lakes, offering walking safaris among wildlife and boat rides.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Boat ride on Lake Naivasha with hippo viewing",
+                "Walking safari on Crescent Island among wildlife",
+                "Bird watching (450+ species)",
+                "Visit Hell's Gate National Park (optional cycling)",
+                "Lunch at lakeside resort with views"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Return transport from Nairobi",
+                "Boat ride with guide",
+                "Crescent Island walking safari",
+                "All park and conservation fees",
+                "Lunch at lakeside resort",
+                "Professional nature guide"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Ngong Hills & Kibera Cultural Insight",
+          "category": [
+            "adventure",
+            "cultural"
+          ],
+          "location": "Ngong Hills & Kibera, Nairobi",
+          "duration": "8–9 hours",
+          "description": "A day of contrasts — hike the scenic Ngong Hills followed by a respectful, insightful tour of Africa's largest informal settlement.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Hike Ngong Hills with panoramic views (7 hills)",
+                "Guided respectful tour of Kibera with local guide",
+                "Visit community projects and social enterprises",
+                "Lunch at community-run restaurant",
+                "Learn about urban challenges and innovations"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Ngong Hills hiking permit and guide",
+                "Kibera tour with local community guide",
+                "Transport between locations",
+                "Lunch at community project",
+                "Donation to community projects",
+                "Bottled water and snacks"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Tea Plantation Experience & Limuru Escapes",
+          "category": [
+            "nature",
+            "cultural"
+          ],
+          "location": "Limuru Highlands (1 hour from Nairobi)",
+          "duration": "8–9 hours",
+          "description": "Experience Kenya's famous tea culture in the cool highlands with scenic views and traditional tea tasting.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Tour of working tea plantation",
+                "Tea plucking experience (seasonal)",
+                "Tea factory tour and tasting session",
+                "Visit Limuru's colonial architecture",
+                "Scenic drive through tea-growing region"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "Tea plantation and factory tour",
+                "Tea tasting session",
+                "Lunch at plantation restaurant",
+                "Transport from Nairobi",
+                "Professional guide",
+                "Tea samples to take home"
+              ]
+            ]
+          ]
+        },
+        {
+          "title": "Nairobi By Night — Entertainment & Culture",
+          "category": [
+            "urban",
+            "cultural"
+          ],
+          "location": "Various Nairobi Nightlife Spots",
+          "duration": "5–6 hours (Evening)",
+          "description": "Experience Nairobi's vibrant nightlife, from cultural performances to modern entertainment venues.",
+          "details": [
+            [
+              "Ideas to discuss",
+              [
+                "Traditional music and dance performance",
+                "Visit to popular Nairobi rooftop bar with city views",
+                "Live jazz or Afro-fusion music experience",
+                "Gourmet dinner at selected restaurant",
+                "Night market or cultural event (depending on day)"
+              ]
+            ],
+            [
+              "Arrangements to confirm",
+              [
+                "All entertainment entry fees",
+                "Three-course gourmet dinner",
+                "Two drinks at selected venues",
+                "Transport between venues",
+                "Local entertainment guide",
+                "Performance tickets"
+              ]
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

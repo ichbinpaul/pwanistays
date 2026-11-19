@@ -41,6 +41,19 @@ Refresh using the source/routing command documented in `PROPERTY-PREVIEWS.md`,
 then run previews, the directory, location guides and sitemap generators. The
 hourly workflow already performs all these steps and commits guide changes.
 
+## Experience trip pages
+
+`experience-trips.json` retains the 25 trip options across Coastal & Cultural,
+Safari Adventures and Nairobi & Inland. Edit this source to update a trip's
+description, categories, timing or proposed arrangements, then run
+`python3 scripts/build_experience_pages.py` from the repository root. The three
+generated pages share their footer with the accommodation directory through
+`scripts/site_chrome.py`. The hourly directory build preserves that footer.
+
+Quotation links include the selected trip's title. Proposed activities and
+inclusions still require confirmation for the guest's dates; do not publish
+guaranteed sightings, availability or prices without current confirmation.
+
 ## Search Console measurement
 
 The supplied seven-day screenshot has a Page filter: 3 clicks, 132 impressions,

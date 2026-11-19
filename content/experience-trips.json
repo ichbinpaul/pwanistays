@@ -34,12 +34,20 @@
             ]
           ],
           "image": {
-            "src": "/images/Haller_Park_PwaniStays.jpg",
-            "width": 330,
-            "height": 247,
-            "alt": "Green trees beside the water at Haller Park",
-            "caption": "Haller Park, Mombasa",
-            "source": "Existing PwaniStays destination photography"
+            "src": "/images/experiences/nguuni-haller-park-mombasa-giraffes-720.webp",
+            "width": 720,
+            "height": 480,
+            "srcset": "/images/experiences/nguuni-haller-park-mombasa-giraffes-360.webp 360w, /images/experiences/nguuni-haller-park-mombasa-giraffes-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "Giraffes at Nguuni Nature Sanctuary in Mombasa",
+            "caption": "Nguuni Nature Sanctuary, Mombasa",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Giraffes_at_the_Nguuni_Nature_Sanctuary_in_Mombasa.jpg?width=1200",
+            "source_sha256": "55008f8dd5e02fc269dede021932bf3546c7a0d75e1acef125e980a7b6873519",
+            "author": "Otubula",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+            "license_name": "CC0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Giraffes_at_the_Nguuni_Nature_Sanctuary_in_Mombasa.jpg",
+            "position": "50% 30%"
           }
         },
         {
@@ -72,16 +80,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/coral-720.webp",
-            "srcset": "/images/experiences/coral-360.webp 360w, /images/experiences/coral-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/mamba-village-mombasa-crocodiles-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "A scuba diver observing fish beneath the water",
-            "caption": "Marine adventures · inspiration",
-            "source": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/mamba-village-mombasa-crocodiles-360.webp 360w, /images/experiences/mamba-village-mombasa-crocodiles-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "Crocodiles on the Kenyan coast",
+            "caption": "Crocodiles on the Kenyan coast",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Crocodiles_at_the_Kenya_Coast.jpg?width=1200",
+            "source_sha256": "9a25c163d4ed209a9677fff50c1b5cc180fbc21adae37372ad4670824ac9ada6",
+            "author": "Jaokov",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Crocodiles_at_the_Kenya_Coast.jpg"
           }
         },
         {
@@ -113,12 +124,15 @@
             ]
           ],
           "image": {
-            "src": "/images/Old_Town_Mombasa_2025_PwaniStays.jpg",
-            "width": 960,
-            "height": 640,
-            "alt": "A street lined with historic buildings in Mombasa Old Town",
-            "caption": "Old Town, Mombasa",
-            "source": "Existing PwaniStays destination photography"
+            "src": "/images/experiences/mombasa-old-town-street-720.webp",
+            "width": 720,
+            "height": 480,
+            "srcset": "/images/experiences/mombasa-old-town-street-360.webp 360w, /images/experiences/mombasa-old-town-street-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "A street with historic buildings in Mombasa Old Town",
+            "caption": "Mombasa Island",
+            "source": "/images/Old_Town_Mombasa_2025_PwaniStays.jpg",
+            "source_sha256": "68e1acf47a365a6ffe9de060727808ac23e3dea352fb20fe3747926e83ee303d"
           }
         },
         {
@@ -150,12 +164,15 @@
             ]
           ],
           "image": {
-            "src": "/images/Diani_Beach_PwaniStays.jpg",
-            "width": 960,
-            "height": 720,
-            "alt": "White sand and turquoise water at Diani Beach",
-            "caption": "Diani Beach",
-            "source": "Existing PwaniStays destination photography"
+            "src": "/images/experiences/diani-beach-kenya-720.webp",
+            "width": 720,
+            "height": 480,
+            "srcset": "/images/experiences/diani-beach-kenya-360.webp 360w, /images/experiences/diani-beach-kenya-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The sandy shoreline at Diani Beach, Kenya",
+            "caption": "Diani Beach (Kwale)",
+            "source": "/images/Diani_Beach_PwaniStays.jpg",
+            "source_sha256": "d6b954256a2a787138c37f6325ace9e5d322d4cbcc2af042ad48edcbf78d3603"
           }
         },
         {
@@ -188,16 +205,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/coral-720.webp",
-            "srcset": "/images/experiences/coral-360.webp 360w, /images/experiences/coral-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/kisite-wasini-snorkelling-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "A scuba diver observing fish beneath the water",
-            "caption": "Marine adventures · inspiration",
-            "source": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/kisite-wasini-snorkelling-360.webp 360w, /images/experiences/kisite-wasini-snorkelling-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "Snorkelling in the waters of Kisite Marine Park",
+            "caption": "Shimoni – Kisite Marine Park – Wasini Island",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Snorkeling_at_Kisite.jpg?width=1200",
+            "source_sha256": "a9d3da34c745307ece10ec100dfc0339c820085228718fe3de7e63003e2579a8",
+            "author": "Hugh Lunnon",
+            "license": "https://creativecommons.org/licenses/by-sa/2.0",
+            "license_name": "CC BY-SA 2.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Snorkeling_at_Kisite.jpg"
           }
         },
         {
@@ -230,16 +250,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/forest-720.webp",
-            "srcset": "/images/experiences/forest-360.webp 360w, /images/experiences/forest-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/shimba-hills-kenya-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Sunlight falling across a path through green woodland",
-            "caption": "Forest walks · inspiration",
-            "source": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/shimba-hills-kenya-360.webp 360w, /images/experiences/shimba-hills-kenya-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The green landscape of Shimba Hills, Kenya",
+            "caption": "Shimba Hills National Reserve",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Shimba_hills.jpg?width=1200",
+            "source_sha256": "dca7f9ad13577d025d6a6d4577798f2fb16b275499feb8fb46c9a3a475126ccd",
+            "author": "ChinkuTravels",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Shimba_hills.jpg"
           }
         },
         {
@@ -271,12 +294,15 @@
             ]
           ],
           "image": {
-            "src": "/images/Nyali_beach_PwaniStays.jpg",
-            "width": 960,
-            "height": 720,
-            "alt": "The shoreline at Nyali Beach",
-            "caption": "Nyali Beach, Mombasa",
-            "source": "Existing PwaniStays destination photography"
+            "src": "/images/experiences/nyali-beach-coastal-activities-720.webp",
+            "width": 720,
+            "height": 480,
+            "srcset": "/images/experiences/nyali-beach-coastal-activities-360.webp 360w, /images/experiences/nyali-beach-coastal-activities-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The shoreline at Nyali Beach in Mombasa",
+            "caption": "Diani / Bamburi / Nyali",
+            "source": "/images/Nyali_beach_PwaniStays.jpg",
+            "source_sha256": "9c3a59f66e46ac449d85cdd0cc3df5a30f392391522df9232652ed3ff86ee9b8"
           }
         },
         {
@@ -310,16 +336,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/elephant-720.webp",
-            "srcset": "/images/experiences/elephant-360.webp 360w, /images/experiences/elephant-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/tsavo-east-red-elephant-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "An African elephant beside green woodland",
-            "caption": "Wildlife inspiration",
-            "source": "https://images.unsplash.com/photo-1549366021-9f761d450615",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/tsavo-east-red-elephant-360.webp 360w, /images/experiences/tsavo-east-red-elephant-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "A red elephant in Tsavo East National Park",
+            "caption": "Mombasa → Voi → Tsavo East National Park",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Majestic_red_elephant_of_Tsavo_East_(5232098119).jpg?width=1200",
+            "source_sha256": "b398beb9943b2da07649158f16a38f509bfe2a4ae1daa9b858d585cf9899a668",
+            "author": "McKay Savage from London, UK",
+            "license": "https://creativecommons.org/licenses/by/2.0",
+            "license_name": "CC BY 2.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Majestic_red_elephant_of_Tsavo_East_(5232098119).jpg"
           }
         },
         {
@@ -351,22 +380,28 @@
             ]
           ],
           "image": {
-            "src": "/images/Fort_Jesus,_2025_PwaniStays.jpg",
-            "width": 960,
-            "height": 641,
-            "alt": "The historic stone walls of Fort Jesus in Mombasa",
-            "caption": "Fort Jesus, Mombasa",
-            "source": "Existing PwaniStays destination photography"
+            "src": "/images/experiences/fort-jesus-mombasa-culture-720.webp",
+            "width": 720,
+            "height": 480,
+            "srcset": "/images/experiences/fort-jesus-mombasa-culture-360.webp 360w, /images/experiences/fort-jesus-mombasa-culture-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The stone walls and grounds of Fort Jesus in Mombasa",
+            "caption": "Ukunda / Kaya Forests / Local Villages",
+            "source": "/images/Fort_Jesus,_2025_PwaniStays.jpg",
+            "source_sha256": "bc70af673dc87374a68d7dfb58885f8a388e1e520552381c291dbae40f9b3c16"
           }
         }
       ],
       "hero_image": {
-        "src": "/images/Old_Town_Mombasa_2025_PwaniStays.jpg",
+        "src": "/images/experiences/watamu-turtle-bay-coast-960.webp",
         "width": 960,
-        "height": 640,
-        "alt": "A street lined with historic buildings in Mombasa Old Town",
-        "caption": "Old Town, Mombasa",
-        "source": "Existing PwaniStays destination photography"
+        "height": 720,
+        "srcset": "/images/experiences/watamu-turtle-bay-coast-640.webp 640w, /images/experiences/watamu-turtle-bay-coast-960.webp 960w",
+        "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px",
+        "alt": "Turtle Bay on the coast at Watamu, Kenya",
+        "caption": "Watamu, Kenya",
+        "source": "/images/Turtle_Bay_Watamu_Kenya_PwaniStays.jpg",
+        "source_sha256": "8d269689d1eea116b54d849e7c6f77b816d1507320adc6538a332111c2edca65"
       }
     },
     {
@@ -406,16 +441,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/zebras-720.webp",
-            "srcset": "/images/experiences/zebras-360.webp 360w, /images/experiences/zebras-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/masai-mara-zebra-migration-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Zebras grazing on open plains beneath a hot-air balloon",
-            "caption": "Safari inspiration",
-            "source": "https://images.unsplash.com/photo-1519659528534-7fd733a832a0",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/masai-mara-zebra-migration-360.webp 360w, /images/experiences/masai-mara-zebra-migration-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "Zebras migrating across the Maasai Mara",
+            "caption": "Masai Mara National Reserve",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Migration_of_zebras_in_Maasai_Mara.jpg?width=1200",
+            "source_sha256": "7e041a343b66bad537d9da81f2c8922c7e58d48b8c5fabc2618fcd999b8565bc",
+            "author": "Renvoy",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Migration_of_zebras_in_Maasai_Mara.jpg"
           }
         },
         {
@@ -451,16 +489,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/kilimanjaro-720.webp",
-            "srcset": "/images/experiences/kilimanjaro-360.webp 360w, /images/experiences/kilimanjaro-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/amboseli-elephants-kilimanjaro-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Mount Kilimanjaro rising above open plains",
-            "caption": "Mount Kilimanjaro",
-            "source": "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6",
-            "license": "https://unsplash.com/license",
-            "illustrative": false
+            "srcset": "/images/experiences/amboseli-elephants-kilimanjaro-360.webp 360w, /images/experiences/amboseli-elephants-kilimanjaro-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "Elephants in Amboseli with Mount Kilimanjaro behind them",
+            "caption": "Amboseli National Park",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg?width=1200",
+            "source_sha256": "ecf2c3e8d2d484d2def136fe9938619fdb66f8799e8d9e4b85fece90c7285114",
+            "author": "Amoghavarsha JS amoghavarsha.com",
+            "license": "https://creativecommons.org/licenses/by-sa/3.0",
+            "license_name": "CC BY-SA 3.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg"
           }
         },
         {
@@ -496,16 +537,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/elephant-720.webp",
-            "srcset": "/images/experiences/elephant-360.webp 360w, /images/experiences/elephant-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/tsavo-red-elephant-safari-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "An African elephant beside green woodland",
-            "caption": "Wildlife inspiration",
-            "source": "https://images.unsplash.com/photo-1549366021-9f761d450615",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/tsavo-red-elephant-safari-360.webp 360w, /images/experiences/tsavo-red-elephant-safari-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "A dust-covered red elephant in Tsavo",
+            "caption": "Tsavo East & West National Parks",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Red_elephant_in_dirt.jpg?width=1200",
+            "source_sha256": "dd0809b271c2584b959d2c5d349bd987342519ac56b4a2f24dba9a85fc7855e0",
+            "author": "Byrdyak",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Red_elephant_in_dirt.jpg"
           }
         },
         {
@@ -541,16 +585,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/giraffe-720.webp",
-            "srcset": "/images/experiences/giraffe-360.webp 360w, /images/experiences/giraffe-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/samburu-reticulated-giraffe-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "A giraffe looking towards the camera",
-            "caption": "Wildlife inspiration",
-            "source": "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/samburu-reticulated-giraffe-360.webp 360w, /images/experiences/samburu-reticulated-giraffe-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "A reticulated giraffe in Samburu",
+            "caption": "Samburu National Reserve",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The_Reticulated_Giraffe_from_Samburu.jpg?width=1200",
+            "source_sha256": "96b9737db7107c031836a974d2439d8c99dffb5915032598d3b8e7d7967072f5",
+            "author": "Sourish Trivedy",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:The_Reticulated_Giraffe_from_Samburu.jpg"
           }
         },
         {
@@ -586,16 +633,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/golden-plains-720.webp",
-            "srcset": "/images/experiences/golden-plains-360.webp 360w, /images/experiences/golden-plains-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/lake-nakuru-flamingos-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Golden light across open savannah",
-            "caption": "Safari landscapes · inspiration",
-            "source": "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/lake-nakuru-flamingos-360.webp 360w, /images/experiences/lake-nakuru-flamingos-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "Flamingos at Lake Nakuru",
+            "caption": "Lake Nakuru National Park",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Flamingoes-Lake_Nakuru.jpg?width=1200",
+            "source_sha256": "b203202fc727c58cc0bf98053b5e0f5c3a98298386e30dd8c4179884b389d09b",
+            "author": "Lyfec",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Flamingoes-Lake_Nakuru.jpg"
           }
         },
         {
@@ -631,16 +681,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/forest-720.webp",
-            "srcset": "/images/experiences/forest-360.webp 360w, /images/experiences/forest-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/aberdare-forest-kenya-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Sunlight falling across a path through green woodland",
-            "caption": "Forest walks · inspiration",
-            "source": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/aberdare-forest-kenya-360.webp 360w, /images/experiences/aberdare-forest-kenya-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The green forest of Aberdare National Park",
+            "caption": "Aberdare National Park",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aberdare_National_Forest_Kenya.jpg?width=1200",
+            "source_sha256": "d25e0b0b22d1c4be82ed979d74b9f6e85d66736f652c01197547b277c7bfb53c",
+            "author": "Wanjikucha",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Aberdare_National_Forest_Kenya.jpg"
           }
         },
         {
@@ -676,16 +729,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/game-drive-720.webp",
-            "srcset": "/images/experiences/game-drive-360.webp 360w, /images/experiences/game-drive-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/meru-national-park-kenya-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "A safari vehicle on grassland at sunset",
-            "caption": "Game drives · inspiration",
-            "source": "https://images.unsplash.com/photo-1516426122078-c23e76319801",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/meru-national-park-kenya-360.webp 360w, /images/experiences/meru-national-park-kenya-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The landscape of Meru National Park in Kenya",
+            "caption": "Meru National Park",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Meru_National_Park%2C_Kenya.jpg?width=1200",
+            "source_sha256": "60766e8c7c9c1703b46120cf2e351811d84191add0c24f590fc5a1a0e6300605",
+            "author": "Nina R",
+            "license": "https://creativecommons.org/licenses/by/2.0",
+            "license_name": "CC BY 2.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Meru_National_Park,_Kenya.jpg"
           }
         },
         {
@@ -721,30 +777,36 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/savannah-720.webp",
-            "srcset": "/images/experiences/savannah-360.webp 360w, /images/experiences/savannah-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/hells-gate-national-park-kenya-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "An acacia tree on open grassland at sunset",
-            "caption": "Savannah inspiration",
-            "source": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/hells-gate-national-park-kenya-360.webp 360w, /images/experiences/hells-gate-national-park-kenya-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "Rock formations in Hell’s Gate National Park",
+            "caption": "Hell's Gate National Park & Lake Naivasha",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hell%27s_Gate%2C_Kenya.jpg?width=1200",
+            "source_sha256": "e0e4ef5e6690d07cdd1182080e6cadb98994647271e0ae34547261f311355abd",
+            "author": "Ninara from Helsinki, Finland",
+            "license": "https://creativecommons.org/licenses/by/2.0",
+            "license_name": "CC BY 2.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Hell%27s_Gate,_Kenya.jpg"
           }
         }
       ],
       "hero_image": {
-        "src": "/images/experiences/savannah-1200.webp",
-        "srcset": "/images/experiences/savannah-720.webp 720w, /images/experiences/savannah-1200.webp 1200w",
+        "src": "/images/experiences/safari-zebras-kenya-1137.webp",
+        "width": 1137,
+        "height": 853,
+        "srcset": "/images/experiences/safari-zebras-kenya-640.webp 640w, /images/experiences/safari-zebras-kenya-1137.webp 1137w",
         "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px",
-        "width": 1200,
-        "height": 800,
-        "alt": "An acacia tree on open grassland at sunset",
-        "caption": "Savannah inspiration",
-        "source": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5",
-        "license": "https://unsplash.com/license",
-        "illustrative": true
+        "alt": "Zebras grazing on open savannah",
+        "caption": "Kenyan savannah",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Zebras_Grazing_Grassland_Savannah.jpg?width=1200",
+        "source_sha256": "fdc326b44e5a5d534cf5baaa53fcd376caedc7945f73222029b33b9c834d6eb4",
+        "author": "Antony Trivet",
+        "license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "license_name": "CC BY-SA 4.0",
+        "attribution_url": "https://commons.wikimedia.org/wiki/File:Zebras_Grazing_Grassland_Savannah.jpg"
       }
     },
     {
@@ -784,16 +846,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/giraffe-720.webp",
-            "srcset": "/images/experiences/giraffe-360.webp 360w, /images/experiences/giraffe-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/nairobi-national-park-giraffe-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "A giraffe looking towards the camera",
-            "caption": "Wildlife inspiration",
-            "source": "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/nairobi-national-park-giraffe-360.webp 360w, /images/experiences/nairobi-national-park-giraffe-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "A giraffe in Nairobi National Park",
+            "caption": "Nairobi National Park & Animal Orphanages",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Giraffe%2C_Nairobi_National_Park.jpg?width=1200",
+            "source_sha256": "fc3c7f04e35c03a3f2c31cccaaa9ee69362d6ef680e8c6f1fbae4755add94da9",
+            "author": "Michelle Juma",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Giraffe,_Nairobi_National_Park.jpg"
           }
         },
         {
@@ -829,16 +894,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/nairobi-city-720.webp",
-            "srcset": "/images/experiences/nairobi-city-360.webp 360w, /images/experiences/nairobi-city-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/karen-blixen-museum-nairobi-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Nairobi city centre with the I&M Bank Tower",
-            "caption": "Nairobi city centre",
-            "source": "https://images.unsplash.com/photo-1611144727915-ef30a08aaeb3",
-            "license": "https://unsplash.com/license",
-            "illustrative": false
+            "srcset": "/images/experiences/karen-blixen-museum-nairobi-360.webp 360w, /images/experiences/karen-blixen-museum-nairobi-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The house and grounds at Karen Blixen Museum in Nairobi",
+            "caption": "Karen, Nairobi",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Karen_Blixen_Museum_House.jpg?width=1200",
+            "source_sha256": "cc8037b8c175c37cd419a57f4a084acf12f8398e53f3c91c4c40dfff7cfff474",
+            "author": "さえぼー",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+            "license_name": "CC0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Karen_Blixen_Museum_House.jpg"
           }
         },
         {
@@ -874,16 +942,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/forest-720.webp",
-            "srcset": "/images/experiences/forest-360.webp 360w, /images/experiences/forest-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/karura-forest-nairobi-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Sunlight falling across a path through green woodland",
-            "caption": "Forest walks · inspiration",
-            "source": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/karura-forest-nairobi-360.webp 360w, /images/experiences/karura-forest-nairobi-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "A nature trail in Karura Forest, Nairobi",
+            "caption": "Karura Forest & Nairobi Viewpoints",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nature_trail_within_Karura_Forest_(1).jpg?width=1200",
+            "source_sha256": "88134cbb3b0d4fd65d8d2c0fe5ecfa082d0f7171ec8d16aa0b02f26c4449901f",
+            "author": "Eva Ayub",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Nature_trail_within_Karura_Forest_(1).jpg"
           }
         },
         {
@@ -919,16 +990,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/nairobi-city-720.webp",
-            "srcset": "/images/experiences/nairobi-city-360.webp 360w, /images/experiences/nairobi-city-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/nairobi-city-market-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Nairobi city centre with the I&M Bank Tower",
-            "caption": "Nairobi city centre",
-            "source": "https://images.unsplash.com/photo-1611144727915-ef30a08aaeb3",
-            "license": "https://unsplash.com/license",
-            "illustrative": false
+            "srcset": "/images/experiences/nairobi-city-market-360.webp 360w, /images/experiences/nairobi-city-market-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The City Market building in Nairobi",
+            "caption": "Various Nairobi Locations",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_City_Market_in_Kenya.jpg?width=1200",
+            "source_sha256": "6de82165fc8c6d2893b056c5d7bca87a97cbdb06cbf36314ae351371484862cc",
+            "author": "AEira-WMF",
+            "license": "https://creativecommons.org/licenses/by/4.0",
+            "license_name": "CC BY 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Nairobi_City_Market_in_Kenya.jpg"
           }
         },
         {
@@ -964,13 +1038,19 @@
             ]
           ],
           "image": {
-            "src": "/images/Haller_Park_PwaniStays.jpg",
-            "width": 330,
-            "height": 247,
-            "alt": "Trees reflected in a quiet pond",
-            "caption": "Waterside nature · inspiration",
-            "source": "Existing PwaniStays destination photography",
-            "illustrative": true
+            "src": "/images/experiences/lake-naivasha-boat-720.webp",
+            "width": 720,
+            "height": 480,
+            "srcset": "/images/experiences/lake-naivasha-boat-360.webp 360w, /images/experiences/lake-naivasha-boat-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "A boat on Lake Naivasha",
+            "caption": "Lake Naivasha (2 hours from Nairobi)",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boat_on_Lake_Naivasha.jpg?width=1200",
+            "source_sha256": "6bcc78a6a12fa4855974bede0c16cc39ea26c5bb753c7330d4a2dd7947fdf01f",
+            "author": "Sabina Müller",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Boat_on_Lake_Naivasha.jpg"
           }
         },
         {
@@ -1006,16 +1086,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/forest-720.webp",
-            "srcset": "/images/experiences/forest-360.webp 360w, /images/experiences/forest-720.webp 720w",
+            "src": "/images/experiences/ngong-hills-kenya-607.webp",
+            "width": 607,
+            "height": 405,
+            "srcset": "/images/experiences/ngong-hills-kenya-360.webp 360w, /images/experiences/ngong-hills-kenya-607.webp 607w",
             "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
-            "width": 720,
-            "height": 480,
-            "alt": "Sunlight falling across a path through green woodland",
-            "caption": "Forest walks · inspiration",
-            "source": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "alt": "The rolling landscape of Ngong Hills, Kenya",
+            "caption": "Ngong Hills & Kibera, Nairobi",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ngong_Hills_Kenya.jpg?width=1200",
+            "source_sha256": "29be4861d42967d90eb332a461feaf3b2dc5ca3aa08253867efd23652e138bd2",
+            "author": "Realisticbiscuit",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Ngong_Hills_Kenya.jpg"
           }
         },
         {
@@ -1051,16 +1134,19 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/tea-720.webp",
-            "srcset": "/images/experiences/tea-360.webp 360w, /images/experiences/tea-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/limuru-tea-farm-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "A cup of tea beside biscuits",
-            "caption": "Tea tasting · inspiration",
-            "source": "https://images.unsplash.com/photo-1544787219-7f47ccb76574",
-            "license": "https://unsplash.com/license",
-            "illustrative": true
+            "srcset": "/images/experiences/limuru-tea-farm-360.webp 360w, /images/experiences/limuru-tea-farm-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "Rows of green tea plants on a farm in Limuru, Kenya",
+            "caption": "Tea plantation, Limuru, Kenya",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Tea_farm_in_Limuru%2C_Kenya.jpg?width=1200",
+            "source_sha256": "45219fbaf668059768b91876abfa07e4aef1233cc87ea04e2fa474ccc317bab5",
+            "author": "SeanTwice",
+            "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+            "license_name": "CC0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Tea_farm_in_Limuru,_Kenya.jpg"
           }
         },
         {
@@ -1096,30 +1182,37 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/nairobi-night-720.webp",
-            "srcset": "/images/experiences/nairobi-night-360.webp 360w, /images/experiences/nairobi-night-720.webp 720w",
-            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "src": "/images/experiences/nairobi-skyline-at-night-720.webp",
             "width": 720,
             "height": 480,
-            "alt": "Nairobi skyline reflected in water after dark",
-            "caption": "Nairobi after dark",
-            "source": "https://images.unsplash.com/photo-1596005554384-d293674c91d7",
-            "license": "https://unsplash.com/license",
-            "illustrative": false
+            "srcset": "/images/experiences/nairobi-skyline-at-night-360.webp 360w, /images/experiences/nairobi-skyline-at-night-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "alt": "The Nairobi skyline illuminated at night",
+            "caption": "Various Nairobi Nightlife Spots",
+            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_skyline_at_Night.jpg?width=1200",
+            "source_sha256": "532eb7f84729dfb1a2ef29ed502c3ba31af6c2c5b3bbe8c03a6ecabd97a6a768",
+            "author": "Kevoyugi",
+            "license": "https://creativecommons.org/licenses/by-sa/4.0",
+            "license_name": "CC BY-SA 4.0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Nairobi_skyline_at_Night.jpg",
+            "position": "50% 80%"
           }
         }
       ],
       "hero_image": {
-        "src": "/images/experiences/nairobi-city-1200.webp",
-        "srcset": "/images/experiences/nairobi-city-720.webp 720w, /images/experiences/nairobi-city-1200.webp 1200w",
-        "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px",
+        "src": "/images/experiences/nairobi-kicc-skyline-1200.webp",
         "width": 1200,
-        "height": 800,
-        "alt": "Nairobi city centre with the I&M Bank Tower",
-        "caption": "Nairobi city centre",
-        "source": "https://images.unsplash.com/photo-1611144727915-ef30a08aaeb3",
-        "license": "https://unsplash.com/license",
-        "illustrative": false
+        "height": 900,
+        "srcset": "/images/experiences/nairobi-kicc-skyline-640.webp 640w, /images/experiences/nairobi-kicc-skyline-1200.webp 1200w",
+        "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px",
+        "alt": "An aerial view of Nairobi’s skyline from the KICC rooftop",
+        "caption": "Nairobi skyline",
+        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg?width=1200",
+        "source_sha256": "a996c3ecdfc949a636b0b3db8cf032a4b584a19061c80d5f859503fe8c142ea6",
+        "author": "Lebu Ayiga",
+        "license": "https://creativecommons.org/licenses/by-sa/4.0",
+        "license_name": "CC BY-SA 4.0",
+        "attribution_url": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg"
       }
     }
   ]

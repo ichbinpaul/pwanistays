@@ -54,14 +54,34 @@ Quotation links include the selected trip's title. Proposed activities and
 inclusions still require confirmation for the guest's dates; do not publish
 guaranteed sightings, availability or prices without current confirmation.
 
-Trip photographs and hero images are also recorded in `experience-trips.json`,
-including their original source, descriptive alt text and any licence link.
-New stock photos are served as local WebP files in `images/experiences/`, with
-360/720-pixel card variants and larger hero variants. Keep the responsive image
-metadata and actual file dimensions in sync when replacing a photo. Recognisable
-destinations can be named; thematic stock uses an “inspiration” caption rather
-than claiming to show a particular attraction. Card photos load lazily; hero
-photos load immediately. The overview reuses these photos to avoid extra assets.
+`experience-photo-sources.json` restores the distinct photographs from the
+earlier trip pages. Do not substitute generic forests, city photos or animals
+for a named attraction. Every trip must have a different, destination-specific
+photograph. Confirm that downloaded photos actually show the intended subject
+before publishing. A missing source must be repaired rather than silently
+substituted with unrelated stock.
+
+`build_experience_images.py --download` downloads the original photos, retains
+Wikimedia authorship/licence metadata, and creates local WebP copies with
+lowercase, hyphenated descriptive filenames. Original downloads stay in a
+temporary cache outside Git. Only the smaller web assets are committed. It
+prepares all sources and checks for duplicate trip-photo hashes before changing
+page metadata, so failed downloads cannot replace the pages with a partial set.
+Card widths are 360 and 720 pixels; covers use up to 1200 pixels. Smaller source
+images are never enlarged. The encoder strips metadata and tries quality levels
+76 down to 60, targeting 24 KB for small cards, 75 KB for large cards and 150 KB
+for covers. Complex images can exceed those targets to retain usable detail.
+
+Then run `python3 scripts/build_experience_pages.py` to regenerate all three
+pages and synchronize the overview's image links. Check all photos visually,
+inspect the generated `experience-image-report.json`, and verify local links
+before committing the content, generated pages and WebP assets together. Card
+photos load lazily; covers load immediately. The published pages use local
+files and need no image-source network access. To prepare only the available
+local originals while a remote source is blocked, use
+`python3 scripts/build_experience_images.py --only-local`; this leaves page
+metadata untouched. Pillow is needed only for this manual image-preparation
+step, not the ordinary site refresh.
 
 ## Search Console measurement
 

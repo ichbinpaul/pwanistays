@@ -1,0 +1,36 @@
+name: Prepare experience destination photographs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: experience-photo-preparation
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Download and optimize the reviewed original photographs
+        run: python3 -u scripts/build_experience_images.py --download
+      - name: Render the experience pages with local photographs
+        run: python3 scripts/build_experience_pages.py
+      - name: Verify the site generators
+        run: python3 -m unittest discover -s tests -q
+      - name: Save the prepared assets on the working branch
+        run: |
+          git add images/experiences content/experience-trips.json content/experience-image-report.json coastal-cultural.html safari.html nairobi.html experiences.html
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Prepare optimized local photographs for every experience"
+          git push

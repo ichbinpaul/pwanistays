@@ -1,0 +1,11 @@
+{
+  "mode": "preparation_only",
+  "active_properties": 133,
+  "retained_inactive_assignments": 0,
+  "registry_assignments": 133,
+  "collision_suffixes": 9,
+  "max_slug_length": 32,
+  "active_urls_changed": false,
+  "redirects_deployed": false,
+  "activation_requirement": "Deploy targets and verify genuine hosting HTTP 301 redirects before migrating canonical URLs"
+}

@@ -203,7 +203,7 @@ def main(argv=None):
         registry = json.loads(args.registry.read_text(encoding="utf-8")) if args.registry else None
         result = plan(source, registry)
         csv_output = io.StringIO(newline="")
-        writer = csv.DictWriter(csv_output, fieldnames=["id", "title", "old_url", "new_url", "status_code"])
+        writer = csv.DictWriter(csv_output, fieldnames=["id", "title", "old_url", "new_url", "status_code"], lineterminator="\n")
         writer.writeheader()
         # Review files may be opened in a spreadsheet; titles are plain text.
         writer.writerows({**row, "title": "'" + row["title"] if

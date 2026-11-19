@@ -18,6 +18,9 @@ def render_photo(image, *, hero=False):
  responsive=''
  if image.get('srcset'):
   responsive=f' srcset="{e(image["srcset"],quote=True)}" sizes="{e(image["sizes"],quote=True)}"'
+ if image.get('position'):
+  if not re.fullmatch(r'\d{1,3}% \d{1,3}%',image['position']):raise ValueError('Invalid photo focal point')
+  responsive+=' style="object-position:'+e(image['position'],quote=True)+'"'
  caption='<figcaption>'+e(image['caption'])+'</figcaption>' if image.get('caption') else ''
  return f'<figure class="{"exp-hero-photo" if hero else "trip-card-photo"}"><img src="{src}"{responsive} width="{image["width"]}" height="{image["height"]}" {attributes} decoding="async" alt="{e(image["alt"],quote=True)}">{caption}</figure>'
 

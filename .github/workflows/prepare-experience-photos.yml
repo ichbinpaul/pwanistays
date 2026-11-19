@@ -4,17 +4,17 @@ on:
   workflow_dispatch:
   push:
     branches: [fix/experience-destination-photos]
-    paths: [scripts/collect_experience_photos.py]
+    paths: [content/experience-photo-sources.json]
 
 permissions:
   contents: write
 
 concurrency:
-  group: experience-photo-review
+  group: experience-photo-preparation
   cancel-in-progress: false
 
 jobs:
-  collect:
+  prepare:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -23,15 +23,17 @@ jobs:
         with:
           python-version: '3.12'
       - run: python3 -m pip install 'Pillow>=11,<13'
-      - name: Collect original photos and destination-specific alternatives for review
-        run: python3 -u scripts/collect_experience_photos.py
-      - name: Save photo review files on the working branch
-        if: always()
+      - name: Download and optimize the reviewed original photographs
+        run: python3 -u scripts/build_experience_images.py --download
+      - name: Render the experience pages with local photographs
+        run: python3 scripts/build_experience_pages.py
+      - name: Verify the site generators
+        run: python3 -m unittest discover -s tests -q
+      - name: Save the prepared assets on the working branch
         run: |
-          if [ ! -d photo-review ]; then exit 0; fi
-          git add photo-review
+          git add images/experiences content/experience-trips.json content/experience-image-report.json coastal-cultural.html safari.html nairobi.html experiences.html
           if git diff --cached --quiet; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Collect destination-specific experience photo candidates for review"
+          git commit -m "Prepare optimized local photographs for every experience"
           git push

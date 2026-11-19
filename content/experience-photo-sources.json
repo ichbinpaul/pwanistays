@@ -6,18 +6,29 @@
       "title": "Nguuni Nature Sanctuary & Haller Park Day Expedition",
       "stem": "nguuni-haller-park-mombasa-giraffes",
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Giraffes_at_the_Nguuni_Nature_Sanctuary_in_Mombasa.jpg?width=1200",
-      "caption": "Mombasa – Bamburi – Klembeni",
+      "caption": "Nguuni Nature Sanctuary, Mombasa",
       "alt": "Giraffes at Nguuni Nature Sanctuary in Mombasa",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Otubula",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "license_name": "CC0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Giraffes_at_the_Nguuni_Nature_Sanctuary_in_Mombasa.jpg",
+      "position": "50% 30%"
     },
     {
       "page": "coastal-cultural",
       "title": "Mamba Village + Mombasa Marine Park Adventure",
       "stem": "mamba-village-mombasa-crocodiles",
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Crocodiles_at_the_Kenya_Coast.jpg?width=1200",
-      "caption": "Nyali – Mombasa Marine National Park",
+      "caption": "Crocodiles on the Kenyan coast",
       "alt": "Crocodiles on the Kenyan coast",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Jaokov",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Crocodiles_at_the_Kenya_Coast.jpg"
     },
     {
       "page": "coastal-cultural",
@@ -26,7 +37,8 @@
       "source": "/images/Old_Town_Mombasa_2025_PwaniStays.jpg",
       "caption": "Mombasa Island",
       "alt": "A street with historic buildings in Mombasa Old Town",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true
     },
     {
       "page": "coastal-cultural",
@@ -35,7 +47,8 @@
       "source": "/images/Diani_Beach_PwaniStays.jpg",
       "caption": "Diani Beach (Kwale)",
       "alt": "The sandy shoreline at Diani Beach, Kenya",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true
     },
     {
       "page": "coastal-cultural",
@@ -44,7 +57,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Snorkeling_at_Kisite.jpg?width=1200",
       "caption": "Shimoni – Kisite Marine Park – Wasini Island",
       "alt": "Snorkelling in the waters of Kisite Marine Park",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Hugh Lunnon",
+      "license": "https://creativecommons.org/licenses/by-sa/2.0",
+      "license_name": "CC BY-SA 2.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Snorkeling_at_Kisite.jpg"
     },
     {
       "page": "coastal-cultural",
@@ -53,7 +71,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Shimba_hills.jpg?width=1200",
       "caption": "Shimba Hills National Reserve",
       "alt": "The green landscape of Shimba Hills, Kenya",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "ChinkuTravels",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Shimba_hills.jpg"
     },
     {
       "page": "coastal-cultural",
@@ -62,7 +85,8 @@
       "source": "/images/Nyali_beach_PwaniStays.jpg",
       "caption": "Diani / Bamburi / Nyali",
       "alt": "The shoreline at Nyali Beach in Mombasa",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true
     },
     {
       "page": "coastal-cultural",
@@ -71,7 +95,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Majestic_red_elephant_of_Tsavo_East_(5232098119).jpg?width=1200",
       "caption": "Mombasa → Voi → Tsavo East National Park",
       "alt": "A red elephant in Tsavo East National Park",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "McKay Savage from London, UK",
+      "license": "https://creativecommons.org/licenses/by/2.0",
+      "license_name": "CC BY 2.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Majestic_red_elephant_of_Tsavo_East_(5232098119).jpg"
     },
     {
       "page": "coastal-cultural",
@@ -80,7 +109,8 @@
       "source": "/images/Fort_Jesus,_2025_PwaniStays.jpg",
       "caption": "Ukunda / Kaya Forests / Local Villages",
       "alt": "The stone walls and grounds of Fort Jesus in Mombasa",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true
     },
     {
       "page": "coastal-cultural",
@@ -89,7 +119,8 @@
       "source": "/images/Turtle_Bay_Watamu_Kenya_PwaniStays.jpg",
       "caption": "Watamu, Kenya",
       "alt": "Turtle Bay on the coast at Watamu, Kenya",
-      "role": "hero"
+      "role": "hero",
+      "reviewed": true
     },
     {
       "page": "safari",
@@ -98,7 +129,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Migration_of_zebras_in_Maasai_Mara.jpg?width=1200",
       "caption": "Masai Mara National Reserve",
       "alt": "Zebras migrating across the Maasai Mara",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Renvoy",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Migration_of_zebras_in_Maasai_Mara.jpg"
     },
     {
       "page": "safari",
@@ -107,7 +143,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg?width=1200",
       "caption": "Amboseli National Park",
       "alt": "Elephants in Amboseli with Mount Kilimanjaro behind them",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Amoghavarsha JS amoghavarsha.com",
+      "license": "https://creativecommons.org/licenses/by-sa/3.0",
+      "license_name": "CC BY-SA 3.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg"
     },
     {
       "page": "safari",
@@ -116,7 +157,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Red_elephant_in_dirt.jpg?width=1200",
       "caption": "Tsavo East & West National Parks",
       "alt": "A dust-covered red elephant in Tsavo",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Byrdyak",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Red_elephant_in_dirt.jpg"
     },
     {
       "page": "safari",
@@ -125,7 +171,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The_Reticulated_Giraffe_from_Samburu.jpg?width=1200",
       "caption": "Samburu National Reserve",
       "alt": "A reticulated giraffe in Samburu",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Sourish Trivedy",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:The_Reticulated_Giraffe_from_Samburu.jpg"
     },
     {
       "page": "safari",
@@ -134,7 +185,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Flamingoes-Lake_Nakuru.jpg?width=1200",
       "caption": "Lake Nakuru National Park",
       "alt": "Flamingos at Lake Nakuru",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Lyfec",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Flamingoes-Lake_Nakuru.jpg"
     },
     {
       "page": "safari",
@@ -143,7 +199,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aberdare_National_Forest_Kenya.jpg?width=1200",
       "caption": "Aberdare National Park",
       "alt": "The green forest of Aberdare National Park",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Wanjikucha",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Aberdare_National_Forest_Kenya.jpg"
     },
     {
       "page": "safari",
@@ -152,7 +213,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Meru_National_Park%2C_Kenya.jpg?width=1200",
       "caption": "Meru National Park",
       "alt": "The landscape of Meru National Park in Kenya",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Nina R",
+      "license": "https://creativecommons.org/licenses/by/2.0",
+      "license_name": "CC BY 2.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Meru_National_Park,_Kenya.jpg"
     },
     {
       "page": "safari",
@@ -161,7 +227,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hell%27s_Gate%2C_Kenya.jpg?width=1200",
       "caption": "Hell's Gate National Park & Lake Naivasha",
       "alt": "Rock formations in Hell’s Gate National Park",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Ninara from Helsinki, Finland",
+      "license": "https://creativecommons.org/licenses/by/2.0",
+      "license_name": "CC BY 2.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Hell%27s_Gate,_Kenya.jpg"
     },
     {
       "page": "safari",
@@ -170,7 +241,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Zebras_Grazing_Grassland_Savannah.jpg?width=1200",
       "caption": "Kenyan savannah",
       "alt": "Zebras grazing on open savannah",
-      "role": "hero"
+      "role": "hero",
+      "reviewed": true,
+      "author": "Antony Trivet",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Zebras_Grazing_Grassland_Savannah.jpg"
     },
     {
       "page": "nairobi",
@@ -179,7 +255,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Giraffe%2C_Nairobi_National_Park.jpg?width=1200",
       "caption": "Nairobi National Park & Animal Orphanages",
       "alt": "A giraffe in Nairobi National Park",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Michelle Juma",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Giraffe,_Nairobi_National_Park.jpg"
     },
     {
       "page": "nairobi",
@@ -188,7 +269,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Karen_Blixen_Museum_House.jpg?width=1200",
       "caption": "Karen, Nairobi",
       "alt": "The house and grounds at Karen Blixen Museum in Nairobi",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "さえぼー",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "license_name": "CC0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Karen_Blixen_Museum_House.jpg"
     },
     {
       "page": "nairobi",
@@ -197,7 +283,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nature_trail_within_Karura_Forest_(1).jpg?width=1200",
       "caption": "Karura Forest & Nairobi Viewpoints",
       "alt": "A nature trail in Karura Forest, Nairobi",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Eva Ayub",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Nature_trail_within_Karura_Forest_(1).jpg"
     },
     {
       "page": "nairobi",
@@ -206,7 +297,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_City_Market_in_Kenya.jpg?width=1200",
       "caption": "Various Nairobi Locations",
       "alt": "The City Market building in Nairobi",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "AEira-WMF",
+      "license": "https://creativecommons.org/licenses/by/4.0",
+      "license_name": "CC BY 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Nairobi_City_Market_in_Kenya.jpg"
     },
     {
       "page": "nairobi",
@@ -215,7 +311,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boat_on_Lake_Naivasha.jpg?width=1200",
       "caption": "Lake Naivasha (2 hours from Nairobi)",
       "alt": "A boat on Lake Naivasha",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Sabina Müller",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Boat_on_Lake_Naivasha.jpg"
     },
     {
       "page": "nairobi",
@@ -224,16 +325,26 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ngong_Hills_Kenya.jpg?width=1200",
       "caption": "Ngong Hills & Kibera, Nairobi",
       "alt": "The rolling landscape of Ngong Hills, Kenya",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Realisticbiscuit",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Ngong_Hills_Kenya.jpg"
     },
     {
       "page": "nairobi",
       "title": "Tea Plantation Experience & Limuru Escapes",
       "stem": "limuru-tea-farm",
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Tea_farm_in_Limuru%2C_Kenya.jpg?width=1200",
-      "caption": "Limuru Highlands (1 hour from Nairobi)",
-      "alt": "A tea farm in Limuru, Kenya",
-      "role": "trip"
+      "caption": "Tea plantation, Limuru, Kenya",
+      "alt": "Rows of green tea plants on a farm in Limuru, Kenya",
+      "role": "trip",
+      "reviewed": true,
+      "author": "SeanTwice",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "license_name": "CC0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Tea_farm_in_Limuru,_Kenya.jpg"
     },
     {
       "page": "nairobi",
@@ -242,7 +353,13 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_skyline_at_Night.jpg?width=1200",
       "caption": "Various Nairobi Nightlife Spots",
       "alt": "The Nairobi skyline illuminated at night",
-      "role": "trip"
+      "role": "trip",
+      "reviewed": true,
+      "author": "Kevoyugi",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Nairobi_skyline_at_Night.jpg",
+      "position": "50% 80%"
     },
     {
       "page": "nairobi",
@@ -251,7 +368,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg?width=1200",
       "caption": "Nairobi skyline",
       "alt": "An aerial view of Nairobi’s skyline from the KICC rooftop",
-      "role": "hero"
+      "role": "hero",
+      "reviewed": true,
+      "author": "Lebu Ayiga",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0",
+      "license_name": "CC BY-SA 4.0",
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg"
     }
   ]
 }

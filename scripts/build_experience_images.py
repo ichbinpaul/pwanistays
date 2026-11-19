@@ -164,7 +164,7 @@ def publish(prepared):
                       'sizes': HERO_SIZES if row['role'] == 'hero' else CARD_SIZES,
                       'alt': row['alt'], 'caption': row['caption'],
                       'source': row['source'], 'source_sha256': digest})
-        for key in ('author', 'license', 'license_name', 'attribution_url'):
+        for key in ('author', 'license', 'license_name', 'attribution_url', 'position'):
             if row.get(key):
                 image[key] = row[key]
         group = catalog[row['page']]

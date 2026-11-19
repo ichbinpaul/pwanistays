@@ -37,10 +37,10 @@
     <meta property="og:title" content="Coastal Apartments & Villas in Kenya | PwaniStays">
     <meta property="og:description" content="Find serviced apartments, beachfront villas and holiday stays in Nyali, Mombasa, Diani, Watamu, Shanzu and Malindi. Request current rates and availability.">
     <!-- CHANGED: Use logo-mobile.png instead of logo-header.png -->
-    <meta property="og:image" content="https://pwanistays.com/logo-mobile.png">
+    <meta property="og:image" content="https://pwanistays.com/images/Nyali_beach_PwaniStays.jpg">
 
 
-    <meta property="og:image:alt" content="PwaniStays Logo - Curated Coastal Stays">
+    <meta property="og:image:alt" content="Palm trees and the Indian Ocean on Kenya’s coast">
     <meta property="og:locale" content="en_KE">
     <meta property="og:site_name" content="PwaniStays">
     
@@ -52,8 +52,8 @@
     <meta name="twitter:title" content="Coastal Apartments & Villas in Kenya | PwaniStays">
     <meta name="twitter:description" content="Find serviced apartments, beachfront villas and holiday stays in Nyali, Mombasa, Diani, Watamu, Shanzu and Malindi. Request current rates and availability.">
     <!-- CHANGED: Use logo-mobile.png instead of logo-header.png -->
-    <meta name="twitter:image" content="https://pwanistays.com/logo-mobile.png">
-    <meta name="twitter:image:alt" content="PwaniStays Logo">
+    <meta name="twitter:image" content="https://pwanistays.com/images/Nyali_beach_PwaniStays.jpg">
+    <meta name="twitter:image:alt" content="Palm trees and the Indian Ocean on Kenya’s coast">
     
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -107,6 +107,7 @@
     }
     </script>
     
+    <link rel="preload" as="image" href="/images/Nyali_beach_PwaniStays.jpg" fetchpriority="high">
     <!-- STEP 1 — Add Swiper.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     
@@ -2434,13 +2435,15 @@
     
     <!-- Canonical URL -->
     <!-- i18n Translation System -->
-    <script src="/i18n.js"></script>
+    <link rel="stylesheet" href="/home.css?v=1">
+    <script src="/i18n.js?v=home-1"></script>
     <link rel="canonical" href="https://pwanistays.com/">
 </head>
-<body>
+<body class="home-page">
+    <a class="home-skip" href="#main-content">Skip to content</a>
     <!-- Scroll to Top Button -->
     <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
-        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>
     </button>
 
     <!-- WhatsApp Float -->
@@ -2498,7 +2501,7 @@
             </ul>
             <!-- Navbar Right: Book Now + Language Switcher -->
             <div class="navbar-right">
-                <a href="#contact" class="btn-book" data-i18n="nav_book_now" onclick="event.preventDefault();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Now</a>
+                <a href="#contact" class="btn-book" data-i18n="nav_book_now" onclick="event.preventDefault();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire Now</a>
                 <div id="langSwitcher" aria-label="Select language"></div>
                 <script>
                   // Build switcher as soon as this element exists in the DOM
@@ -2510,6 +2513,7 @@
     </header>
 
     <!-- Inquiry Property Highlight - shown only when ?property=ID is in the URL -->
+    <main id="main-content" tabindex="-1">
     <section id="inquiryHighlight" style="display:none; padding: 30px 20px 10px;">
         <div style="max-width: 420px; margin: 0 auto;">
             <div style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; padding: 12px 18px; border-radius: 10px 10px 0 0; font-size: 0.9rem; text-align: center;">
@@ -2519,34 +2523,21 @@
         </div>
     </section>
 
-    <!-- CHANGE 3: Hero Section - NOW A 2-IMAGE CAROUSEL -->
-    <section class="hero" id="home" role="region" aria-label="Hero section">
-        <!-- Hero Carousel -->
-        <div class="hero-carousel">
-            <div class="swiper heroSwiper">
-                <div class="swiper-wrapper">
-                    <!-- Slide 1: Ocean-facing balcony / exterior (NEW IMAGE - NO DIVER) -->
-                    <div class="swiper-slide">
-                        <div class="hero-slide" style="background-image: url('/images/Nyali_beach_PwaniStays.jpg');"></div>
-                    </div>
-                    <!-- Slide 2: Bright interior with coastal feel -->
-                    <div class="swiper-slide">
-                        <div class="hero-slide" style="background-image: url('/images/Villa_Malindi_PwaniStays.jpg');"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+    <section class="hero" id="home" aria-labelledby="home-title">
+      <div class="home-hero-grid">
         <div class="hero-content">
-            <h1 class="sr-only">PwaniStays - Curated Coastal Stays & Experiences</h1>
-            <!-- UPDATED: Changed from "Experience Luxury on the Kenyan Coast" to "Curated Stays & Coastal Experiences" -->
-            <h2 data-i18n="hero_heading">Curated Stays & Coastal Experiences</h2>
-            <p data-i18n="hero_subheading">Find apartments, villas and beachfront stays along the Kenyan coast. Select your dates, explore properties and request a clear quotation from our local team.</p>
-            
-            <!-- UPDATED: Search Box with 3 inputs - ADDED VILLA OPTION -->
-            <div class="search-box" role="search">
+          <span class="home-eyebrow">Personally assisted coastal stays</span>
+          <h1 id="home-title" data-i18n="hero_heading">Find your place on Kenya’s coast.</h1>
+          <p data-i18n="hero_subheading">Apartments, villas and beach breaks, with local help to find the stay that fits. Explore your options, then ask us for a quotation for your dates.</p>
+          <div class="home-hero-links"><a href="/stays.html" class="home-browse-link">Browse all accommodation <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a><a href="/about.html">Meet your local team</a></div>
+        </div>
+        <figure class="home-hero-photo"><img src="/images/Nyali_beach_PwaniStays.jpg" width="960" height="720" fetchpriority="high" decoding="async" alt="Palm trees beside a sandy beach and the Indian Ocean on Kenya’s coast"><figcaption><span>Kenya’s coast, your kind of stay.</span><span>Start with a place. We’ll help with the details.</span></figcaption></figure>
+      </div>
+      <div class="home-search-panel">
+        <div class="home-search-heading"><strong>Where would you like to stay?</strong><span>Dates optional · Personal quotations</span></div>
+            <div class="search-box" role="search" aria-label="Find coastal accommodation">
                 <div class="search-input">
-                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <label for="searchLocation">Destination</label>
                     <select id="searchLocation" aria-label="Select destination">
                         <option value="" data-i18n="search_any_location">Any Location</option>
                         <option value="Mombasa">Mombasa</option>
@@ -2563,11 +2554,11 @@
                     </select>
                 </div>
                 <div class="search-input date-range-input" onclick="showCalendar()">
-                    <i class="fas fa-calendar" aria-hidden="true"></i>
-                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly data-i18n-placeholder="search_checkin_checkout">
+                    <label for="dateRange">Travel dates</label>
+                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly aria-haspopup="dialog" aria-controls="calendarContainer" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showCalendar();}" data-i18n-placeholder="search_checkin_checkout">
                 </div>
                 <div class="search-input">
-                    <i class="fas fa-home" aria-hidden="true"></i>
+                    <label for="propertyType">Accommodation</label>
                     <!-- UPDATED: Property type dropdown with normalized values - ADDED VILLA -->
                     <select id="propertyType" aria-label="Property type">
                         <option value="" data-i18n="search_any_type">Any Type</option>
@@ -2581,7 +2572,7 @@
                     </select>
                 </div>
                 <div class="search-input">
-                    <i class="fas fa-users" aria-hidden="true"></i>
+                    <label for="guestCount">Guests</label>
                     <select id="guestCount" aria-label="Number of guests">
                         <option value="1">1 Guest</option><option value="2" selected>2 Guests</option>
                         <option value="3">3 Guests</option><option value="4">4 Guests</option>
@@ -2593,30 +2584,31 @@
                 </div>
                 <div class="search-btn-container">
                     <button class="search-btn" onclick="searchProperties()" aria-label="Search properties">
-                        <i class="fas fa-search" aria-hidden="true"></i> <span data-i18n="search_btn">Search Properties</span>
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg> <span data-i18n="search_btn">Search Properties</span>
                     </button>
                 </div>
             </div>
             
-            <!-- Calendar Backdrop -->
-            <div id="calendarBackdrop" class="calendar-backdrop" onclick="hideCalendar()"></div>
-            
-            <!-- Calendar Container -->
-            <div id="calendarContainer" class="calendar-overlay"></div>
-        </div>
+
+        <p class="home-search-note">Browse by destination and accommodation type. We’ll confirm availability, guest capacity and the full price for your dates.</p>
+      </div>
+      <noscript><p class="home-noscript">Browse our <a href="/stays.html">complete accommodation directory</a> or <a href="https://wa.me/254738544784">ask our team on WhatsApp</a>. Live filters need JavaScript.</p><style>.home-search-panel{display:none}</style></noscript>
+      <div id="calendarBackdrop" class="calendar-backdrop" onclick="hideCalendar()"></div>
+      <div id="calendarContainer" class="calendar-overlay" role="dialog" aria-modal="true" aria-label="Choose check-in and check-out dates"></div>
     </section>
+    <div class="home-reassurance" aria-label="How we help"><span>Local team in Mombasa</span><span>Dates and rates confirmed with you</span><a href="/how-it-works.html">A clear booking process</a></div>
 
     <!-- Results Section -->
     <section id="searchResults" class="properties-section" style="display: none;">
         <div class="section-title">
             <h2 data-i18n="results_title">Search Results</h2>
-            <p id="resultsCount" data-i18n="results_loading">Loading properties...</p>
+            <p role="status" aria-live="polite" id="resultsCount" data-i18n="results_loading">Loading properties...</p>
         </div>
         
         <div id="resultsHeader" class="results-header" style="display: none;">
             <h3 id="searchCriteria"></h3>
             <p id="datesCriteria"></p>
-            <a class="clear-filters" onclick="clearSearch()" data-i18n="results_clear">Clear filters and show all properties</a>
+            <button type="button" class="clear-filters" onclick="clearSearch()" data-i18n="results_clear">Clear filters and show all properties</button>
         </div>
         
         <div id="propertyList" class="properties-grid">
@@ -2627,8 +2619,8 @@
     <!-- Featured Stays - UPDATED with View All button -->
     <section class="featured-stays" id="stays">
         <div class="section-title">
-            <h2 data-i18n="section_featured">Featured Properties</h2>
-            <p data-i18n="section_featured_sub">Hand-selected luxury accommodations across Kenya's finest beach destinations</p>
+            <h2 data-i18n="section_featured">A few places to start</h2>
+            <p data-i18n="section_featured_sub">Explore a selection of coastal stays. Open a unit to see its photos, details and enquiry options.</p>
         </div>
         <div id="featuredProperties" class="stays-container">
             <div class="loading-spinner">
@@ -2642,155 +2634,6 @@
         </div>
     </section>
 
-    <!-- UPDATED: Services Section with proper CTA links -->
-    <section class="services" id="services" role="region" aria-label="Our services">
-        <div class="section-title">
-            <h2 data-i18n="section_services">Complete Coastal Experience</h2>
-            <p data-i18n="section_services_sub">End-to-end travel solutions for your Kenyan coastal vacation</p>
-        </div>
-        <div class="services-container">
-            <div class="service-card" role="article">
-                <div class="service-icon">
-                    <i class="fas fa-umbrella-beach" aria-hidden="true"></i>
-                </div>
-                <h3 data-i18n="svc_accommodation">Coastal Accommodation</h3>
-                <p data-i18n="svc_accommodation_desc">Premium apartments, villas, and resorts across all major Kenyan coastal destinations - beachfront and prime locations. From budget-friendly options to luxurious 5-bedroom villas with private pools, we have the perfect stay for every traveler.</p>
-                <a href="/#stays" class="service-btn">
-                    <i class="fas fa-search"></i> Browse Accommodation
-                </a>
-            </div>
-            <div class="service-card" role="article">
-                <div class="service-icon">
-                    <i class="fas fa-plane-arrival" aria-hidden="true"></i>
-                </div>
-                <h3 data-i18n="svc_transfers">Seamless Transfers</h3>
-                <p data-i18n="svc_transfers_desc">Private airport transfers from Moi International (MBA), Ukunda (UKA), and SGR stations with meet & greet service. Our professional drivers ensure safe, comfortable transfers in air-conditioned vehicles with complimentary bottled water.</p>
-                <button class="service-btn service-whatsapp-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-                    <i class="fas fa-plane-arrival"></i> Book Transfers
-                </button>
-            </div>
-            <div class="service-card" role="article">
-                <div class="service-icon">
-                    <i class="fas fa-ship" aria-hidden="true"></i>
-                </div>
-                <h3 data-i18n="svc_marine">Marine Experiences</h3>
-                <p data-i18n="svc_marine_desc">Dhow cruises, snorkeling at Marine Parks, deep sea fishing, and dolphin watching tours with certified guides. We arrange all equipment, permits, and transportation for unforgettable coastal adventures.</p>
-                <a href="coastal-cultural.html" class="service-btn">
-                    <i class="fas fa-compass"></i> Explore Experiences
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose Us - UPDATED with European Guest Specialists -->
-    <section class="why-us" id="about" role="region" aria-label="Why choose us">
-        <div class="section-title">
-            <h2 data-i18n="section_why">Why Choose PwaniStays?</h2>
-            <p data-i18n="section_why_sub">Local expertise meets international standards</p>
-        </div>
-        <div class="features-container">
-            <div class="feature" role="article">
-                <i class="fas fa-award" aria-hidden="true"></i>
-                <h3 data-i18n="why_specialists">Coastal Specialists</h3>
-                <p data-i18n="why_specialists_desc">Local coastal knowledge and personally assisted accommodation recommendations.</p>
-            </div>
-            <div class="feature" role="article">
-                <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                <h3 data-i18n="why_vetting">Property Vetting</h3>
-                <p data-i18n="why_vetting_desc">We work with property owners and review available property information to help you choose confidently.</p>
-            </div>
-            <div class="feature" role="article">
-                <i class="fas fa-handshake" aria-hidden="true"></i>
-                <h3 data-i18n="why_rates">Transparent Quotations</h3>
-                <p data-i18n="why_rates_desc">We confirm availability, total costs and applicable terms with you before any booking is final.</p>
-            </div>
-            <div class="feature" role="article">
-                <i class="fas fa-globe-europe" aria-hidden="true"></i>
-                <h3 data-i18n="why_european">European Guest Specialists</h3>
-                <p data-i18n="why_european_desc">Expertise in catering to European travelers with understanding of preferences, travel standards, and seamless communication.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials - Loaded from Supabase (approved reviews only) -->
-    <section class="testimonials" id="testimonials" role="region" aria-label="Client testimonials">
-        <div class="section-title">
-            <h2 data-i18n="section_testimonials">What Our Guests Say</h2>
-            <p data-i18n="section_testimonials_sub">Real experiences from local and international travelers</p>
-        </div>
-        <div class="testimonials-container">
-            <div class="testimonial-slider" id="testimonialSlider">
-                <!-- Reviews loaded from Supabase -->
-                <div class="loading-spinner">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p style="margin-top:10px;">Loading reviews...</p>
-                </div>
-            </div>
-            <button class="testimonial-prev" aria-label="Previous testimonial">‹</button>
-            <button class="testimonial-next" aria-label="Next testimonial">›</button>
-            <div class="testimonial-dots"></div>
-        </div>
-    </section>
-
-    <!-- NEW: Leave Feedback Section -->
-    <section class="leave-feedback" id="leave-feedback">
-        <div class="section-title">
-            <h2>Share Your Experience</h2>
-            <p>Tell us about your stay with PwaniStays</p>
-        </div>
-        
-        <div class="feedback-form">
-            <h3>Leave Your Feedback</h3>
-            
-            <div class="form-group">
-                <label for="feedbackName">Your Name *</label>
-                <input type="text" id="feedbackName" placeholder="Enter your full name" required>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="feedbackCity">City</label>
-                    <input type="text" id="feedbackCity" placeholder="e.g., Nairobi, London">
-                </div>
-                
-                <div class="form-group">
-                    <label for="feedbackCountry">Country *</label>
-                    <select id="feedbackCountry" required>
-                        <option value="" disabled selected>Select your country *</option>
-                        <!-- Populated by JS -->
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Your Rating *</label>
-                <div class="star-rating">
-                    <span class="star" data-rating="1">★</span>
-                    <span class="star" data-rating="2">★</span>
-                    <span class="star" data-rating="3">★</span>
-                    <span class="star" data-rating="4">★</span>
-                    <span class="star" data-rating="5">★</span>
-                </div>
-                <div class="rating-text" id="ratingText">Click to rate your experience</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="feedbackComment">Your Review *</label>
-                <textarea id="feedbackComment" rows="5" placeholder="Tell us about your experience with PwaniStays..." required></textarea>
-            </div>
-            
-            <button class="feedback-btn" onclick="submitFeedback()" id="submitFeedbackBtn">
-                Submit Your Review
-            </button>
-            
-            <p class="feedback-pending-note">
-                <i class="fas fa-info-circle"></i> Your review will appear after a brief moderation check — usually within 24 hours.
-            </p>
-            
-            <div id="feedbackMessage" style="margin-top: 20px; text-align: center; display: none;"></div>
-        </div>
-    </section>
-
     <!-- Coastal Destinations - UPDATED with YOUR local images -->
     <section class="destinations" id="destinations" role="region" aria-label="Coastal destinations">
         <div class="section-title">
@@ -2799,7 +2642,7 @@
         </div>
         <div class="destinations-slider-wrapper">
             <button class="dest-arrow dest-arrow-prev" id="destPrev" aria-label="Previous destinations">
-                <i class="fas fa-chevron-left"></i>
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>
             </button>
             <div class="destinations-clip">
                 <div class="destinations-container" id="destinationsTrack">
@@ -2905,29 +2748,172 @@
             </div>
             </div>
             <button class="dest-arrow dest-arrow-next" id="destNext" aria-label="Next destinations">
-                <i class="fas fa-chevron-right"></i>
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>
             </button>
         </div>
     </section>
 
-    <section class="partners-promo" style="padding:65px 6%;background:#f1f8f4;text-align:center;">
-        <div style="max-width:840px;margin:auto;">
-            <h2 style="color:#0b634e;margin-bottom:12px;">Own a furnished apartment or villa?</h2>
-            <p style="color:#415c53;line-height:1.7;margin-bottom:22px;">PwaniStays helps owners reach guests and handles accommodation inquiries. We are also open to tailored property management partnerships.</p>
-            <a href="/partners.html" style="display:inline-block;background:#0d7a5f;color:white;border-radius:9px;padding:13px 24px;text-decoration:none;font-weight:700;">Partner with PwaniStays</a>
+
+    <!-- UPDATED: Services Section with proper CTA links -->
+    <section class="services" id="services" role="region" aria-label="Our services">
+        <div class="section-title">
+            <h2 data-i18n="section_services">Make more of your time on the coast</h2>
+            <p data-i18n="section_services_sub">Start with your stay. Ask us about the rest of your trip.</p>
+        </div>
+        <div class="services-container">
+            <div class="service-card" role="article">
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 16 0H4Zm8-8v16m-4 0h8"/></svg></div>
+                <h3 data-i18n="svc_accommodation">Coastal Accommodation</h3>
+                <p data-i18n="svc_accommodation_desc">Compare apartments and villas across Kenya’s coast. Tell us your dates and what matters to you, and we’ll help you explore the options.</p>
+                <a href="/#stays" class="service-btn">
+                    <i class="fas fa-search"></i> Browse Accommodation
+                </a>
+            </div>
+            <div class="service-card" role="article">
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 12 8 3 6-10 2 1-3 10 4 2-1 2-7-2-6-1-3-3Z"/></svg></div>
+                <h3 data-i18n="svc_transfers">Seamless Transfers</h3>
+                <p data-i18n="svc_transfers_desc">Planning an airport or SGR arrival? Ask our team about transfer options, the route and current charges for your group.</p>
+                <button class="service-btn service-whatsapp-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-plane-arrival"></i> Book Transfers
+                </button>
+            </div>
+            <div class="service-card" role="article">
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 9 4 9-4M3 21l3-1 3 1 3-1 3 1 3-1 3 1M6 16V9h12v7M10 9V4h4v5"/></svg></div>
+                <h3 data-i18n="svc_marine">Marine Experiences</h3>
+                <p data-i18n="svc_marine_desc">Explore coastal and cultural experiences, from time on the water to local discoveries. Confirm arrangements and what is included with our team.</p>
+                <a href="coastal-cultural.html" class="service-btn">
+                    <i class="fas fa-compass"></i> Explore Experiences
+                </a>
+            </div>
         </div>
     </section>
+
+    <!-- Why Choose Us - UPDATED with European Guest Specialists -->
+    <section class="why-us" id="about" role="region" aria-label="Why choose us">
+        <div class="section-title">
+            <h2 data-i18n="section_why">Why Choose PwaniStays?</h2>
+            <p data-i18n="section_why_sub">Local people. Practical advice. A personal conversation.</p>
+        </div>
+        <div class="features-container">
+            <div class="feature" role="article">
+                <i class="fas fa-award" aria-hidden="true"></i>
+                <h3 data-i18n="why_specialists">Coastal Specialists</h3>
+                <p data-i18n="why_specialists_desc">A local team in Mombasa to help you explore the coast and compare accommodation.</p>
+            </div>
+            <div class="feature" role="article">
+                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                <h3 data-i18n="why_vetting">Property Vetting</h3>
+                <p data-i18n="why_vetting_desc">We work with property owners and review available property information to help you choose confidently.</p>
+            </div>
+            <div class="feature" role="article">
+                <i class="fas fa-handshake" aria-hidden="true"></i>
+                <h3 data-i18n="why_rates">Transparent Quotations</h3>
+                <p data-i18n="why_rates_desc">We confirm availability, total costs and applicable terms with you before any booking is final.</p>
+            </div>
+            <div class="feature" role="article">
+                <i class="fas fa-globe-europe" aria-hidden="true"></i>
+                <h3 data-i18n="why_european">Local &amp; international guests</h3>
+                <p data-i18n="why_european_desc">Help planning a coastal stay, whether you’re travelling within Kenya or visiting from further afield.</p>
+            </div>
+        </div>
+        <p class="home-about-link"><a href="/about.html">Meet the people behind PwaniStays</a></p>
+    </section>
+
+    <!-- Testimonials - Loaded from Supabase (approved reviews only) -->
+    <section class="testimonials" id="testimonials" role="region" aria-label="Client testimonials">
+        <div class="section-title">
+            <h2 data-i18n="section_testimonials">What Our Guests Say</h2>
+            <p data-i18n="section_testimonials_sub">Real experiences from local and international travelers</p>
+        </div>
+        <div class="testimonials-container">
+            <div class="testimonial-slider" id="testimonialSlider">
+                <!-- Reviews loaded from Supabase -->
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p style="margin-top:10px;">Loading reviews...</p>
+                </div>
+            </div>
+            <button class="testimonial-prev" aria-label="Previous testimonial">‹</button>
+            <button class="testimonial-next" aria-label="Next testimonial">›</button>
+            <div class="testimonial-dots"></div>
+        </div>
+    </section>
+
+    <!-- NEW: Leave Feedback Section -->
+    <section class="leave-feedback" id="leave-feedback">
+        <details class="home-feedback-details">
+        <summary>Stayed with PwaniStays? Share your experience.<span>Write a review</span></summary>
+        <div class="home-feedback-content">
+        <div class="section-title">
+            <h2>Share Your Experience</h2>
+            <p>Tell us about your stay with PwaniStays</p>
+        </div>
+        
+        <div class="feedback-form">
+            <h3>Leave Your Feedback</h3>
+            
+            <div class="form-group">
+                <label for="feedbackName">Your Name *</label>
+                <input type="text" id="feedbackName" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="feedbackCity">City</label>
+                    <input type="text" id="feedbackCity" placeholder="e.g., Nairobi, London">
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedbackCountry">Country *</label>
+                    <select id="feedbackCountry" required>
+                        <option value="" disabled selected>Select your country *</option>
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Your Rating *</label>
+                <div class="star-rating">
+                    <button type="button" class="star" data-rating="1" aria-label="Rate 1 out of 5">★</button>
+                    <button type="button" class="star" data-rating="2" aria-label="Rate 2 out of 5">★</button>
+                    <button type="button" class="star" data-rating="3" aria-label="Rate 3 out of 5">★</button>
+                    <button type="button" class="star" data-rating="4" aria-label="Rate 4 out of 5">★</button>
+                    <button type="button" class="star" data-rating="5" aria-label="Rate 5 out of 5">★</button>
+                </div>
+                <div class="rating-text" id="ratingText" aria-live="polite">Click to rate your experience</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedbackComment">Your Review *</label>
+                <textarea id="feedbackComment" rows="5" placeholder="Tell us about your experience with PwaniStays..." required></textarea>
+            </div>
+            
+            <button class="feedback-btn" onclick="submitFeedback()" id="submitFeedbackBtn">
+                Submit Your Review
+            </button>
+            
+            <p class="feedback-pending-note">
+                <i class="fas fa-info-circle"></i> Reviews are considered for publication after moderation by our team.
+            </p>
+            
+            <div id="feedbackMessage" style="margin-top: 20px; text-align: center; display: none;"></div>
+        </div>
+        </div></details>
+    </section>
+
+    <section class="partners-promo"><div><span class="home-eyebrow">For property owners</span><h2>Have a place guests would love?</h2><p>Talk to us about listing your furnished apartment or villa and reaching coastal travellers.</p></div><a class="btn-secondary" href="/partners.html">Partner with PwaniStays</a></section>
 
     <!-- Contact Section -->
     <section class="contact" id="contact" role="region" aria-label="Contact us">
         <div class="section-title">
-            <h2 data-i18n="section_contact">Start Your Coastal Journey</h2>
-            <p data-i18n="section_contact_sub">Contact our coastal experts for personalized assistance</p>
+            <h2 data-i18n="section_contact">Tell us what your ideal stay looks like</h2>
+            <p data-i18n="section_contact_sub">Share your dates, group size and preferences. Our team will help you explore your options.</p>
         </div>
         <div class="contact-container">
             <div class="contact-info">
                 <div class="contact-item">
-                    <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                    <svg class="home-contact-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h4l1 5-3 2a16 16 0 0 0 5 5l2-3 5 1v4a3 3 0 0 1-3 3C10 20 4 14 4 6a3 3 0 0 1 3-3Z"/></svg>
                     <div>
                         <h3>Call Us Direct</h3>
                         <p><a href="tel:+254738544784">+254 738 544 784</a> / <a href="tel:+254715875933">+254 715 875 933</a></p>
@@ -2935,7 +2921,7 @@
                     </div>
                 </div>
                 <div class="contact-item">
-                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    <svg class="home-contact-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4a8 8 0 1 1 3 3l-4 1Z"/></svg>
                     <div>
                         <h3>WhatsApp Chat</h3>
                         <p><a href="https://wa.me/254738544784">+254 738 544 784</a></p>
@@ -2943,7 +2929,7 @@
                     </div>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <svg class="home-contact-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
                     <div>
                         <h3>Operating Hours</h3>
                         <p>WhatsApp &amp; phone inquiries</p>
@@ -2952,27 +2938,32 @@
                 </div>
             </div>
             <div class="contact-form" id="book-now" role="form" aria-label="Booking inquiry form">
-                <h3>Send Detailed Inquiry</h3>
+                <h3>Send a booking enquiry</h3>
                 <form id="inquiryForm">
                     <div class="form-group">
+                        <label for="name">Full name <span aria-hidden="true">*</span></label>
                         <input type="text" placeholder="Full Name *" id="name" required aria-required="true" data-i18n-placeholder="contact_name">
                     </div>
                     <div class="form-group">
+                        <label for="email">Email address <span aria-hidden="true">*</span></label>
                         <input type="email" placeholder="Email Address *" id="email" required aria-required="true" data-i18n-placeholder="contact_email">
                     </div>
                     <div class="form-group">
+                        <label for="inquiryCountry">Country <span aria-hidden="true">*</span></label>
                         <select id="inquiryCountry" required aria-required="true" onchange="updatePhonePrefix()" style="width:100%;padding:15px;border:1px solid var(--light-gray);border-radius:10px;font-size:1rem;transition:var(--transition);font-family:inherit;background:#fff;">
                             <option value="" disabled selected>Select Country *</option>
                             <!-- Populated by JS -->
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="phone">Phone number <span aria-hidden="true">*</span></label>
                         <div class="phone-input-wrapper">
                             <span id="phonePrefix" class="phone-country-code">+254</span>
                             <input type="tel" placeholder="Phone number *" id="phone" required aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="service">What can we help with? <span aria-hidden="true">*</span></label>
                         <select id="service" required aria-required="true">
                             <option value="" disabled selected data-i18n="contact_select_service">Service Interested In *</option>
                             <option value="stay">Accommodation Only</option>
@@ -2982,6 +2973,7 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="message">Tell us about your plans <span aria-hidden="true">*</span></label>
                         <textarea placeholder="Your Detailed Requirements (Travel dates, group size, budget, special requests) *" 
                                   rows="5" id="message" required aria-required="true"></textarea>
                     </div>
@@ -2990,6 +2982,8 @@
             </div>
         </div>
     </section>
+
+    </main>
 
     <!-- UPDATED: Footer with working navigation links -->
     <footer role="contentinfo">
@@ -3009,17 +3003,17 @@
                          class="footer-logo-mobile"
                          style="height: 60px; width: auto; margin-bottom: 20px;">
                 </div>
-                <p>Your trusted coastal accommodation partner in Kenya since 2020. We specialize in premium beachfront properties across the Kenyan coast with a focus on authentic experiences and seamless service.</p>
+                <p>Personally assisted apartments, villas and coastal experiences in Kenya. Explore your options with a local team in Mombasa.</p>
                 <div class="social-links">
                     <!-- UPDATED: Removed TripAdvisor and X, updated Instagram username -->
                     <a href="https://www.facebook.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
-                        <i class="fab fa-facebook-f"></i>
+                        Facebook
                     </a>
                     <a href="https://www.instagram.com/pwanistays" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
+                        Instagram
                     </a>
                     <a href="https://www.tiktok.com/@pwani.stays" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
-                        <i class="fab fa-tiktok"></i>
+                        TikTok
                     </a>
                 </div>
             </div>
@@ -3082,7 +3076,7 @@
         const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
         const SUPABASE_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
 
-        if (!window.supabaseClient) {
+        if (!window.supabaseClient && window.supabase?.createClient) {
             window.supabaseClient = window.supabase.createClient(
                 SUPABASE_URL,
                 SUPABASE_KEY
@@ -3127,6 +3121,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('calendarContainer').style.display = 'block';
                 document.getElementById('calendarBackdrop').style.display = 'block';
                 isCalendarVisible = true;
+                document.getElementById('dateRange').setAttribute('aria-expanded', 'true');
+                document.querySelector('#calendarContainer button')?.focus();
                 
                 document.body.style.overflow = 'hidden';
             };
@@ -3135,6 +3131,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('calendarContainer').style.display = 'none';
                 document.getElementById('calendarBackdrop').style.display = 'none';
                 isCalendarVisible = false;
+                document.getElementById('dateRange').setAttribute('aria-expanded', 'false');
+                document.getElementById('dateRange').focus();
                 
                 document.body.style.overflow = '';
             };
@@ -3445,14 +3443,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     } else if (selectedCheckin) {
                         dateRangeInput.value = `${formatDate(selectedCheckin)} → ${window.i18n ? window.i18n.t('cal_select_checkout') : 'Select checkout'}`;
                     } else {
-                        dateRangeInput.value = window.i18n ? window.i18n.t('select_checkin_checkout') : 'Select check-in → Select check-out';
-                        dateRangeInput.placeholder = window.i18n ? window.i18n.t('search_checkin_checkout') : 'Check-in → Check-out';
+                        dateRangeInput.value = '';
+                        dateRangeInput.placeholder = window.i18n ? window.i18n.t('search_checkin_checkout') : 'Add dates';
                     }
                 }
             }
 
             function generateCalendar() {
                 const calendar = document.getElementById('calendarContainer');
+                const focusedDay = calendar.contains(document.activeElement) ? document.activeElement.getAttribute('aria-label') : null;
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
@@ -3507,7 +3506,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ? ""
                         : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
 
-                    html += `<div class="${className}" ${onClick}>${day}</div>`;
+                    html += `<button type="button" class="${className}" ${isDisabled ? 'disabled' : ''} aria-label="${day} ${getMonthName(currentMonth)} ${currentYear}" ${onClick}>${day}</button>`;
                 }
 
                 const totalCells = firstDay + daysInMonth;
@@ -3536,6 +3535,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
 
                 calendar.innerHTML = html;
+                if (focusedDay) Array.from(calendar.querySelectorAll('button')).find(b => b.getAttribute('aria-label') === focusedDay)?.focus();
             }
 
             window.selectDate = function(day, month, year) {
@@ -3646,7 +3646,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         .eq("is_active", true)
                         .eq("is_featured", true)
                         .order("created_at", { ascending: false })
-                        .limit(6);
+                        .limit(3);
                     
                     const { data, error } = await query;
                     
@@ -3657,7 +3657,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             .select(PUBLIC_PROPERTY_FIELDS)
                             .eq("is_active", true)
                             .order("created_at", { ascending: false })
-                            .limit(6);
+                            .limit(3);
                         
                         const { data: recentData, error: recentError } = await query;
                         
@@ -3682,7 +3682,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                 } catch (error) {
                     console.error("Error:", error);
-                    container.innerHTML = '<div class="no-properties">Unable to load featured properties.</div>';
+                    container.innerHTML = '<div class="no-properties"><p>Live listings could not load just now.</p><a href="/stays.html">Browse our complete accommodation directory</a></div>';
                 }
             }
 
@@ -3920,6 +3920,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         .eq('approved', true)
                         .order('created_at', { ascending: false });
 
+                    document.querySelector('.testimonials').classList.toggle('has-no-reviews', !reviews || reviews.length === 0);
+                    document.querySelectorAll('.testimonial-prev,.testimonial-next,.testimonial-dots').forEach(el => el.hidden = !reviews || reviews.length < 2);
                     if (error) throw error;
 
                     if (!reviews || reviews.length === 0) {
@@ -3969,9 +3971,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (nextBtn) { nextBtn.onclick = nextTestimonial; }
 
                     if (window._testimonialInterval) clearInterval(window._testimonialInterval);
-                    window._testimonialInterval = setInterval(nextTestimonial, 5500);
+                    // Reviews advance only when the guest chooses a control.
 
                 } catch (err) {
+                    document.querySelectorAll('.testimonial-prev,.testimonial-next,.testimonial-dots').forEach(el => el.hidden = true);
                     console.error('Error loading testimonials:', err);
                     const slider2 = document.getElementById('testimonialSlider');
                     if (slider2) slider2.innerHTML = '<p style="text-align:center;color:var(--gray);padding:40px 20px;">Unable to load reviews right now. Please refresh the page.</p>';
@@ -4145,6 +4148,14 @@ document.addEventListener("DOMContentLoaded", () => {
             // Close calendar when clicking backdrop
             document.getElementById('calendarBackdrop').addEventListener('click', hideCalendar);
             
+            document.getElementById('calendarContainer').addEventListener('keydown', (event) => {
+                if (event.key !== 'Tab') return;
+                const controls = Array.from(event.currentTarget.querySelectorAll('button:not([disabled]),a[href],input:not([disabled])'));
+                const first = controls[0], last = controls[controls.length - 1];
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+            });
+
             // Close calendar when pressing Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && isCalendarVisible) {
@@ -4171,6 +4182,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         const targetElement = document.getElementById(targetId);
                         
                         if (targetElement) {
+                            if (this.classList.contains('home-skip')) targetElement.focus({preventScroll:true});
                             window.scrollTo({
                                 top: targetElement.offsetTop - 80,
                                 behavior: 'smooth'
@@ -4185,6 +4197,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Additional Helper Functions
             
             function initHeroCarousel() {
+                if (!document.querySelector('.heroSwiper') || typeof Swiper !== 'function') return;
                 const heroSwiper = new Swiper('.heroSwiper', {
                     spaceBetween: 0,
                     slidesPerView: 1,
@@ -4276,6 +4289,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             function initializePropertySwiper(propertyId, images, cardRoot = document) {
+                if (typeof Swiper !== 'function') return null;
                 const mainSwiperElement = cardRoot.querySelector(`[id="main-${propertyId}"]`);
                 const thumbSwiperElement = cardRoot.querySelector(`[id="thumb-${propertyId}"]`);
                 
@@ -4317,10 +4331,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     navigation: false,
                     thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
-                    autoplay: images.length > 1 ? {
-                        delay: 3000,
-                        disableOnInteraction: false,
-                    } : false,
+                    autoplay: false,
                     effect: 'slide',
                     speed: 500,
                     preloadImages: false,

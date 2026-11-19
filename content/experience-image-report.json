@@ -1,0 +1,562 @@
+[
+  {
+    "title": "Nguuni Nature Sanctuary & Haller Park Day Expedition",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Giraffes_at_the_Nguuni_Nature_Sanctuary_in_Mombasa.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/nguuni-haller-park-mombasa-giraffes-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 19690,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/nguuni-haller-park-mombasa-giraffes-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 65708,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Mamba Village + Mombasa Marine Park Adventure",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Crocodiles_at_the_Kenya_Coast.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/mamba-village-mombasa-crocodiles-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 18896,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/mamba-village-mombasa-crocodiles-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 72416,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Mombasa Old Town & Cultural Day",
+    "source": "/images/Old_Town_Mombasa_2025_PwaniStays.jpg",
+    "variants": [
+      {
+        "src": "/images/experiences/mombasa-old-town-street-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 23816,
+        "quality": 60
+      },
+      {
+        "src": "/images/experiences/mombasa-old-town-street-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 93358,
+        "quality": 60
+      }
+    ]
+  },
+  {
+    "title": "Diani Beach & Leisure Day",
+    "source": "/images/Diani_Beach_PwaniStays.jpg",
+    "variants": [
+      {
+        "src": "/images/experiences/diani-beach-kenya-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 7262,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/diani-beach-kenya-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 27276,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Kisite–Wasini Marine Safari",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Snorkeling_at_Kisite.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/kisite-wasini-snorkelling-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 19540,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/kisite-wasini-snorkelling-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 65902,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Shimba Hills Nature & Waterfall Experience",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Shimba_hills.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/shimba-hills-kenya-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 10474,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/shimba-hills-kenya-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 35514,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Coastal Outdoor & Active Experience",
+    "source": "/images/Nyali_beach_PwaniStays.jpg",
+    "variants": [
+      {
+        "src": "/images/experiences/nyali-beach-coastal-activities-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 22882,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/nyali-beach-coastal-activities-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 74356,
+        "quality": 64
+      }
+    ]
+  },
+  {
+    "title": "Tsavo East Game Safari with Train-to-Voi + Overnight",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Majestic_red_elephant_of_Tsavo_East_(5232098119).jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/tsavo-east-red-elephant-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 17176,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/tsavo-east-red-elephant-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 57706,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Cultural & Community Immersion",
+    "source": "/images/Fort_Jesus,_2025_PwaniStays.jpg",
+    "variants": [
+      {
+        "src": "/images/experiences/fort-jesus-mombasa-culture-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 16692,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/fort-jesus-mombasa-culture-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 71902,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Coastal & Cultural",
+    "source": "/images/Turtle_Bay_Watamu_Kenya_PwaniStays.jpg",
+    "variants": [
+      {
+        "src": "/images/experiences/watamu-turtle-bay-coast-640.webp",
+        "width": 640,
+        "height": 480,
+        "bytes": 71800,
+        "quality": 72
+      },
+      {
+        "src": "/images/experiences/watamu-turtle-bay-coast-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 149046,
+        "quality": 60
+      }
+    ]
+  },
+  {
+    "title": "Masai Mara Classic Safari",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Migration_of_zebras_in_Maasai_Mara.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/masai-mara-zebra-migration-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 5958,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/masai-mara-zebra-migration-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 32712,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Amboseli Elephant Experience",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/amboseli-elephants-kilimanjaro-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 11122,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/amboseli-elephants-kilimanjaro-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 53494,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Tsavo Wilderness Adventure",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Red_elephant_in_dirt.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/tsavo-red-elephant-safari-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 10094,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/tsavo-red-elephant-safari-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 45244,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Samburu Special 5 Safari",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The_Reticulated_Giraffe_from_Samburu.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/samburu-reticulated-giraffe-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 9988,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/samburu-reticulated-giraffe-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 25140,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Lake Nakuru Flamingo Safari",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Flamingoes-Lake_Nakuru.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/lake-nakuru-flamingos-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 23990,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/lake-nakuru-flamingos-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 85182,
+        "quality": 60
+      }
+    ]
+  },
+  {
+    "title": "Aberdare Mountain Forest Safari",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aberdare_National_Forest_Kenya.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/aberdare-forest-kenya-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 17802,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/aberdare-forest-kenya-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 71936,
+        "quality": 72
+      }
+    ]
+  },
+  {
+    "title": "Meru National Park Adventure",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Meru_National_Park%2C_Kenya.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/meru-national-park-kenya-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 20736,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/meru-national-park-kenya-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 73414,
+        "quality": 72
+      }
+    ]
+  },
+  {
+    "title": "Hell's Gate & Lake Naivasha Adventure",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hell%27s_Gate%2C_Kenya.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/hells-gate-national-park-kenya-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 17416,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/hells-gate-national-park-kenya-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 74600,
+        "quality": 72
+      }
+    ]
+  },
+  {
+    "title": "Safari Adventures",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Zebras_Grazing_Grassland_Savannah.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/safari-zebras-kenya-640.webp",
+        "width": 640,
+        "height": 480,
+        "bytes": 47534,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/safari-zebras-kenya-1137.webp",
+        "width": 1137,
+        "height": 853,
+        "bytes": 140820,
+        "quality": 60
+      }
+    ]
+  },
+  {
+    "title": "Nairobi Wildlife Conservation Experience",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Giraffe%2C_Nairobi_National_Park.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/nairobi-national-park-giraffe-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 23218,
+        "quality": 64
+      },
+      {
+        "src": "/images/experiences/nairobi-national-park-giraffe-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 97586,
+        "quality": 60
+      }
+    ]
+  },
+  {
+    "title": "Karen Blixen & Cultural Heritage Tour",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Karen_Blixen_Museum_House.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/karen-blixen-museum-nairobi-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 23418,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/karen-blixen-museum-nairobi-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 83092,
+        "quality": 60
+      }
+    ]
+  },
+  {
+    "title": "Karura Forest Adventure & City Views",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nature_trail_within_Karura_Forest_(1).jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/karura-forest-nairobi-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 28094,
+        "quality": 60
+      },
+      {
+        "src": "/images/experiences/karura-forest-nairobi-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 121676,
+        "quality": 60
+      }
+    ]
+  },
+  {
+    "title": "Nairobi Food & Market Exploration",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_City_Market_in_Kenya.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/nairobi-city-market-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 18528,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/nairobi-city-market-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 61752,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Lake Naivasha & Crescent Island",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boat_on_Lake_Naivasha.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/lake-naivasha-boat-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 5752,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/lake-naivasha-boat-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 18110,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Ngong Hills & Kibera Cultural Insight",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ngong_Hills_Kenya.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/ngong-hills-kenya-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 10086,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/ngong-hills-kenya-607.webp",
+        "width": 607,
+        "height": 405,
+        "bytes": 31702,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Tea Plantation Experience & Limuru Escapes",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Tea_farm_in_Limuru%2C_Kenya.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/limuru-tea-farm-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 38770,
+        "quality": 60
+      },
+      {
+        "src": "/images/experiences/limuru-tea-farm-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 160712,
+        "quality": 60
+      }
+    ]
+  },
+  {
+    "title": "Nairobi By Night — Entertainment & Culture",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_skyline_at_Night.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/nairobi-skyline-at-night-360.webp",
+        "width": 360,
+        "height": 240,
+        "bytes": 6984,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/nairobi-skyline-at-night-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 19270,
+        "quality": 76
+      }
+    ]
+  },
+  {
+    "title": "Nairobi & Inland",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg?width=1200",
+    "variants": [
+      {
+        "src": "/images/experiences/nairobi-kicc-skyline-640.webp",
+        "width": 640,
+        "height": 480,
+        "bytes": 53476,
+        "quality": 76
+      },
+      {
+        "src": "/images/experiences/nairobi-kicc-skyline-1200.webp",
+        "width": 1200,
+        "height": 900,
+        "bytes": 165954,
+        "quality": 60
+      }
+    ]
+  }
+]

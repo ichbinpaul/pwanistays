@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const canonicalUrl = 'https://pwanistays.com' + canonicalPath;
     if (!document.documentElement.dataset.propertyId ||
         (window.PwaniPropertyRoutes && window.PwaniPropertyRoutes.enabled === true && location.pathname !== canonicalPath)) {
-      const dated = new URL(u.link(id, {
-        checkin: inParam, checkout: outParam, guests: params.get('guests')
-      }), location.origin);
+      const dated = new URL(location.href);
       dated.pathname = canonicalPath;
+      dated.searchParams.delete('id');
+      dated.searchParams.delete('property');
       history.replaceState(null, '', dated.pathname + dated.search);
     }
     const pageTitle = `${data.title || 'Coastal accommodation'} | PwaniStays`;

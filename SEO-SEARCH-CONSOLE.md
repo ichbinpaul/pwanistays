@@ -11,7 +11,7 @@ The repository supplies a preferred host, `https://pwanistays.com`, and:
 
 - `robots.txt` permits crawling and advertises both sitemap URLs.
 - `sitemap.xml` contains the main public pages.
-- `property-sitemap.xml` contains the active `/stays/<property-UUID>/` URLs.
+- `property-sitemap.xml` contains the active `/stays/<assigned-slug>/` canonical URLs.
 - Its image-sitemap entries also point to validated website-owned cover photos.
 - Each generated active property page has its own canonical URL, title,
   description and actual property cover image.

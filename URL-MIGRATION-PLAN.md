@@ -1,8 +1,10 @@
 # Friendly property URLs and current GSC findings
 
-Updated 19 November 2026. Friendly paths are implemented in the staged release;
-the canonical migration and Cloudflare redirects are not activated. Existing
-UUID URLs remain canonical and remain in the sitemap during staging.
+Updated 19 November 2026. The friendly canonical release is prepared with
+`use_friendly_urls=true` and registry `ready_for_redirects=true`. All active
+source links, directory links, canonicals and property sitemap entries now use
+the assigned friendly paths. Both full pages remain available. Cloudflare
+redirects must stay disabled until this release is confirmed live.
 
 ## Confirmed example
 
@@ -13,7 +15,7 @@ Mombasa**. The proposed human-readable URL is:
 `https://pwanistays.com/stays/cozy-studio-bamburi/`
 
 The supplied GSC screenshot confirms that the existing UUID URL is indexed.
-The staged release generates the friendly target with that same unit's content
+The canonical release generates the friendly target with that same unit's content
 and photo. Confirm its GitHub Pages publication before treating it as live.
 A readable address improves usability; it does not by itself make Google index
 or rank a page.

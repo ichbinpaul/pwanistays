@@ -1,6 +1,7 @@
 # Property-specific link previews
 
-Shared property links now use `/stays/<property-UUID>/`. These pages are generated
+Shared property links now use `/stays/<assigned-slug>/`. Existing UUID pages
+remain available and declare the same friendly canonical. These pages are generated
 from the site's existing property-detail template and the public catalogue source.
 Each HTML response includes that unit's real designated cover photo, title,
 description, canonical URL, Open Graph tags and large-image Twitter card before
@@ -53,7 +54,7 @@ null and `amenities` as a list of nonempty text strings. Older records without
 these fields use safe empty/fallback content. Raw imported promotional captions,
 private rates, guest information and internal booking data are not used.
 
-## Friendly-path staging
+## Friendly-path configuration
 
 When both `catalogue/property-slugs.json` and
 `catalogue/property-url-settings.json` exist, the generator loads their immutable
@@ -71,10 +72,10 @@ does not change the catalogue source's active URLs or create an HTTP redirect.
 
 The source's `slug` must agree with the registry, and its URL must agree with the
 explicit routing setting. This prevents accidental canonical changes from stale
-configuration. A future explicitly enabled friendly setting can declare the
+configuration. The current release explicitly enables the friendly setting and declares the
 friendly route as canonical on both pages, while preserving the old UUID page.
-That activation requires a separately reviewed rollout with genuine hosting HTTP
-301 redirects. This generator neither deploys a Cloudflare Worker nor enables the
+After verifying publication, enable genuine HTTP 301 redirects in the prepared
+Cloudflare Worker. This generator neither deploys a Cloudflare Worker nor enables the
 friendly-URL setting.
 
 Registry entries remain reserved when properties are withdrawn or renamed.

@@ -75,8 +75,9 @@ independent and unchanged.
 
 The routing option keeps the permanent UUID-to-slug registry in step with the
 source. Keep it on source-refresh commands now that routing is configured.
-`catalogue/property-url-settings.json` explicitly keeps `use_friendly_urls` false
-until the Cloudflare migration is activated; hourly exports cannot enable it.
+`catalogue/property-url-settings.json` now sets `use_friendly_urls=true` for the
+friendly canonical release. Hourly exports preserve the configured mode and
+existing names; they cannot choose a different activation mode on their own.
 
 Committing source files is distinct from publishing them on the website. In
 particular, commits made with `GITHUB_TOKEN` do not themselves guarantee a

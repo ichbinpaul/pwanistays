@@ -274,6 +274,13 @@
       "bytes": 330387,
       "etag": "\"ee9225e237454f3ddbf58b3daca72130\""
     },
+    "5630fda7-aaba-4672-81c4-4178d7d12b5c": {
+      "source_url": "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/01.jpeg",
+      "image_url": "https://pwanistays.com/images/property-covers/5630fda7-aaba-4672-81c4-4178d7d12b5c-0718e9390f4e871d.jpg",
+      "sha256": "0718e9390f4e871d48adb5b6213a9f9101ac4621d6fc8d061de30015d5f696d8",
+      "bytes": 99327,
+      "etag": "\"b60b8613534d75760dee466f427e3f84\""
+    },
     "572b8b9f-96d5-4d90-bdae-f259426f9d67": {
       "source_url": "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/572b8b9f-96d5-4d90-bdae-f259426f9d67/_pwani_v6_65193eb078fa4938/02.jpeg",
       "image_url": "https://pwanistays.com/images/property-covers/572b8b9f-96d5-4d90-bdae-f259426f9d67-45c50bd0f2a99a56.jpg",

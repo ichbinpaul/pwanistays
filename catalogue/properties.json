@@ -2,7 +2,7 @@
   "version": 1,
   "status": "source_export_only",
   "meta_connected": false,
-  "generated_at": "2026-11-18T22:31:39+00:00",
+  "generated_at": "2026-11-19T03:30:27+00:00",
   "properties": [
     {
       "id": "0886efb2-8054-48b9-97bc-332fc59132e2",
@@ -1330,6 +1330,48 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/52981154-8bfd-43c7-8aad-5a2ad336adf2/_pwani_v6_90dd71ca04d148c5/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/52981154-8bfd-43c7-8aad-5a2ad336adf2/_pwani_v6_90dd71ca04d148c5/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/52981154-8bfd-43c7-8aad-5a2ad336adf2/_pwani_v6_90dd71ca04d148c5/10.jpeg"
+      ]
+    },
+    {
+      "id": "5630fda7-aaba-4672-81c4-4178d7d12b5c",
+      "title": "Cozy & Spacious Studio Apartment – Links Road, Nyali",
+      "location": "Nyali",
+      "unit_type": "studio",
+      "beds": null,
+      "amenities": [
+        "❄️ Air conditioning (AC)",
+        "🛏️ Spacious, tastefully furnished studio",
+        "🍳 Separate, fully equipped kitchen",
+        "🍽️ Dining & working area",
+        "📺 Smart TV with Netflix & DSTV",
+        "🌐 Unlimited Wi-Fi",
+        "🛁 Bathtub",
+        "🚿 Instant hot shower",
+        "🌅 Spacious private balcony",
+        "🚗 Ample parking",
+        "🔒 24/7 security",
+        "🌴 Quiet and relaxing environment",
+        "📍 Prime Location:",
+        "🏖️ 5-minute drive to the beach",
+        "🛍️ 5-minute walk to Nyali Cinemax & Chandarana",
+        "🌊 5-minute drive to English Point Marina",
+        "🍕 1-minute walk to Pizza Inn",
+        "🚕 Easy access to public transport",
+        "👥 Perfect for couples, solo travelers & business stays."
+      ],
+      "url": "https://pwanistays.com/stays/5630fda7-aaba-4672-81c4-4178d7d12b5c/",
+      "description": "Cozy & Spacious Studio Apartment – Links Road, Nyali. Holiday accommodation in Nyali. View photos and property details; contact PwaniStays for current rates and availability.",
+      "images": [
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/01.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/02.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/03.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/04.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/05.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/06.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/07.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/08.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/09.jpeg",
+        "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/10.jpeg"
       ]
     },
     {

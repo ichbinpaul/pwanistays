@@ -164,3 +164,46 @@ test('Cloudflare module wrapper ignores the runtime ExecutionContext argument', 
         globalThis.fetch = previous;
     }
 });
+
+test('legacy public HTML paths redirect once with the original query string', async () => {
+    const env = { SITE_HTML_REDIRECTS_ENABLED: 'true' };
+    const query = '?utm_source=coast%20trip&tag=a&tag=b&empty=';
+    const paths = {
+        '/index.html': '/',
+        '/how-it-works.html': '/how-it-works',
+        '/stays.html': '/stays',
+        '/header.html': '/header',
+        '/property.html': '/property',
+        '/guides/diani/index.html': '/guides/diani/',
+        '/stays/nyali-studio/index.html': '/stays/nyali-studio/',
+    };
+    for (const [legacy, clean] of Object.entries(paths)) {
+        for (const method of ['GET', 'HEAD']) {
+            const { calls, fetcher } = fetchStub();
+            const response = await handleRequest(new Request('https://pwanistays.com' + legacy + query, { method }), env, fetcher);
+            assert.equal(response.status, 301, legacy);
+            assert.equal(response.headers.get('Location'), 'https://pwanistays.com' + clean + query);
+            assert.equal(calls.length, 0);
+        }
+    }
+});
+
+test('clean routes serve the existing origin file with its query and method', async () => {
+    for (const path of ['/how-it-works', '/stays', '/header']) {
+        const { calls, fetcher, origin } = fetchStub();
+        const request = new Request('https://pwanistays.com' + path + '?tag=a&tag=b', { method: 'HEAD' });
+        assert.equal(await handleRequest(request, {}, fetcher), origin);
+        assert.equal(calls[0][0].url, 'https://pwanistays.com' + path + '.html?tag=a&tag=b');
+        assert.equal(calls[0][0].method, 'HEAD');
+    }
+});
+
+test('HTML property redirects preserve the full query even when resolving a friendly slug', async () => {
+    const { fetcher } = fetchStub();
+    const query = `?id=${ID}&checkin=2030-02-03&tag=a&tag=b&utm_source=coast%20trip`;
+    const env = { ...enabled, SITE_HTML_REDIRECTS_ENABLED: 'true' };
+    const request = new Request('https://pwanistays.com/property.html' + query);
+    const response = await handleRequest(request, env, fetcher);
+    assert.equal(response.status, 301);
+    assert.equal(response.headers.get('Location'), 'https://pwanistays.com/stays/nyali-studio/' + query);
+});

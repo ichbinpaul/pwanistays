@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const u = window.PwaniListings;
   const params = new URLSearchParams(location.search);
   // Generated pages embed their own identity; a query cannot switch units.
-  // Keep older /property.html?id=... links usable for existing conversations.
+  // Keep older /property?id=... links usable for existing conversations.
   const id = document.documentElement.dataset.propertyId || params.get('id');
   const declaredPath = document.documentElement.dataset.propertyPath;
   const canonicalPath = /^\/stays\/[a-z0-9-]+\/$/.test(declaredPath || '')

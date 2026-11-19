@@ -1,10 +1,14 @@
-/* Preparation only: keep PROPERTY_URLS_ENABLED disabled until every friendly
- * target is published and the canonical migration is ready. This Worker
- * does not deploy itself, create pages, or change a catalogue. */
+/* Serve clean URLs for GitHub Pages and redirect legacy page and property URLs. */
 
 export const REGISTRY_URL = 'https://pwanistays.com/catalogue/property-slugs.json';
 export const MAX_REGISTRY_BYTES = 1024 * 1024;
 const ORIGIN = 'https://pwanistays.com';
+const HTML_PAGES = new Set([
+    '/404', '/about', '/accommodation', '/bookings', '/cancellation', '/coastal-cultural',
+    '/experiences', '/header', '/how-it-works', '/nairobi', '/page-template', '/partners',
+    '/privacy', '/property', '/safari', '/stays', '/terms',
+]);
+const DIRECTORY_INDEX = /^\/(?:guides|stays)(?:\/[a-z0-9-]+)?\/index\.html$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const RESERVED = new Set([
@@ -34,7 +38,7 @@ function legacyId(url) {
     if (url.hostname !== 'pwanistays.com' || !['http:', 'https:'].includes(url.protocol) || url.port) return null;
     const match = url.pathname.match(/^\/stays\/([0-9a-f-]+)(?:\/(?:index\.html)?)?$/);
     if (match) return UUID.test(match[1]) ? match[1] : null;
-    const parameter = url.pathname === '/property.html' ? 'id' : url.pathname === '/' ? 'property' : null;
+    const parameter = ['/property', '/property.html'].includes(url.pathname) ? 'id' : url.pathname === '/' ? 'property' : null;
     if (!parameter || url.searchParams.getAll(parameter).length !== 1) return null;
     const id = url.searchParams.get(parameter);
     return UUID.test(id || '') ? id : null;
@@ -87,12 +91,43 @@ async function readRegistry(response) {
 }
 
 export async function handleRequest(request, env = {}, fetcher = fetch) {
-    if (env.PROPERTY_URLS_ENABLED !== 'true' || !['GET', 'HEAD'].includes(request.method)) {
-        return fetcher(request);
-    }
     const url = new URL(request.url);
-    // Normal pages, friendly paths and invalid UUIDs never fetch the registry.
-    if (!legacyId(url)) return fetcher(request);
+    if (url.origin !== ORIGIN || !['GET', 'HEAD'].includes(request.method)) return fetcher(request);
+    if (env.PROPERTY_URLS_ENABLED === 'true' && legacyId(url)) {
+        const target = await propertyRedirect(url, fetcher);
+        if (target) {
+            if (env.SITE_HTML_REDIRECTS_ENABLED === 'true' && url.pathname.endsWith('.html')) {
+                const destination = new URL(target);
+                destination.search = url.search;
+                return Response.redirect(destination.href, 301);
+            }
+            return Response.redirect(target, 301);
+        }
+    }
+
+    const path = url.pathname;
+    const clean = path.replace(/\.html$/, '');
+    if (env.SITE_HTML_REDIRECTS_ENABLED === 'true') {
+        if (path === '/index.html') {
+            url.pathname = '/';
+        } else if (DIRECTORY_INDEX.test(path)) {
+            url.pathname = path.slice(0, -'index.html'.length);
+        } else if (path !== clean && HTML_PAGES.has(clean)) {
+            url.pathname = clean;
+        }
+        if (url.pathname !== path) return Response.redirect(url.href, 301);
+    }
+
+    // A same-zone subrequest from a Worker route goes directly to the origin.
+    // Use a manual redirect policy so an origin response cannot hide a routing loop.
+    if (HTML_PAGES.has(path)) {
+        url.pathname = path + '.html';
+        return fetcher(new Request(url, request), { redirect: 'manual' });
+    }
+    return fetcher(request);
+}
+
+async function propertyRedirect(url, fetcher) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3000);
     try {
@@ -105,15 +140,14 @@ export async function handleRequest(request, env = {}, fetcher = fetch) {
         // A dashboard toggle alone must not activate a staged canonical map.
         // The site build publishes this only with the friendly canonical release.
         if (registry.ready_for_redirects === true) {
-            const target = resolveRedirect(url, registry);
-            if (target) return Response.redirect(target, 301);
+            return resolveRedirect(url, registry);
         }
     } catch {
         // Bad maps/network failures must leave the existing site usable.
     } finally {
         clearTimeout(timeout);
     }
-    return fetcher(request);
+    return null;
 }
 
 export default {

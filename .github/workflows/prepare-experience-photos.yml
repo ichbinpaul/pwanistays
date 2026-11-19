@@ -1,0 +1,37 @@
+name: Prepare experience destination photographs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [fix/experience-destination-photos]
+    paths: [scripts/collect_experience_photos.py]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: experience-photo-review
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Collect original photos and destination-specific alternatives for review
+        run: python3 -u scripts/collect_experience_photos.py
+      - name: Save photo review files on the working branch
+        if: always()
+        run: |
+          if [ ! -d photo-review ]; then exit 0; fi
+          git add photo-review
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Collect destination-specific experience photo candidates for review"
+          git push

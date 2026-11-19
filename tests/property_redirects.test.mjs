@@ -6,7 +6,7 @@ import worker, {
 
 const ID = '12345678-abcd-4321-9876-123456789012';
 const OTHER = '12345678-abcd-4321-9876-123456789013';
-const registry = { version: 1, slugs: { [ID]: 'nyali-studio' } };
+const registry = { version: 1, ready_for_redirects: true, slugs: { [ID]: 'nyali-studio' } };
 const enabled = { PROPERTY_URLS_ENABLED: 'true' };
 
 function registryResponse(value = registry, options = {}) {
@@ -93,6 +93,17 @@ test('a known-shaped but unmapped UUID looks up the map then passes through', as
     assert.equal(calls[0][0], REGISTRY_URL);
     assert.equal(calls[1][0], request);
     assert.equal(calls.length, 2);
+});
+
+test('a staged or missing readiness flag keeps current URLs usable even if the Worker is enabled', async () => {
+    for (const ready of [false, undefined, 'true', 1]) {
+        const value = { ...registry, ready_for_redirects: ready };
+        const { calls, fetcher, origin } = fetchStub(() => registryResponse(value));
+        const request = new Request(`https://pwanistays.com/stays/${ID}/`);
+        assert.equal(await handleRequest(request, enabled, fetcher), origin);
+        assert.equal(calls.length, 2);
+        assert.equal(calls[1][0], request);
+    }
 });
 
 test('unsafe, duplicate, reserved and UUID-shaped slugs cannot redirect', async () => {

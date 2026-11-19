@@ -18,6 +18,7 @@ from urllib.parse import urlencode, urlsplit
 import uuid
 
 from build_whatsapp_catalogue import atomic_write, valid_photo
+from property_routes import canonical_url, routing_path, validate_registry
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKER = "<!-- PWANISTAYS_PROPERTY_PREVIEW_V1 -->"
@@ -80,8 +81,7 @@ def validate_source(snapshot):
         amenities = row.get("amenities", [])
         if not isinstance(amenities, list) or any(not isinstance(item, str) or not item.strip() for item in amenities):
             raise PreviewError("Public amenities must be a list of nonempty text values")
-        if row.get("url") not in {property_url(property_id), f"{SITE}/property.html?id={property_id}"}:
-            raise PreviewError("Property URL is not a recognised public property link")
+        canonical_url(row)
         images = row.get("images")
         if (not isinstance(images, list) or not 1 <= len(images) <= 10 or
                 any(not isinstance(url, str) or not valid_photo(url) for url in images) or
@@ -289,7 +289,7 @@ def prerender_body(template, row):
     else:
         position = element("propertyTitle")["end"]
         edits.append((position, position, "\n      " + summary))
-    contact = "https://wa.me/254738544784?" + urlencode({"text": "Hello PwaniStays! Please confirm current rates and availability for " + title + ".\n" + property_url(row["id"])})
+    contact = "https://wa.me/254738544784?" + urlencode({"text": "Hello PwaniStays! Please confirm current rates and availability for " + title + ".\n" + canonical_url(row)})
     fallback = ('<noscript id="propertyNoScript"><p>To request current rates and availability without JavaScript, '
                 f'<a href="{escape(contact, quote=True)}">contact PwaniStays on WhatsApp about this property</a>.</p></noscript>')
     if "propertyNoScript" in parsed.elements:
@@ -305,7 +305,7 @@ def prerender_body(template, row):
 
 
 def structured_data(row):
-    url, title = property_url(row["id"]), row["title"].strip()
+    url, title = canonical_url(row), row["title"].strip()
     data = {"@context": "https://schema.org", "@graph": [
         {"@type": "WebPage", "@id": url + "#webpage", "name": title + " | PwaniStays",
          "description": row["description"].strip(), "url": url, "image": row.get("seo_image") or row["images"][0],
@@ -329,7 +329,7 @@ def render_property(template, row):
     parsed = TemplateHead(template)
     title = row["title"].strip() + " | PwaniStays"
     description = row["description"].strip()
-    url, image = property_url(row["id"]), row.get("seo_image") or row["images"][0]
+    url, image = canonical_url(row), row.get("seo_image") or row["images"][0]
     values = [
         ("name", "description", description), ("name", "robots", "index,follow,max-image-preview:large"),
         ("property", "og:type", "website"), ("property", "og:site_name", "PwaniStays"),
@@ -347,8 +347,8 @@ def render_property(template, row):
     metadata += "".join(f'  <meta {kind}="{name}" content="{escape(value, quote=True)}">\n'
                         for kind, name, value in values)
     metadata += "  " + structured_data(row)
-    attrs = [(key, value) for key, value in parsed.html_attrs if key.lower() != "data-property-id"]
-    attrs.append(("data-property-id", row["id"]))
+    attrs = [(key, value) for key, value in parsed.html_attrs if key.lower() not in {"data-property-id", "data-property-path"}]
+    attrs.extend([("data-property-id", row["id"]), ("data-property-path", urlsplit(url).path)])
     html_open = "<html" + "".join(" " + key + ("" if value is None else f'="{escape(value, quote=True)}"')
                                   for key, value in attrs) + ">\n" + MARKER
     edits = parsed.edits + [(*parsed.html_span, html_open), (parsed.head_close, parsed.head_close, metadata)]
@@ -361,11 +361,14 @@ def render_property(template, row):
     return prerender_body(result, row)
 
 
-def render_tombstone(property_id):
+def render_tombstone(property_id, url=None, slug=None):
     canonical_uuid(property_id)
-    url = property_url(property_id)
+    row = {"id": property_id, "url": url or property_url(property_id)}
+    if slug is not None:
+        row["slug"] = slug
+    url = canonical_url(row)
     return f'''<!DOCTYPE html>
-<html lang="en" data-property-id="{property_id}" data-property-unavailable="true">
+<html lang="en" data-property-id="{property_id}" data-property-path="{urlsplit(url).path}" data-property-unavailable="true">
 {MARKER}
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -388,7 +391,12 @@ def render_tombstone(property_id):
 '''
 
 
-def owned_pages(output_dir):
+def page_owner(content):
+    attrs = dict(TemplateHead(content).html_attrs)
+    return canonical_uuid(attrs.get("data-property-id"))
+
+
+def owned_pages(output_dir, registry=None):
     # Refuse symbolic paths, unknown files and unowned collisions before writing.
     path = output_dir.absolute()
     if any(part.is_symlink() for part in (path, *path.parents)):
@@ -397,11 +405,16 @@ def owned_pages(output_dir):
         return {}
     if not path.is_dir():
         raise PreviewError("Preview output is not a directory")
+    slugs = validate_registry(registry) if registry is not None else {}
+    aliases = {slug: property_id for property_id, slug in slugs.items()}
     result = {}
     for directory in path.iterdir():
         if directory.is_symlink() or not directory.is_dir():
             raise PreviewError("Unexpected file or link in preview output")
-        canonical_uuid(directory.name)
+        if directory.name in aliases:
+            owner = aliases[directory.name]
+        else:
+            owner = canonical_uuid(directory.name)
         children = list(directory.iterdir())
         if len(children) != 1 or children[0].name != "index.html":
             raise PreviewError("Preview directory contains unknown files or an unowned collision")
@@ -411,24 +424,48 @@ def owned_pages(output_dir):
         content = page.read_text(encoding="utf-8")
         if MARKER not in content:
             raise PreviewError("Refusing to overwrite a page without the preview ownership marker")
+        if page_owner(content) != owner:
+            raise PreviewError("Preview directory does not belong to the embedded property UUID")
         result[directory.name] = content
     return result
 
 
-def generate(snapshot, template, output_dir, check=False):
+def generate(snapshot, template, output_dir, check=False, registry=None, friendly=False):
     rows = validate_source(snapshot)
+    if type(friendly) is not bool or (friendly and registry is None):
+        raise PreviewError("Friendly routing requires an explicit valid registry and boolean setting")
+    slugs = validate_registry(registry) if registry is not None else {}
+    for row in rows:
+        if registry is not None and (row["id"] not in slugs or row.get("slug") != slugs[row["id"]]):
+            raise PreviewError("Every active source slug must match its immutable registry assignment")
+        expected = SITE + routing_path(row["id"], registry, friendly) if registry is not None else property_url(row["id"])
+        if canonical_url(row) != expected:
+            raise PreviewError("Source canonical URL disagrees with the configured routing setting")
     # Render all content and inspect all existing output before modifying anything.
-    rendered = {row["id"]: render_property(template, row) for row in rows}
+    rendered = {}
+    for row in rows:
+        page = render_property(template, row)
+        rendered[row["id"]] = page
+        if registry is not None:
+            rendered[slugs[row["id"]]] = page
     directory = Path(output_dir)
-    previous = owned_pages(directory)
-    withdrawn = set(previous) - set(rendered)
-    rendered.update({property_id: render_tombstone(property_id) for property_id in withdrawn})
+    previous = owned_pages(directory, registry)
+    active = {row["id"] for row in rows}
+    withdrawn = (set(slugs) | {page_owner(content) for content in previous.values()}) - active
+    for property_id in withdrawn:
+        slug = slugs.get(property_id)
+        canonical = (SITE + routing_path(property_id, registry, friendly)
+                     if slug is not None else property_url(property_id))
+        page = render_tombstone(property_id, canonical, slug)
+        rendered[property_id] = page
+        if slug is not None:
+            rendered[slug] = page
     changes = {property_id: content for property_id, content in rendered.items()
                if previous.get(property_id) != content}
     if not check:
         for property_id, content in sorted(changes.items()):
             atomic_write(directory / property_id / "index.html", content.encode("utf-8"))
-    return {"active": len(rows), "withdrawn": len(withdrawn), "changed": len(changes)}
+    return {"active": len(rows), "withdrawn": len(withdrawn), "pages": len(rendered), "changed": len(changes)}
 
 
 def main(argv=None):
@@ -436,6 +473,8 @@ def main(argv=None):
     parser.add_argument("--source", type=Path, default=ROOT / "catalogue/properties.json")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "stays")
     parser.add_argument("--covers", type=Path, help="validated local-cover manifest; defaults to catalogue/cover-images.json when present")
+    parser.add_argument("--registry", type=Path, help="immutable slug registry; auto-loaded with URL settings when present")
+    parser.add_argument("--settings", type=Path, help="versioned URL settings containing use_friendly_urls")
     parser.add_argument("--check", action="store_true", help="validate and render without changing files")
     args = parser.parse_args(argv)
     try:
@@ -443,8 +482,22 @@ def main(argv=None):
         covers = args.covers if args.covers is not None else ROOT / "catalogue/cover-images.json"
         if args.covers is not None or covers.exists() or covers.is_symlink():
             snapshot = load_cover_images(snapshot, covers, root=ROOT)
+        registry_path = args.registry if args.registry is not None else ROOT / "catalogue/property-slugs.json"
+        settings_path = args.settings if args.settings is not None else ROOT / "catalogue/property-url-settings.json"
+        configured = [path.exists() or path.is_symlink() for path in (registry_path, settings_path)]
+        if args.registry is not None or args.settings is not None or any(configured):
+            if not all(configured):
+                raise PreviewError("Immutable registry and URL settings must both be supplied")
+            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+            settings = json.loads(settings_path.read_text(encoding="utf-8"))
+            if (not isinstance(settings, dict) or type(settings.get("version")) is not int
+                    or settings["version"] != 1 or type(settings.get("use_friendly_urls")) is not bool):
+                raise PreviewError("Unsupported property URL settings")
+            friendly = settings["use_friendly_urls"]
+        else:
+            registry, friendly = None, False
         template = (ROOT / "property.html").read_text(encoding="utf-8")
-        counts = generate(snapshot, template, args.output_dir, args.check)
+        counts = generate(snapshot, template, args.output_dir, args.check, registry, friendly)
         print(json.dumps({"mode": "check" if args.check else "generated", **counts}))
         return 0
     except PreviewError as exc:

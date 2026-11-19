@@ -2,7 +2,7 @@
   "version": 1,
   "status": "source_export_only",
   "meta_connected": false,
-  "generated_at": "2026-11-19T03:30:27+00:00",
+  "generated_at": "2026-11-19T09:30:49+00:00",
   "properties": [
     {
       "id": "0886efb2-8054-48b9-97bc-332fc59132e2",
@@ -34,7 +34,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/0886efb2-8054-48b9-97bc-332fc59132e2/_pwani_v6_366b2f7e531a4938/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/0886efb2-8054-48b9-97bc-332fc59132e2/_pwani_v6_366b2f7e531a4938/10.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/0886efb2-8054-48b9-97bc-332fc59132e2/_pwani_v6_366b2f7e531a4938/11.jpeg"
-      ]
+      ],
+      "slug": "modern-studio-bamburi"
     },
     {
       "id": "10906602-d820-4563-a202-2a1afd537f7b",
@@ -66,7 +67,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/10906602-d820-4563-a202-2a1afd537f7b/_pwani_v6_001e924774014ff5/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/10906602-d820-4563-a202-2a1afd537f7b/_pwani_v6_001e924774014ff5/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/10906602-d820-4563-a202-2a1afd537f7b/_pwani_v6_001e924774014ff5/08.jpeg"
-      ]
+      ],
+      "slug": "stylish-studio-3rd-avenue-nyali"
     },
     {
       "id": "11680760-81be-408a-bfbd-d6459f170357",
@@ -101,7 +103,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/11680760-81be-408a-bfbd-d6459f170357/_pwani_v6_d3c2ddbb9d454b51/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/11680760-81be-408a-bfbd-d6459f170357/_pwani_v6_d3c2ddbb9d454b51/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/11680760-81be-408a-bfbd-d6459f170357/_pwani_v6_d3c2ddbb9d454b51/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-2br-aqua-gardens-nyali"
     },
     {
       "id": "12fa8a19-c8cc-4bb5-bb73-55a2ddb8f22f",
@@ -133,7 +136,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/12fa8a19-c8cc-4bb5-bb73-55a2ddb8f22f/_pwani_v6_c030ca6469b24266/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/12fa8a19-c8cc-4bb5-bb73-55a2ddb8f22f/_pwani_v6_c030ca6469b24266/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/12fa8a19-c8cc-4bb5-bb73-55a2ddb8f22f/_pwani_v6_c030ca6469b24266/10.jpeg"
-      ]
+      ],
+      "slug": "modern-2br-bamburi"
     },
     {
       "id": "1487ffbf-71ae-4b36-ae3f-5d91bd9acd8e",
@@ -172,7 +176,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1487ffbf-71ae-4b36-ae3f-5d91bd9acd8e/_pwani_v6_479b24a14643461d/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1487ffbf-71ae-4b36-ae3f-5d91bd9acd8e/_pwani_v6_479b24a14643461d/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1487ffbf-71ae-4b36-ae3f-5d91bd9acd8e/_pwani_v6_479b24a14643461d/10.jpeg"
-      ]
+      ],
+      "slug": "spacious-pavilion-3br-nyali"
     },
     {
       "id": "15525bad-87ad-4fe7-9691-a71690480c6d",
@@ -209,7 +214,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/15525bad-87ad-4fe7-9691-a71690480c6d/_pwani_v6_9b2fb0c65d25466f/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/15525bad-87ad-4fe7-9691-a71690480c6d/_pwani_v6_9b2fb0c65d25466f/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/15525bad-87ad-4fe7-9691-a71690480c6d/_pwani_v6_9b2fb0c65d25466f/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-shanzu"
     },
     {
       "id": "17b44b3e-ca29-4c46-ae03-76e30d078ae8",
@@ -242,7 +248,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/17b44b3e-ca29-4c46-ae03-76e30d078ae8/_pwani_v6_75f797e7007f4465/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/17b44b3e-ca29-4c46-ae03-76e30d078ae8/_pwani_v6_75f797e7007f4465/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/17b44b3e-ca29-4c46-ae03-76e30d078ae8/_pwani_v6_75f797e7007f4465/09.jpeg"
-      ]
+      ],
+      "slug": "charming-studio-bamburi"
     },
     {
       "id": "17c9b604-09ea-487e-8961-dcab0982151e",
@@ -276,7 +283,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/17c9b604-09ea-487e-8961-dcab0982151e/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/17c9b604-09ea-487e-8961-dcab0982151e/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/17c9b604-09ea-487e-8961-dcab0982151e/10.jpeg"
-      ]
+      ],
+      "slug": "comfortable-2br-stay-diani"
     },
     {
       "id": "1863f60b-9d1b-40d6-af7a-3a3f9a665d48",
@@ -315,7 +323,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1863f60b-9d1b-40d6-af7a-3a3f9a665d48/_pwani_v6_a25783408a7646cb/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1863f60b-9d1b-40d6-af7a-3a3f9a665d48/_pwani_v6_a25783408a7646cb/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1863f60b-9d1b-40d6-af7a-3a3f9a665d48/_pwani_v6_a25783408a7646cb/10.jpeg"
-      ]
+      ],
+      "slug": "luxury-beachfront-1br-nyali"
     },
     {
       "id": "1ac511b6-b301-4ea3-9e03-e8c647d24298",
@@ -349,7 +358,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1ac511b6-b301-4ea3-9e03-e8c647d24298/_pwani_v6_639bcba8e4124687/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1ac511b6-b301-4ea3-9e03-e8c647d24298/_pwani_v6_639bcba8e4124687/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1ac511b6-b301-4ea3-9e03-e8c647d24298/_pwani_v6_639bcba8e4124687/08.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-bamburi"
     },
     {
       "id": "1b268d2a-0496-4621-8a9e-39c69620e953",
@@ -383,7 +393,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1b268d2a-0496-4621-8a9e-39c69620e953/_pwani_v6_f21f26d9f5ce4499/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1b268d2a-0496-4621-8a9e-39c69620e953/_pwani_v6_f21f26d9f5ce4499/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1b268d2a-0496-4621-8a9e-39c69620e953/_pwani_v6_f21f26d9f5ce4499/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-sunrise-2br-nyali"
     },
     {
       "id": "1bf2a1ff-c055-4d99-9126-90dff01e2204",
@@ -414,7 +425,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1bf2a1ff-c055-4d99-9126-90dff01e2204/_pwani_v6_6f9fc4f7800b43d8/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1bf2a1ff-c055-4d99-9126-90dff01e2204/_pwani_v6_6f9fc4f7800b43d8/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1bf2a1ff-c055-4d99-9126-90dff01e2204/_pwani_v6_6f9fc4f7800b43d8/08.jpeg"
-      ]
+      ],
+      "slug": "spacious-near-studio-kilifi"
     },
     {
       "id": "1cb21d28-4685-4414-a2b5-3dd5ae0c65fe",
@@ -448,7 +460,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1cb21d28-4685-4414-a2b5-3dd5ae0c65fe/_pwani_v6_e72d4201bd1140dc/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1cb21d28-4685-4414-a2b5-3dd5ae0c65fe/_pwani_v6_e72d4201bd1140dc/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1cb21d28-4685-4414-a2b5-3dd5ae0c65fe/_pwani_v6_e72d4201bd1140dc/10.jpeg"
-      ]
+      ],
+      "slug": "modern-coastal-studio-bamburi"
     },
     {
       "id": "1f409d43-7529-49c7-a3ca-3b207c0c4807",
@@ -479,7 +492,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1f409d43-7529-49c7-a3ca-3b207c0c4807/_pwani_v6_53dcae12054945c6/03.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1f409d43-7529-49c7-a3ca-3b207c0c4807/_pwani_v6_53dcae12054945c6/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1f409d43-7529-49c7-a3ca-3b207c0c4807/_pwani_v6_53dcae12054945c6/05.jpeg"
-      ]
+      ],
+      "slug": "modern-studio-3rd-avenue-nyali"
     },
     {
       "id": "1fc1be10-6383-4da1-9f4f-d5fdfff68954",
@@ -511,7 +525,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1fc1be10-6383-4da1-9f4f-d5fdfff68954/_pwani_v6_b57ad09bacdf468d/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1fc1be10-6383-4da1-9f4f-d5fdfff68954/_pwani_v6_b57ad09bacdf468d/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/1fc1be10-6383-4da1-9f4f-d5fdfff68954/_pwani_v6_b57ad09bacdf468d/10.jpeg"
-      ]
+      ],
+      "slug": "luxury-villa-with-studio-diani"
     },
     {
       "id": "233f5f0b-5a10-4a35-a0da-9d88e1c6cbaf",
@@ -546,7 +561,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/233f5f0b-5a10-4a35-a0da-9d88e1c6cbaf/_pwani_v6_44206b01fd424443/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/233f5f0b-5a10-4a35-a0da-9d88e1c6cbaf/_pwani_v6_44206b01fd424443/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/233f5f0b-5a10-4a35-a0da-9d88e1c6cbaf/_pwani_v6_44206b01fd424443/09.jpeg"
-      ]
+      ],
+      "slug": "elegant-coastal-3br-nyali"
     },
     {
       "id": "23a034b5-5ddc-40af-aa6e-ca6170dae079",
@@ -578,7 +594,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/23a034b5-5ddc-40af-aa6e-ca6170dae079/_pwani_v6_46a3ddc9b4f044fc/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/23a034b5-5ddc-40af-aa6e-ca6170dae079/_pwani_v6_46a3ddc9b4f044fc/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/23a034b5-5ddc-40af-aa6e-ca6170dae079/_pwani_v6_46a3ddc9b4f044fc/06.jpeg"
-      ]
+      ],
+      "slug": "beachfront-studio-diani"
     },
     {
       "id": "23fed633-7ef4-4e24-847c-59e178eec1b4",
@@ -609,7 +626,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/23fed633-7ef4-4e24-847c-59e178eec1b4/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/23fed633-7ef4-4e24-847c-59e178eec1b4/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/23fed633-7ef4-4e24-847c-59e178eec1b4/07.jpeg"
-      ]
+      ],
+      "slug": "comfortable-1br-bamburi"
     },
     {
       "id": "2ab7b255-e0bc-4de6-a28b-245cfc26a667",
@@ -645,7 +663,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2ab7b255-e0bc-4de6-a28b-245cfc26a667/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2ab7b255-e0bc-4de6-a28b-245cfc26a667/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2ab7b255-e0bc-4de6-a28b-245cfc26a667/08.jpeg"
-      ]
+      ],
+      "slug": "premium-1br-oceanview-shanzu"
     },
     {
       "id": "2bd155cb-7339-427f-bfd4-5fdaf3c499d2",
@@ -675,7 +694,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2bd155cb-7339-427f-bfd4-5fdaf3c499d2/_pwani_v6_112112723d6c45b3/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2bd155cb-7339-427f-bfd4-5fdaf3c499d2/_pwani_v6_112112723d6c45b3/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2bd155cb-7339-427f-bfd4-5fdaf3c499d2/_pwani_v6_112112723d6c45b3/07.jpeg"
-      ]
+      ],
+      "slug": "modern-studio-nyali"
     },
     {
       "id": "2e57c491-c131-4ff5-a728-262a45704194",
@@ -710,7 +730,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2e57c491-c131-4ff5-a728-262a45704194/_pwani_v6_27dff6e8ceaa4c0c/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2e57c491-c131-4ff5-a728-262a45704194/_pwani_v6_27dff6e8ceaa4c0c/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2e57c491-c131-4ff5-a728-262a45704194/_pwani_v6_27dff6e8ceaa4c0c/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-3br-aqua-gardens-nyali"
     },
     {
       "id": "2f4578c5-e189-47dc-ad03-4a21e7c347b3",
@@ -746,7 +767,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2f4578c5-e189-47dc-ad03-4a21e7c347b3/_pwani_v6_3f2864cea4f14646/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2f4578c5-e189-47dc-ad03-4a21e7c347b3/_pwani_v6_3f2864cea4f14646/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/2f4578c5-e189-47dc-ad03-4a21e7c347b3/_pwani_v6_3f2864cea4f14646/10.jpeg"
-      ]
+      ],
+      "slug": "stylish-2br-villa-diani"
     },
     {
       "id": "331679ff-a1cd-4872-b2ae-3910944ea373",
@@ -784,7 +806,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/331679ff-a1cd-4872-b2ae-3910944ea373/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/331679ff-a1cd-4872-b2ae-3910944ea373/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/331679ff-a1cd-4872-b2ae-3910944ea373/10.jpeg"
-      ]
+      ],
+      "slug": "exclusive-penthouse-1br-shanzu"
     },
     {
       "id": "346f5f81-8597-4c18-a611-bce59abdb8af",
@@ -820,7 +843,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/346f5f81-8597-4c18-a611-bce59abdb8af/_pwani_v6_7949d478112148b1/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/346f5f81-8597-4c18-a611-bce59abdb8af/_pwani_v6_7949d478112148b1/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/346f5f81-8597-4c18-a611-bce59abdb8af/_pwani_v6_7949d478112148b1/10.jpeg"
-      ]
+      ],
+      "slug": "1-2br-beach-nyali"
     },
     {
       "id": "3603aac7-c1f3-4b49-82ad-773c599f7aab",
@@ -854,7 +878,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3603aac7-c1f3-4b49-82ad-773c599f7aab/_pwani_v6_04b06b6239ee4be7/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3603aac7-c1f3-4b49-82ad-773c599f7aab/_pwani_v6_04b06b6239ee4be7/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3603aac7-c1f3-4b49-82ad-773c599f7aab/_pwani_v6_04b06b6239ee4be7/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-3br-nyali"
     },
     {
       "id": "365b036e-20d1-484c-aed7-9f82065e06be",
@@ -893,7 +918,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/365b036e-20d1-484c-aed7-9f82065e06be/_pwani_v6_f5587ea5f184449f/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/365b036e-20d1-484c-aed7-9f82065e06be/_pwani_v6_f5587ea5f184449f/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/365b036e-20d1-484c-aed7-9f82065e06be/_pwani_v6_f5587ea5f184449f/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-1br-near-cinemax-nyali"
     },
     {
       "id": "367fb74e-a916-40da-8041-e0fd12a0fed9",
@@ -930,7 +956,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/367fb74e-a916-40da-8041-e0fd12a0fed9/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/367fb74e-a916-40da-8041-e0fd12a0fed9/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/367fb74e-a916-40da-8041-e0fd12a0fed9/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-1br-shanzu"
     },
     {
       "id": "373cc145-f2af-4c1c-938c-c03ff0a12fa1",
@@ -966,7 +993,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/373cc145-f2af-4c1c-938c-c03ff0a12fa1/_pwani_v6_2c776ed385f04a16/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/373cc145-f2af-4c1c-938c-c03ff0a12fa1/_pwani_v6_2c776ed385f04a16/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/373cc145-f2af-4c1c-938c-c03ff0a12fa1/_pwani_v6_2c776ed385f04a16/10.jpeg"
-      ]
+      ],
+      "slug": "deluxe-with-studio-mtwapa"
     },
     {
       "id": "38849db1-36ff-4b1f-9acf-686410e7a14f",
@@ -1006,7 +1034,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/38849db1-36ff-4b1f-9acf-686410e7a14f/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/38849db1-36ff-4b1f-9acf-686410e7a14f/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/38849db1-36ff-4b1f-9acf-686410e7a14f/10.jpeg"
-      ]
+      ],
+      "slug": "beachfront-escape-4br-malindi"
     },
     {
       "id": "3c2e04e4-486c-4efc-a984-37b98c3bffdd",
@@ -1039,7 +1068,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3c2e04e4-486c-4efc-a984-37b98c3bffdd/_pwani_v6_d922f2d10b654baf/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3c2e04e4-486c-4efc-a984-37b98c3bffdd/_pwani_v6_d922f2d10b654baf/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3c2e04e4-486c-4efc-a984-37b98c3bffdd/_pwani_v6_d922f2d10b654baf/09.jpeg"
-      ]
+      ],
+      "slug": "sleek-studio-bamburi"
     },
     {
       "id": "3c7648d9-a7f2-4dd8-bb84-7004950a0eeb",
@@ -1071,7 +1101,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3c7648d9-a7f2-4dd8-bb84-7004950a0eeb/_pwani_v6_c6e0bc6bca284195/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3c7648d9-a7f2-4dd8-bb84-7004950a0eeb/_pwani_v6_c6e0bc6bca284195/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3c7648d9-a7f2-4dd8-bb84-7004950a0eeb/_pwani_v6_c6e0bc6bca284195/10.jpeg"
-      ]
+      ],
+      "slug": "2br-bamburi"
     },
     {
       "id": "3cd03909-1ce9-449d-9efb-71d458a470da",
@@ -1098,7 +1129,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3cd03909-1ce9-449d-9efb-71d458a470da/_pwani_v6_3f895ca45e72411f/02.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3cd03909-1ce9-449d-9efb-71d458a470da/_pwani_v6_3f895ca45e72411f/03.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/3cd03909-1ce9-449d-9efb-71d458a470da/_pwani_v6_3f895ca45e72411f/04.jpeg"
-      ]
+      ],
+      "slug": "cozy-studio-bamburi"
     },
     {
       "id": "400c4393-7d02-4221-9358-29385986e5e8",
@@ -1135,7 +1167,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/400c4393-7d02-4221-9358-29385986e5e8/_pwani_v6_5ab6e6aea2794906/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/400c4393-7d02-4221-9358-29385986e5e8/_pwani_v6_5ab6e6aea2794906/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/400c4393-7d02-4221-9358-29385986e5e8/_pwani_v6_5ab6e6aea2794906/10.jpeg"
-      ]
+      ],
+      "slug": "stylish-1br-seaview-shanzu"
     },
     {
       "id": "415f67f4-9267-44ff-a579-a0831c12c947",
@@ -1166,7 +1199,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/415f67f4-9267-44ff-a579-a0831c12c947/_pwani_v6_030409eea7824ea8/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/415f67f4-9267-44ff-a579-a0831c12c947/_pwani_v6_030409eea7824ea8/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/415f67f4-9267-44ff-a579-a0831c12c947/_pwani_v6_030409eea7824ea8/10.jpeg"
-      ]
+      ],
+      "slug": "stylish-2br-5th-avenue-nyali"
     },
     {
       "id": "4664953e-d22b-417b-97c4-1ed1724a8a11",
@@ -1194,7 +1228,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4664953e-d22b-417b-97c4-1ed1724a8a11/03.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4664953e-d22b-417b-97c4-1ed1724a8a11/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4664953e-d22b-417b-97c4-1ed1724a8a11/05.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-stay-kilifi"
     },
     {
       "id": "48f39e49-e7b4-4b08-8a16-3ee047bb9c9c",
@@ -1229,7 +1264,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/48f39e49-e7b4-4b08-8a16-3ee047bb9c9c/_pwani_v6_60b41e5523254782/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/48f39e49-e7b4-4b08-8a16-3ee047bb9c9c/_pwani_v6_60b41e5523254782/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/48f39e49-e7b4-4b08-8a16-3ee047bb9c9c/_pwani_v6_60b41e5523254782/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-studio-diani"
     },
     {
       "id": "4b092cad-c6b0-4527-a6f6-3e73aa6c5635",
@@ -1263,7 +1299,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4b092cad-c6b0-4527-a6f6-3e73aa6c5635/_pwani_v6_3fa25feaeec1423e/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4b092cad-c6b0-4527-a6f6-3e73aa6c5635/_pwani_v6_3fa25feaeec1423e/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4b092cad-c6b0-4527-a6f6-3e73aa6c5635/_pwani_v6_3fa25feaeec1423e/10.jpeg"
-      ]
+      ],
+      "slug": "studio-bamburi"
     },
     {
       "id": "4daa0199-13fe-4843-92a3-55000ed88973",
@@ -1293,7 +1330,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4daa0199-13fe-4843-92a3-55000ed88973/_pwani_v6_25261a1ef1424646/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4daa0199-13fe-4843-92a3-55000ed88973/_pwani_v6_25261a1ef1424646/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/4daa0199-13fe-4843-92a3-55000ed88973/_pwani_v6_25261a1ef1424646/06.jpeg"
-      ]
+      ],
+      "slug": "cozy-affordable-studio-bamburi"
     },
     {
       "id": "52981154-8bfd-43c7-8aad-5a2ad336adf2",
@@ -1330,7 +1368,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/52981154-8bfd-43c7-8aad-5a2ad336adf2/_pwani_v6_90dd71ca04d148c5/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/52981154-8bfd-43c7-8aad-5a2ad336adf2/_pwani_v6_90dd71ca04d148c5/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/52981154-8bfd-43c7-8aad-5a2ad336adf2/_pwani_v6_90dd71ca04d148c5/10.jpeg"
-      ]
+      ],
+      "slug": "2br-mtwapa"
     },
     {
       "id": "5630fda7-aaba-4672-81c4-4178d7d12b5c",
@@ -1372,7 +1411,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5630fda7-aaba-4672-81c4-4178d7d12b5c/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-spacious-studio-nyali"
     },
     {
       "id": "572b8b9f-96d5-4d90-bdae-f259426f9d67",
@@ -1411,7 +1451,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/572b8b9f-96d5-4d90-bdae-f259426f9d67/_pwani_v6_65193eb078fa4938/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/572b8b9f-96d5-4d90-bdae-f259426f9d67/_pwani_v6_65193eb078fa4938/10.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/572b8b9f-96d5-4d90-bdae-f259426f9d67/_pwani_v6_65193eb078fa4938/11.jpeg"
-      ]
+      ],
+      "slug": "exquisite-2br-kikambala"
     },
     {
       "id": "5ad4f6c9-d936-41e6-8261-ab0ba7188899",
@@ -1445,7 +1486,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5ad4f6c9-d936-41e6-8261-ab0ba7188899/_pwani_v6_ce979d2d75e944d3/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5ad4f6c9-d936-41e6-8261-ab0ba7188899/_pwani_v6_ce979d2d75e944d3/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5ad4f6c9-d936-41e6-8261-ab0ba7188899/_pwani_v6_ce979d2d75e944d3/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-budget-studio-bamburi"
     },
     {
       "id": "5adf272a-9b57-42a0-a468-b66797249d46",
@@ -1482,7 +1524,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5adf272a-9b57-42a0-a468-b66797249d46/_pwani_v6_1a5fc486bc844a74/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5adf272a-9b57-42a0-a468-b66797249d46/_pwani_v6_1a5fc486bc844a74/05%20-%20Copy.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5adf272a-9b57-42a0-a468-b66797249d46/_pwani_v6_1a5fc486bc844a74/05.jpeg"
-      ]
+      ],
+      "slug": "elegant-2br-villa-diani"
     },
     {
       "id": "5b2cf7a7-dc9a-4c1c-960a-78f5a829348a",
@@ -1517,7 +1560,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5b2cf7a7-dc9a-4c1c-960a-78f5a829348a/_pwani_v6_49938d5c47b34db6/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5b2cf7a7-dc9a-4c1c-960a-78f5a829348a/_pwani_v6_49938d5c47b34db6/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5b2cf7a7-dc9a-4c1c-960a-78f5a829348a/_pwani_v6_49938d5c47b34db6/09.jpeg"
-      ]
+      ],
+      "slug": "modern-1br-beachside-stay-shanzu"
     },
     {
       "id": "5bea5386-dab0-452e-bead-466072c4ed2b",
@@ -1555,7 +1599,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5bea5386-dab0-452e-bead-466072c4ed2b/_pwani_v6_85c5e17560d64911/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5bea5386-dab0-452e-bead-466072c4ed2b/_pwani_v6_85c5e17560d64911/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5bea5386-dab0-452e-bead-466072c4ed2b/_pwani_v6_85c5e17560d64911/10.jpeg"
-      ]
+      ],
+      "slug": "comfortable-pavilion-3br-nyali"
     },
     {
       "id": "5c5a686a-db42-4096-866c-065ccb5712ec",
@@ -1587,7 +1632,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5c5a686a-db42-4096-866c-065ccb5712ec/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5c5a686a-db42-4096-866c-065ccb5712ec/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/5c5a686a-db42-4096-866c-065ccb5712ec/09.jpeg"
-      ]
+      ],
+      "slug": "cozy-stay-studio-kilifi"
     },
     {
       "id": "62bb6f1e-07eb-4e8b-8d63-e6ce1d2ba1d8",
@@ -1622,7 +1668,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/62bb6f1e-07eb-4e8b-8d63-e6ce1d2ba1d8/_pwani_v6_34e6f3be89ad420f/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/62bb6f1e-07eb-4e8b-8d63-e6ce1d2ba1d8/_pwani_v6_34e6f3be89ad420f/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/62bb6f1e-07eb-4e8b-8d63-e6ce1d2ba1d8/_pwani_v6_34e6f3be89ad420f/10.jpeg"
-      ]
+      ],
+      "slug": "spacious-2br-nyali"
     },
     {
       "id": "62ef712a-6823-471a-b5de-1a8490bb4729",
@@ -1658,7 +1705,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/62ef712a-6823-471a-b5de-1a8490bb4729/_pwani_v6_078c402055e94bb5/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/62ef712a-6823-471a-b5de-1a8490bb4729/_pwani_v6_078c402055e94bb5/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/62ef712a-6823-471a-b5de-1a8490bb4729/_pwani_v6_078c402055e94bb5/10.jpeg"
-      ]
+      ],
+      "slug": "spacious-villa-near-5br-nyali"
     },
     {
       "id": "633009f8-f63c-4ffc-adfd-83446c0e3f8e",
@@ -1694,7 +1742,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/633009f8-f63c-4ffc-adfd-83446c0e3f8e/_pwani_v6_9856b9b38b7847fb/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/633009f8-f63c-4ffc-adfd-83446c0e3f8e/_pwani_v6_9856b9b38b7847fb/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/633009f8-f63c-4ffc-adfd-83446c0e3f8e/_pwani_v6_9856b9b38b7847fb/10.jpeg"
-      ]
+      ],
+      "slug": "modern-3br-nyali"
     },
     {
       "id": "679ab65b-e813-4752-8c43-225c553b2c42",
@@ -1725,7 +1774,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/679ab65b-e813-4752-8c43-225c553b2c42/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/679ab65b-e813-4752-8c43-225c553b2c42/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/679ab65b-e813-4752-8c43-225c553b2c42/08.jpeg"
-      ]
+      ],
+      "slug": "comfortable-stay-1br-kilifi"
     },
     {
       "id": "68bb46c2-db0c-4b60-8740-771b9c1da27b",
@@ -1765,7 +1815,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/68bb46c2-db0c-4b60-8740-771b9c1da27b/_pwani_v6_72b1de8694b64993/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/68bb46c2-db0c-4b60-8740-771b9c1da27b/_pwani_v6_72b1de8694b64993/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/68bb46c2-db0c-4b60-8740-771b9c1da27b/_pwani_v6_72b1de8694b64993/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-beachfront-3br-nyali"
     },
     {
       "id": "68ff94ba-1c7c-403f-b79c-13a537907d1e",
@@ -1795,7 +1846,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/68ff94ba-1c7c-403f-b79c-13a537907d1e/_pwani_v6_40fc330c986b4a93/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/68ff94ba-1c7c-403f-b79c-13a537907d1e/_pwani_v6_40fc330c986b4a93/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/68ff94ba-1c7c-403f-b79c-13a537907d1e/_pwani_v6_40fc330c986b4a93/06.jpeg"
-      ]
+      ],
+      "slug": "cozy-in-prime-studio-nyali"
     },
     {
       "id": "6a68bf32-3eab-49a4-9497-edd7dccf7c29",
@@ -1837,7 +1889,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6a68bf32-3eab-49a4-9497-edd7dccf7c29/_pwani_v6_b4f8528830364dd8/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6a68bf32-3eab-49a4-9497-edd7dccf7c29/_pwani_v6_b4f8528830364dd8/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6a68bf32-3eab-49a4-9497-edd7dccf7c29/_pwani_v6_b4f8528830364dd8/10.jpeg"
-      ]
+      ],
+      "slug": "deluxe-coral-studio-nyali"
     },
     {
       "id": "6c343e54-89e5-425b-8398-4c02cab7f4b6",
@@ -1870,7 +1923,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6c343e54-89e5-425b-8398-4c02cab7f4b6/03.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6c343e54-89e5-425b-8398-4c02cab7f4b6/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6c343e54-89e5-425b-8398-4c02cab7f4b6/05.jpeg"
-      ]
+      ],
+      "slug": "luxury-seaview-1br-shanzu"
     },
     {
       "id": "6ce23148-46c4-4d6c-9dce-7bbf4a5b8bbf",
@@ -1907,7 +1961,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6ce23148-46c4-4d6c-9dce-7bbf4a5b8bbf/_pwani_v6_e3b5e944547e4a02/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6ce23148-46c4-4d6c-9dce-7bbf4a5b8bbf/_pwani_v6_e3b5e944547e4a02/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6ce23148-46c4-4d6c-9dce-7bbf4a5b8bbf/_pwani_v6_e3b5e944547e4a02/10.jpeg"
-      ]
+      ],
+      "slug": "serene-retreat-1br-diani"
     },
     {
       "id": "6ef14fda-5157-4ad7-aac1-5bd95b022754",
@@ -1937,7 +1992,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6ef14fda-5157-4ad7-aac1-5bd95b022754/_pwani_v6_9038d542b600426e/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6ef14fda-5157-4ad7-aac1-5bd95b022754/_pwani_v6_9038d542b600426e/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6ef14fda-5157-4ad7-aac1-5bd95b022754/_pwani_v6_9038d542b600426e/07.jpeg"
-      ]
+      ],
+      "slug": "modern-studio-bamburi-6ef14f"
     },
     {
       "id": "6fbfcbfe-fa5e-4ca4-97ba-1ce20e342dc4",
@@ -1965,7 +2021,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6fbfcbfe-fa5e-4ca4-97ba-1ce20e342dc4/WhatsApp%20Image%202026-08-09%20at%2022.10.31%20%282%29.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6fbfcbfe-fa5e-4ca4-97ba-1ce20e342dc4/WhatsApp%20Image%202026-08-09%20at%2022.10.31.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/6fbfcbfe-fa5e-4ca4-97ba-1ce20e342dc4/WhatsApp%20Image%202026-08-09%20at%2022.10.32.jpeg"
-      ]
+      ],
+      "slug": "charming-1br-bamburi"
     },
     {
       "id": "711cc2b2-ed9d-4286-82cd-a28381ccd8b9",
@@ -1998,7 +2055,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/711cc2b2-ed9d-4286-82cd-a28381ccd8b9/_pwani_v6_618b0e82829844ac/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/711cc2b2-ed9d-4286-82cd-a28381ccd8b9/_pwani_v6_618b0e82829844ac/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/711cc2b2-ed9d-4286-82cd-a28381ccd8b9/_pwani_v6_618b0e82829844ac/10.jpeg"
-      ]
+      ],
+      "slug": "modern-3br-nyali-711cc2"
     },
     {
       "id": "7b7fdb6e-7060-4b89-90fb-b89e241258cb",
@@ -2034,7 +2092,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7b7fdb6e-7060-4b89-90fb-b89e241258cb/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7b7fdb6e-7060-4b89-90fb-b89e241258cb/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7b7fdb6e-7060-4b89-90fb-b89e241258cb/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-retreat-2br-diani"
     },
     {
       "id": "7c7974ce-1952-4af0-beb9-867395a5d920",
@@ -2068,7 +2127,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7c7974ce-1952-4af0-beb9-867395a5d920/_pwani_v6_2d9c74d6c86f4659/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7c7974ce-1952-4af0-beb9-867395a5d920/_pwani_v6_2d9c74d6c86f4659/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7c7974ce-1952-4af0-beb9-867395a5d920/_pwani_v6_2d9c74d6c86f4659/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-seaview-1br-nyali"
     },
     {
       "id": "7e89546b-3be8-483f-b373-968c881f4481",
@@ -2104,7 +2164,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7e89546b-3be8-483f-b373-968c881f4481/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7e89546b-3be8-483f-b373-968c881f4481/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/7e89546b-3be8-483f-b373-968c881f4481/10.jpeg"
-      ]
+      ],
+      "slug": "1br-beachfront-escape-diani"
     },
     {
       "id": "8248a64c-7312-494a-be08-285cc8a2c90b",
@@ -2142,7 +2203,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8248a64c-7312-494a-be08-285cc8a2c90b/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8248a64c-7312-494a-be08-285cc8a2c90b/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8248a64c-7312-494a-be08-285cc8a2c90b/10.jpeg"
-      ]
+      ],
+      "slug": "beachfront-with-studio-nyali"
     },
     {
       "id": "85033b1b-0a39-4678-86ec-81f8b2d11e2a",
@@ -2177,7 +2239,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/85033b1b-0a39-4678-86ec-81f8b2d11e2a/_pwani_v6_bcfbb8b8652349ef/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/85033b1b-0a39-4678-86ec-81f8b2d11e2a/_pwani_v6_bcfbb8b8652349ef/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/85033b1b-0a39-4678-86ec-81f8b2d11e2a/_pwani_v6_bcfbb8b8652349ef/10.jpeg"
-      ]
+      ],
+      "slug": "spacious-3br-nyali"
     },
     {
       "id": "88d50233-7713-4726-9d7e-cf442c743fec",
@@ -2211,7 +2274,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/88d50233-7713-4726-9d7e-cf442c743fec/_pwani_v6_09d9833e0e80480e/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/88d50233-7713-4726-9d7e-cf442c743fec/_pwani_v6_09d9833e0e80480e/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/88d50233-7713-4726-9d7e-cf442c743fec/_pwani_v6_09d9833e0e80480e/08.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-coastal-escape-shanzu"
     },
     {
       "id": "8b09dd39-6465-46a4-9e9c-1215a2ab8089",
@@ -2243,7 +2307,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8b09dd39-6465-46a4-9e9c-1215a2ab8089/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8b09dd39-6465-46a4-9e9c-1215a2ab8089/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8b09dd39-6465-46a4-9e9c-1215a2ab8089/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-studio-nyali"
     },
     {
       "id": "8d6a59c9-177c-4f04-948c-5cf0ec86d35c",
@@ -2275,7 +2340,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8d6a59c9-177c-4f04-948c-5cf0ec86d35c/_pwani_v6_70140e238bf244ec/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8d6a59c9-177c-4f04-948c-5cf0ec86d35c/_pwani_v6_70140e238bf244ec/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8d6a59c9-177c-4f04-948c-5cf0ec86d35c/_pwani_v6_70140e238bf244ec/08.jpeg"
-      ]
+      ],
+      "slug": "1br-diani"
     },
     {
       "id": "8df15d77-6c5f-4339-abc9-42769ac38ef1",
@@ -2310,7 +2376,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8df15d77-6c5f-4339-abc9-42769ac38ef1/_pwani_v6_69f8e427ea6446ac/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8df15d77-6c5f-4339-abc9-42769ac38ef1/_pwani_v6_69f8e427ea6446ac/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8df15d77-6c5f-4339-abc9-42769ac38ef1/_pwani_v6_69f8e427ea6446ac/08.jpeg"
-      ]
+      ],
+      "slug": "luxurious-1br-bamburi"
     },
     {
       "id": "8f096777-3e0e-4bb9-b660-15b6c3a7b78d",
@@ -2344,7 +2411,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8f096777-3e0e-4bb9-b660-15b6c3a7b78d/_pwani_v6_6f7c80f50d094432/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8f096777-3e0e-4bb9-b660-15b6c3a7b78d/_pwani_v6_6f7c80f50d094432/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/8f096777-3e0e-4bb9-b660-15b6c3a7b78d/_pwani_v6_6f7c80f50d094432/10.jpeg"
-      ]
+      ],
+      "slug": "3br-nyali"
     },
     {
       "id": "905465fe-d39d-490b-b83f-56c39b8cbcf2",
@@ -2376,7 +2444,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/905465fe-d39d-490b-b83f-56c39b8cbcf2/_pwani_v6_b8bb4eae89b545d6/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/905465fe-d39d-490b-b83f-56c39b8cbcf2/_pwani_v6_b8bb4eae89b545d6/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/905465fe-d39d-490b-b83f-56c39b8cbcf2/_pwani_v6_b8bb4eae89b545d6/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-penthouse-5br-nyali"
     },
     {
       "id": "91a84606-1628-42bc-b298-7bcd277426be",
@@ -2414,7 +2483,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/91a84606-1628-42bc-b298-7bcd277426be/_pwani_v6_d44fd3dccfd3493b/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/91a84606-1628-42bc-b298-7bcd277426be/_pwani_v6_d44fd3dccfd3493b/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/91a84606-1628-42bc-b298-7bcd277426be/_pwani_v6_d44fd3dccfd3493b/10.jpeg"
-      ]
+      ],
+      "slug": "spacious-2-3br-coastal-nyali"
     },
     {
       "id": "91c3f694-d035-4de2-978b-5ba8f67746cc",
@@ -2444,7 +2514,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/91c3f694-d035-4de2-978b-5ba8f67746cc/_pwani_v6_c58828327706450d/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/91c3f694-d035-4de2-978b-5ba8f67746cc/_pwani_v6_c58828327706450d/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/91c3f694-d035-4de2-978b-5ba8f67746cc/_pwani_v6_c58828327706450d/06.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-ganjoni-mombasa"
     },
     {
       "id": "92bf9c6a-d85e-4d8f-9e85-34753b5bd938",
@@ -2479,7 +2550,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/92bf9c6a-d85e-4d8f-9e85-34753b5bd938/_pwani_v6_205fe0162d8d4299/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/92bf9c6a-d85e-4d8f-9e85-34753b5bd938/_pwani_v6_205fe0162d8d4299/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/92bf9c6a-d85e-4d8f-9e85-34753b5bd938/_pwani_v6_205fe0162d8d4299/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-beachfront-studio-malindi"
     },
     {
       "id": "954e26ab-338d-429a-bb47-7b83cfa4e34a",
@@ -2516,7 +2588,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/954e26ab-338d-429a-bb47-7b83cfa4e34a/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/954e26ab-338d-429a-bb47-7b83cfa4e34a/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/954e26ab-338d-429a-bb47-7b83cfa4e34a/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-3br-penthouse-diani"
     },
     {
       "id": "97df9020-094d-43eb-924e-38ceb2aa6c73",
@@ -2550,7 +2623,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/97df9020-094d-43eb-924e-38ceb2aa6c73/_pwani_v6_2837f7a341d04b70/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/97df9020-094d-43eb-924e-38ceb2aa6c73/_pwani_v6_2837f7a341d04b70/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/97df9020-094d-43eb-924e-38ceb2aa6c73/_pwani_v6_2837f7a341d04b70/09.jpeg"
-      ]
+      ],
+      "slug": "modern-2br-nyali"
     },
     {
       "id": "980dfde8-d1a3-4e27-894f-b6fe396a866b",
@@ -2583,7 +2657,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/980dfde8-d1a3-4e27-894f-b6fe396a866b/_pwani_v6_0d051b2835e64235/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/980dfde8-d1a3-4e27-894f-b6fe396a866b/_pwani_v6_0d051b2835e64235/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/980dfde8-d1a3-4e27-894f-b6fe396a866b/_pwani_v6_0d051b2835e64235/10.jpeg"
-      ]
+      ],
+      "slug": "modern-2br-3rd-avenue-nyali"
     },
     {
       "id": "9b6f8ca4-2b6f-4f87-a8d7-6706aca1d409",
@@ -2619,7 +2694,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9b6f8ca4-2b6f-4f87-a8d7-6706aca1d409/_pwani_v6_d0c53ddafe3042d0/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9b6f8ca4-2b6f-4f87-a8d7-6706aca1d409/_pwani_v6_d0c53ddafe3042d0/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9b6f8ca4-2b6f-4f87-a8d7-6706aca1d409/_pwani_v6_d0c53ddafe3042d0/10.jpeg"
-      ]
+      ],
+      "slug": "luxury-private-4br-vipingo"
     },
     {
       "id": "9c27a981-8cb4-4167-85e8-ed15181fed87",
@@ -2651,7 +2727,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9c27a981-8cb4-4167-85e8-ed15181fed87/_pwani_v6_c9d9c99f9ecf4780/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9c27a981-8cb4-4167-85e8-ed15181fed87/_pwani_v6_c9d9c99f9ecf4780/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9c27a981-8cb4-4167-85e8-ed15181fed87/_pwani_v6_c9d9c99f9ecf4780/10.jpeg"
-      ]
+      ],
+      "slug": "modern-1br-nyali"
     },
     {
       "id": "9c6ce896-bb44-4ad3-bd04-7830860e1c24",
@@ -2673,7 +2750,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9c6ce896-bb44-4ad3-bd04-7830860e1c24/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9c6ce896-bb44-4ad3-bd04-7830860e1c24/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9c6ce896-bb44-4ad3-bd04-7830860e1c24/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-3br-nyali-9c6ce8"
     },
     {
       "id": "9cd74743-98f0-4304-b496-5f0fc132e4da",
@@ -2707,7 +2785,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9cd74743-98f0-4304-b496-5f0fc132e4da/_pwani_v6_f7d42182a02841fc/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9cd74743-98f0-4304-b496-5f0fc132e4da/_pwani_v6_f7d42182a02841fc/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9cd74743-98f0-4304-b496-5f0fc132e4da/_pwani_v6_f7d42182a02841fc/10.jpeg"
-      ]
+      ],
+      "slug": "luxury-3br-aqua-gardens-nyali"
     },
     {
       "id": "9d633c63-6a0b-493f-ac7b-5093d929c5f3",
@@ -2745,7 +2824,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9d633c63-6a0b-493f-ac7b-5093d929c5f3/_pwani_v6_90be16c8922249b9/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9d633c63-6a0b-493f-ac7b-5093d929c5f3/_pwani_v6_90be16c8922249b9/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9d633c63-6a0b-493f-ac7b-5093d929c5f3/_pwani_v6_90be16c8922249b9/10.jpeg"
-      ]
+      ],
+      "slug": "modern-3br-3rd-avenue-nyali"
     },
     {
       "id": "9fbea57e-1fc4-4708-b513-fa1d5edd1a06",
@@ -2781,7 +2861,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9fbea57e-1fc4-4708-b513-fa1d5edd1a06/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9fbea57e-1fc4-4708-b513-fa1d5edd1a06/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/9fbea57e-1fc4-4708-b513-fa1d5edd1a06/10.jpeg"
-      ]
+      ],
+      "slug": "spacious-coastal-2br-diani"
     },
     {
       "id": "a0fb0297-2533-4f66-a65e-8ef8172d510e",
@@ -2819,7 +2900,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a0fb0297-2533-4f66-a65e-8ef8172d510e/_pwani_v6_9849f26c29364e20/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a0fb0297-2533-4f66-a65e-8ef8172d510e/_pwani_v6_9849f26c29364e20/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a0fb0297-2533-4f66-a65e-8ef8172d510e/_pwani_v6_9849f26c29364e20/10.jpeg"
-      ]
+      ],
+      "slug": "modern-beachfront-3br-nyali"
     },
     {
       "id": "a199ec11-fd3b-40a0-9302-18f657f6802a",
@@ -2852,7 +2934,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a199ec11-fd3b-40a0-9302-18f657f6802a/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a199ec11-fd3b-40a0-9302-18f657f6802a/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a199ec11-fd3b-40a0-9302-18f657f6802a/07.jpeg"
-      ]
+      ],
+      "slug": "cozy-escape-near-2br-malindi"
     },
     {
       "id": "a1bbd1a4-4dee-46f7-a894-7b8c8aee1bc0",
@@ -2887,7 +2970,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a1bbd1a4-4dee-46f7-a894-7b8c8aee1bc0/_pwani_v6_6af423e489054207/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a1bbd1a4-4dee-46f7-a894-7b8c8aee1bc0/_pwani_v6_6af423e489054207/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a1bbd1a4-4dee-46f7-a894-7b8c8aee1bc0/_pwani_v6_6af423e489054207/10.jpeg"
-      ]
+      ],
+      "slug": "the-coastal-studio-mtwapa"
     },
     {
       "id": "a581a875-c7bf-4a2c-8f78-612ffcc574a0",
@@ -2923,7 +3007,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a581a875-c7bf-4a2c-8f78-612ffcc574a0/_pwani_v6_039599d9b37449de/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a581a875-c7bf-4a2c-8f78-612ffcc574a0/_pwani_v6_039599d9b37449de/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a581a875-c7bf-4a2c-8f78-612ffcc574a0/_pwani_v6_039599d9b37449de/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-3br-villa-watamu"
     },
     {
       "id": "a6166303-218f-412a-a398-f58c2fc82eee",
@@ -2952,7 +3037,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a6166303-218f-412a-a398-f58c2fc82eee/_pwani_v6_37a1a4f4c4b94ce8/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a6166303-218f-412a-a398-f58c2fc82eee/_pwani_v6_37a1a4f4c4b94ce8/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a6166303-218f-412a-a398-f58c2fc82eee/_pwani_v6_37a1a4f4c4b94ce8/06.jpeg"
-      ]
+      ],
+      "slug": "cozy-studio-nyali-a61663"
     },
     {
       "id": "a7640c87-bc28-4e77-9984-8ba0a6a2e5e6",
@@ -2986,7 +3072,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a7640c87-bc28-4e77-9984-8ba0a6a2e5e6/_pwani_v6_e9004b8e578f4c42/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a7640c87-bc28-4e77-9984-8ba0a6a2e5e6/_pwani_v6_e9004b8e578f4c42/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a7640c87-bc28-4e77-9984-8ba0a6a2e5e6/_pwani_v6_e9004b8e578f4c42/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-mwembe-studio-mombasa"
     },
     {
       "id": "a8f50c5d-95f7-42cc-8552-240947bd8a29",
@@ -3020,7 +3107,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a8f50c5d-95f7-42cc-8552-240947bd8a29/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a8f50c5d-95f7-42cc-8552-240947bd8a29/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a8f50c5d-95f7-42cc-8552-240947bd8a29/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-coastal-stay-bamburi"
     },
     {
       "id": "a931a48c-eaf5-4856-83e8-c45feedd8f21",
@@ -3053,7 +3141,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a931a48c-eaf5-4856-83e8-c45feedd8f21/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a931a48c-eaf5-4856-83e8-c45feedd8f21/10.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/a931a48c-eaf5-4856-83e8-c45feedd8f21/11.jpeg"
-      ]
+      ],
+      "slug": "elegant-private-4br-malindi"
     },
     {
       "id": "ab59444c-fa56-4548-85f1-f8faf7c293cc",
@@ -3095,7 +3184,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ab59444c-fa56-4548-85f1-f8faf7c293cc/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ab59444c-fa56-4548-85f1-f8faf7c293cc/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ab59444c-fa56-4548-85f1-f8faf7c293cc/10.jpeg"
-      ]
+      ],
+      "slug": "exquisite-2br-nyali"
     },
     {
       "id": "abe663af-b427-4163-aa93-5eb8c0e6d3a3",
@@ -3124,7 +3214,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/abe663af-b427-4163-aa93-5eb8c0e6d3a3/_pwani_v6_d9494a14de794ef3/03.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/abe663af-b427-4163-aa93-5eb8c0e6d3a3/_pwani_v6_d9494a14de794ef3/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/abe663af-b427-4163-aa93-5eb8c0e6d3a3/_pwani_v6_d9494a14de794ef3/05.jpeg"
-      ]
+      ],
+      "slug": "elegant-getaway-studio-mtwapa"
     },
     {
       "id": "ad664ed4-6fa6-4ca1-a63d-684034591d48",
@@ -3157,7 +3248,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ad664ed4-6fa6-4ca1-a63d-684034591d48/_pwani_v6_b397dd4399ec4b7f/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ad664ed4-6fa6-4ca1-a63d-684034591d48/_pwani_v6_b397dd4399ec4b7f/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ad664ed4-6fa6-4ca1-a63d-684034591d48/_pwani_v6_b397dd4399ec4b7f/10.jpeg"
-      ]
+      ],
+      "slug": "1br-3rd-avenue-nyali"
     },
     {
       "id": "ae8d0460-f3be-4af0-9540-b30979da3577",
@@ -3192,7 +3284,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ae8d0460-f3be-4af0-9540-b30979da3577/_pwani_v6_1f726e67ed1643d5/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ae8d0460-f3be-4af0-9540-b30979da3577/_pwani_v6_1f726e67ed1643d5/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ae8d0460-f3be-4af0-9540-b30979da3577/_pwani_v6_1f726e67ed1643d5/10.jpeg"
-      ]
+      ],
+      "slug": "3br-aqua-gardens-nyali"
     },
     {
       "id": "b02d3bb4-a37b-49ab-b971-ce1eacc5593a",
@@ -3227,7 +3320,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b02d3bb4-a37b-49ab-b971-ce1eacc5593a/_pwani_v6_8df3816a4bb24d36/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b02d3bb4-a37b-49ab-b971-ce1eacc5593a/_pwani_v6_8df3816a4bb24d36/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b02d3bb4-a37b-49ab-b971-ce1eacc5593a/_pwani_v6_8df3816a4bb24d36/06.jpeg"
-      ]
+      ],
+      "slug": "luxurious-seaview-4br-nyali"
     },
     {
       "id": "b1ec2c41-7f0d-4eb5-bd21-3f721e507935",
@@ -3264,7 +3358,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b1ec2c41-7f0d-4eb5-bd21-3f721e507935/_pwani_v6_9d229b7734274f33/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b1ec2c41-7f0d-4eb5-bd21-3f721e507935/_pwani_v6_9d229b7734274f33/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b1ec2c41-7f0d-4eb5-bd21-3f721e507935/_pwani_v6_9d229b7734274f33/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-2br-3rd-avenue-nyali"
     },
     {
       "id": "b77ff8c4-5d70-43fb-933b-28cfad0d9f56",
@@ -3301,7 +3396,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b77ff8c4-5d70-43fb-933b-28cfad0d9f56/_pwani_v6_5957bb9b30904338/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b77ff8c4-5d70-43fb-933b-28cfad0d9f56/_pwani_v6_5957bb9b30904338/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/b77ff8c4-5d70-43fb-933b-28cfad0d9f56/_pwani_v6_5957bb9b30904338/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-sunset-paradise-shanzu"
     },
     {
       "id": "bbabc2d3-feb4-4fad-9f81-8ee9e4f9bba9",
@@ -3341,7 +3437,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/bbabc2d3-feb4-4fad-9f81-8ee9e4f9bba9/_pwani_v6_68f57af4ef934643/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/bbabc2d3-feb4-4fad-9f81-8ee9e4f9bba9/_pwani_v6_68f57af4ef934643/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/bbabc2d3-feb4-4fad-9f81-8ee9e4f9bba9/_pwani_v6_68f57af4ef934643/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-3rd-avenue-1br-nyali"
     },
     {
       "id": "c144a5d8-ef62-4ace-a580-686f3f7da4b6",
@@ -3378,7 +3475,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c144a5d8-ef62-4ace-a580-686f3f7da4b6/_pwani_v6_a8ae64834aa84024/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c144a5d8-ef62-4ace-a580-686f3f7da4b6/_pwani_v6_a8ae64834aa84024/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c144a5d8-ef62-4ace-a580-686f3f7da4b6/_pwani_v6_a8ae64834aa84024/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-1br-nyali"
     },
     {
       "id": "c294be1f-e656-4999-8864-7b3ed393bffe",
@@ -3408,7 +3506,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c294be1f-e656-4999-8864-7b3ed393bffe/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c294be1f-e656-4999-8864-7b3ed393bffe/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c294be1f-e656-4999-8864-7b3ed393bffe/07.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-stay-mnarani-kilifi"
     },
     {
       "id": "c44203e8-be5c-408d-ade6-0ce457a529ae",
@@ -3449,7 +3548,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c44203e8-be5c-408d-ade6-0ce457a529ae/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c44203e8-be5c-408d-ade6-0ce457a529ae/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c44203e8-be5c-408d-ade6-0ce457a529ae/10.jpeg"
-      ]
+      ],
+      "slug": "luxury-5br-private-villa-diani"
     },
     {
       "id": "c6f6564f-c2e4-44af-95aa-f326825c22c0",
@@ -3481,7 +3581,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c6f6564f-c2e4-44af-95aa-f326825c22c0/_pwani_v6_f6cefc0a69594c6a/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c6f6564f-c2e4-44af-95aa-f326825c22c0/_pwani_v6_f6cefc0a69594c6a/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c6f6564f-c2e4-44af-95aa-f326825c22c0/_pwani_v6_f6cefc0a69594c6a/09.jpeg"
-      ]
+      ],
+      "slug": "cozy-35m2-pool-studio-nyali"
     },
     {
       "id": "c7640a16-708f-4610-9275-946a823c337e",
@@ -3518,7 +3619,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c7640a16-708f-4610-9275-946a823c337e/_pwani_v6_524b64cf9e6f4614/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c7640a16-708f-4610-9275-946a823c337e/_pwani_v6_524b64cf9e6f4614/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/c7640a16-708f-4610-9275-946a823c337e/_pwani_v6_524b64cf9e6f4614/10.jpeg"
-      ]
+      ],
+      "slug": "stylish-2br-3rd-avenue-nyali"
     },
     {
       "id": "ca45d311-a220-434e-90c2-5f4d223f3769",
@@ -3551,7 +3653,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ca45d311-a220-434e-90c2-5f4d223f3769/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ca45d311-a220-434e-90c2-5f4d223f3769/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ca45d311-a220-434e-90c2-5f4d223f3769/10.jpeg"
-      ]
+      ],
+      "slug": "cozy-stay-green-studio-kilifi"
     },
     {
       "id": "cab2d7e2-b09e-4134-add4-f780cf32bbf1",
@@ -3583,7 +3686,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cab2d7e2-b09e-4134-add4-f780cf32bbf1/_pwani_v6_79fbd2d616254325/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cab2d7e2-b09e-4134-add4-f780cf32bbf1/_pwani_v6_79fbd2d616254325/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cab2d7e2-b09e-4134-add4-f780cf32bbf1/_pwani_v6_79fbd2d616254325/10.jpeg"
-      ]
+      ],
+      "slug": "stylish-1br-mtwapa"
     },
     {
       "id": "cdfcd5ab-394a-4270-bc7b-7ce883ef4530",
@@ -3610,7 +3714,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cdfcd5ab-394a-4270-bc7b-7ce883ef4530/02.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cdfcd5ab-394a-4270-bc7b-7ce883ef4530/03.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cdfcd5ab-394a-4270-bc7b-7ce883ef4530/04.jpeg"
-      ]
+      ],
+      "slug": "cozy-1br-coastal-stay-kilifi"
     },
     {
       "id": "ce44811c-1b04-4277-8484-b112d4c86888",
@@ -3653,7 +3758,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ce44811c-1b04-4277-8484-b112d4c86888/_pwani_v6_3dceab59f83749dd/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ce44811c-1b04-4277-8484-b112d4c86888/_pwani_v6_3dceab59f83749dd/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ce44811c-1b04-4277-8484-b112d4c86888/_pwani_v6_3dceab59f83749dd/10.jpeg"
-      ]
+      ],
+      "slug": "classic-executive-1br-nyali"
     },
     {
       "id": "cf5e71e8-eb14-4d12-b3b9-618a960a2206",
@@ -3685,7 +3791,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cf5e71e8-eb14-4d12-b3b9-618a960a2206/_pwani_v6_d798f21641ec40d3/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cf5e71e8-eb14-4d12-b3b9-618a960a2206/_pwani_v6_d798f21641ec40d3/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/cf5e71e8-eb14-4d12-b3b9-618a960a2206/_pwani_v6_d798f21641ec40d3/08.jpeg"
-      ]
+      ],
+      "slug": "1br-diani-cf5e71"
     },
     {
       "id": "d0914b42-af52-45c6-8bcf-d8cd66b601c6",
@@ -3724,7 +3831,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d0914b42-af52-45c6-8bcf-d8cd66b601c6/_pwani_v6_98be70667b124259/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d0914b42-af52-45c6-8bcf-d8cd66b601c6/_pwani_v6_98be70667b124259/10.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d0914b42-af52-45c6-8bcf-d8cd66b601c6/_pwani_v6_98be70667b124259/11.jpeg"
-      ]
+      ],
+      "slug": "elegant-pavilion-3br-nyali"
     },
     {
       "id": "d1f8a3b3-13ae-4436-bd4f-8a3e1be8f551",
@@ -3760,7 +3868,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d1f8a3b3-13ae-4436-bd4f-8a3e1be8f551/06.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d1f8a3b3-13ae-4436-bd4f-8a3e1be8f551/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d1f8a3b3-13ae-4436-bd4f-8a3e1be8f551/08.jpeg"
-      ]
+      ],
+      "slug": "luxury-1br-shanzu-d1f8a3"
     },
     {
       "id": "d2a14ccc-9238-491a-9783-bf82f8e69db7",
@@ -3800,7 +3909,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d2a14ccc-9238-491a-9783-bf82f8e69db7/_pwani_v6_6f4e2c01b51249fc/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d2a14ccc-9238-491a-9783-bf82f8e69db7/_pwani_v6_6f4e2c01b51249fc/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d2a14ccc-9238-491a-9783-bf82f8e69db7/_pwani_v6_6f4e2c01b51249fc/10.jpeg"
-      ]
+      ],
+      "slug": "beachfront-3br-luxury-nyali"
     },
     {
       "id": "d36c5119-4862-44c7-9eb1-8c4dfb6302ba",
@@ -3835,7 +3945,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d36c5119-4862-44c7-9eb1-8c4dfb6302ba/_pwani_v6_0c277982a2314fc3/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d36c5119-4862-44c7-9eb1-8c4dfb6302ba/_pwani_v6_0c277982a2314fc3/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d36c5119-4862-44c7-9eb1-8c4dfb6302ba/_pwani_v6_0c277982a2314fc3/10.jpeg"
-      ]
+      ],
+      "slug": "modern-studio-links-road-nyali"
     },
     {
       "id": "d6202e4e-964f-47d9-8eab-aaadd2ed09fd",
@@ -3869,7 +3980,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d6202e4e-964f-47d9-8eab-aaadd2ed09fd/_pwani_v6_0c253e872c534708/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d6202e4e-964f-47d9-8eab-aaadd2ed09fd/_pwani_v6_0c253e872c534708/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d6202e4e-964f-47d9-8eab-aaadd2ed09fd/_pwani_v6_0c253e872c534708/10.jpeg"
-      ]
+      ],
+      "slug": "modern-3br-aqua-garden-nyali"
     },
     {
       "id": "d722839e-a4b8-456b-a92e-df756dd09e9e",
@@ -3905,7 +4017,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d722839e-a4b8-456b-a92e-df756dd09e9e/_pwani_v6_97bfab49b3bd4e13/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d722839e-a4b8-456b-a92e-df756dd09e9e/_pwani_v6_97bfab49b3bd4e13/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d722839e-a4b8-456b-a92e-df756dd09e9e/_pwani_v6_97bfab49b3bd4e13/10.jpeg"
-      ]
+      ],
+      "slug": "stylish-1br-3rd-avenue-nyali"
     },
     {
       "id": "d7bc430f-12ca-46c6-bde9-5b3892f7fd98",
@@ -3940,7 +4053,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d7bc430f-12ca-46c6-bde9-5b3892f7fd98/_pwani_v6_91b2a6b8fe174b45/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d7bc430f-12ca-46c6-bde9-5b3892f7fd98/_pwani_v6_91b2a6b8fe174b45/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d7bc430f-12ca-46c6-bde9-5b3892f7fd98/_pwani_v6_91b2a6b8fe174b45/10.jpeg"
-      ]
+      ],
+      "slug": "premium-beachfront-1br-nyali"
     },
     {
       "id": "d9a71ab4-7d6d-4df6-8f66-68097323a7fa",
@@ -3972,7 +4086,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d9a71ab4-7d6d-4df6-8f66-68097323a7fa/_pwani_v6_eae0f13728434a5e/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d9a71ab4-7d6d-4df6-8f66-68097323a7fa/_pwani_v6_eae0f13728434a5e/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/d9a71ab4-7d6d-4df6-8f66-68097323a7fa/_pwani_v6_eae0f13728434a5e/10.jpeg"
-      ]
+      ],
+      "slug": "modern-1br-nyali-d9a71a"
     },
     {
       "id": "db3e294c-0c39-4034-8728-0836c79f2748",
@@ -4009,7 +4124,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/db3e294c-0c39-4034-8728-0836c79f2748/_pwani_v6_200b22ce880347e2/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/db3e294c-0c39-4034-8728-0836c79f2748/_pwani_v6_200b22ce880347e2/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/db3e294c-0c39-4034-8728-0836c79f2748/_pwani_v6_200b22ce880347e2/10.jpeg"
-      ]
+      ],
+      "slug": "2br-mtwapa-db3e29"
     },
     {
       "id": "de912b54-f5c6-439e-90da-c38915ba66c3",
@@ -4044,7 +4160,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/de912b54-f5c6-439e-90da-c38915ba66c3/_pwani_v6_6dd4220779944bb6/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/de912b54-f5c6-439e-90da-c38915ba66c3/_pwani_v6_6dd4220779944bb6/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/de912b54-f5c6-439e-90da-c38915ba66c3/_pwani_v6_6dd4220779944bb6/10.jpeg"
-      ]
+      ],
+      "slug": "serene-3br-seaview-kilifi"
     },
     {
       "id": "df724fbf-caa0-4539-bdb8-cc3b0947a962",
@@ -4086,7 +4203,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/df724fbf-caa0-4539-bdb8-cc3b0947a962/_pwani_v6_daf9688a8e604afd/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/df724fbf-caa0-4539-bdb8-cc3b0947a962/_pwani_v6_daf9688a8e604afd/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/df724fbf-caa0-4539-bdb8-cc3b0947a962/_pwani_v6_daf9688a8e604afd/10.jpeg"
-      ]
+      ],
+      "slug": "premium-1br-nyali"
     },
     {
       "id": "e51cd2f9-f1ec-44f9-9df2-1c1ebad3ba87",
@@ -4126,7 +4244,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e51cd2f9-f1ec-44f9-9df2-1c1ebad3ba87/_pwani_v6_53f9aedabc4f45ae/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e51cd2f9-f1ec-44f9-9df2-1c1ebad3ba87/_pwani_v6_53f9aedabc4f45ae/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e51cd2f9-f1ec-44f9-9df2-1c1ebad3ba87/_pwani_v6_53f9aedabc4f45ae/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-4br-oceanview-nyali"
     },
     {
       "id": "e5ff3b1d-65da-4e93-a003-8e7fff308038",
@@ -4165,7 +4284,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e5ff3b1d-65da-4e93-a003-8e7fff308038/_pwani_v6_54d08c087c304305/04.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e5ff3b1d-65da-4e93-a003-8e7fff308038/_pwani_v6_54d08c087c304305/05.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e5ff3b1d-65da-4e93-a003-8e7fff308038/_pwani_v6_54d08c087c304305/06.jpeg"
-      ]
+      ],
+      "slug": "exquisite-1br-nyali"
     },
     {
       "id": "e604337e-682b-40e4-adb5-9b051af37b96",
@@ -4201,7 +4321,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e604337e-682b-40e4-adb5-9b051af37b96/_pwani_v6_a9d20ff4fe7d49f3/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e604337e-682b-40e4-adb5-9b051af37b96/_pwani_v6_a9d20ff4fe7d49f3/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e604337e-682b-40e4-adb5-9b051af37b96/_pwani_v6_a9d20ff4fe7d49f3/10.jpeg"
-      ]
+      ],
+      "slug": "exquisite-3br-beachfront-bamburi"
     },
     {
       "id": "e776ffae-6e5f-4080-b6aa-798380c16d5a",
@@ -4233,7 +4354,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e776ffae-6e5f-4080-b6aa-798380c16d5a/_pwani_v6_a62f7ed2cd3844e4/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e776ffae-6e5f-4080-b6aa-798380c16d5a/_pwani_v6_a62f7ed2cd3844e4/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e776ffae-6e5f-4080-b6aa-798380c16d5a/_pwani_v6_a62f7ed2cd3844e4/10.jpeg"
-      ]
+      ],
+      "slug": "1br-nyali"
     },
     {
       "id": "e8578102-5149-4833-8a40-a412b5989f5e",
@@ -4269,7 +4391,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e8578102-5149-4833-8a40-a412b5989f5e/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e8578102-5149-4833-8a40-a412b5989f5e/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/e8578102-5149-4833-8a40-a412b5989f5e/10.jpeg"
-      ]
+      ],
+      "slug": "beachfront-escape-2br-malindi"
     },
     {
       "id": "ea28c193-608c-4414-9545-57c89c6fe74d",
@@ -4300,7 +4423,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ea28c193-608c-4414-9545-57c89c6fe74d/_pwani_v6_fb6ab11b25214589/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ea28c193-608c-4414-9545-57c89c6fe74d/_pwani_v6_fb6ab11b25214589/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ea28c193-608c-4414-9545-57c89c6fe74d/_pwani_v6_fb6ab11b25214589/10.jpeg"
-      ]
+      ],
+      "slug": "tastefully-1br-nyali"
     },
     {
       "id": "ec94239a-08c3-4a43-a373-07b5a32386c7",
@@ -4333,7 +4457,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ec94239a-08c3-4a43-a373-07b5a32386c7/_pwani_v6_d6773dceeb5f43f9/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ec94239a-08c3-4a43-a373-07b5a32386c7/_pwani_v6_d6773dceeb5f43f9/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ec94239a-08c3-4a43-a373-07b5a32386c7/_pwani_v6_d6773dceeb5f43f9/10.jpeg"
-      ]
+      ],
+      "slug": "villa-in-en-suite-3br-malindi"
     },
     {
       "id": "eef77bb0-1c78-48f8-8e82-bf0a23af12ce",
@@ -4375,7 +4500,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/eef77bb0-1c78-48f8-8e82-bf0a23af12ce/_pwani_v6_35e0f159b0074265/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/eef77bb0-1c78-48f8-8e82-bf0a23af12ce/_pwani_v6_35e0f159b0074265/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/eef77bb0-1c78-48f8-8e82-bf0a23af12ce/_pwani_v6_35e0f159b0074265/10.jpeg"
-      ]
+      ],
+      "slug": "deluxe-studio-nyali"
     },
     {
       "id": "eefec3e2-86b4-4166-b28e-4def468e2689",
@@ -4410,7 +4536,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/eefec3e2-86b4-4166-b28e-4def468e2689/_pwani_v6_c08de7bf57ef4b8e/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/eefec3e2-86b4-4166-b28e-4def468e2689/_pwani_v6_c08de7bf57ef4b8e/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/eefec3e2-86b4-4166-b28e-4def468e2689/_pwani_v6_c08de7bf57ef4b8e/10.jpeg"
-      ]
+      ],
+      "slug": "stylish-3br-aqua-gardens-nyali"
     },
     {
       "id": "f1c8dd32-d52a-4a9f-9821-71b3ba2fe2fe",
@@ -4446,7 +4573,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f1c8dd32-d52a-4a9f-9821-71b3ba2fe2fe/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f1c8dd32-d52a-4a9f-9821-71b3ba2fe2fe/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f1c8dd32-d52a-4a9f-9821-71b3ba2fe2fe/09.jpeg"
-      ]
+      ],
+      "slug": "modern-coastal-1br-shanzu"
     },
     {
       "id": "f6478be3-65ff-4c71-95da-d48116efb2c4",
@@ -4481,7 +4609,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f6478be3-65ff-4c71-95da-d48116efb2c4/_pwani_v6_22ccfc5659d34db0/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f6478be3-65ff-4c71-95da-d48116efb2c4/_pwani_v6_22ccfc5659d34db0/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f6478be3-65ff-4c71-95da-d48116efb2c4/_pwani_v6_22ccfc5659d34db0/10.jpeg"
-      ]
+      ],
+      "slug": "luxurious-3br-nyali-f6478b"
     },
     {
       "id": "f85d6c35-703e-452b-8e28-457ebed96f16",
@@ -4523,7 +4652,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f85d6c35-703e-452b-8e28-457ebed96f16/_pwani_v6_272e713973eb4c2d/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f85d6c35-703e-452b-8e28-457ebed96f16/_pwani_v6_272e713973eb4c2d/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/f85d6c35-703e-452b-8e28-457ebed96f16/_pwani_v6_272e713973eb4c2d/09.jpeg"
-      ]
+      ],
+      "slug": "exquisite-2br-coral-sands-nyali"
     },
     {
       "id": "fb4470ad-5436-4b7b-8e7a-ac79d319bceb",
@@ -4556,7 +4686,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/fb4470ad-5436-4b7b-8e7a-ac79d319bceb/_pwani_v6_412f4443e75949da/07.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/fb4470ad-5436-4b7b-8e7a-ac79d319bceb/_pwani_v6_412f4443e75949da/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/fb4470ad-5436-4b7b-8e7a-ac79d319bceb/_pwani_v6_412f4443e75949da/09.jpeg"
-      ]
+      ],
+      "slug": "cozy-studio-3rd-avenue-nyali"
     },
     {
       "id": "fc46ee52-232e-411b-a962-f2e138652d1c",
@@ -4592,7 +4723,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/fc46ee52-232e-411b-a962-f2e138652d1c/_pwani_v6_0808bb5f34874ebb/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/fc46ee52-232e-411b-a962-f2e138652d1c/_pwani_v6_0808bb5f34874ebb/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/fc46ee52-232e-411b-a962-f2e138652d1c/_pwani_v6_0808bb5f34874ebb/10.jpeg"
-      ]
+      ],
+      "slug": "elegant-coastal-2br-malindi"
     },
     {
       "id": "ff411e7f-877c-4ca3-a5af-47ae95b4a148",
@@ -4626,7 +4758,8 @@
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ff411e7f-877c-4ca3-a5af-47ae95b4a148/_pwani_v6_a76b3f1be75c46c2/08.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ff411e7f-877c-4ca3-a5af-47ae95b4a148/_pwani_v6_a76b3f1be75c46c2/09.jpeg",
         "https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/ff411e7f-877c-4ca3-a5af-47ae95b4a148/_pwani_v6_a76b3f1be75c46c2/10.jpeg"
-      ]
+      ],
+      "slug": "deluxe-studio-diani"
     }
   ]
 }

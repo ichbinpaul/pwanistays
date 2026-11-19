@@ -42,8 +42,8 @@ Python 3.12 and its standard library are sufficient.
 ```bash
 cd /workspace/pwanistays
 python3 -m unittest discover -s tests -v
-python3 scripts/build_whatsapp_catalogue.py --check
-python3 scripts/build_whatsapp_catalogue.py
+python3 scripts/build_whatsapp_catalogue.py --routing-settings catalogue/property-url-settings.json --check
+python3 scripts/build_whatsapp_catalogue.py --routing-settings catalogue/property-url-settings.json
 ```
 
 `--check` fetches and validates the source without writing output files. A normal
@@ -63,7 +63,7 @@ needed for this export. The publishable source configuration already exists in
 preview pages hourly at minute 15 and supports **Run workflow** in GitHub Actions. The
 workflow runs the catalogue tests before generating output, then commits only
 catalogue JSON files, validated website-owned covers, generated property preview
-pages, the HTML directory, and their matching sitemap
+pages, the generated public property route script, the HTML directory, and their matching sitemap
 to `main` when their content changes. It uses a
 normal push and fails on conflicting branch updates; it never force-pushes or
 overwrites unrelated work. Inspect failed Actions runs before retrying.
@@ -72,6 +72,11 @@ The schedule starts only after this workflow is present on the repository's
 default branch and GitHub Actions is enabled. Repository contents and Pages write
 permissions for the workflow's `GITHUB_TOKEN` are required. The existing sitemap workflow is
 independent and unchanged.
+
+The routing option keeps the permanent UUID-to-slug registry in step with the
+source. Keep it on source-refresh commands now that routing is configured.
+`catalogue/property-url-settings.json` explicitly keeps `use_friendly_urls` false
+until the Cloudflare migration is activated; hourly exports cannot enable it.
 
 Committing source files is distinct from publishing them on the website. In
 particular, commits made with `GITHUB_TOKEN` do not themselves guarantee a

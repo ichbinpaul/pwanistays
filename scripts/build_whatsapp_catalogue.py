@@ -257,11 +257,33 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", type=Path, default=ROOT / "catalogue")
     parser.add_argument("--check", action="store_true", help="fetch and validate without writing")
     parser.add_argument("--workers", type=int, choices=range(1, 9), default=4)
+    parser.add_argument("--routing-settings", type=Path, help="Prepare staged property routes using the immutable registry")
     args = parser.parse_args(argv)
     try:
         base, key = public_config()
         snapshot = build_snapshot(base, key, args.workers)
+        registry_path = bootstrap_path = registry = bootstrap = None
+        if args.routing_settings:
+            # Routes stay opt-in for older callers and offline source fixtures.
+            from property_routes import BOOTSTRAP_MARKER, prepare_snapshot
+            registry_path = ROOT / "catalogue/property-slugs.json"
+            bootstrap_path = ROOT / "property-routes.js"
+            for path in [args.routing_settings, registry_path, bootstrap_path]:
+                absolute = path.absolute()
+                if any(part.is_symlink() for part in (absolute, *absolute.parents)):
+                    raise SourceError("Routing inputs/outputs must not contain symbolic links")
+                if absolute.exists() and not absolute.is_file():
+                    raise SourceError("Routing inputs/outputs must be regular files")
+            if bootstrap_path.exists() and not bootstrap_path.read_text(encoding="utf-8").startswith(BOOTSTRAP_MARKER + "\n"):
+                raise SourceError("Refusing to overwrite an unowned property routing script")
+            settings = json.loads(args.routing_settings.read_text(encoding="utf-8"))
+            prior_registry = json.loads(registry_path.read_text(encoding="utf-8"))
+            snapshot, registry, bootstrap = prepare_snapshot(snapshot, settings, prior_registry)
         if not args.check:
+            if registry is not None:
+                for path, data in [(registry_path, encode(registry)), (bootstrap_path, bootstrap.encode("utf-8"))]:
+                    if not path.exists() or path.read_bytes() != data:
+                        atomic_write(path, data)
             save_snapshot(snapshot, args.output_dir)
         count = len(snapshot["properties"])
         print(f"Validated {count} active properties and {sum(len(p['images']) for p in snapshot['properties'])} image URLs.")

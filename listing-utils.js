@@ -25,7 +25,12 @@
   }
   function permalink(id) {
     if (!UUID.test(id || '')) return '/#stays';
-    return '/stays/' + id.toLowerCase() + '/';
+    const identity = id.toLowerCase();
+    const routes = window.PwaniPropertyRoutes;
+    const friendly = routes && routes.enabled === true && routes.paths && routes.paths[identity];
+    if (typeof friendly === 'string' && /^\/stays\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(friendly)
+        && friendly.slice(7, -1).length <= 32) return friendly;
+    return '/stays/' + identity + '/';
   }
   function link(id, dates) {
     if (!UUID.test(id || '')) return '/#stays';

@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Generated pages embed their own identity; a query cannot switch units.
   // Keep older /property.html?id=... links usable for existing conversations.
   const id = document.documentElement.dataset.propertyId || params.get('id');
+  const declaredPath = document.documentElement.dataset.propertyPath;
+  const canonicalPath = /^\/stays\/[a-z0-9-]+\/$/.test(declaredPath || '')
+    ? declaredPath : u.permalink(id);
   const status = document.getElementById('propertyStatus');
   const content = document.getElementById('propertyContent');
   const checkin = document.getElementById('checkin');
@@ -54,11 +57,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
     property = data;
-    const canonicalUrl = 'https://pwanistays.com' + u.permalink(id);
-    if (!document.documentElement.dataset.propertyId) {
-      history.replaceState(null, '', u.link(id, {
+    const canonicalUrl = 'https://pwanistays.com' + canonicalPath;
+    if (!document.documentElement.dataset.propertyId ||
+        (window.PwaniPropertyRoutes && window.PwaniPropertyRoutes.enabled === true && location.pathname !== canonicalPath)) {
+      const dated = new URL(u.link(id, {
         checkin: inParam, checkout: outParam, guests: params.get('guests')
-      }));
+      }), location.origin);
+      dated.pathname = canonicalPath;
+      history.replaceState(null, '', dated.pathname + dated.search);
     }
     const pageTitle = `${data.title || 'Coastal accommodation'} | PwaniStays`;
     const pageDescription = `Explore ${data.title || 'this stay'} in ${data.location || 'coastal Kenya'}. View amenities and photos, then request current rates and availability from PwaniStays.`;
@@ -156,7 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     status.textContent = 'We could not load this property right now. Please try again, or message PwaniStays directly.';
     return;
   }
-  const propertyLink = 'https://pwanistays.com' + u.permalink(id);
+  const propertyLink = 'https://pwanistays.com' + canonicalPath;
   document.getElementById('emailInquiry').addEventListener('click', (e) => {
     e.currentTarget.href = `mailto:bookings@pwanistays.com?subject=${encodeURIComponent('PwaniStays quotation — '+property.title)}&body=${encodeURIComponent('Hello PwaniStays,\n\nPlease send me the current rate and availability for:\nProperty: '+property.title+'\nLink: '+propertyLink+'\nCheck-in: '+(checkin.value || 'To be confirmed')+'\nCheck-out: '+(checkout.value || 'To be confirmed')+'\nGuests: '+guests.value+'\n\nThank you.')}`;
   });

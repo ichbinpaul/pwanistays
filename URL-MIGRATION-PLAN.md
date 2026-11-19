@@ -1,7 +1,8 @@
 # Friendly property URLs and current GSC findings
 
-Prepared 19 November 2026. This is a review plan, not an active URL migration.
-Existing public URLs, canonical tags and sitemaps have not been changed by this work.
+Updated 19 November 2026. Friendly paths are implemented in the staged release;
+the canonical migration and Cloudflare redirects are not activated. Existing
+UUID URLs remain canonical and remain in the sitemap during staging.
 
 ## Confirmed example
 
@@ -11,8 +12,11 @@ Mombasa**. The proposed human-readable URL is:
 
 `https://pwanistays.com/stays/cozy-studio-bamburi/`
 
-That proposed address is not live yet. A readable address improves usability;
-it does not by itself make Google index or rank a page.
+The supplied GSC screenshot confirms that the existing UUID URL is indexed.
+The staged release generates the friendly target with that same unit's content
+and photo. Confirm its GitHub Pages publication before treating it as live.
+A readable address improves usability; it does not by itself make Google index
+or rank a page.
 
 ## Permanent naming policy
 
@@ -47,27 +51,38 @@ headers and extra review fields are not Cloudflare's upload format.
 
 When revising an existing review, pass its `property-slugs.json` using `--registry`
 and use another empty output directory. That preserves the existing assignments.
-After approval, the registry must be promoted into the actual hourly build;
-this preparation script does not currently alter that build.
+The permanent registry is now `catalogue/property-slugs.json`; the hourly build
+uses it and reserves earlier names, including withdrawn units. The files in
+`planning/` are the original review snapshot. For later reviews, pass the current
+registry rather than allocating a new set of names.
 
 ## Deployment sequence
 
-1. Integrate the approved registry into the source exporter, page generator,
-   complete directory, share links, enquiry links and strict URL validators.
-   Publish real friendly-path HTML containing the correct unit's visible content,
-   cover image and embedded UUID. Keep old UUID pages usable during the transition.
-2. Set the friendly URL consistently in canonical, OG, structured-data and
-   sitemap output, and switch all internal links together. Old aliases should
-   point canonically to that same friendly unit while redirects are activated.
-3. Verify the new target pages return 200 and work on mobile before enabling
-   **real HTTP 301 redirects** in Cloudflare from the old addresses. Preserve
+1. **Implemented:** the source exporter, page generator, complete directory,
+   share links, enquiry links and URL validators support the permanent registry.
+   The staging build generates full HTML at both UUID and friendly paths, with
+   the same cover image and embedded UUID. `use_friendly_urls=false` preserves
+   current canonicals, links and sitemap entries.
+2. Publish this staging release. Check that the GitHub Pages build and site-health
+   workflow succeed, and that friendly targets return 200 with correct unit
+   content and mobile booking behavior. Install the prepared Cloudflare Worker
+   with its activation variable disabled. See `cloudflare/README.md`.
+3. In one coordinated release, set `use_friendly_urls=true` in
+   `catalogue/property-url-settings.json`, bump the `property-routes.js` query
+   version in `index.html` and `property.html`, and regenerate source, previews,
+   directory and sitemap. Both old and new pages then declare the friendly
+   canonical, OG and structured-data URL; all generated internal links switch.
+   The source build also sets registry `ready_for_redirects=true`.
+4. Verify the friendly canonical release is live, then enable
+   **real HTTP 301 redirects** using `PROPERTY_URLS_ENABLED=true` in Cloudflare.
+   Both activation flags must agree before the Worker redirects. Preserve
    check-in, check-out, guests and tracking parameters. Unknown IDs must not be
    sent to an unrelated unit or the homepage.
-4. Verify actual status/Location headers, correct destination unit, canonical,
+5. Verify actual status/Location headers, correct destination unit, canonical,
    photo preview, dates and enquiry behavior. Check slash/no-slash variants and
    avoid chains or loops. GitHub Pages JavaScript/meta-refresh redirects are not
    equivalent to HTTP 301 responses.
-5. Resubmit the updated property sitemap once. Inspect several new canonical
+6. Resubmit the updated property sitemap once. Inspect several new canonical
    URLs in GSC. Old URLs becoming "Page with redirect" is an expected migration
    outcome; they do not need to remain indexed independently.
 
@@ -84,10 +99,12 @@ option for UUID paths, `/property.html?id=UUID` and `/?property=UUID`. It reads 
 public approved registry at `/catalogue/property-slugs.json`, so future units can
 be handled by the hourly registry build without manually adding redirect rows.
 
-The Worker is **disabled by default**. It must not be enabled until the approved
-registry and friendly destination pages are published and tested. Only then set
-`PROPERTY_URLS_ENABLED=true` and attach the intended proxied-zone routes for
-`pwanistays.com/stays/*`, `pwanistays.com/property.html*` and the homepage path.
+The Worker is **disabled by default**. Install it with
+`PROPERTY_URLS_ENABLED=false` and the proxied-zone route `pwanistays.com/*`.
+This route covers the old query links as well as UUID paths; normal pages pass
+through unchanged. After the friendly canonical release is published and tested,
+set `PROPERTY_URLS_ENABLED=true`. The published registry must also contain the
+boolean `ready_for_redirects:true`; staged maps explicitly keep this false.
 Known old GET/HEAD links receive a 301; normal/friendly URLs and unknown IDs pass
 through. Registry failures also leave the origin route usable. A deployment
 must verify Cloudflare route matching and origin behavior in addition to the
@@ -123,9 +140,10 @@ selector, so it does not establish which report scope is selected.
 
 ## Highest-priority visibility work
 
-1. GSC live-test `/stays.html`, the exact supplied unit URL and a unit in another
+1. GSC live-test `/stays.html` and a unit in another
    area. Confirm fetch/indexing are allowed and the declared canonical matches.
-   Where already indexed, compare Google's selected canonical. Request indexing
+   The supplied example is already indexed and does not need another indexing
+   request while unchanged. Where already indexed, compare Google's selected canonical. Request indexing
    for representatives after successful tests, not all 133 manually.
 2. Resolve the current coastal page crawl status; keep intentional duplicate
    homepage/filter exclusions. Current source `robots.txt` uses `Allow: /` and

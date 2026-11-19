@@ -40,6 +40,41 @@ test('WhatsApp draft uses the property preview URL and preserves its title', () 
     assert.equal(link.rel, 'noopener noreferrer');
 });
 
+test('friendly links activate together and preserve date selections and sharing identity', () => {
+    const routes = { enabled: false, paths: { [id]: '/stays/cozy-studio-bamburi/' } };
+    const context = { window: { PwaniPropertyRoutes: routes }, URL, URLSearchParams, Date,
+        document: {createElement() {return {setAttribute(k,v) {this[k] = v;}};}} };
+    load('listing-utils.js', context);
+    load('property-sharing.js', context);
+    const u = context.window.PwaniListings;
+    assert.equal(u.permalink(id), `/stays/${id}/`, 'staging keeps current canonical links');
+    routes.enabled = true;
+    assert.equal(u.permalink(id.toUpperCase()), '/stays/cozy-studio-bamburi/');
+    const url = new URL(u.link(id, {checkin: '2030-02-03', checkout: '2030-02-05', guests: 3}), 'https://pwanistays.com');
+    assert.equal(url.pathname, '/stays/cozy-studio-bamburi/');
+    assert.equal(url.searchParams.get('checkin'), '2030-02-03');
+    assert.equal(url.searchParams.get('checkout'), '2030-02-05');
+    assert.equal(url.searchParams.get('guests'), '3');
+    const share = context.window.createPropertyShareLink({id, title: 'Cozy Studio'});
+    assert.ok(new URL(share.href).searchParams.get('text').includes('https://pwanistays.com/stays/cozy-studio-bamburi/'));
+    assert.equal(u.permalink('12345678-abcd-4321-9876-123456789099'), '/stays/12345678-abcd-4321-9876-123456789099/');
+});
+
+test('invalid or inactive client mappings safely use the current UUID path', () => {
+    const routes = {enabled: true, paths: {}};
+    const context = {window: {PwaniPropertyRoutes: routes}, URLSearchParams, Date};
+    load('listing-utils.js', context);
+    for (const unsafe of ['https://elsewhere.example/', '//elsewhere.example/', '/stays/../secret/', '/stays/Studio/', '/stays/x?next=bad/', '/stays/' + 'x'.repeat(33) + '/']) {
+        routes.paths[id] = unsafe;
+        assert.equal(context.window.PwaniListings.permalink(id), `/stays/${id}/`);
+    }
+    routes.paths[id] = '/stays/valid-slug/';
+    for (const inactive of ['true', false, undefined]) {
+        routes.enabled = inactive;
+        assert.equal(context.window.PwaniListings.permalink(id), `/stays/${id}/`);
+    }
+});
+
 test('a pending static page falls back to the same unit with date selections', () => {
     const href = `https://pwanistays.com/stays/${id}/?checkin=2030-02-03&checkout=2030-02-05&guests=3&next=https://elsewhere.example`;
     let redirected;

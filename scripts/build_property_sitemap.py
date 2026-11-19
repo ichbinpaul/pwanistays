@@ -19,6 +19,7 @@ import urllib.request
 import uuid
 from pathlib import Path
 from xml.etree import ElementTree as ET
+from property_routes import canonical_url
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "listing-utils.js"
@@ -74,15 +75,36 @@ def fetch_active_ids(base_url: str, public_key: str) -> list[str]:
     raise RuntimeError("Too many listing pages; refusing incomplete sitemap")
 
 
-def render_sitemap(ids: list[str], images: dict[str, str] | None = None) -> bytes:
+def render_sitemap(ids: list[str], images: dict[str, str] | None = None,
+                   urls: dict[str, str] | None = None) -> bytes:
+    if len(set(ids)) != len(ids):
+        raise ValueError("Duplicate property UUID in sitemap")
+    if urls is not None and (not isinstance(urls, dict) or set(urls) - set(ids)):
+        raise ValueError("Sitemap URL mapping contains unknown property IDs")
+    canonical_urls = {}
+    for property_id in ids:
+        row = {"id": property_id}
+        if urls and property_id in urls:
+            candidate = urls[property_id]
+            if not isinstance(candidate, str):
+                raise ValueError("Invalid sitemap URL")
+            row["url"] = candidate
+            prefix = SITE_BASE + "/stays/"
+            if candidate.startswith(prefix) and candidate.endswith("/"):
+                # The mapping already associates each canonical URL with its ID.
+                # Reuse the shared route validator for its URL/slug syntax.
+                segment = candidate[len(prefix):-1]
+                if segment != property_id:
+                    row["slug"] = segment
+        canonical_urls[property_id] = canonical_url(row)
+    if len(set(canonical_urls.values())) != len(ids):
+        raise ValueError("Multiple properties resolve to the same sitemap URL")
     ET.register_namespace("", NS)
     ET.register_namespace("image", IMAGE_NS)
     urlset = ET.Element(f"{{{NS}}}urlset")
     for property_id in ids:
         node = ET.SubElement(urlset, f"{{{NS}}}url")
-        ET.SubElement(node, f"{{{NS}}}loc").text = (
-            f"{SITE_BASE}/stays/{property_id}/"
-        )
+        ET.SubElement(node, f"{{{NS}}}loc").text = canonical_urls[property_id]
         if images and property_id in images:
             image = ET.SubElement(node, f"{{{IMAGE_NS}}}image")
             ET.SubElement(image, f"{{{IMAGE_NS}}}loc").text = images[property_id]
@@ -103,15 +125,18 @@ def main(argv=None) -> int:
     parser.add_argument("--covers", type=Path, help="Include validated website-owned cover image URLs")
     args = parser.parse_args(argv)
     try:
-        images = None
+        images, urls = None, None
         if args.source:
             snapshot = json.loads(args.source.read_text(encoding="utf-8"))
             rows = snapshot.get("properties")
             if snapshot.get("version") != 1 or not isinstance(rows, list):
                 raise ValueError("Invalid public property snapshot")
-            ids = [str(uuid.UUID(row["id"])) for row in rows]
+            urls = {row["id"]: canonical_url(row) for row in rows}
+            ids = [row["id"] for row in rows]
             if len(set(ids)) != len(ids):
                 raise ValueError("Duplicate property UUID in snapshot")
+            if len(set(urls.values())) != len(ids):
+                raise ValueError("Multiple properties resolve to the same canonical URL")
             ids.sort()
             if args.covers:
                 from build_property_previews import load_cover_images
@@ -126,7 +151,7 @@ def main(argv=None) -> int:
         # configuration issue. Do not erase a previously working sitemap.
         if not ids:
             raise RuntimeError("No active listings returned; refusing empty sitemap")
-        xml = render_sitemap(ids, images)
+        xml = render_sitemap(ids, images, urls)
         if not OUTPUT.exists() or OUTPUT.read_bytes() != xml:
             OUTPUT.write_bytes(xml)
         update_robots()

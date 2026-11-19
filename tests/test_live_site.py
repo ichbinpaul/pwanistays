@@ -80,6 +80,11 @@ class HttpTests(unittest.TestCase):
             self.assertEqual(mod.check(target, mod.SITE)["issues"], [])
         with patch.object(mod, "fetch", return_value=response(url=target["url"])):
             self.assertIn("Script asset", mod.check(target, mod.SITE)["issues"][0])
+        target = {"url": mod.SITE + "/catalogue/property-slugs.json", "kind": "asset", "expected": None}
+        with patch.object(mod, "fetch", return_value=response(url=target["url"])):
+            self.assertIn("JSON asset", mod.check(target, mod.SITE)["issues"][0])
+        with patch.object(mod, "fetch", return_value=response(url=target["url"], headers={"content-type": "application/json"})):
+            self.assertEqual(mod.check(target, mod.SITE)["issues"], [])
 
     def test_only_server_errors_are_retried_once(self):
         with patch.object(mod, "read_url", side_effect=[response(status=503), response()]) as read, patch.object(mod.time, "sleep"):

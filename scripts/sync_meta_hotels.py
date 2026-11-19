@@ -84,10 +84,11 @@ def payloads(snapshot, details=None):
         if any(not isinstance(row.get(field), str) or not row[field].strip()
                for field in ("title", "description")):
             raise SyncError("Property title and public description are required")
-        expected_url = "https://pwanistays.com/stays/" + property_id + "/"
-        legacy_url = "https://pwanistays.com/property.html?id=" + property_id
-        if row.get("url") not in (expected_url, legacy_url):
-            raise SyncError("Property must use its canonical public website link")
+        from property_routes import canonical_url
+        try:
+            expected_url = canonical_url(row)
+        except ValueError:
+            raise SyncError("Property must use its canonical public website link") from None
         images = row.get("images")
         if (not isinstance(images, list) or not 1 <= len(images) <= 10 or
                 any(not isinstance(image, str) or not valid_photo(image) for image in images) or

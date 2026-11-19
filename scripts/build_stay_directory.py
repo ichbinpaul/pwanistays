@@ -10,6 +10,7 @@ import sys
 
 from build_property_previews import ROOT, SITE, validate_source, load_cover_images
 from build_whatsapp_catalogue import atomic_write
+from property_routes import canonical_url
 
 MARKER = "<!-- PWANISTAYS_STAY_DIRECTORY_V1 -->"
 TYPES = {"studio": "Studio", "villa": "Villa", **{
@@ -18,6 +19,9 @@ TYPES = {"studio": "Studio", "villa": "Villa", **{
 
 def render(snapshot):
     rows = validate_source(snapshot)
+    urls = {row["id"]: canonical_url(row) for row in rows}
+    if len(set(urls.values())) != len(rows):
+        raise ValueError("Multiple properties resolve to the same canonical URL")
     groups = defaultdict(list)
     for row in rows:
         groups[row.get("location") or "Other locations"].append(row)
@@ -28,7 +32,7 @@ def render(snapshot):
         cards = []
         for row in sorted(items, key=lambda item: (item["title"].casefold(), item["id"])):
             ordered_rows.append(row)
-            url = "/stays/" + row["id"] + "/"
+            url = urls[row["id"]].removeprefix(SITE)
             cards.append(f'''<article class="pw-card directory-card">
   <a href="{url}" tabindex="-1" aria-hidden="true"><img src="{escape(row.get('seo_image') or row['images'][0], quote=True)}" alt="{escape(row['title'], quote=True)} — property photo" loading="lazy" decoding="async" width="640" height="426"></a>
   <div class="pw-pad"><h3><a href="{url}">{escape(row['title'])}</a></h3>
@@ -41,7 +45,7 @@ def render(snapshot):
               "name": "Coastal apartments, villas and holiday stays | PwaniStays",
               "mainEntity": {"@type": "ItemList", "numberOfItems": len(rows),
                   "itemListElement": [{"@type": "ListItem", "position": index + 1,
-                     "url": SITE + "/stays/" + row["id"] + "/", "name": row["title"]} for index, row in enumerate(ordered_rows)]}}
+                     "url": urls[row["id"]], "name": row["title"]} for index, row in enumerate(ordered_rows)]}}
     structured = json.dumps(schema, ensure_ascii=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
     return f'''<!DOCTYPE html>
 <html lang="en">

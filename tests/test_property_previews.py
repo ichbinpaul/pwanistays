@@ -419,5 +419,133 @@ class CoverManifestTests(unittest.TestCase):
             self.assertEqual(index.read_bytes(), before)
 
 
+class FriendlyStagingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.template = (ROOT / "property.html").read_text(encoding="utf-8")
+
+    def registry(self):
+        return {"version": 1, "slugs": {ID: "beach-villa-nyali", OTHER: "pool-apartment-nyali"}}
+
+    def routed_row(self, property_id=ID, friendly=False):
+        value = property_row(property_id)
+        value["slug"] = self.registry()["slugs"][property_id]
+        value["url"] = "https://pwanistays.com/stays/" + (value["slug"] if friendly else property_id) + "/"
+        return value
+
+    def test_staged_alias_and_uuid_pages_share_unit_and_uuid_canonical(self):
+        registry = {"version": 1, "slugs": {ID: self.registry()["slugs"][ID]}}
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder)
+            counts = mod.generate(snapshot(self.routed_row()), self.template, output, registry=registry)
+            self.assertEqual(counts["active"], 1)
+            self.assertEqual(counts["pages"], 2)
+            uuid_page = (output / ID / "index.html").read_text()
+            alias_page = (output / registry["slugs"][ID] / "index.html").read_text()
+            self.assertEqual(uuid_page, alias_page)
+            parsed = Metadata(alias_page)
+            self.assertEqual(parsed.canonical(), [f"https://pwanistays.com/stays/{ID}/"])
+            self.assertEqual(parsed.html_attrs["data-property-id"], ID)
+            self.assertEqual(parsed.html_attrs["data-property-path"], f"/stays/{ID}/")
+            self.assertEqual(parsed.content("og:image"), [self.routed_row()["images"][0]])
+            self.assertEqual(mod.generate(snapshot(self.routed_row()), self.template, output, registry=registry)["changed"], 0)
+
+    def test_explicit_friendly_mode_keeps_old_page_and_uses_one_friendly_canonical(self):
+        registry = {"version": 1, "slugs": {ID: self.registry()["slugs"][ID]}}
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder)
+            mod.generate(snapshot(self.routed_row()), self.template, output, registry=registry)
+            counts = mod.generate(snapshot(self.routed_row(friendly=True)), self.template, output,
+                                  registry=registry, friendly=True)
+            self.assertEqual(counts["pages"], 2)
+            for directory in [ID, registry["slugs"][ID]]:
+                parsed = Metadata((output / directory / "index.html").read_text())
+                expected = f"https://pwanistays.com/stays/{registry['slugs'][ID]}/"
+                self.assertEqual(parsed.canonical(), [expected])
+                self.assertEqual(parsed.content("og:url"), [expected])
+                self.assertEqual(parsed.html_attrs["data-property-id"], ID)
+                self.assertEqual(parsed.html_attrs["data-property-path"], f"/stays/{registry['slugs'][ID]}/")
+
+    def test_registry_and_mode_mismatch_preserve_existing_pages(self):
+        registry = {"version": 1, "slugs": {ID: self.registry()["slugs"][ID]}}
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder)
+            mod.generate(snapshot(self.routed_row()), self.template, output, registry=registry)
+            before = {path.relative_to(output): path.read_bytes() for path in output.rglob("index.html")}
+            cases = [(snapshot(self.routed_row(friendly=True)), registry, False),
+                     (snapshot(self.routed_row()), registry, True),
+                     (snapshot(self.routed_row()), registry, "false"),
+                     (snapshot(self.routed_row(friendly=True)), None, False),
+                     (snapshot(property_row()), registry, False),
+                     (snapshot(self.routed_row()), {"version": 1, "slugs": {}}, False)]
+            for source, proposed_registry, friendly in cases:
+                with self.subTest(source=source, friendly=friendly), self.assertRaises((ValueError, RuntimeError)):
+                    mod.generate(source, self.template, output, registry=proposed_registry, friendly=friendly)
+                self.assertEqual(before, {path.relative_to(output): path.read_bytes() for path in output.rglob("index.html")})
+
+    def test_withdrawn_registry_identity_gets_two_safe_tombstones(self):
+        registry = self.registry()
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder)
+            mod.generate(snapshot(self.routed_row(), self.routed_row(OTHER)), self.template, output, registry=registry)
+            counts = mod.generate(snapshot(self.routed_row(OTHER)), self.template, output, registry=registry)
+            self.assertEqual(counts["withdrawn"], 1)
+            self.assertEqual(counts["pages"], 4)
+            for directory in [ID, registry["slugs"][ID]]:
+                tombstone = (output / directory / "index.html").read_text()
+                parsed = Metadata(tombstone)
+                self.assertEqual(parsed.html_attrs["data-property-id"], ID)
+                self.assertEqual(parsed.canonical(), [f"https://pwanistays.com/stays/{ID}/"])
+                self.assertEqual(parsed.content("og:image"), [])
+                self.assertTrue(any("noindex" in value for value in parsed.content("robots")))
+            # Reserved inactive routes remain unavailable in an explicit future mode.
+            mod.generate(snapshot(self.routed_row(OTHER, friendly=True)), self.template, output,
+                         registry=registry, friendly=True)
+            parsed = Metadata((output / registry["slugs"][ID] / "index.html").read_text())
+            self.assertEqual(parsed.canonical(), [f"https://pwanistays.com/stays/{registry['slugs'][ID]}/"])
+
+    def test_alias_ownership_and_unknown_paths_are_checked_before_writes(self):
+        registry = self.registry()
+        for wrong_id in [ID, OTHER]:
+            with self.subTest(wrong_id=wrong_id), tempfile.TemporaryDirectory() as folder:
+                output = Path(folder)
+                mod.generate(snapshot(self.routed_row(), self.routed_row(OTHER)), self.template, output, registry=registry)
+                wrong = (output / ("unknown-alias" if wrong_id == ID else registry["slugs"][ID]))
+                wrong.mkdir(exist_ok=True)
+                (wrong / "index.html").write_text(mod.render_property(self.template, self.routed_row(wrong_id)))
+                before = {path.relative_to(output): path.read_bytes() for path in output.rglob("index.html")}
+                with self.assertRaises((ValueError, RuntimeError)):
+                    mod.generate(snapshot(self.routed_row(), self.routed_row(OTHER)), self.template, output, registry=registry)
+                self.assertEqual(before, {path.relative_to(output): path.read_bytes() for path in output.rglob("index.html")})
+
+    def test_cli_autoloads_registry_and_false_settings_without_global_fixture_leakage(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            catalogue = root / "catalogue"
+            catalogue.mkdir()
+            (root / "property.html").write_text(self.template)
+            (catalogue / "properties.json").write_text(json.dumps(snapshot(self.routed_row())))
+            registry = {"version": 1, "slugs": {ID: self.registry()["slugs"][ID]}}
+            (catalogue / "property-slugs.json").write_text(json.dumps(registry))
+            (catalogue / "property-url-settings.json").write_text(json.dumps({"version": 1, "use_friendly_urls": False}))
+            with patch.object(mod, "ROOT", root), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(mod.main([]), 0)
+            self.assertTrue((root / "stays" / registry["slugs"][ID] / "index.html").is_file())
+            parsed = Metadata((root / "stays" / ID / "index.html").read_text())
+            self.assertEqual(parsed.canonical(), [f"https://pwanistays.com/stays/{ID}/"])
+
+    def test_cli_refuses_partial_routing_configuration_without_output(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            catalogue = root / "catalogue"
+            catalogue.mkdir()
+            (root / "property.html").write_text(self.template)
+            (catalogue / "properties.json").write_text(json.dumps(snapshot(self.routed_row())))
+            (catalogue / "property-slugs.json").write_text(json.dumps(self.registry()))
+            with patch.object(mod, "ROOT", root), contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(mod.main([]), 1)
+            self.assertFalse((root / "stays").exists())
+
+
 if __name__ == "__main__":
     unittest.main()

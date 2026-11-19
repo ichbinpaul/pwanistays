@@ -102,8 +102,12 @@ export async function handleRequest(request, env = {}, fetcher = fetch) {
             cf: { cacheTtl: 300, cacheEverything: true },
         });
         const registry = await readRegistry(response);
-        const target = resolveRedirect(url, registry);
-        if (target) return Response.redirect(target, 301);
+        // A dashboard toggle alone must not activate a staged canonical map.
+        // The site build publishes this only with the friendly canonical release.
+        if (registry.ready_for_redirects === true) {
+            const target = resolveRedirect(url, registry);
+            if (target) return Response.redirect(target, 301);
+        }
     } catch {
         // Bad maps/network failures must leave the existing site usable.
     } finally {

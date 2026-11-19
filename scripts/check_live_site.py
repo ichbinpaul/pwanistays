@@ -25,7 +25,8 @@ SITE = "https://pwanistays.com"
 MAX_BYTES = 2 * 1024 * 1024
 ESSENTIAL = ["/robots.txt", "/sitemap.xml", "/property-sitemap.xml", "/stays.html",
              "/header.html", "/header.css", "/i18n.js", "/listing-utils.js",
-             "/property.js", "/property-sharing.js", "/favicon.ico"]
+             "/property.js", "/property-sharing.js", "/property-routes.js",
+             "/catalogue/property-slugs.json", "/favicon.ico"]
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 
 
@@ -236,6 +237,8 @@ def check(target, base):
             issues.append("Stylesheet asset returned an unexpected Content-Type")
         if path.endswith(".xml") and not any(kind in content_type for kind in ["application/xml", "text/xml"]):
             issues.append("Sitemap asset returned an unexpected Content-Type")
+        if path.endswith(".json") and "application/json" not in content_type:
+            issues.append("JSON asset returned an unexpected Content-Type")
     if target["kind"] == "page" and response["status"] == 200:
         if "text/html" not in response["headers"].get("content-type", "").lower():
             issues.append("Indexable page did not return HTML")

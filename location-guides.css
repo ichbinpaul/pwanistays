@@ -1,0 +1,5 @@
+.guide-prose{max-width:76ch;line-height:1.8;overflow-wrap:anywhere}
+.guide-prose section{margin:2.5rem 0}.guide-prose h2{line-height:1.35}.guide-prose h3{font-size:1.1rem;line-height:1.5}
+.guide-listings{columns:2;column-gap:2.5rem;padding-left:1.25rem;line-height:1.65}.guide-listings li{break-inside:avoid;margin:.65rem 0;overflow-wrap:anywhere}
+.directory-locations{display:flex;flex-wrap:wrap;gap:1rem;margin:2rem 0}
+@media(max-width:650px){.guide-listings{columns:1}}

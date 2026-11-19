@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       history.replaceState(null, '', dated.pathname + dated.search);
     }
     const pageTitle = `${data.title || 'Coastal accommodation'} | PwaniStays`;
-    const pageDescription = `Explore ${data.title || 'this stay'} in ${data.location || 'coastal Kenya'}. View amenities and photos, then request current rates and availability from PwaniStays.`;
+    const pageDescription = (document.documentElement.dataset.propertyId && document.querySelector('meta[name="description"]')?.content) || `Explore ${data.title || 'this stay'} in ${data.location || 'coastal Kenya'}. View amenities and photos, then request current rates and availability from PwaniStays.`;
     document.title = pageTitle;
     const descMeta = document.querySelector('meta[name="description"]');
     if (descMeta) descMeta.content = pageDescription;

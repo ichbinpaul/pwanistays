@@ -133,3 +133,16 @@ and can cache old ones. Newly shared `/stays/` URLs provide unit-specific static
 metadata; old `property.html?id=...` or `/?property=...` links may retain generic
 cached previews. Existing messages are not rewritten. This feature is independent
 of native WhatsApp catalogue eligibility and API activation.
+
+## Reviewed copy and location guides
+
+`content/property-copy.json` supplies reviewed descriptions and concise search
+summaries for selected units. The source exporter checks the recorded public
+facts before applying the copy; changed facts skip the editorial override and
+print the affected UUID for review. Generated pages show the reviewed paragraphs
+in an About this stay section and retain the search summary after browser
+hydration. See `content/README.md` for adding further units.
+
+Run `python3 scripts/build_location_guides.py` after refreshing the source to keep
+the Nyali, Diani and Shanzu guides linked to active inventory. The hourly refresh
+already generates and commits these guide pages.

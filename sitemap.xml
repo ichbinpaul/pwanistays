@@ -12,6 +12,10 @@
   <url><loc>https://pwanistays.com/privacy.html</loc></url>
   <url><loc>https://pwanistays.com/terms.html</loc></url>
   <url><loc>https://pwanistays.com/cancellation.html</loc></url>
+  <url><loc>https://pwanistays.com/guides/</loc></url>
+  <url><loc>https://pwanistays.com/guides/nyali/</loc></url>
+  <url><loc>https://pwanistays.com/guides/diani/</loc></url>
+  <url><loc>https://pwanistays.com/guides/shanzu/</loc></url>
   <!-- property-sitemap.xml is maintained alongside the hourly property pages.
        Both sitemap URLs are advertised in robots.txt. -->
 </urlset>

@@ -72,6 +72,7 @@ def render(snapshot):
     <h1 class="pw-title">Apartments, villas and holiday stays on Kenya’s coast</h1>
     <p class="pw-lead">Browse {len(rows)} listed units by location. Open a property to see its photos and amenities, select your dates and request a personalised quotation.</p>
     <p>Listings describe accommodation offered through PwaniStays. Availability and total rates are confirmed individually for your dates.</p>
+    <p><a href="/guides/">Read the Nyali, Diani and Shanzu accommodation guides</a> to compare areas and plan your stay.</p>
     <nav class="directory-locations" aria-label="Browse accommodation by location">{' '.join(links)}</nav>
     {''.join(sections)}
     <p><a href="/how-it-works.html">How booking works</a> · <a href="/experiences.html">Explore experiences</a> · <a href="/#contact">Contact PwaniStays</a></p>

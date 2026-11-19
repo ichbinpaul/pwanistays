@@ -262,6 +262,13 @@ def main(argv: list[str] | None = None) -> int:
     try:
         base, key = public_config()
         snapshot = build_snapshot(base, key, args.workers)
+        copy_path = ROOT / "content/property-copy.json"
+        if copy_path.exists():
+            from content_copy import apply_copy
+            snapshot, copy_status = apply_copy(snapshot, json.loads(copy_path.read_text(encoding="utf-8")))
+            print(f"Reviewed descriptions: {len(copy_status['applied'])}; facts needing review: {len(copy_status['needs_review'])}")
+            if copy_status['needs_review']:
+                print("Copy skipped after listing facts changed: " + ", ".join(copy_status['needs_review']))
         registry_path = bootstrap_path = registry = bootstrap = None
         if args.routing_settings:
             # Routes stay opt-in for older callers and offline source fixtures.

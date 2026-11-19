@@ -282,7 +282,15 @@ def prerender_body(template, row):
                                          ("pwMainImage", cover, ("hidden", "data-seo-image", "data-seo-source"))]:
         node = element(element_id)
         edits.append((node["start"], node["open_end"], opening_tag(node, changes, remove)))
-    summary = '<p class="pw-muted" id="propertySummary">' + escape(row["description"].strip()) + "</p>"
+    summary = '<p class="pw-muted" id="propertySummary">' + escape((row.get("seo_summary") or row["description"]).strip()) + "</p>"
+    from content_copy import AREA_GUIDES
+    guide = AREA_GUIDES.get(row.get("location"))
+    if guide:
+        summary += f'<p><a href="/guides/{guide}/">Where to stay in {escape(row["location"])}: area and booking guide</a></p>'
+    if row.get("seo_summary") and "propertyDescription" in parsed.elements:
+        content("propertyDescription", "".join("<p>" + escape(p) + "</p>" for p in row["description"].split("\n\n")))
+        node = element("propertyAbout")
+        edits.append((node["start"], node["open_end"], opening_tag(node, {}, ("hidden",))))
     if "propertySummary" in parsed.elements:
         node = element("propertySummary")
         edits.append((node["start"], node["end"], summary))
@@ -328,7 +336,7 @@ def render_property(template, row):
     validate_source({"version": 1, "properties": [row]})
     parsed = TemplateHead(template)
     title = row["title"].strip() + " | PwaniStays"
-    description = row["description"].strip()
+    description = (row.get("seo_summary") or row["description"]).strip()
     url, image = canonical_url(row), row.get("seo_image") or row["images"][0]
     values = [
         ("name", "description", description), ("name", "robots", "index,follow,max-image-preview:large"),

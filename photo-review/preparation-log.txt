@@ -1,0 +1,20 @@
+Prepared nguuni-haller-park-mombasa-giraffes: 360px 36.2 KiB, 720px 131.4 KiB
+Traceback (most recent call last):
+  File "/home/runner/work/pwanistays/pwanistays/scripts/build_experience_images.py", line 132, in prepare
+    data = read_original(row, cache, download)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/pwanistays/pwanistays/scripts/build_experience_images.py", line 74, in read_original
+    raise ValueError('Unexpected photo download host')
+ValueError: Unexpected photo download host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/pwanistays/pwanistays/scripts/build_experience_images.py", line 212, in <module>
+    main()
+  File "/home/runner/work/pwanistays/pwanistays/scripts/build_experience_images.py", line 202, in main
+    prepared = prepare(rows, args.cache, args.download)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/pwanistays/pwanistays/scripts/build_experience_images.py", line 142, in prepare
+    raise ValueError(f"Cannot prepare {row['stem']}: {exc}") from exc
+ValueError: Cannot prepare mamba-village-mombasa-crocodiles: Unexpected photo download host

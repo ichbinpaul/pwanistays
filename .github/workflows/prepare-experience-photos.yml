@@ -2,9 +2,6 @@ name: Prepare experience destination photographs
 
 on:
   workflow_dispatch:
-  push:
-    branches: [fix/experience-destination-photos]
-    paths: [content/experience-photo-sources.json, scripts/build_experience_images.py, .github/workflows/prepare-experience-photos.yml]
 
 permissions:
   contents: write
@@ -24,7 +21,7 @@ jobs:
           python-version: '3.12'
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Download and optimize the reviewed original photographs
-        run: python3 -u scripts/build_experience_images.py --download > photo-review/preparation-log.txt 2>&1
+        run: python3 -u scripts/build_experience_images.py --download
       - name: Render the experience pages with local photographs
         run: python3 scripts/build_experience_pages.py
       - name: Verify the site generators
@@ -36,14 +33,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Prepare optimized local photographs for every experience"
-          git push
-      - name: Save public photo preparation diagnostics
-        if: failure()
-        run: |
-          if [ ! -f photo-review/preparation-log.txt ]; then exit 0; fi
-          git add photo-review/preparation-log.txt
-          if git diff --cached --quiet; then exit 0; fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Record photo preparation diagnostics"
           git push

@@ -4,6 +4,7 @@ from pathlib import Path
 from html import escape as e
 from urllib.parse import urlencode
 import json
+import re
 from site_chrome import SITE_FOOTER
 from build_whatsapp_catalogue import atomic_write
 R=Path(__file__).resolve().parents[1]
@@ -19,6 +20,53 @@ def render_photo(image, *, hero=False):
   responsive=f' srcset="{e(image["srcset"],quote=True)}" sizes="{e(image["sizes"],quote=True)}"'
  caption='<figcaption>'+e(image['caption'])+'</figcaption>' if image.get('caption') else ''
  return f'<figure class="{"exp-hero-photo" if hero else "trip-card-photo"}"><img src="{src}"{responsive} width="{image["width"]}" height="{image["height"]}" {attributes} decoding="async" alt="{e(image["alt"],quote=True)}">{caption}</figure>'
+
+def render_photo_credits(images):
+ credits=[]
+ seen=set()
+ for image in images:
+  url=image.get('attribution_url')
+  if not url or url in seen:continue
+  seen.add(url)
+  photo=e(image.get('caption') or image['alt'])
+  author=e(image.get('author') or 'See the source for authorship')
+  license_url=image.get('license')
+  license_name=e(image.get('license_name') or 'Licence details')
+  license_link=f' · <a href="{e(license_url,quote=True)}" target="_blank" rel="noopener noreferrer">{license_name}</a>' if license_url else ''
+  credits.append(f'<li><a href="{e(url,quote=True)}" target="_blank" rel="noopener noreferrer">{photo}</a> — {author}{license_link}. Resized and compressed for the web.</li>')
+ return '<div class="exp-wrap trip-photo-credits"><details><summary>Photography credits</summary><ul>'+''.join(credits)+'</ul></details></div>' if credits else ''
+
+def refresh_overview_photos(content, document):
+ """Keep the three navigation photos in sync with the destination covers."""
+ for group in document['categories']:
+  hero=group.get('hero_image')
+  if not hero:continue
+  image=dict(hero);image.pop('caption',None)
+  image['sizes']='(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 29vw, 384px'
+  figure=render_photo(image).replace('class="trip-card-photo"','class="exp-category-photo"')
+  pattern=r'(<a class="exp-category"[^>]*href="/'+re.escape(group['slug'])+r'\.html">)<figure class="exp-category-photo">.*?</figure>'
+  content,count=re.subn(pattern,lambda match:match.group(1)+figure,content,count=1,flags=re.S)
+  if count!=1:raise ValueError('Cannot find the overview photo for '+group['slug'])
+ # Optimize the overview's existing Fort Jesus and Diani photos as well.
+ for group in document['categories']:
+  for trip in group['items']:
+   image=trip.get('image',{})
+   original=image.get('source','')
+   if not original.startswith('/images/') or original==image.get('src'):continue
+   pattern=r'<img\b[^>]*src="'+re.escape(original)+r'"[^>]*>'
+   match=re.search(pattern,content)
+   if not match:continue
+   hero='fetchpriority="high"' in match.group(0)
+   tag=re.search(r'<img\b[^>]*>',render_photo(image,hero=hero)).group(0)
+   content=content[:match.start()]+tag+content[match.end():]
+   if hero:
+    preload='<link rel="preload" as="image" href="'+e(image['src'],quote=True)+'" imagesrcset="'+e(image['srcset'],quote=True)+'" imagesizes="'+e(image['sizes'],quote=True)+'" fetchpriority="high">'
+    content=re.sub(r'<link\b[^>]*rel="preload"[^>]*href="'+re.escape(original)+r'"[^>]*>',lambda _:preload,content)
+   content=content.replace('https://pwanistays.com'+original,'https://pwanistays.com'+image['src'])
+ photos=[group['hero_image'] for group in document['categories'] if group.get('hero_image')]
+ content=re.sub(r'<div class="exp-wrap trip-photo-credits">.*?</div>','',content,flags=re.S)
+ content=content.replace('</main>',render_photo_credits(photos)+'</main>')
+ return content
 configs=[('coastal-cultural','package','Coastal & Cultural','Sea air, local stories and time to explore.','Explore coastal heritage, marine outings and days by the sea. Start with an idea, then talk to our team about your dates and departure point.','all-packages','/images/Old_Town_Mombasa_2025_PwaniStays.jpg','Old Town, Mombasa'),('safari','safari','Safari Adventures','Make room for the wild.','Compare Kenya safari ideas by route, time and the kind of trip you have in mind. Our team will help you check travel arrangements and a current quotation.','safari-packages',None,None),('nairobi','experience','Nairobi & Inland','A different side of Kenya.','City discoveries, cultural visits and time in nature. Explore Nairobi and inland trip ideas, then ask us what can fit your schedule.','inland-packages',None,None)]
 
 def render_pages(document):
@@ -51,6 +99,8 @@ def render_pages(document):
    old='<link rel="preload" as="image" href="'+photo+'" fetchpriority="high">'
    preload='<link rel="preload" as="image" href="'+e(photo,quote=True)+'" imagesrcset="'+e(hero['srcset'],quote=True)+'" imagesizes="'+e(hero['sizes'],quote=True)+'" fetchpriority="high">'
    html=html.replace(old,preload)
+  photos=([hero] if hero else [])+[item['image'] for item in items if item.get('image')]
+  html=html.replace('</main>',render_photo_credits(photos)+'</main>')
   html=html.replace('<span aria-hidden="true">↗</span>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>')
   pages[slug+'.html']=html.replace('<html lang="en">','<html lang="en">'+MARKER)
  return pages
@@ -58,11 +108,14 @@ def render_pages(document):
 def main():
  document=json.loads((R/'content/experience-trips.json').read_text())
  pages=render_pages(document)
+ overview=R/'experiences.html'
+ overview_html=refresh_overview_photos(overview.read_text(),document)
  for name in pages:
   target=R/name
   if target.is_symlink() or (target.exists() and MARKER not in target.read_text()):raise ValueError('Refusing an unowned experience page')
  for name,html in pages.items():
   target=R/name;data=html.encode()
   if not target.exists() or target.read_bytes()!=data:atomic_write(target,data)
+ if overview.read_text()!=overview_html:atomic_write(overview,overview_html.encode())
  print('Generated 3 experience pages from preserved trip content')
 if __name__=='__main__':main()

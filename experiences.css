@@ -20,3 +20,5 @@
 
 .experiences-page .menu-toggle i::before{content:'';display:block;width:21px;height:16px;border-block:2px solid currentColor;background:linear-gradient(currentColor,currentColor) center/100% 2px no-repeat}
 .experiences-page .whatsapp-float i::before{content:"";display:block;width:30px;height:30px;background:center/contain no-repeat url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6.2%2024.3%204%2029l6.2-1.6A13%2013%200%201%200%206.2%2024.3Z%22%2F%3E%3Cpath%20d%3D%22M11%209.5c-3%201-.8%206.3%202.6%209.4s7.5%204.4%208.6%201.5l-3.4-2-1.4%201c-2.4-.9-4.1-2.6-5-4.8l1.1-1.4Z%22%2F%3E%3C%2Fsvg%3E")}
+
+.trip-photo-credits{padding-bottom:35px;font-size:.75rem;color:#53665e}.trip-photo-credits summary{cursor:pointer}.trip-photo-credits ul{padding-left:20px;margin-top:15px}.trip-photo-credits li{margin-block:8px}.trip-photo-credits a{text-underline-offset:3px}

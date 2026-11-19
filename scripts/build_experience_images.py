@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'content/experience-photo-sources.json'
 CONTENT = ROOT / 'content/experience-trips.json'
 OUTPUT = ROOT / 'images/experiences'
-ALLOWED_HOSTS = {'commons.wikimedia.org', 'upload.wikimedia.org'}
+ALLOWED_HOSTS = {'commons.wikimedia.org', 'upload.wikimedia.org', 'thumb.wikimedia.org'}
 CARD_SIZES = '(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px'
 HERO_SIZES = '(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px'
 
@@ -70,7 +70,7 @@ def read_original(row, cache, download):
     if parsed.scheme != 'https' or parsed.hostname not in ALLOWED_HOSTS:
         raise ValueError('Only original Wikimedia photo sources can be downloaded')
     resolved = commons_info(row, cache, download) if parsed.hostname == 'commons.wikimedia.org' else source
-    if urlsplit(resolved).hostname not in ALLOWED_HOSTS:
+    if urlsplit(resolved).scheme != 'https' or urlsplit(resolved).hostname not in ALLOWED_HOSTS:
         raise ValueError('Unexpected photo download host')
     path = cache / (hashlib.sha256(source.encode()).hexdigest() + '.image')
     if path.exists():
@@ -98,15 +98,18 @@ def encode_variants(row, data):
         image = ImageOps.exif_transpose(original).convert('RGB')
     if image.width < 300 or image.height < 180:
         raise ValueError(f"Source too small: {row['stem']}")
-    # No filters, generated scenery or destructive cropping: retain the photo.
+    # Match the display frame, retaining the reviewed subject and natural colour.
+    # This avoids downloading a tall portrait only to hide most of it with CSS.
     widths = (640, 1200) if row['role'] == 'hero' else (360, 720)
+    ratio = 4 / 3 if row['role'] == 'hero' else 3 / 2
+    position = tuple(float(p.rstrip('%')) / 100 for p in row.get('position', '50% 50%').split())
     variants = []
     for requested in widths:
-        width = min(requested, image.width)
+        width = min(requested, image.width, int(image.height * ratio))
         if any(v['width'] == width for v in variants):
             continue
-        height = round(image.height * width / image.width)
-        small = image.resize((width, height), Image.Resampling.LANCZOS)
+        height = round(width / ratio)
+        small = ImageOps.fit(image, (width, height), Image.Resampling.LANCZOS, centering=position)
         budget = 24_000 if width <= 360 else 75_000 if width <= 720 else 150_000
         for quality in (76, 72, 68, 64, 60):
             encoded = BytesIO()

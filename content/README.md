@@ -54,6 +54,15 @@ Quotation links include the selected trip's title. Proposed activities and
 inclusions still require confirmation for the guest's dates; do not publish
 guaranteed sightings, availability or prices without current confirmation.
 
+Trip photographs and hero images are also recorded in `experience-trips.json`,
+including their original source, descriptive alt text and any licence link.
+New stock photos are served as local WebP files in `images/experiences/`, with
+360/720-pixel card variants and larger hero variants. Keep the responsive image
+metadata and actual file dimensions in sync when replacing a photo. Recognisable
+destinations can be named; thematic stock uses an “inspiration” caption rather
+than claiming to show a particular attraction. Card photos load lazily; hero
+photos load immediately. The overview reuses these photos to avoid extra assets.
+
 ## Search Console measurement
 
 The supplied seven-day screenshot has a Page filter: 3 clicks, 132 impressions,

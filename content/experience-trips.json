@@ -32,7 +32,15 @@
                 "Professional guide and refreshments"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/Haller_Park_PwaniStays.jpg",
+            "width": 330,
+            "height": 247,
+            "alt": "Green trees beside the water at Haller Park",
+            "caption": "Haller Park, Mombasa",
+            "source": "Existing PwaniStays destination photography"
+          }
         },
         {
           "title": "Mamba Village + Mombasa Marine Park Adventure",
@@ -62,7 +70,19 @@
                 "Guide and lunch stop"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/coral-720.webp",
+            "srcset": "/images/experiences/coral-360.webp 360w, /images/experiences/coral-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "A scuba diver observing fish beneath the water",
+            "caption": "Marine adventures · inspiration",
+            "source": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Mombasa Old Town & Cultural Day",
@@ -91,7 +111,15 @@
                 "Local lunch experience"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/Old_Town_Mombasa_2025_PwaniStays.jpg",
+            "width": 960,
+            "height": 640,
+            "alt": "A street lined with historic buildings in Mombasa Old Town",
+            "caption": "Old Town, Mombasa",
+            "source": "Existing PwaniStays destination photography"
+          }
         },
         {
           "title": "Diani Beach & Leisure Day",
@@ -120,7 +148,15 @@
                 "Beach equipment (umbrella, chairs)"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/Diani_Beach_PwaniStays.jpg",
+            "width": 960,
+            "height": 720,
+            "alt": "White sand and turquoise water at Diani Beach",
+            "caption": "Diani Beach",
+            "source": "Existing PwaniStays destination photography"
+          }
         },
         {
           "title": "Kisite–Wasini Marine Safari",
@@ -150,7 +186,19 @@
                 "Seafood lunch on Wasini Island"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/coral-720.webp",
+            "srcset": "/images/experiences/coral-360.webp 360w, /images/experiences/coral-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "A scuba diver observing fish beneath the water",
+            "caption": "Marine adventures · inspiration",
+            "source": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Shimba Hills Nature & Waterfall Experience",
@@ -180,7 +228,19 @@
                 "Picnic lunch with refreshments"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/forest-720.webp",
+            "srcset": "/images/experiences/forest-360.webp 360w, /images/experiences/forest-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Sunlight falling across a path through green woodland",
+            "caption": "Forest walks · inspiration",
+            "source": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Coastal Outdoor & Active Experience",
@@ -209,7 +269,15 @@
                 "Snacks and refreshments"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/Nyali_beach_PwaniStays.jpg",
+            "width": 960,
+            "height": 720,
+            "alt": "The shoreline at Nyali Beach",
+            "caption": "Nyali Beach, Mombasa",
+            "source": "Existing PwaniStays destination photography"
+          }
         },
         {
           "title": "Tsavo East Game Safari with Train-to-Voi + Overnight",
@@ -240,7 +308,19 @@
                 "Professional safari guide"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/elephant-720.webp",
+            "srcset": "/images/experiences/elephant-360.webp 360w, /images/experiences/elephant-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "An African elephant beside green woodland",
+            "caption": "Wildlife inspiration",
+            "source": "https://images.unsplash.com/photo-1549366021-9f761d450615",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Cultural & Community Immersion",
@@ -269,9 +349,25 @@
                 "Authentic local lunch"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/Fort_Jesus,_2025_PwaniStays.jpg",
+            "width": 960,
+            "height": 641,
+            "alt": "The historic stone walls of Fort Jesus in Mombasa",
+            "caption": "Fort Jesus, Mombasa",
+            "source": "Existing PwaniStays destination photography"
+          }
         }
-      ]
+      ],
+      "hero_image": {
+        "src": "/images/Old_Town_Mombasa_2025_PwaniStays.jpg",
+        "width": 960,
+        "height": 640,
+        "alt": "A street lined with historic buildings in Mombasa Old Town",
+        "caption": "Old Town, Mombasa",
+        "source": "Existing PwaniStays destination photography"
+      }
     },
     {
       "slug": "safari",
@@ -308,7 +404,19 @@
                 "Return flights from Nairobi (optional)"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/zebras-720.webp",
+            "srcset": "/images/experiences/zebras-360.webp 360w, /images/experiences/zebras-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Zebras grazing on open plains beneath a hot-air balloon",
+            "caption": "Safari inspiration",
+            "source": "https://images.unsplash.com/photo-1519659528534-7fd733a832a0",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Amboseli Elephant Experience",
@@ -341,7 +449,19 @@
                 "Hotel pickup/dropoff in Nairobi"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/kilimanjaro-720.webp",
+            "srcset": "/images/experiences/kilimanjaro-360.webp 360w, /images/experiences/kilimanjaro-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Mount Kilimanjaro rising above open plains",
+            "caption": "Mount Kilimanjaro",
+            "source": "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6",
+            "license": "https://unsplash.com/license",
+            "illustrative": false
+          }
         },
         {
           "title": "Tsavo Wilderness Adventure",
@@ -374,7 +494,19 @@
                 "Camping equipment (if camping)"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/elephant-720.webp",
+            "srcset": "/images/experiences/elephant-360.webp 360w, /images/experiences/elephant-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "An African elephant beside green woodland",
+            "caption": "Wildlife inspiration",
+            "source": "https://images.unsplash.com/photo-1549366021-9f761d450615",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Samburu Special 5 Safari",
@@ -407,7 +539,19 @@
                 "Cultural village visit"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/giraffe-720.webp",
+            "srcset": "/images/experiences/giraffe-360.webp 360w, /images/experiences/giraffe-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "A giraffe looking towards the camera",
+            "caption": "Wildlife inspiration",
+            "source": "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Lake Nakuru Flamingo Safari",
@@ -440,7 +584,19 @@
                 "Professional guide"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/golden-plains-720.webp",
+            "srcset": "/images/experiences/golden-plains-360.webp 360w, /images/experiences/golden-plains-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Golden light across open savannah",
+            "caption": "Safari landscapes · inspiration",
+            "source": "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Aberdare Mountain Forest Safari",
@@ -473,7 +629,19 @@
                 "All game viewing activities"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/forest-720.webp",
+            "srcset": "/images/experiences/forest-360.webp 360w, /images/experiences/forest-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Sunlight falling across a path through green woodland",
+            "caption": "Forest walks · inspiration",
+            "source": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Meru National Park Adventure",
@@ -506,7 +674,19 @@
                 "Rhino sanctuary visit"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/game-drive-720.webp",
+            "srcset": "/images/experiences/game-drive-360.webp 360w, /images/experiences/game-drive-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "A safari vehicle on grassland at sunset",
+            "caption": "Game drives · inspiration",
+            "source": "https://images.unsplash.com/photo-1516426122078-c23e76319801",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Hell's Gate & Lake Naivasha Adventure",
@@ -539,9 +719,33 @@
                 "Professional guide"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/savannah-720.webp",
+            "srcset": "/images/experiences/savannah-360.webp 360w, /images/experiences/savannah-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "An acacia tree on open grassland at sunset",
+            "caption": "Savannah inspiration",
+            "source": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         }
-      ]
+      ],
+      "hero_image": {
+        "src": "/images/experiences/savannah-1200.webp",
+        "srcset": "/images/experiences/savannah-720.webp 720w, /images/experiences/savannah-1200.webp 1200w",
+        "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px",
+        "width": 1200,
+        "height": 800,
+        "alt": "An acacia tree on open grassland at sunset",
+        "caption": "Savannah inspiration",
+        "source": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5",
+        "license": "https://unsplash.com/license",
+        "illustrative": true
+      }
     },
     {
       "slug": "nairobi",
@@ -578,7 +782,19 @@
                 "Giraffe feeding pellets"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/giraffe-720.webp",
+            "srcset": "/images/experiences/giraffe-360.webp 360w, /images/experiences/giraffe-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "A giraffe looking towards the camera",
+            "caption": "Wildlife inspiration",
+            "source": "https://images.unsplash.com/photo-1547721064-da6cfb341d50",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Karen Blixen & Cultural Heritage Tour",
@@ -611,7 +827,19 @@
                 "Bottled water"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/nairobi-city-720.webp",
+            "srcset": "/images/experiences/nairobi-city-360.webp 360w, /images/experiences/nairobi-city-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Nairobi city centre with the I&M Bank Tower",
+            "caption": "Nairobi city centre",
+            "source": "https://images.unsplash.com/photo-1611144727915-ef30a08aaeb3",
+            "license": "https://unsplash.com/license",
+            "illustrative": false
+          }
         },
         {
           "title": "Karura Forest Adventure & City Views",
@@ -644,7 +872,19 @@
                 "Safety equipment"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/forest-720.webp",
+            "srcset": "/images/experiences/forest-360.webp 360w, /images/experiences/forest-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Sunlight falling across a path through green woodland",
+            "caption": "Forest walks · inspiration",
+            "source": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Nairobi Food & Market Exploration",
@@ -677,7 +917,19 @@
                 "Recipe cards to take home"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/nairobi-city-720.webp",
+            "srcset": "/images/experiences/nairobi-city-360.webp 360w, /images/experiences/nairobi-city-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Nairobi city centre with the I&M Bank Tower",
+            "caption": "Nairobi city centre",
+            "source": "https://images.unsplash.com/photo-1611144727915-ef30a08aaeb3",
+            "license": "https://unsplash.com/license",
+            "illustrative": false
+          }
         },
         {
           "title": "Lake Naivasha & Crescent Island",
@@ -710,7 +962,16 @@
                 "Professional nature guide"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/Haller_Park_PwaniStays.jpg",
+            "width": 330,
+            "height": 247,
+            "alt": "Trees reflected in a quiet pond",
+            "caption": "Waterside nature · inspiration",
+            "source": "Existing PwaniStays destination photography",
+            "illustrative": true
+          }
         },
         {
           "title": "Ngong Hills & Kibera Cultural Insight",
@@ -743,7 +1004,19 @@
                 "Bottled water and snacks"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/forest-720.webp",
+            "srcset": "/images/experiences/forest-360.webp 360w, /images/experiences/forest-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Sunlight falling across a path through green woodland",
+            "caption": "Forest walks · inspiration",
+            "source": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Tea Plantation Experience & Limuru Escapes",
@@ -776,7 +1049,19 @@
                 "Tea samples to take home"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/tea-720.webp",
+            "srcset": "/images/experiences/tea-360.webp 360w, /images/experiences/tea-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "A cup of tea beside biscuits",
+            "caption": "Tea tasting · inspiration",
+            "source": "https://images.unsplash.com/photo-1544787219-7f47ccb76574",
+            "license": "https://unsplash.com/license",
+            "illustrative": true
+          }
         },
         {
           "title": "Nairobi By Night — Entertainment & Culture",
@@ -809,9 +1094,33 @@
                 "Performance tickets"
               ]
             ]
-          ]
+          ],
+          "image": {
+            "src": "/images/experiences/nairobi-night-720.webp",
+            "srcset": "/images/experiences/nairobi-night-360.webp 360w, /images/experiences/nairobi-night-720.webp 720w",
+            "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
+            "width": 720,
+            "height": 480,
+            "alt": "Nairobi skyline reflected in water after dark",
+            "caption": "Nairobi after dark",
+            "source": "https://images.unsplash.com/photo-1596005554384-d293674c91d7",
+            "license": "https://unsplash.com/license",
+            "illustrative": false
+          }
         }
-      ]
+      ],
+      "hero_image": {
+        "src": "/images/experiences/nairobi-city-1200.webp",
+        "srcset": "/images/experiences/nairobi-city-720.webp 720w, /images/experiences/nairobi-city-1200.webp 1200w",
+        "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px",
+        "width": 1200,
+        "height": 800,
+        "alt": "Nairobi city centre with the I&M Bank Tower",
+        "caption": "Nairobi city centre",
+        "source": "https://images.unsplash.com/photo-1611144727915-ef30a08aaeb3",
+        "license": "https://unsplash.com/license",
+        "illustrative": false
+      }
     }
   ]
 }

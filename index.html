@@ -602,20 +602,6 @@
             display: block;
         }
         
-        .mainSwiper .swiper-pagination {
-            bottom: 10px !important;
-        }
-        
-        .mainSwiper .swiper-pagination-bullet {
-            background: white;
-            opacity: 0.7;
-        }
-        
-        .mainSwiper .swiper-pagination-bullet-active {
-            background: var(--primary);
-            opacity: 1;
-        }
-        
         /* ✅ FIX 3 — THUMBNAIL STRIP (PREVENT COLLISION) */
         .thumbSwiper {
             margin-top: 8px;
@@ -1156,7 +1142,7 @@
             margin-top: 30px;
         }
         
-        .testimonial-author h4 {
+        .testimonial-author .reviewer-name {
             color: var(--primary);
             margin-bottom: 5px;
             font-size: 1.1rem;
@@ -2435,7 +2421,7 @@
     
     <!-- Canonical URL -->
     <!-- i18n Translation System -->
-    <link rel="stylesheet" href="/home.css?v=1">
+    <link rel="stylesheet" href="/home.css?v=2">
     <script src="/i18n.js?v=home-1"></script>
     <link rel="canonical" href="https://pwanistays.com/">
 </head>
@@ -2472,14 +2458,14 @@
             <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
-            <ul class="nav-links" role="menubar">
-                <li role="none"><a href="#home" class="active" role="menuitem" data-i18n="nav_home">Home</a></li>
-                <li role="none"><a href="about" role="menuitem" data-i18n="nav_about">About Us</a></li>
-                <li role="none"><a href="/stays" role="menuitem" data-i18n="nav_accommodation">Accommodation</a></li>
+            <ul class="nav-links">
+                <li><a href="#home" class="active" data-i18n="nav_home">Home</a></li>
+                <li><a href="about" data-i18n="nav_about">About Us</a></li>
+                <li><a href="/stays" data-i18n="nav_accommodation">Accommodation</a></li>
                 
                 <!-- Experiences Dropdown -->
-                <li role="none" class="dropdown">
-                    <a href="experiences" role="menuitem" class="dropdown-toggle" data-i18n="nav_experiences">Experiences ▾</a>
+                <li class="dropdown">
+                    <a href="experiences" class="dropdown-toggle" data-i18n="nav_experiences">Experiences ▾</a>
                     <ul class="dropdown-menu">
                         <li><a href="nairobi" data-i18n="nav_nairobi">Nairobi & Inland</a></li>
                         <li><a href="safari" data-i18n="nav_safari">Safari</a></li>
@@ -2487,16 +2473,16 @@
                     </ul>
                 </li>
                 
-                <li role="none"><a href="how-it-works" role="menuitem" data-i18n="nav_how_it_works">How It Works</a></li>
-                <li role="none"><a href="/partners" role="menuitem">List Your Property</a></li>
-                <li role="none"><a href="#contact" role="menuitem" data-i18n="nav_contact">Contact</a></li>
+                <li><a href="how-it-works" data-i18n="nav_how_it_works">How It Works</a></li>
+                <li><a href="/partners">List Your Property</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
                 
                 <!-- Header Search -->
-                <li role="none" class="header-search-container" id="mobileSearchContainer">
+                <li class="header-search-container" id="mobileSearchContainer">
                     <button id="searchToggle" aria-label="Toggle search">
                         <i class="fas fa-search"></i>
                     </button>
-                    <input type="text" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
+                    <input type="search" id="headerSearch" placeholder="Search beachfront, villa, Nyali..." aria-label="Search properties">
                 </li>
             </ul>
             <!-- Navbar Right: Book Now + Language Switcher -->
@@ -2553,10 +2539,11 @@
                         <option value="Vipingo">Vipingo</option>
                     </select>
                 </div>
-                <div class="search-input date-range-input" onclick="showCalendar()">
-                    <label for="dateRange">Travel dates</label>
-                    <input type="text" placeholder="Check-in → Check-out" id="dateRange" aria-label="Select check-in and check-out dates" readonly aria-haspopup="dialog" aria-controls="calendarContainer" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showCalendar();}" data-i18n-placeholder="search_checkin_checkout">
-                </div>
+                <button type="button" class="search-input date-range-input" id="dateRange"
+                        aria-haspopup="dialog" aria-controls="calendarContainer" aria-expanded="false" onclick="showCalendar()">
+                    <span class="date-range-label">Travel dates</span>
+                    <span id="dateRangeValue" data-i18n="search_checkin_checkout">Check-in → Check-out</span>
+                </button>
                 <div class="search-input">
                     <label for="propertyType">Accommodation</label>
                     <!-- UPDATED: Property type dropdown with normalized values - ADDED VILLA -->
@@ -3436,16 +3423,15 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             function updateDateRangeInput() {
-                const dateRangeInput = document.getElementById('dateRange');
-                if (dateRangeInput) {
-                    if (selectedCheckin && selectedCheckout) {
-                        dateRangeInput.value = `${formatDate(selectedCheckin)} → ${formatDate(selectedCheckout)}`;
-                    } else if (selectedCheckin) {
-                        dateRangeInput.value = `${formatDate(selectedCheckin)} → ${window.i18n ? window.i18n.t('cal_select_checkout') : 'Select checkout'}`;
-                    } else {
-                        dateRangeInput.value = '';
-                        dateRangeInput.placeholder = window.i18n ? window.i18n.t('search_checkin_checkout') : 'Add dates';
-                    }
+                const dateRangeValue = document.getElementById('dateRangeValue');
+                if (selectedCheckin) {
+                    dateRangeValue.removeAttribute('data-i18n');
+                    const checkout = selectedCheckout ? formatDate(selectedCheckout) :
+                        (window.i18n ? window.i18n.t('cal_select_checkout') : 'Select checkout');
+                    dateRangeValue.textContent = `${formatDate(selectedCheckin)} → ${checkout}`;
+                } else {
+                    dateRangeValue.setAttribute('data-i18n', 'search_checkin_checkout');
+                    dateRangeValue.textContent = window.i18n ? window.i18n.t('search_checkin_checkout') : 'Check-in → Check-out';
                 }
             }
 
@@ -3854,7 +3840,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                          onerror="this.onerror=null;this.src='/logo-header.png'">
                                 </div>
                             </div>
-                            <div class="swiper-pagination"></div>
+                            <div class="gallery-controls" hidden>
+                                <button type="button" class="gallery-prev" aria-label="Previous photo"><span aria-hidden="true">‹</span></button>
+                                <div class="swiper-pagination"></div>
+                                <button type="button" class="gallery-next" aria-label="Next photo"><span aria-hidden="true">›</span></button>
+                            </div>
                         </div>
                         <div class="swiper thumbSwiper" id="thumb-${property.id}" style="display: none;">
                             <div class="swiper-wrapper"></div>
@@ -3942,7 +3932,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <div class="testimonial-content">
                                 <p>"${escapeHtml(review.comment)}"</p>
                                 <div class="testimonial-author">
-                                    <h4>${escapeHtml(review.name)}</h4>
+                                    <div class="reviewer-name">${escapeHtml(review.name)}</div>
                                     ${loc ? `<p>From ${escapeHtml(loc)}</p>` : ''}
                                     <div class="rating">${filled}${empty}</div>
                                 </div>
@@ -4321,15 +4311,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     thumbSwiperElement.style.display = 'none';
                 }
                 
+                const controls = mainSwiperElement.querySelector('.gallery-controls');
+                controls.hidden = images.length < 2;
                 const mainSwiper = new Swiper(mainSwiperElement, {
                     spaceBetween: 0,
                     loop: images.length > 1,
                     pagination: {
-                        el: mainSwiperElement.querySelector('.swiper-pagination'),
-                        clickable: true,
-                        dynamicBullets: true
+                        el: controls.querySelector('.swiper-pagination'),
+                        type: 'fraction'
                     },
-                    navigation: false,
+                    navigation: {
+                        prevEl: controls.querySelector('.gallery-prev'),
+                        nextEl: controls.querySelector('.gallery-next')
+                    },
+                    a11y: { prevSlideMessage: 'Previous photo', nextSlideMessage: 'Next photo' },
                     thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
                     autoplay: false,
                     effect: 'slide',

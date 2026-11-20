@@ -1,6 +1,7 @@
 {
   "version": 1,
   "slugs": {
+    "067f53e8-cac5-4556-a4ed-775ba8425583": "luxurious-3br-kikambala",
     "0886efb2-8054-48b9-97bc-332fc59132e2": "modern-studio-bamburi",
     "10906602-d820-4563-a202-2a1afd537f7b": "stylish-studio-3rd-avenue-nyali",
     "11680760-81be-408a-bfbd-d6459f170357": "luxurious-2br-aqua-gardens-nyali",
@@ -14,11 +15,13 @@
     "1b268d2a-0496-4621-8a9e-39c69620e953": "elegant-sunrise-2br-nyali",
     "1bf2a1ff-c055-4d99-9126-90dff01e2204": "spacious-near-studio-kilifi",
     "1cb21d28-4685-4414-a2b5-3dd5ae0c65fe": "modern-coastal-studio-bamburi",
+    "1ec3fc4d-8ca8-41d0-882d-d0148d1fe356": "cozy-affordable-studio-nyali",
     "1f409d43-7529-49c7-a3ca-3b207c0c4807": "modern-studio-3rd-avenue-nyali",
     "1fc1be10-6383-4da1-9f4f-d5fdfff68954": "luxury-villa-with-studio-diani",
     "233f5f0b-5a10-4a35-a0da-9d88e1c6cbaf": "elegant-coastal-3br-nyali",
     "23a034b5-5ddc-40af-aa6e-ca6170dae079": "beachfront-studio-diani",
     "23fed633-7ef4-4e24-847c-59e178eec1b4": "comfortable-1br-bamburi",
+    "2a0efb61-1b0e-489c-82ba-379943dbb9b1": "luxury-2br-beachfront-kikambala",
     "2ab7b255-e0bc-4de6-a28b-245cfc26a667": "premium-1br-oceanview-shanzu",
     "2bd155cb-7339-427f-bfd4-5fdaf3c499d2": "modern-studio-nyali",
     "2e57c491-c131-4ff5-a728-262a45704194": "elegant-3br-aqua-gardens-nyali",
@@ -36,6 +39,7 @@
     "400c4393-7d02-4221-9358-29385986e5e8": "stylish-1br-seaview-shanzu",
     "415f67f4-9267-44ff-a579-a0831c12c947": "stylish-2br-5th-avenue-nyali",
     "4664953e-d22b-417b-97c4-1ed1724a8a11": "cozy-1br-stay-kilifi",
+    "468230c2-066b-4a78-9a2d-2fa9d792db21": "luxurious-4br-nyali",
     "48f39e49-e7b4-4b08-8a16-3ee047bb9c9c": "cozy-studio-diani",
     "4b092cad-c6b0-4527-a6f6-3e73aa6c5635": "studio-bamburi",
     "4daa0199-13fe-4843-92a3-55000ed88973": "cozy-affordable-studio-bamburi",
@@ -91,12 +95,14 @@
     "a8f50c5d-95f7-42cc-8552-240947bd8a29": "cozy-1br-coastal-stay-bamburi",
     "a931a48c-eaf5-4856-83e8-c45feedd8f21": "elegant-private-4br-malindi",
     "ab59444c-fa56-4548-85f1-f8faf7c293cc": "exquisite-2br-nyali",
+    "ab59b3c8-4fb8-470d-8447-b23b73d9a3b0": "stylish-2br-mt-kenya-road-nyali",
     "abe663af-b427-4163-aa93-5eb8c0e6d3a3": "elegant-getaway-studio-mtwapa",
     "ad664ed4-6fa6-4ca1-a63d-684034591d48": "1br-3rd-avenue-nyali",
     "ae8d0460-f3be-4af0-9540-b30979da3577": "3br-aqua-gardens-nyali",
     "b02d3bb4-a37b-49ab-b971-ce1eacc5593a": "luxurious-seaview-4br-nyali",
     "b1ec2c41-7f0d-4eb5-bd21-3f721e507935": "elegant-2br-3rd-avenue-nyali",
     "b77ff8c4-5d70-43fb-933b-28cfad0d9f56": "cozy-1br-sunset-paradise-shanzu",
+    "bad5c88d-85b0-4998-8a1d-49caa4ced53a": "stylish-with-studio-nyali",
     "bbabc2d3-feb4-4fad-9f81-8ee9e4f9bba9": "luxurious-3rd-avenue-1br-nyali",
     "c144a5d8-ef62-4ace-a580-686f3f7da4b6": "luxurious-1br-nyali",
     "c294be1f-e656-4999-8864-7b3ed393bffe": "cozy-1br-stay-mnarani-kilifi",
@@ -118,6 +124,7 @@
     "d9a71ab4-7d6d-4df6-8f66-68097323a7fa": "modern-1br-nyali-d9a71a",
     "db3e294c-0c39-4034-8728-0836c79f2748": "2br-mtwapa-db3e29",
     "de912b54-f5c6-439e-90da-c38915ba66c3": "serene-3br-seaview-kilifi",
+    "df638127-07b9-4f5a-b5d4-8250411226dd": "stunning-seaview-1st-2br-nyali",
     "df724fbf-caa0-4539-bdb8-cc3b0947a962": "premium-1br-nyali",
     "e51cd2f9-f1ec-44f9-9df2-1c1ebad3ba87": "luxurious-4br-oceanview-nyali",
     "e5ff3b1d-65da-4e93-a003-8e7fff308038": "exquisite-1br-nyali",
@@ -133,7 +140,8 @@
     "f85d6c35-703e-452b-8e28-457ebed96f16": "exquisite-2br-coral-sands-nyali",
     "fb4470ad-5436-4b7b-8e7a-ac79d319bceb": "cozy-studio-3rd-avenue-nyali",
     "fc46ee52-232e-411b-a962-f2e138652d1c": "elegant-coastal-2br-malindi",
-    "ff411e7f-877c-4ca3-a5af-47ae95b4a148": "deluxe-studio-diani"
+    "ff411e7f-877c-4ca3-a5af-47ae95b4a148": "deluxe-studio-diani",
+    "fff071d5-d8a3-4ed0-87e9-7cc950dd4f12": "exquisite-2br-kikambala-fff071"
   },
   "ready_for_redirects": true
 }

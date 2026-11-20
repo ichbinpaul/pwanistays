@@ -42,7 +42,7 @@ def render(snapshot):
 </article>''')
         sections.append(f'<section id="{anchor}" class="directory-section"><h2>Stays in {escape(location)}</h2><div class="directory-grid">' + "\n".join(cards) + '</div></section>')
     schema = {"@context": "https://schema.org", "@type": "CollectionPage",
-              "@id": SITE + "/stays.html", "url": SITE + "/stays.html",
+              "@id": SITE + "/stays", "url": SITE + "/stays",
               "name": "Coastal apartments, villas and holiday stays | PwaniStays",
               "mainEntity": {"@type": "ItemList", "numberOfItems": len(rows),
                   "itemListElement": [{"@type": "ListItem", "position": index + 1,
@@ -56,8 +56,8 @@ def render(snapshot):
   <title>Coastal Apartments, Villas &amp; Holiday Stays | PwaniStays</title>
   <meta name="description" content="Browse PwaniStays apartments, villas and holiday accommodation by location, including Nyali, Bamburi, Diani, Shanzu, Kilifi and Malindi. View photos and request rates.">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <link rel="canonical" href="{SITE}/stays.html">
-  <meta property="og:type" content="website"><meta property="og:url" content="{SITE}/stays.html">
+  <link rel="canonical" href="{SITE}/stays">
+  <meta property="og:type" content="website"><meta property="og:url" content="{SITE}/stays">
   <meta property="og:title" content="Coastal Apartments, Villas &amp; Holiday Stays | PwaniStays">
   <meta property="og:description" content="Browse coastal accommodation by location and view each unit’s photos and amenities.">
   <meta property="og:image" content="{escape(rows[0].get('seo_image') or rows[0]['images'][0], quote=True)}">
@@ -76,7 +76,7 @@ def render(snapshot):
     <p><a href="/guides/">Read the Nyali, Diani and Shanzu accommodation guides</a> to compare areas and plan your stay.</p>
     <nav class="directory-locations" aria-label="Browse accommodation by location">{' '.join(links)}</nav>
     {''.join(sections)}
-    <p><a href="/how-it-works.html">How booking works</a> · <a href="/experiences.html">Explore experiences</a> · <a href="/#contact">Contact PwaniStays</a></p>
+    <p><a href="/how-it-works">How booking works</a> · <a href="/experiences">Explore experiences</a> · <a href="/#contact">Contact PwaniStays</a></p>
   </main>
   {SITE_FOOTER}
 </body></html>

@@ -187,6 +187,12 @@ def audit(root):
                 continue
             local = posixpath.normpath(unquote(parsed.path or "/")).lstrip("/")
             target = root / local
+            # GitHub Pages serves extensionless page URLs from matching HTML files.
+            # A real file or directory index takes precedence over the HTML file.
+            if (local and not parsed.path.endswith("/") and not target.suffix
+                    and not target.is_symlink() and not target.is_file() and not (target / "index.html").is_file()
+                    and local + ".html" in pages):
+                target = root / (local + ".html")
             if not target.resolve().is_relative_to(root):
                 problem(ref, "target_escapes_site_root")
                 continue

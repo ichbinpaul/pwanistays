@@ -309,7 +309,7 @@ def prerender_body(template, row):
     result = template
     for start, end, replacement in sorted(edits, reverse=True):
         result = result[:start] + replacement + result[end:]
-    return result.replace('href="/#stays"', 'href="/stays.html"')
+    return result.replace('href="/#stays"', 'href="/stays"')
 
 
 def structured_data(row):
@@ -321,7 +321,7 @@ def structured_data(row):
          "breadcrumb": {"@id": url + "#breadcrumbs"}},
         {"@type": "BreadcrumbList", "@id": url + "#breadcrumbs", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
-            {"@type": "ListItem", "position": 2, "name": "Accommodation", "item": SITE + "/stays.html"},
+            {"@type": "ListItem", "position": 2, "name": "Accommodation", "item": SITE + "/stays"},
             {"@type": "ListItem", "position": 3, "name": title, "item": url}]}]}
     # JSON-LD is script raw text: HTML entities do not prevent a </script> breakout.
     encoded = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
@@ -393,7 +393,7 @@ def render_tombstone(property_id, url=None, slug=None):
 <body><main class="pw-main pw-container">
   <h1>This property is no longer listed</h1>
   <p>Explore our current accommodation or contact PwaniStays for help choosing a stay.</p>
-  <p><a href="/stays.html">Browse current accommodation</a></p>
+  <p><a href="/stays">Browse current accommodation</a></p>
 </main></body>
 </html>
 '''

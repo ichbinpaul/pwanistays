@@ -23,7 +23,7 @@ from xml.etree import ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://pwanistays.com"
 MAX_BYTES = 2 * 1024 * 1024
-ESSENTIAL = ["/robots.txt", "/sitemap.xml", "/property-sitemap.xml", "/stays.html",
+ESSENTIAL = ["/robots.txt", "/sitemap.xml", "/property-sitemap.xml", "/stays",
              "/header.html", "/header.css", "/i18n.js", "/listing-utils.js",
              "/property.js", "/property-sharing.js", "/property-routes.js",
              "/catalogue/property-slugs.json", "/favicon.ico"]

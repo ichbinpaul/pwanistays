@@ -31,6 +31,20 @@ class AuditTests(unittest.TestCase):
             self.assertEqual(report["counts"]["local_targets_checked"], 3)
             self.assertEqual(report["counts"]["fragments_checked"], 2)
 
+    def test_extensionless_pages_and_directory_indexes_resolve_separately(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            self.put(root, "index.html", '''<a href="/about#team">About</a>
+                <a href="/stays?guests=2#directory">Directory</a>
+                <a href="/stays/unit/">Unit</a><a href="/stays/">Missing index</a>''')
+            self.put(root, "about.html", '<h1 id="team">Our team</h1>')
+            self.put(root, "stays.html", '<h1 id="directory">Directory</h1>')
+            self.put(root, "stays/unit/index.html", '<h1>Unit</h1>')
+            report = mod.audit(root)
+            self.assertEqual(report["counts"]["fragments_checked"], 2)
+            self.assertEqual([(item["url"], item["reason"]) for item in report["broken"]],
+                             [("/stays/", "missing_local_target")])
+
     def test_missing_links_fragments_assets_and_css_imports_are_reported(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

@@ -27,9 +27,9 @@ def shell(title, summary, path, body, schema, image="/logo-mobile.png"):
 <link rel="icon" href="/favicon-32x32.png"><link rel="stylesheet" href="/header.css"><link rel="stylesheet" href="/new-pages.css"><link rel="stylesheet" href="/location-guides.css">
 <script src="/header-loader.js" defer></script><script type="application/ld+json">{structured}</script>
 </head><body><div id="site-header"></div><main class="pw-main pw-container">
-<nav class="pw-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/stays.html">Accommodation</a> / <a href="/guides/">Area guides</a></nav>
+<nav class="pw-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/stays">Accommodation</a> / <a href="/guides/">Area guides</a></nav>
 <h1 class="pw-title">{escape(title)}</h1>{body}
-</main><footer class="pw-footer"><div class="pw-container">PwaniStays · <a href="/how-it-works.html">How booking works</a> · <a href="/terms.html">Booking terms</a> · <a href="/cancellation.html">Cancellations</a></div></footer></body></html>'''
+</main><footer class="pw-footer"><div class="pw-container">PwaniStays · <a href="/how-it-works">How booking works</a> · <a href="/terms">Booking terms</a> · <a href="/cancellation">Cancellations</a></div></footer></body></html>'''
 
 
 def render_guides(snapshot, document):
@@ -60,7 +60,7 @@ def render_guides(snapshot, document):
             {'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'Home','item':SITE+'/'},{'@type':'ListItem','position':2,'name':'Area guides','item':SITE+'/guides/'},{'@type':'ListItem','position':3,'name':location,'item':SITE+path}]}]}
         output[slug+'/index.html'] = shell(guide['title'],guide['summary'],path,prose+listings+related,schema, '/images/'+{'Nyali':'Nyali_beach_PwaniStays.jpg','Diani':'Diani_Beach_PwaniStays.jpg','Shanzu':'Shanzu_Mombasa_PwaniStays.jpg'}[location])
     title='Kenya coast accommodation guides: Nyali, Diani and Shanzu'
-    body='<div class="guide-prose"><p class="pw-lead">Choose an area by the kind of stay you need, then compare individual properties. These guides cover layouts, facilities and the questions to ask before booking.</p>'+''.join('<section><h2><a href="/guides/'+g['slug']+'/">'+escape(g['title'])+'</a></h2><p>'+escape(g['summary'])+'</p></section>' for g in guides)+'<p><a href="/stays.html">Browse accommodation across all locations</a></p></div>'
+    body='<div class="guide-prose"><p class="pw-lead">Choose an area by the kind of stay you need, then compare individual properties. These guides cover layouts, facilities and the questions to ask before booking.</p>'+''.join('<section><h2><a href="/guides/'+g['slug']+'/">'+escape(g['title'])+'</a></h2><p>'+escape(g['summary'])+'</p></section>' for g in guides)+'<p><a href="/stays">Browse accommodation across all locations</a></p></div>'
     output['index.html'] = shell(title,'Practical guides to choosing accommodation in Nyali, Diani and Shanzu, with current unit links and questions to ask before booking.','/guides/',body,{'@context':'https://schema.org','@type':'CollectionPage','name':title,'url':SITE+'/guides/'})
     return output
 

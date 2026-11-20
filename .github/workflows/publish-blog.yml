@@ -1,0 +1,57 @@
+name: Publish a PwaniStays blog post
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_code:
+        description: Paste the publish code copied from Blog Studio
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: publish-pwanistays-blog
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install 'markdown-it-py==4.0.0'
+      - name: Confirm branch-based Pages publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')" = legacy
+      - name: Validate draft and build the article
+        env:
+          BLOG_PUBLISH_CODE: ${{ inputs.publish_code }}
+        run: python3 scripts/publish_blog.py
+      - name: Check site links
+        run: python3 scripts/audit_site_links.py > "$RUNNER_TEMP/link-audit.json"
+      - name: Commit the published article
+        run: |
+          git add -- blog index.html sitemap.xml
+          git diff --cached --check
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Publish a PwaniStays blog post'
+          git push origin HEAD:main
+      - name: Request GitHub Pages publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          latest_commit="$(gh api "repos/$GITHUB_REPOSITORY/pages/builds/latest" --jq 'if .status == "built" then .commit else "" end')"
+          if [ "$latest_commit" != "$(git rev-parse HEAD)" ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" > /dev/null
+          fi

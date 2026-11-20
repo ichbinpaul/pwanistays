@@ -81,7 +81,7 @@ test('a pending static page falls back to the same unit with date selections', (
     const location = { href, pathname: new URL(href).pathname, replace(value) {redirected = value;} };
     load('property-route-fallback.js', {window: {location}, URL});
     const url = new URL(redirected, 'https://pwanistays.com');
-    assert.equal(url.pathname, '/property.html');
+    assert.equal(url.pathname, '/property');
     assert.equal(url.searchParams.get('id'), id);
     assert.equal(url.searchParams.get('checkin'), '2030-02-03');
     assert.equal(url.searchParams.get('guests'), '3');

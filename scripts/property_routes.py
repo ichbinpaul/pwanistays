@@ -69,8 +69,9 @@ def canonical_url(row):
     slug = checked_slug(row["slug"]) if "slug" in row else None
     current = SITE + "/stays/" + identity + "/"
     legacy = SITE + "/property.html?id=" + identity
+    clean_legacy = SITE + "/property?id=" + identity
     url = row.get("url", current)
-    if url in (current, legacy):
+    if url in (current, legacy, clean_legacy):
         return current
     if slug and url == SITE + "/stays/" + slug + "/":
         return url

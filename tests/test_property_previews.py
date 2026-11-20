@@ -129,7 +129,7 @@ class RenderingTests(unittest.TestCase):
         self.assertIn(row["title"], photo["alt"])
         self.assertNotIn("hidden", photo)
         self.assertIn("https://wa.me/254738544784?", content("propertyNoScript"))
-        self.assertIn('href="/stays.html"', html)
+        self.assertIn('href="/stays"', html)
         original = mod.TemplateElements(self.template).elements["quoteForm"]
         self.assertEqual(content("quoteForm"), self.template[original["open_end"]:original["close_start"]])
 
@@ -174,7 +174,7 @@ class RenderingTests(unittest.TestCase):
         self.assertEqual(graph["WebPage"]["url"], f"https://pwanistays.com/stays/{ID}/")
         crumbs = graph["BreadcrumbList"]["itemListElement"]
         self.assertEqual([item["position"] for item in crumbs], [1, 2, 3])
-        self.assertEqual(crumbs[1]["item"], "https://pwanistays.com/stays.html")
+        self.assertEqual(crumbs[1]["item"], "https://pwanistays.com/stays")
         self.assertEqual(crumbs[2]["name"], title)
         for forbidden in ["price", "ratingValue", "offers", "aggregateRating", "latitude", "availability"]:
             self.assertNotIn('"' + forbidden + '"', raw)

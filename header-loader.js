@@ -1,7 +1,7 @@
 /**
  * PwaniStays — header-loader.js
  * ================================
- * Fetches /header.html, injects it into <div id="site-header">,
+ * Fetches /header, injects it into <div id="site-header">,
  * marks the active nav link, wires mobile menu, header search,
  * and calls buildSwitcher() (from i18n.js) to show the language toggle.
  *
@@ -20,7 +20,7 @@
     var mount = document.getElementById("site-header");
     if (!mount) return;
 
-    fetch("/header.html", { cache: "no-cache" })
+    fetch("/header", { cache: "no-cache" })
       .then(function(res) { return res.ok ? res.text() : Promise.reject(res.status); })
       .then(function(html) {
         mount.innerHTML = html;
@@ -44,7 +44,7 @@
     var slug = window.location.pathname
       .replace(/\/$/, "").replace(/\.html$/, "")
       .split("/").filter(Boolean).pop() || "home";
-    if (window.location.pathname === "/stays.html" || /^\/stays\//.test(window.location.pathname)) slug = "accommodation";
+    if (slug === "stays" || /^\/stays\//.test(window.location.pathname)) slug = "accommodation";
 
     mount.querySelectorAll("[data-nav-page]").forEach(function(el) {
       var match = el.getAttribute("data-nav-page") === slug ||
@@ -151,7 +151,7 @@
 
   // ── Handle ?search= param when redirected from other pages ─────
   function handleSearchParam() {
-    if (window.location.pathname !== "/" && !window.location.pathname.endsWith("index.html")) return;
+    if (window.location.pathname !== "/" && window.location.pathname !== "/index.html") return;
     var term = new URLSearchParams(window.location.search).get("search");
     if (term && typeof window.performKeywordSearch === "function") {
       setTimeout(function() { window.performKeywordSearch(term); }, 1000);

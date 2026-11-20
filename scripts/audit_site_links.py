@@ -193,6 +193,10 @@ def audit(root):
             if any(part.is_symlink() for part in (target, *target.parents) if part != root.parent):
                 problem(ref, "symbolic_target_not_audited", local)
                 continue
+            if not target.suffix and target != root and not parsed.path.endswith("/"):
+                html_target = target.with_suffix(".html")
+                if html_target.is_file() and not html_target.is_symlink():
+                    target = html_target
             if target.is_dir():
                 target = target / "index.html"
             relative = target.relative_to(root).as_posix()

@@ -1,8 +1,26 @@
-# Install property redirects in Cloudflare
+# Deploy clean URLs and property redirects in Cloudflare
 
-This is the remaining dashboard setup for the shorter property URLs. The Worker
-is not deployed by a GitHub push. No per-property Cloudflare rules are needed:
-the hourly site build maintains the permanent public registry automatically.
+GitHub Pages continues to serve the existing HTML files. The Cloudflare route
+serves their clean URLs and issues permanent redirects for legacy URLs. A GitHub
+push does not update the Worker. The hourly site build maintains the property
+slug registry.
+
+## Release the clean URLs
+
+1. Update the Worker on the existing `pwanistays.com/*` route using the complete
+   `property-redirects.mjs` module. Preserve the current
+   `PROPERTY_URLS_ENABLED` setting. Leave `SITE_HTML_REDIRECTS_ENABLED` unset
+   until step 3. Clean routes become available immediately, including
+   `/stays` for the directory page and `/header` for shared navigation.
+2. Verify the clean routes return 200 before publishing the GitHub change.
+   Publish the site and verify that the new canonicals and navigation are live.
+3. Set `SITE_HTML_REDIRECTS_ENABLED=true` on the Worker. Verify that, for
+   example, `/how-it-works.html?utm_source=qa&tag=a&tag=b` returns 301 to
+   `/how-it-works?utm_source=qa&tag=a&tag=b`, which returns 200. Also verify
+   `/index.html`, `/guides/diani/index.html` and an existing property link.
+
+If you disable `SITE_HTML_REDIRECTS_ENABLED`, keep the Worker deployed so
+clean links and any cached permanent redirects still resolve.
 
 ## Stage the Worker
 
@@ -23,9 +41,7 @@ the hourly site build maintains the permanent public registry automatically.
    normally. At this stage the Worker is installed but redirects are disabled.
 
 Dashboard labels can vary slightly. Keep existing DNS destinations and TLS
-settings. The code only redirects recognised old GET/HEAD property links;
-ordinary pages, friendly paths, unknown units and failed registry requests pass
-through to the current website.
+settings. The Worker passes assets and ordinary directory URLs through to the existing website.
 
 ## Activate after the canonical release
 

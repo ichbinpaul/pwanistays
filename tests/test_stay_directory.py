@@ -64,6 +64,16 @@ class DirectoryTests(unittest.TestCase):
         schema = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.S).group(1))
         self.assertEqual(schema["mainEntity"]["itemListElement"][0]["url"],
                          "https://pwanistays.com/stays/nyali-studio/")
+        self.assertEqual(schema["breadcrumb"]["itemListElement"][-1]["item"],
+                         "https://pwanistays.com/stays")
+
+    def test_directory_uses_thumbnails_only_when_available(self):
+        source = self.source()
+        row = source["properties"][0]
+        small, large = "/images/stay-thumbnails/cover-360.webp", "/images/stay-thumbnails/cover-720.webp"
+        html = mod.render(source, {row["id"]: (small, large)})
+        self.assertIn(f'src="{small}" srcset="{small} 360w, {large} 720w"', html)
+        self.assertIn('src="https://example.com/cover.jpg"', mod.render(source))
 
     def test_staged_slug_keeps_explicit_uuid_canonical_until_activation(self):
         source = self.source()

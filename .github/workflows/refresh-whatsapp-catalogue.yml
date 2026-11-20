@@ -43,6 +43,8 @@ jobs:
         run: node --test tests/property_links.test.js tests/property_redirects.test.mjs
       - name: Refresh source from active public properties and galleries
         run: python3 scripts/build_whatsapp_catalogue.py --routing-settings catalogue/property-url-settings.json
+      - name: Install the directory thumbnail encoder
+        run: python3 -m pip install 'Pillow>=11,<13'
       - name: Generate per-property preview pages and matching sitemap
         run: |
           python3 scripts/cache_property_covers.py
@@ -56,14 +58,14 @@ jobs:
         id: commit
         run: |
           echo "changed=false" >> "$GITHUB_OUTPUT"
-          git add -- catalogue/properties.json catalogue/status.json catalogue/cover-images.json catalogue/property-slugs.json property-routes.js images/property-covers stays stays.html guides property-sitemap.xml robots.txt
+          git add -- catalogue/properties.json catalogue/status.json catalogue/cover-images.json catalogue/property-slugs.json property-routes.js images/property-covers images/stay-thumbnails stays stays.html guides property-sitemap.xml robots.txt
           if git diff --cached --quiet; then
             echo "Catalogue source is unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Refresh public property previews and catalogue source" -- catalogue/properties.json catalogue/status.json catalogue/cover-images.json catalogue/property-slugs.json property-routes.js images/property-covers stays stays.html guides property-sitemap.xml robots.txt
+          git commit -m "Refresh public property previews and catalogue source" -- catalogue/properties.json catalogue/status.json catalogue/cover-images.json catalogue/property-slugs.json property-routes.js images/property-covers images/stay-thumbnails stays stays.html guides property-sitemap.xml robots.txt
           # Normal push: a concurrent main-branch update must fail rather than be overwritten.
           git push origin HEAD:main
           echo "changed=true" >> "$GITHUB_OUTPUT"

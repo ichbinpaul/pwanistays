@@ -17,7 +17,7 @@ import sys
 from urllib.parse import urlencode, urlsplit
 import uuid
 
-from build_whatsapp_catalogue import atomic_write, valid_photo
+from build_whatsapp_catalogue import MAX_IMAGES, atomic_write, valid_photo
 from property_routes import canonical_url, routing_path, validate_registry
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -83,10 +83,10 @@ def validate_source(snapshot):
             raise PreviewError("Public amenities must be a list of nonempty text values")
         canonical_url(row)
         images = row.get("images")
-        if (not isinstance(images, list) or not 1 <= len(images) <= 10 or
+        if (not isinstance(images, list) or not 1 <= len(images) <= MAX_IMAGES or
                 any(not isinstance(url, str) or not valid_photo(url) for url in images) or
                 len(set(images)) != len(images)):
-            raise PreviewError("Each property needs one to ten distinct public HTTPS image URLs")
+            raise PreviewError(f"Each property needs 1 to {MAX_IMAGES} distinct public HTTPS image URLs")
         if "seo_image" in row or "seo_source" in row:
             cover_path(row.get("seo_image"), property_id)
             if row.get("seo_source") != images[0]:

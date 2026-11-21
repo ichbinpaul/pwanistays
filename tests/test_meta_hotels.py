@@ -55,6 +55,13 @@ class PlanTests(unittest.TestCase):
         self.assertNotIn("confidential", json.dumps(first))
         self.assertNotIn("address", first[0])
 
+    def test_meta_payload_uses_first_ten_of_twenty_public_photos(self):
+        value = snapshot()
+        images = [f"https://example.com/{i:02}.jpg" for i in range(1, 21)]
+        value["properties"][0]["images"] = images
+        payload = mod.payloads(value)[0]
+        self.assertEqual(payload["images"], [{"image_url": url} for url in images[:10]])
+
     def test_approved_address_only_and_no_fabricated_metadata(self):
         address = {"city": "Mombasa", "country": "Kenya", "latitude": -4.0, "longitude": 39.7}
         self.assertEqual(mod.payloads(snapshot(), {ID: {"address": address}})[0]["address"], address)

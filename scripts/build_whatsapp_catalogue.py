@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIELDS = "id,title,location,unit_type,image_url,is_active,beds,description"
 PAGE_SIZE = 100
 MAX_PAGES = 1000
-MAX_IMAGES = 10
+MAX_IMAGES = 20
 REVISION = re.compile(r"^_pwani_v6_[a-f0-9]{16}$")
 IMAGE = re.compile(r"\.(?:jpe?g|png|webp|avif|gif)$", re.I)
 

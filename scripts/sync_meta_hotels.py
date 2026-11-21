@@ -18,10 +18,11 @@ from urllib.parse import urlencode
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 import uuid
 
-from build_whatsapp_catalogue import ROOT, valid_photo
+from build_whatsapp_catalogue import MAX_IMAGES, ROOT, valid_photo
 
 PREFIX = "pwanistays:"
 MAX_PAGES = 1000
+MAX_META_IMAGES = 10
 NUMERIC_ID = re.compile(r"^[1-9][0-9]*$")
 
 
@@ -90,13 +91,13 @@ def payloads(snapshot, details=None):
         except ValueError:
             raise SyncError("Property must use its canonical public website link") from None
         images = row.get("images")
-        if (not isinstance(images, list) or not 1 <= len(images) <= 10 or
+        if (not isinstance(images, list) or not 1 <= len(images) <= MAX_IMAGES or
                 any(not isinstance(image, str) or not valid_photo(image) for image in images) or
                 len(set(images)) != len(images)):
-            raise SyncError("Each property needs one to ten distinct valid HTTPS image URLs")
+            raise SyncError(f"Each property needs 1 to {MAX_IMAGES} distinct valid HTTPS image URLs")
         item = {"hotel_id": PREFIX + property_id, "name": row["title"].strip(),
                 "description": row["description"].strip(), "brand": "PwaniStays",
-                "url": expected_url, "images": [{"image_url": image} for image in images]}
+                "url": expected_url, "images": [{"image_url": image} for image in images[:MAX_META_IMAGES]]}
         if property_id in details:
             item["address"] = details[property_id]["address"]
         result.append(item)

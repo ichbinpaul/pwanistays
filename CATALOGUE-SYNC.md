@@ -23,9 +23,9 @@ selected `amenities`, `url`, `description`, and `images`. Legacy caption prose,
 rate/contact lines and internal price/commission columns are excluded from the
 published source. IDs remain stable across refreshes. The property URL
 opens its existing website details and gallery. The image list contains at most
-ten HTTPS URLs: the designated cover first, then the numbered gallery order with
+20 HTTPS URLs: the designated cover first, then the numbered gallery order with
 duplicates removed. This is deterministic selection, not AI analysis of room
-coverage, sharpness, or photographic quality. A property with fewer than ten
+coverage, sharpness, or photographic quality. A property with fewer than 20
 photos uses the available photos; it does not receive unrelated filler images.
 
 The source deliberately excludes internal rates, commissions, booking records,

@@ -1,4 +1,4 @@
-import { amount, bookingLocationReview, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=5';
+import { amount, bookingLocationReview, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=6';
 
 const digits = new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 });
 export const number = value => value == null ? '—' : digits.format(value);
@@ -101,14 +101,29 @@ function drawComparison(bookings) {
 }
 
 function drawLocationReview(bookings) {
-    const review = bookingLocationReview(bookings);
-    if (!review.length) return '<p>No unit names with conflicting recorded locations.</p>';
-    return `<p>Counts use the locations saved on bookings across all dates and statuses. The most frequent location can help you check a discrepancy.</p>
+    const { patterns, conflicts } = bookingLocationReview(bookings);
+    if (!patterns.length && !conflicts.length) return '<p>No bookings with conflicting or blank locations.</p>';
+    return `<p>Counts use the locations saved on bookings across all dates and statuses. Confirm a location before changing a booking flagged by frequency alone.</p>
+        <h3>Bookings to review (${number(conflicts.length)})</h3>
+        ${conflicts.length ? `<div class="table-wrap" role="region" tabindex="0" aria-label="Bookings with location conflicts">
+            <table>
+                <thead><tr><th scope="col">Booking</th><th scope="col">Recorded unit</th><th scope="col">Status</th>
+                    <th scope="col">Recorded location</th><th scope="col">Location to check</th>
+                    <th scope="col">Reason</th><th scope="col">Contribution</th></tr></thead>
+                <tbody>${conflicts.map(row => `<tr><th scope="row">${escapeHtml(row.id || '—')}
+                    ${row.id == null ? '' : `<div><button type="button" class="secondary" data-booking-id="${escapeHtml(row.id)}"
+                        aria-label="Edit booking ${escapeHtml(row.id)}">Edit</button></div>`}</th>
+                    <td>${escapeHtml(row.unit || 'Unit missing')}</td><td>${escapeHtml(row.status)}</td>
+                    <td>${escapeHtml(row.location || 'Blank')}</td><td>${escapeHtml(row.locationToCheck || '—')}</td>
+                    <td>${escapeHtml(row.reason)}</td><td>${money(row.contribution)}</td></tr>`).join('')}</tbody>
+            </table>
+        </div>` : '<p>No bookings with conflicting or blank locations.</p>'}
+        ${patterns.length ? `<h3>Recorded locations by unit</h3>
         <div class="table-wrap" role="region" tabindex="0" aria-label="Recorded unit locations">
             <table>
                 <thead><tr><th scope="col">Unit</th><th scope="col">Recorded locations</th>
                     <th scope="col">Most frequent</th><th scope="col">Confirmed location</th></tr></thead>
-                <tbody>${review.map(({ unit, recorded, missing, confirmed }) => {
+                <tbody>${patterns.map(({ unit, recorded, missing, confirmed }) => {
                     const [top, next] = recorded;
                     const mostFrequent = !top ? '—' : top.count === next?.count ? 'Tie' : top.location;
                     const counts = recorded.map(({ location, count }) => `${escapeHtml(location)} (${number(count)})`);
@@ -117,10 +132,10 @@ function drawLocationReview(bookings) {
                         <td>${escapeHtml(mostFrequent)}</td><td>${escapeHtml(confirmed || '—')}</td></tr>`;
                 }).join('')}</tbody>
             </table>
-        </div>`;
+        </div>` : ''}`;
 }
 
-export function setupReport(root, readBookings) {
+export function setupReport(root, readBookings, editBooking) {
     const form = root.querySelector('#reportFilters');
     const from = form.elements.from;
     const through = form.elements.through;
@@ -135,6 +150,11 @@ export function setupReport(root, readBookings) {
     const result = root.querySelector('#furnishingResult');
     const evidence = root.querySelector('#furnishingEvidence');
     let report = null;
+
+    locationReview.addEventListener('click', event => {
+        const button = event.target.closest('button[data-booking-id]');
+        if (button) editBooking(button.dataset.bookingId);
+    });
 
     function showEvidence() {
         const row = unit.value ? report?.units[Number(unit.value)] : null;

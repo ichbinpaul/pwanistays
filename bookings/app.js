@@ -1,5 +1,5 @@
-import { amount, bookedAmounts, bookingLocation, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=5';
-import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=5';
+import { amount, bookedAmounts, bookingLocation, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=6';
+import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=6';
 
 const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
@@ -166,8 +166,7 @@ function renderBookingsTable() {
         else if (statusOptions.includes(action)) bulkUpdateStatus(action);
     });
     container.querySelectorAll('.editBtn').forEach(button => button.addEventListener('click', () => {
-        const booking = bookings.find(row => String(row.id) === button.dataset.id);
-        if (booking) openModal(booking);
+        editBooking(button.dataset.id);
     }));
     container.querySelector('#exportAllBtn').addEventListener('click', () => exportBookings(false));
     for (const [id, step] of [['nextPage', 1], ['previousPage', -1]]) {
@@ -208,6 +207,11 @@ function showUnitLocation(form) {
     document.getElementById('unitLocationNotice').textContent = confirmed && recorded.toLowerCase() !== confirmed.toLowerCase()
         ? `Reports use ${confirmed} for ${unitName(name, recorded)}. Set the location to ${confirmed} to correct this booking.`
         : '';
+}
+
+function editBooking(id) {
+    const booking = bookings.find(row => String(row.id) === id);
+    if (booking) openModal(booking);
 }
 
 function openModal(booking = null) {
@@ -761,7 +765,7 @@ async function renderApp() {
             <section id="contentAnalytics" class="panel" aria-label="Booking performance" hidden>${reportPanel}</section>
         </div>
         ${bookingDialog}`;
-    drawReport = setupReport(document.getElementById('contentAnalytics'), () => dataReady ? bookings : null);
+    drawReport = setupReport(document.getElementById('contentAnalytics'), () => dataReady ? bookings : null, editBooking);
     document.getElementById('tabBookings').addEventListener('click', () => switchTab('bookings'));
     document.getElementById('tabAnalytics').addEventListener('click', () => switchTab('analytics'));
     document.getElementById('addBtn').addEventListener('click', () => openModal());

@@ -89,6 +89,16 @@ const unitAliases = new Map([
 
 const confirmedUnits = [
     {
+        name: '3rd Avenue Beach Apartments',
+        location: 'Nyali',
+        aliases: /^(?:3rd|third) avenue beach apartments?(?: nyali)?$/,
+    },
+    {
+        name: 'APA Apartments Nyali',
+        location: 'Nyali',
+        aliases: /^apa apartments?(?: ?(?:nyali|shanzu))?$/,
+    },
+    {
         name: 'Coral Sands Residences',
         location: 'Nyali',
         aliases: /^coral sands(?: (?:(?:residen|reciden)ce|apartment)(?:s|\(s\))?)?(?: (?:nyali|diani))?$/,
@@ -97,6 +107,16 @@ const confirmedUnits = [
         name: 'Mwembe Tayari',
         location: 'Mombasa',
         aliases: /^mwembe tayari(?: ?(?:nyali|mombasa(?: town)?))?$/,
+    },
+    {
+        name: 'PK Ocean Apartments',
+        location: 'Nyali',
+        aliases: /^pk oceans?(?: view)?(?: apartments?)?(?: nyali)?$/,
+    },
+    {
+        name: 'Silent Springs Villas',
+        location: 'Diani',
+        aliases: /^silent springs villas?(?: diani)?$/,
     },
 ];
 
@@ -140,17 +160,19 @@ export function unitNameResolver(bookings) {
 }
 
 export function bookingLocationReview(bookings) {
-    const unitName = unitNameResolver(bookings);
     const units = new Map();
     for (const booking of bookings) {
-        const unit = unitName(booking.unit_name, booking.location);
-        if (!unit) continue;
+        const label = knownUnitName(booking.unit_name);
+        const name = label.toLowerCase() === 'no name' ? '' : label;
+        const confirmed = bookingLocation(name);
+        const unit = confirmed ? name : name.replace(/\s+apartments?$/i, '');
         const key = unit.toLowerCase();
         if (!units.has(key)) {
-            units.set(key, { unit, confirmed: bookingLocation(unit), recorded: new Map(), missing: 0 });
+            units.set(key, { unit, confirmed, recorded: new Map(), missing: 0, bookings: [] });
         }
         const review = units.get(key);
         const location = groupLabel(booking.location);
+        review.bookings.push({ booking, location });
         if (!location) {
             review.missing++;
             continue;
@@ -159,10 +181,39 @@ export function bookingLocationReview(bookings) {
         if (!review.recorded.has(locationKey)) review.recorded.set(locationKey, { location, count: 0 });
         review.recorded.get(locationKey).count++;
     }
-    return [...units.values()].filter(review => review.confirmed || review.recorded.size > 1).map(review => {
+    const patterns = [];
+    const conflicts = [];
+    for (const review of units.values()) {
+        const { unit, confirmed, missing } = review;
         const recorded = [...review.recorded.values()].sort((a, b) => b.count - a.count || a.location.localeCompare(b.location));
-        return { ...review, recorded };
-    }).sort((a, b) => a.unit.localeCompare(b.unit));
+        const [first, second] = recorded;
+        const tied = first && first.count === second?.count;
+        const usual = unit && !tied ? first?.location : '';
+        if (unit && (confirmed || recorded.length > 1 || missing)) patterns.push({ unit, confirmed, missing, recorded });
+
+        for (const { booking, location } of review.bookings) {
+            const key = location.toLowerCase();
+            let reason;
+            if (confirmed && key !== confirmed.toLowerCase()) reason = 'Conflicts with confirmed location';
+            else if (!location) reason = 'Location is blank';
+            else if (unit && !confirmed && recorded.length > 1) {
+                if (tied) reason = 'Tie between recorded locations';
+                else if (key !== usual.toLowerCase()) reason = 'Unit recorded more often elsewhere';
+            }
+            if (reason) conflicts.push({
+                id: booking.id,
+                unit: groupLabel(booking.unit_name),
+                status: groupLabel(booking.status, 'Unspecified'),
+                location,
+                locationToCheck: confirmed || usual || '',
+                reason,
+                contribution: bookedAmounts(booking).contribution,
+            });
+        }
+    }
+    patterns.sort((a, b) => a.unit.localeCompare(b.unit));
+    conflicts.sort((a, b) => a.unit.localeCompare(b.unit) || String(a.id ?? '').localeCompare(String(b.id ?? ''), undefined, { numeric: true }));
+    return { patterns, conflicts };
 }
 
 function summary() {

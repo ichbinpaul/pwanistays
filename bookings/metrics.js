@@ -25,6 +25,44 @@ export function bookedAmounts(booking) {
     return { paid, contribution };
 }
 
+function legacyAmount(value) {
+    return parseFloat(value) || 0;
+}
+
+function legacyContribution(booking) {
+    return legacyAmount(booking.guest_paid) - legacyAmount(booking.host_cost) - legacyAmount(booking.charges);
+}
+
+export function legacyComparison(bookings) {
+    const empty = () => ({ count: 0, paid: 0, contribution: 0 });
+    const totals = empty(), otherStatus = empty(), missingAmounts = empty(), fullyCosted = empty();
+    for (const booking of bookings) {
+        const paid = legacyAmount(booking.guest_paid);
+        const contribution = legacyContribution(booking);
+        const group = booking.status?.trim().toLowerCase() !== 'complete' ? otherStatus
+            : bookedAmounts(booking).contribution === null ? missingAmounts : fullyCosted;
+        for (const row of [totals, group]) {
+            row.count++;
+            row.paid += paid;
+            row.contribution += contribution;
+        }
+    }
+    return { totals, otherStatus, missingAmounts, fullyCosted };
+}
+
+export function bookingWrite(fields, previous = null) {
+    const { profit, month, nights, ...patch } = fields;
+    const booking = { ...previous, ...patch };
+    if (!previous || ['guest_paid', 'host_cost', 'charges'].some(field => Object.hasOwn(patch, field))) {
+        patch.profit = legacyContribution(booking);
+    }
+    if (!previous || ['check_in', 'check_out'].some(field => Object.hasOwn(patch, field))) {
+        patch.nights = stayNights(booking.check_in, booking.check_out);
+        patch.month = isoDay(booking.check_in).slice(0, 7) || null;
+    }
+    return patch;
+}
+
 function roundMoney(number) {
     return Math.round((number + Math.sign(number) * Number.EPSILON) * 100) / 100;
 }

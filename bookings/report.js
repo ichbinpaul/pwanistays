@@ -1,4 +1,4 @@
-import { amount, bookingReport, furnishingScenario } from './metrics.js';
+import { amount, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=2';
 
 const digits = new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 });
 export const number = value => value == null ? '—' : digits.format(value);
@@ -78,6 +78,28 @@ function card(label, value, context) {
     return `<div class="metric"><h3>${label}</h3><strong>${value}</strong><p>${context}</p></div>`;
 }
 
+function drawComparison(bookings) {
+    const { totals, otherStatus, missingAmounts, fullyCosted } = legacyComparison(bookings);
+    const rows = [
+        ['Former dashboard totals', totals],
+        ['Pending, In Progress and other statuses', otherStatus],
+        ['Completed with missing amounts', missingAmounts],
+        ['Completed with all amounts recorded', fullyCosted],
+    ];
+    return `<p>The former dashboard included all statuses and counted blank amounts as zero. This comparison uses all dates and the bookings loaded today.</p>
+        <div class="table-wrap" role="region" tabindex="0" aria-label="Comparison with the former dashboard">
+            <table class="reconciliation-table">
+                <thead><tr><th scope="col">Booking group</th><th scope="col">Bookings</th>
+                    <th scope="col">Guest payments (KES)</th><th scope="col">Contribution by the old formula (KES)</th></tr></thead>
+                <tbody>${rows.map(([label, row]) => `<tr><th scope="row">${label}</th>
+                    <td>${number(row.count)}</td><td>${number(row.paid)}</td><td>${number(row.contribution)}</td></tr>`).join('')}
+                </tbody>
+            </table>
+        </div>
+        <p>The performance report includes recorded payments from completed stays. Its contribution figure only includes completed stays with guest payment, host cost and charges recorded.</p>
+        ${totals.count > 1000 ? '<p>The former dashboard fetched bookings in one request. Its totals could have omitted records beyond the database response limit.</p>' : ''}`;
+}
+
 export function setupReport(root, readBookings) {
     const form = root.querySelector('#reportFilters');
     const from = form.elements.from;
@@ -85,6 +107,7 @@ export function setupReport(root, readBookings) {
     const dimension = form.elements.dimension;
     const sort = form.elements.sort;
     const output = root.querySelector('#reportOutput');
+    const comparison = root.querySelector('#legacyComparison');
     const exportButton = root.querySelector('#exportReport');
     const calculator = root.querySelector('#furnishingForm');
     const unit = calculator.elements.unit;
@@ -106,6 +129,7 @@ export function setupReport(root, readBookings) {
         exportButton.disabled = bookings === null;
         if (bookings === null) {
             output.innerHTML = '<p class="empty">Booking data is unavailable. Refresh bookings to try again.</p>';
+            comparison.innerHTML = '';
             report = null;
             unit.replaceChildren(new Option('Select a unit', ''));
             showEvidence();
@@ -114,6 +138,7 @@ export function setupReport(root, readBookings) {
 
         const unitLabel = unit.selectedOptions[0]?.text;
         report = bookingReport(bookings, from.value, through.value);
+        comparison.innerHTML = drawComparison(bookings);
         const { totals, pending, inProgress, other, undated } = report;
         const missingDates = totals.count - totals.nightCount;
         const rows = Array.from(report[dimension.value]);
@@ -127,8 +152,8 @@ export function setupReport(root, readBookings) {
             <div class="metric-grid">
                 ${card('Completed stays', number(totals.count), `${pending} pending · ${inProgress} in progress${other ? ` · ${other} other` : ''}`)}
                 ${card('Booked nights', number(totals.nightCount ? totals.nights : null), `Valid dates for ${totals.nightCount} of ${totals.count} stays`)}
-                ${card('Guest payments', money(totals.paidCount ? totals.paid : null), `Recorded on ${totals.paidCount} of ${totals.count} stays`)}
-                ${card('Booking contribution', money(totals.costedCount ? totals.contribution : null), `All amounts recorded on ${totals.costedCount} of ${totals.count} stays`)}
+                ${card('Completed guest payments', money(totals.paidCount ? totals.paid : null), `Recorded on ${totals.paidCount} of ${totals.count} completed stays`)}
+                ${card('Fully costed contribution', money(totals.costedCount ? totals.contribution : null), `All amounts recorded on ${totals.costedCount} of ${totals.count} completed stays`)}
             </div>
             <div class="report-section">
                 ${reportTable(rows, sections.find(([key]) => key === dimension.value)[1])}

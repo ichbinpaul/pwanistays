@@ -1,5 +1,5 @@
-import { bookedAmounts, isoDay, stayNights } from './metrics.js';
-import { escapeHtml, money, number, saveCsv, setupReport } from './report.js';
+import { amount, bookedAmounts, bookingWrite, isoDay, stayNights } from './metrics.js?v=2';
+import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=2';
 
 const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
@@ -12,6 +12,7 @@ const pageSize = 40;
 let dataReady = false;
 let loadRequest = 0;
 let drawReport;
+let originalForm;
 let activeTab = 'bookings';
 const statusOptions = ['Complete', 'In Progress', 'Pending'];
 const fieldOptions = ['location', 'unit_type', 'source', 'sub_source', 'unit_name', 'host'];
@@ -21,13 +22,7 @@ const fields = [
     'check_out', 'nights', 'guest_paid', 'host_cost', 'charges', 'profit', 'status',
     'source', 'sub_source', 'month', 'host', 'notes',
 ];
-
-function autoCalculate(row) {
-    row.nights = stayNights(row.check_in, row.check_out);
-    row.month = isoDay(row.check_in).slice(0, 7) || null;
-    row.profit = bookedAmounts(row).contribution;
-    return row;
-}
+const moneyFields = ['guest_paid', 'host_cost', 'charges'];
 
 function addSuggestions() {
     for (const field of fieldOptions) {
@@ -59,7 +54,7 @@ async function loadBookings() {
             records.push(...data);
             if (data.length < size) break;
         }
-        bookings = records.map(autoCalculate);
+        bookings = records;
         addSuggestions();
         dataReady = true;
         add.disabled = importer.disabled = false;
@@ -83,7 +78,9 @@ function renderBookingsTable() {
     const statusOrder = new Map([['Pending', 0], ['In Progress', 1], ['Complete', 2]]);
     const filtered = bookings.filter(booking =>
         (!filteredStatus || (filteredStatus === 'needs-review'
-            ? booking.status === 'Complete' && (!booking.nights || booking.profit == null || !booking.unit_name?.trim())
+            ? booking.status?.trim().toLowerCase() === 'complete' && (
+                !stayNights(booking.check_in, booking.check_out) ||
+                bookedAmounts(booking).contribution === null || !booking.unit_name?.trim())
             : booking.status === filteredStatus)) &&
         (!filterText || [booking.id, booking.guest_name, booking.unit_name, booking.location, booking.phone]
             .some(value => String(value ?? '').toLowerCase().includes(filterText)))
@@ -119,15 +116,17 @@ function renderBookingsTable() {
             const id = escapeHtml(booking.id);
             const status = escapeHtml(booking.status || 'Unspecified');
             const dates = [isoDay(booking.check_in), isoDay(booking.check_out)].filter(Boolean);
+            const nights = stayNights(booking.check_in, booking.check_out);
+            const { paid, contribution } = bookedAmounts(booking);
             return `<tr>
                 <td><input type="checkbox" class="rowCheckbox" data-id="${id}" aria-label="Select booking ${id}"></td>
                 <th scope="row">${escapeHtml(booking.guest_name || 'Unnamed guest')}<small>${id}</small></th>
                 <td>${escapeHtml(booking.unit_name || '—')}<small>${escapeHtml(booking.location)}</small>
                     <small class="mobile-dates">${dates.join(' → ')}</small></td>
-                <td>${dates.join(' → ') || '—'}<small>${booking.nights ? `${number(booking.nights)} nights` : ''}</small></td>
+                <td>${dates.join(' → ') || '—'}<small>${nights ? `${number(nights)} nights` : ''}</small></td>
                 <td><span class="badge badge-${statusOrder.get(booking.status) ?? 3}">${status}</span></td>
-                <td>${money(bookedAmounts(booking).paid)}</td>
-                <td>${money(booking.profit)}</td>
+                <td>${money(paid)}</td>
+                <td>${money(contribution)}</td>
                 <td><button class="secondary editBtn" type="button" data-id="${id}" aria-label="Edit booking ${id}">Edit</button></td>
             </tr>`;
         }).join('')}</tbody></table></div>
@@ -181,6 +180,11 @@ function nextBookingId() {
     return `PS${String(max + 1).padStart(3, '0')}`;
 }
 
+function formValues(form) {
+    return Object.fromEntries(fields.filter(field => form.elements[field]).map(field =>
+        [field, form.elements[field].value.trim() || null]));
+}
+
 function openModal(booking = null) {
     const dialog = document.getElementById('modal');
     const form = document.getElementById('bookingForm');
@@ -209,6 +213,7 @@ function openModal(booking = null) {
             input.add(new Option(booking[field], booking[field], false, true));
         }
     }
+    originalForm = formValues(form);
     updatePreview();
     dialog.showModal();
     form.elements.guest_name.focus();
@@ -219,7 +224,7 @@ function updatePreview() {
     const { check_in, check_out } = form.elements;
     const nights = stayNights(check_in.value, check_out.value);
     check_out.setCustomValidity(check_in.value && check_out.value && !nights ? 'Check-out must be after check-in.' : '');
-    const amounts = Object.fromEntries(['guest_paid', 'host_cost', 'charges'].map(field => [field, form.elements[field].value]));
+    const amounts = Object.fromEntries(moneyFields.map(field => [field, form.elements[field].value]));
     const { contribution } = bookedAmounts(amounts);
     document.getElementById('stayPreview').textContent = nights === null ? '—' : `${number(nights)} ${nights === 1 ? 'night' : 'nights'}`;
     document.getElementById('contributionPreview').textContent = money(contribution);
@@ -233,29 +238,39 @@ async function saveBooking(event) {
     const message = document.getElementById('bookingError');
     if (save.disabled) return;
     message.textContent = '';
-    const data = Object.fromEntries(fields.filter(field => form.elements[field]).map(field =>
-        [field, form.elements[field].value.trim() || null]));
+    const data = formValues(form);
     if (!data.guest_name) {
         message.textContent = 'Enter the guest’s name.';
         form.elements.guest_name.focus();
         return;
     }
     const original = bookings.find(row => String(row.id) === id);
+    if (id && !original) {
+        message.textContent = 'This booking is no longer in the loaded records. Close this form and refresh.';
+        return;
+    }
     if (data.status === 'Complete' && original?.status !== 'Complete' && (!data.unit_name || !stayNights(data.check_in, data.check_out))) {
         message.textContent = 'Enter a unit and both stay dates before marking this booking complete.';
         form.elements[data.unit_name ? 'check_in' : 'unit_name'].focus();
         return;
     }
 
-    autoCalculate(data);
+    const changes = id
+        ? Object.fromEntries(Object.entries(data).filter(([field, value]) => value !== originalForm[field]))
+        : data;
+    if (!Object.keys(changes).length) {
+        document.getElementById('modal').close();
+        return;
+    }
+    const patch = bookingWrite(changes, original);
     const now = new Date().toISOString();
-    data.updated_at = now;
+    patch.updated_at = now;
     save.disabled = document.getElementById('modalCancel').disabled = true;
     save.textContent = 'Saving…';
     try {
         const operation = id
-            ? supabaseClient.from('bookings').update(data).eq('id', id)
-            : supabaseClient.from('bookings').insert([{ ...data, id: nextBookingId(), created_at: now }]);
+            ? supabaseClient.from('bookings').update(patch).eq('id', id)
+            : supabaseClient.from('bookings').insert([{ ...patch, id: nextBookingId(), created_at: now }]);
         const { data: saved, error } = await operation.select('id').single();
         if (error?.code === '23505' && !id) {
             await loadBookings();
@@ -265,7 +280,9 @@ async function saveBooking(event) {
         if (error || !saved) throw new Error('No booking confirmed');
         document.getElementById('modal').close();
         await loadBookings();
-        if (dataReady) document.getElementById('bookingsStatus').textContent = `Booking ${saved.id} saved.`;
+        if (dataReady) {
+            document.getElementById('bookingsStatus').textContent = `Booking ${saved.id} saved${data.status ? ` as ${data.status}` : ''}.`;
+        }
     } catch {
         message.textContent = 'Could not save the booking. Your entries are still here. Check your connection or sign-in and try again.';
     } finally {
@@ -376,12 +393,9 @@ async function importCSVWithProgress() {
             'Host': 'host',
             'Notes': 'notes'
         };
-        let headerMap = {};
-        for (let i = 0; i < cleanKeys.length; i++) {
-            const friendly = cleanKeys[i];
-            if (columnMap[friendly]) headerMap[friendly] = columnMap[friendly];
-        }
-        if (!headerMap['Booking ID'] || !headerMap['Guest Name']) {
+        const headerMap = rawKeys.flatMap((key, i) => Object.hasOwn(columnMap, cleanKeys[i])
+            ? [[key, columnMap[cleanKeys[i]]]] : []);
+        if (!cleanKeys.includes('Booking ID') || !cleanKeys.includes('Guest Name')) {
             modalDiv.remove();
             alert('CSV must contain "Booking ID" and "Guest Name" columns.');
             return;
@@ -392,45 +406,44 @@ async function importCSVWithProgress() {
         for (let idx = 0; idx < totalRows; idx++) {
             const row = data[idx];
             const dbRow = {};
-            for (let [friendly, dbCol] of Object.entries(headerMap)) {
+            for (const [friendly, dbCol] of headerMap) {
                 let val = row[friendly];
                 if (val !== undefined && val !== null && val !== '') {
                     val = val.toString().trim();
-                    if (['guest_paid', 'host_cost', 'charges', 'profit'].includes(dbCol)) {
+                    if (moneyFields.includes(dbCol)) {
                         val = val.replace(/,/g, '');
                     }
                     if (dbCol === 'phone' && val.startsWith("'+")) val = val.slice(1);
-                    dbRow[dbCol] = val;
+                    dbRow[dbCol] = val || null;
                 } else {
                     dbRow[dbCol] = null;
                 }
             }
-            if (dbRow.id) dbRow.id = dbRow.id.trim();
-            if (dbRow.guest_name) dbRow.guest_name = dbRow.guest_name.trim();
-            if (!dbRow.id || !dbRow.guest_name) {
+            if (!dbRow.id || !dbRow.guest_name || moneyFields.some(field => dbRow[field] != null && amount(dbRow[field]) === null)) {
                 skipped++;
-                skippedRows.push(idx+2);
-                    continue;
+                skippedRows.push(idx + 2);
+                continue;
             }
             if (dbRow.check_in) dbRow.check_in = dbRow.check_in.substring(0,10);
             if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
-            autoCalculate(dbRow);
-            ['guest_paid', 'host_cost', 'charges', 'profit', 'nights'].forEach(f => {
-                if (dbRow[f] !== null && dbRow[f] !== '') dbRow[f] = parseFloat(dbRow[f]);
-                if (isNaN(dbRow[f])) dbRow[f] = null;
-            });
-            const { data: existing, error: lookupError } = await supabaseClient.from('bookings').select('id').eq('id', dbRow.id);
+            const { id, ...input } = dbRow;
+            const { data: existing, error: lookupError } = await supabaseClient.from('bookings')
+                .select('guest_paid,host_cost,charges,check_in,check_out').eq('id', id).maybeSingle();
             if (lookupError) {
                 skipped++;
                 skippedRows.push(idx + 2);
-            } else if (existing.length) {
-                const { error } = await supabaseClient.from('bookings').update(dbRow).eq('id', dbRow.id);
+            } else if (existing) {
+                for (const field of [...moneyFields, 'check_in', 'check_out']) {
+                    if (Object.hasOwn(input, field) && (input[field] == null
+                        ? existing[field] == null : String(input[field]) === String(existing[field]))) delete input[field];
+                }
+                const { error } = await supabaseClient.from('bookings').update(bookingWrite(input, existing)).eq('id', id);
                 if (!error) imported++;
                 else { skipped++; skippedRows.push(idx+2); }
             } else {
-                dbRow.created_at = new Date().toISOString();
-                dbRow.updated_at = dbRow.created_at;
-                const { error } = await supabaseClient.from('bookings').insert([dbRow]);
+                const now = new Date().toISOString();
+                const { error } = await supabaseClient.from('bookings')
+                    .insert([{ ...bookingWrite(input), id, created_at: now, updated_at: now }]);
                 if (!error) imported++;
                 else { skipped++; skippedRows.push(idx+2); }
             }
@@ -542,6 +555,10 @@ const reportPanel = `
         <button type="button" id="clearReportDates" class="secondary">All dates</button>
     </form>
     <div id="reportOutput"></div>
+    <details class="report-notes" open>
+        <summary>Compare with former dashboard totals (all dates)</summary>
+        <div id="legacyComparison"></div>
+    </details>
     <section class="calculator" aria-labelledby="furnishingTitle">
         <h2 id="furnishingTitle">Furnishing calculator</h2>
         <p>Estimate how long a unit would take to repay furnishing costs. Enter a typical month for the proposed operating model.</p>

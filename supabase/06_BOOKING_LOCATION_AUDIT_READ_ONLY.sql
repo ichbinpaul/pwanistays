@@ -22,6 +22,7 @@ WITH source AS (
            CASE
                WHEN name_key ~ '^(3rd|third) avenue beach apartments?( nyali)?$' THEN '3rd avenue beach apartments'
                WHEN name_key ~ '^apa apartments?( ?(nyali|shanzu))?$' THEN 'apa apartments nyali'
+               WHEN name_key ~ '^bu?xton point( ?mombasa( town)?)?[.]?$' THEN 'buxton point'
                WHEN name_key ~ '^coral sands( ((residen|reciden)ce|apartment)(s|[(]s[)])?)?( (nyali|diani))?$' THEN 'coral sands residences'
                WHEN name_key ~ '^mwembe tayari( ?(nyali|mombasa( town)?))?$' THEN 'mwembe tayari'
                WHEN name_key ~ '^pk oceans?( view)?( apartments?)?( nyali)?$' THEN 'pk ocean apartments'
@@ -33,7 +34,6 @@ WITH source AS (
            COALESCE(confirmed_unit, CASE
                WHEN lower(unit) = 'no name' THEN ''
                WHEN lower(unit) IN ('aqua garden', 'aqua gardens') THEN 'aqua garden'
-               WHEN lower(unit) IN ('bxton point', 'buxton point') THEN 'buxton point'
                WHEN lower(unit) IN ('coral gables apart', 'coral gables apartment(s)') THEN 'coral gables'
                ELSE regexp_replace(lower(unit), ' apartments?$', '')
            END) AS unit_key,
@@ -46,6 +46,7 @@ WITH source AS (
            CASE confirmed_unit
                WHEN '3rd avenue beach apartments' THEN 'Nyali'
                WHEN 'apa apartments nyali' THEN 'Nyali'
+               WHEN 'buxton point' THEN 'Mombasa'
                WHEN 'coral sands residences' THEN 'Nyali'
                WHEN 'mwembe tayari' THEN 'Mombasa'
                WHEN 'pk ocean apartments' THEN 'Nyali'

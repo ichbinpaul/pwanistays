@@ -78,8 +78,6 @@ export function groupLabel(value, fallback = '') {
 const unitAliases = new Map([
     ['aqua garden', 'Aqua Garden'],
     ['aqua gardens', 'Aqua Garden'],
-    ['buxton point', 'Buxton Point'],
-    ['bxton point', 'Buxton Point'],
     ['coral gables', 'Coral Gables'],
     ['coral gables apart', 'Coral Gables'],
     ['coral gables apartment', 'Coral Gables'],
@@ -97,6 +95,11 @@ const confirmedUnits = [
         name: 'APA Apartments Nyali',
         location: 'Nyali',
         aliases: /^apa apartments?(?: ?(?:nyali|shanzu))?$/,
+    },
+    {
+        name: 'Buxton Point',
+        location: 'Mombasa',
+        aliases: /^bu?xton point(?: ?mombasa(?: town)?)?\.?$/,
     },
     {
         name: 'Coral Sands Residences',

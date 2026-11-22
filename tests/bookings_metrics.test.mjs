@@ -168,6 +168,23 @@ test('location review identifies individual bookings across locations and status
     assert.equal(conflicts.find(row => row.id === 'PS011').locationToCheck, 'Nyali');
 });
 
+test('Buxton Point rolls up both spellings with Mombasa in the unit name', () => {
+    const bookings = [
+        ['Bxton Point Mombasa', 'Mombasa'],
+        ['Buxton Point Mombasa', 'Mombasa'],
+        [' BUXTON Point – Mombasa Town. ', 'Mombasa Town'],
+        ['Bxton PointMombasa', null],
+        ['Buxton Point Unit 12', 'Mombasa'],
+    ].map(([unit_name, location]) => ({ unit_name, location, status: 'Complete', guest_paid: 500 }));
+
+    const { units, totals } = bookingReport(bookings);
+    assert.deepEqual(units.map(row => [row.label, row.count, row.contribution]), [
+        ['Buxton Point · Mombasa', 4, 2000],
+        ['Buxton Point Unit 12 · Mombasa', 1, 500],
+    ]);
+    assert.equal(totals.contribution, 2500);
+});
+
 test('confirmed apartment aliases roll up corrected locations and keep distinct numbered units separate', () => {
     const bookings = [
         ['PS001', 'Silent Springs Villas', ''],

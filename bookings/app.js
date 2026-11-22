@@ -1,5 +1,5 @@
-import { amount, bookedAmounts, bookingLocation, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=6';
-import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=6';
+import { amount, bookedAmounts, bookingLocation, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=7';
+import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=7';
 
 const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
@@ -33,6 +33,7 @@ function addSuggestions() {
             if (field === 'location') return bookingLocation(booking.unit_name, booking.location);
             return booking[field]?.trim();
         }).filter(Boolean));
+        if (field === 'unit_name') values.add('N/A');
         list.replaceChildren(...Array.from(values).sort((a, b) => a.localeCompare(b)).map(value => new Option(value)));
     }
 }
@@ -129,7 +130,7 @@ function renderBookingsTable() {
             return `<tr>
                 <td><input type="checkbox" class="rowCheckbox" data-id="${id}" aria-label="Select booking ${id}"></td>
                 <th scope="row">${escapeHtml(booking.guest_name || 'Unnamed guest')}<small>${id}</small></th>
-                <td>${escapeHtml(unitName(booking.unit_name, booking.location) || '—')}<small>${escapeHtml(bookingLocation(booking.unit_name, booking.location))}</small>
+                <td>${escapeHtml(unitName(booking.unit_name, booking.location) || 'N/A')}<small>${escapeHtml(bookingLocation(booking.unit_name, booking.location))}</small>
                     <small class="mobile-dates">${dates.join(' → ')}</small></td>
                 <td>${dates.join(' → ') || '—'}<small>${nights ? `${number(nights)} nights` : ''}</small></td>
                 <td><span class="badge badge-${statusOrder.get(booking.status) ?? 3}">${status}</span></td>
@@ -544,6 +545,7 @@ const bookingDialog = `
                         ${input('check_out', 'Check-out', 'type="date"')}
                         ${choice('status', 'Status', '<option>Pending</option><option>In Progress</option><option>Complete</option>')}
                     </div>
+                    <p class="field-help">Use N/A when the unit name is unavailable.</p>
                     <p id="unitLocationNotice" class="field-help"></p>
                 </fieldset>
                 <fieldset>
@@ -634,6 +636,12 @@ function setupBookingForm() {
         const normalize = value => groupLabel(value).toLowerCase();
         const name = form.elements.unit_name.value;
         if (!name) return;
+        const canonical = unitName(name, form.elements.location.value);
+        if (canonical === 'N/A') {
+            form.elements.unit_name.value = canonical;
+            showUnitLocation(form);
+            return;
+        }
         const confirmed = bookingLocation(name);
         if (confirmed) form.elements.location.value = confirmed;
         const matches = bookings.filter(booking =>

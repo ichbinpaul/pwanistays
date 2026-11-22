@@ -22,7 +22,9 @@ WITH source AS (
            CASE
                WHEN name_key ~ '^(3rd|third) avenue beach apartments?( nyali)?$' THEN '3rd avenue beach apartments'
                WHEN name_key ~ '^apa apartments?( ?(nyali|shanzu))?$' THEN 'apa apartments nyali'
+               WHEN name_key ~ '^bu?xton point( ?mombasa( town)?)?[.]?$' THEN 'buxton point'
                WHEN name_key ~ '^coral sands( ((residen|reciden)ce|apartment)(s|[(]s[)])?)?( (nyali|diani))?$' THEN 'coral sands residences'
+               WHEN name_key ~ '^(golden sand resort|golden sun (resort|(apartment|aprtment)s?))( diani)?$' THEN 'golden sun resort'
                WHEN name_key ~ '^mwembe tayari( ?(nyali|mombasa( town)?))?$' THEN 'mwembe tayari'
                WHEN name_key ~ '^pk oceans?( view)?( apartments?)?( nyali)?$' THEN 'pk ocean apartments'
                WHEN name_key ~ '^silent springs villas?( diani)?$' THEN 'silent springs villas'
@@ -31,10 +33,10 @@ WITH source AS (
 ), classified AS (
     SELECT *,
            COALESCE(confirmed_unit, CASE
-               WHEN lower(unit) = 'no name' THEN ''
+               WHEN lower(unit) IN ('no name', 'n/a') THEN ''
                WHEN lower(unit) IN ('aqua garden', 'aqua gardens') THEN 'aqua garden'
-               WHEN lower(unit) IN ('bxton point', 'buxton point') THEN 'buxton point'
                WHEN lower(unit) IN ('coral gables apart', 'coral gables apartment(s)') THEN 'coral gables'
+               WHEN lower(unit) IN ('zuriluxe', 'zuriluxe oasis village') THEN 'zuriluxe oasis village'
                ELSE regexp_replace(lower(unit), ' apartments?$', '')
            END) AS unit_key,
            CASE WHEN paid_text ~ number_pattern THEN paid_text::numeric END AS paid,
@@ -46,7 +48,9 @@ WITH source AS (
            CASE confirmed_unit
                WHEN '3rd avenue beach apartments' THEN 'Nyali'
                WHEN 'apa apartments nyali' THEN 'Nyali'
+               WHEN 'buxton point' THEN 'Mombasa'
                WHEN 'coral sands residences' THEN 'Nyali'
+               WHEN 'golden sun resort' THEN 'Diani'
                WHEN 'mwembe tayari' THEN 'Mombasa'
                WHEN 'pk ocean apartments' THEN 'Nyali'
                WHEN 'silent springs villas' THEN 'Diani'
@@ -87,7 +91,9 @@ WITH source AS (
     FROM locations l
     LEFT JOIN patterns p USING (unit_key)
 ), output AS (
-    SELECT '01 Booking to review' AS section, booking_id, unit, status,
+    SELECT '01 Booking to review' AS section, booking_id,
+           CASE WHEN lower(unit) IN ('', 'no name', 'n/a') THEN 'N/A' ELSE unit END AS unit,
+           status,
            COALESCE(NULLIF(recorded_location, ''), '(blank)') AS recorded_location,
            COALESCE(confirmed_location, usual_location) AS location_to_check,
            frequency AS recorded_counts, reason AS detail,

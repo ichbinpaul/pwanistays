@@ -78,13 +78,15 @@ export function groupLabel(value, fallback = '') {
 const unitAliases = new Map([
     ['aqua garden', 'Aqua Garden'],
     ['aqua gardens', 'Aqua Garden'],
-    ['buxton point', 'Buxton Point'],
-    ['bxton point', 'Buxton Point'],
     ['coral gables', 'Coral Gables'],
     ['coral gables apart', 'Coral Gables'],
     ['coral gables apartment', 'Coral Gables'],
     ['coral gables apartments', 'Coral Gables'],
     ['coral gables apartment(s)', 'Coral Gables'],
+    ['no name', 'N/A'],
+    ['n/a', 'N/A'],
+    ['zuriluxe', 'Zuriluxe Oasis Village'],
+    ['zuriluxe oasis village', 'Zuriluxe Oasis Village'],
 ]);
 
 const confirmedUnits = [
@@ -99,9 +101,19 @@ const confirmedUnits = [
         aliases: /^apa apartments?(?: ?(?:nyali|shanzu))?$/,
     },
     {
+        name: 'Buxton Point',
+        location: 'Mombasa',
+        aliases: /^bu?xton point(?: ?mombasa(?: town)?)?\.?$/,
+    },
+    {
         name: 'Coral Sands Residences',
         location: 'Nyali',
         aliases: /^coral sands(?: (?:(?:residen|reciden)ce|apartment)(?:s|\(s\))?)?(?: (?:nyali|diani))?$/,
+    },
+    {
+        name: 'Golden Sun Resort',
+        location: 'Diani',
+        aliases: /^(?:golden sand resort|golden sun (?:resort|(?:apartment|aprtment)s?))(?: diani)?$/,
     },
     {
         name: 'Mwembe Tayari',
@@ -139,7 +151,7 @@ export function unitNameResolver(bookings) {
     for (const booking of bookings) {
         const location = bookingLocation(booking.unit_name, booking.location).toLowerCase();
         const name = knownUnitName(booking.unit_name);
-        if (!location || !name) continue;
+        if (!location || !name || name === 'N/A') continue;
         if (!byLocation.has(location)) byLocation.set(location, new Map());
         const names = byLocation.get(location);
         if (!names.has(name.toLowerCase())) names.set(name.toLowerCase(), name);
@@ -163,7 +175,7 @@ export function bookingLocationReview(bookings) {
     const units = new Map();
     for (const booking of bookings) {
         const label = knownUnitName(booking.unit_name);
-        const name = label.toLowerCase() === 'no name' ? '' : label;
+        const name = label === 'N/A' ? '' : label;
         const confirmed = bookingLocation(name);
         const unit = confirmed ? name : name.replace(/\s+apartments?$/i, '');
         const key = unit.toLowerCase();
@@ -172,7 +184,7 @@ export function bookingLocationReview(bookings) {
         }
         const review = units.get(key);
         const location = groupLabel(booking.location);
-        review.bookings.push({ booking, location });
+        review.bookings.push({ booking, location, recordedName: label === 'N/A' ? label : groupLabel(booking.unit_name) });
         if (!location) {
             review.missing++;
             continue;
@@ -191,7 +203,7 @@ export function bookingLocationReview(bookings) {
         const usual = unit && !tied ? first?.location : '';
         if (unit && (confirmed || recorded.length > 1 || missing)) patterns.push({ unit, confirmed, missing, recorded });
 
-        for (const { booking, location } of review.bookings) {
+        for (const { booking, location, recordedName } of review.bookings) {
             const key = location.toLowerCase();
             let reason;
             if (confirmed && key !== confirmed.toLowerCase()) reason = 'Conflicts with confirmed location';
@@ -202,7 +214,7 @@ export function bookingLocationReview(bookings) {
             }
             if (reason) conflicts.push({
                 id: booking.id,
-                unit: groupLabel(booking.unit_name),
+                unit: recordedName,
                 status: groupLabel(booking.status, 'Unspecified'),
                 location,
                 locationToCheck: confirmed || usual || '',
@@ -266,9 +278,10 @@ export function bookingReport(bookings, from, through) {
 
         const nights = stayNights(date, booking.check_out);
         const money = bookedAmounts(booking);
-        const unit = unitName(booking.unit_name, booking.location);
+        const label = unitName(booking.unit_name, booking.location);
+        const unit = label === 'N/A' ? '' : label;
         const location = bookingLocation(booking.unit_name, booking.location) || 'Location missing';
-        const unitLabel = unit ? `${unit} · ${location}` : 'Unit missing';
+        const unitLabel = unit ? `${unit} · ${location}` : 'N/A';
         const labels = {
             units: [unitLabel, unit ? JSON.stringify([unit.toLowerCase(), location.toLowerCase()]) : null],
             months: [date ? date.slice(0, 7) : 'Check-in missing'],

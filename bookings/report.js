@@ -1,4 +1,4 @@
-import { amount, bookingLocationReview, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=6';
+import { amount, bookingLocationReview, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=7';
 
 const digits = new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 });
 export const number = value => value == null ? '—' : digits.format(value);
@@ -113,7 +113,7 @@ function drawLocationReview(bookings) {
                 <tbody>${conflicts.map(row => `<tr><th scope="row">${escapeHtml(row.id || '—')}
                     ${row.id == null ? '' : `<div><button type="button" class="secondary" data-booking-id="${escapeHtml(row.id)}"
                         aria-label="Edit booking ${escapeHtml(row.id)}">Edit</button></div>`}</th>
-                    <td>${escapeHtml(row.unit || 'Unit missing')}</td><td>${escapeHtml(row.status)}</td>
+                    <td>${escapeHtml(row.unit || 'N/A')}</td><td>${escapeHtml(row.status)}</td>
                     <td>${escapeHtml(row.location || 'Blank')}</td><td>${escapeHtml(row.locationToCheck || '—')}</td>
                     <td>${escapeHtml(row.reason)}</td><td>${money(row.contribution)}</td></tr>`).join('')}</tbody>
             </table>
@@ -208,7 +208,7 @@ export function setupReport(root, readBookings, editBooking) {
                 ${undated && (from.value || through.value) ? `${undated} completed stays across all dates have an unknown check-in and are excluded by this filter.` : ''}</p>
             </details>`;
         unit.replaceChildren(new Option('Select a unit', ''), ...report.units.flatMap((row, index) =>
-            row.label === 'Unit missing' ? [] : [new Option(row.label, index, false, row.label === unitLabel)]));
+            row.unit ? [new Option(row.label, index, false, row.label === unitLabel)] : []));
         showEvidence();
     }
 

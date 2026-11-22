@@ -168,6 +168,23 @@ test('location review identifies individual bookings across locations and status
     assert.equal(conflicts.find(row => row.id === 'PS011').locationToCheck, 'Nyali');
 });
 
+test('Buxton Point rolls up both spellings with Mombasa in the unit name', () => {
+    const bookings = [
+        ['Bxton Point Mombasa', 'Mombasa'],
+        ['Buxton Point Mombasa', 'Mombasa'],
+        [' BUXTON Point – Mombasa Town. ', 'Mombasa Town'],
+        ['Bxton PointMombasa', null],
+        ['Buxton Point Unit 12', 'Mombasa'],
+    ].map(([unit_name, location]) => ({ unit_name, location, status: 'Complete', guest_paid: 500 }));
+
+    const { units, totals } = bookingReport(bookings);
+    assert.deepEqual(units.map(row => [row.label, row.count, row.contribution]), [
+        ['Buxton Point · Mombasa', 4, 2000],
+        ['Buxton Point Unit 12 · Mombasa', 1, 500],
+    ]);
+    assert.equal(totals.contribution, 2500);
+});
+
 test('confirmed apartment aliases roll up corrected locations and keep distinct numbered units separate', () => {
     const bookings = [
         ['PS001', 'Silent Springs Villas', ''],
@@ -191,6 +208,30 @@ test('confirmed apartment aliases roll up corrected locations and keep distinct 
     assert.deepEqual(conflicts.map(row => [row.id, row.locationToCheck]).sort(),
         [['PS001', 'Diani'], ['PS002', 'Nyali'], ['PS004', 'Nyali'], ['PS007', 'Nyali']]);
     assert.equal(bookings[3].location, 'Shanzu');
+});
+
+test('Golden Sun and Zuriluxe aliases consolidate without treating N/A as a property', () => {
+    const bookings = [
+        ['Golden Sand Resort', 'Diani'],
+        ['Golden Sun Aprtments', 'Diani'],
+        ['Golden Sun Resort', 'Diani'],
+        ['Zuriluxe', 'Malindi'],
+        ['Zuriluxe Oasis Village', 'Malindi'],
+        ['No Name', 'Bamburi'],
+        ['N/A', 'Malindi'],
+        ['', 'Mtwapa'],
+    ].map(([unit_name, location]) => ({ unit_name, location, status: 'Complete', guest_paid: 500 }));
+
+    const name = unitNameResolver(bookings);
+    assert.equal(name('No Name', 'Bamburi'), 'N/A');
+    const { units, locations } = bookingReport(bookings);
+    assert.equal(units.find(row => row.label === 'Golden Sun Resort · Diani').contribution, 1500);
+    assert.equal(units.find(row => row.label === 'Zuriluxe Oasis Village · Malindi').contribution, 1000);
+    const unavailable = units.find(row => row.label === 'N/A');
+    assert.equal(unavailable.count, 3);
+    assert.equal(unavailable.unit, undefined);
+    assert.equal(locations.find(row => row.label === 'Bamburi').contribution, 500);
+    assert.equal(bookingLocationReview(bookings).conflicts.length, 0);
 });
 
 test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {

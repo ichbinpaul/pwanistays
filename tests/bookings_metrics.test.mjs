@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { bookedAmounts, bookingReport, furnishingScenario, isoDay, stayNights } from '../bookings/metrics.js';
+import { bookedAmounts, bookingReport, bookingWrite, furnishingScenario, isoDay, legacyComparison, stayNights } from '../bookings/metrics.js';
 
 test('stay dates use calendar days, and never turn reversed dates into positive nights', () => {
     assert.equal(isoDay('2026-02-30'), '');
@@ -58,4 +58,32 @@ test('projected payback allows for expenses, zero bookings and impossible break-
     assert.equal(furnishingScenario({ ...inputs, occupancy: 0 }).payback, null);
     assert.equal(furnishingScenario({ ...inputs, nightly: 0 }).breakEven, null);
     assert.equal(furnishingScenario({ ...inputs, fixed: 150000 }).breakEven, 125);
+});
+
+test('the former totals include pending contribution and treat missing costs as zero', () => {
+    const completed = { status: 'Complete', guest_paid: 12_000, host_cost: 9_000, charges: 500, profit: 123 };
+    const pending = { status: 'Pending', guest_paid: 4_000, host_cost: 3_500, charges: 0 };
+    const incomplete = { status: 'Complete', guest_paid: 2_000, host_cost: 500, charges: '' };
+    const bookings = [completed, pending, incomplete];
+
+    const comparison = legacyComparison(bookings);
+    assert.deepEqual(comparison.totals, { count: 3, paid: 18_000, contribution: 4_500 });
+    assert.deepEqual(comparison.otherStatus, { count: 1, paid: 4_000, contribution: 500 });
+    assert.equal(comparison.missingAmounts.contribution, 1_500);
+    assert.equal(comparison.fullyCosted.contribution, 2_500);
+    assert.equal(bookingReport(bookings).totals.paid, 14_000);
+    assert.equal(bookingReport(bookings).totals.contribution, 2_500);
+    assert.equal(completed.profit, 123);
+});
+
+test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {
+    const existing = {
+        guest_paid: 10_000, host_cost: 8_000, charges: null, profit: 2_000,
+        check_in: '2026-11-22', check_out: '2026-11-25', month: '2026-11', nights: 3,
+    };
+    assert.deepEqual(bookingWrite({ notes: 'Arrives in the evening' }, existing), { notes: 'Arrives in the evening' });
+    assert.deepEqual(bookingWrite({ status: 'Complete', profit: 10 }, existing), { status: 'Complete' });
+    assert.deepEqual(bookingWrite({ guest_paid: 9_000 }, existing), { guest_paid: 9_000, profit: 1_000 });
+    assert.deepEqual(bookingWrite({ check_out: '2026-11-26' }, existing), { check_out: '2026-11-26', nights: 4, month: '2026-11' });
+    assert.deepEqual(bookingWrite({ guest_paid: 500 }), { guest_paid: 500, profit: 500, nights: null, month: null });
 });

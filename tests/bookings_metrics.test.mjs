@@ -153,15 +153,19 @@ test('location review identifies individual bookings across locations and status
         ['PS008', 'Bungalow 5', 'Kilifi', 'Complete'],
         ['PS009', 'Ocean Home', '', 'Complete'],
         ['PS010', '', '', 'Pending'],
+        ['PS011', 'PK Ocean Apartments', 'Mombasa', 'Complete'],
+        ['PS012', 'No Name', 'Bamburi', 'Complete'],
+        ['PS013', 'No Name', 'Mtwapa', 'Complete'],
     ].map(([id, unit_name, location, status]) => ({ id, unit_name, location, status, guest_paid: 500 }));
     const { conflicts } = bookingLocationReview(bookings);
-    assert.deepEqual(conflicts.map(row => row.id).sort(), ['PS001', 'PS003', 'PS005', 'PS007', 'PS008', 'PS009', 'PS010']);
+    assert.deepEqual(conflicts.map(row => row.id).sort(), ['PS001', 'PS003', 'PS005', 'PS007', 'PS008', 'PS009', 'PS010', 'PS011']);
     assert.equal(conflicts.find(row => row.id === 'PS001').locationToCheck, 'Nyali');
     assert.equal(conflicts.find(row => row.id === 'PS003').locationToCheck, 'Mombasa');
     assert.equal(conflicts.find(row => row.id === 'PS005').locationToCheck, 'Watamu');
     assert.equal(conflicts.find(row => row.id === 'PS005').status, 'Pending');
     assert.equal(conflicts.find(row => row.id === 'PS007').locationToCheck, '');
     assert.equal(conflicts.find(row => row.id === 'PS010').contribution, 500);
+    assert.equal(conflicts.find(row => row.id === 'PS011').locationToCheck, 'Nyali');
 });
 
 test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {

@@ -22,11 +22,13 @@ WITH source AS (
            CASE
                WHEN name_key ~ '^coral sands( ((residen|reciden)ce|apartment)(s|[(]s[)])?)?( (nyali|diani))?$' THEN 'coral sands residences'
                WHEN name_key ~ '^mwembe tayari( ?(nyali|mombasa( town)?))?$' THEN 'mwembe tayari'
+               WHEN name_key ~ '^pk ocean( apartments?)?( nyali)?$' THEN 'pk ocean apartments'
            END AS confirmed_unit
     FROM prepared
 ), classified AS (
     SELECT *,
            COALESCE(confirmed_unit, CASE
+               WHEN lower(unit) = 'no name' THEN ''
                WHEN lower(unit) IN ('aqua garden', 'aqua gardens') THEN 'aqua garden'
                WHEN lower(unit) IN ('bxton point', 'buxton point') THEN 'buxton point'
                WHEN lower(unit) IN ('coral gables apart', 'coral gables apartment(s)') THEN 'coral gables'
@@ -41,6 +43,7 @@ WITH source AS (
            CASE confirmed_unit
                WHEN 'coral sands residences' THEN 'Nyali'
                WHEN 'mwembe tayari' THEN 'Mombasa'
+               WHEN 'pk ocean apartments' THEN 'Nyali'
            END AS confirmed_location,
            COALESCE(paid, 0) - COALESCE(host_cost, 0) - COALESCE(charges, 0) AS former_contribution,
            CASE WHEN paid IS NOT NULL

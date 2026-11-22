@@ -98,6 +98,11 @@ const confirmedUnits = [
         location: 'Mombasa',
         aliases: /^mwembe tayari(?: ?(?:nyali|mombasa(?: town)?))?$/,
     },
+    {
+        name: 'PK Ocean Apartments',
+        location: 'Nyali',
+        aliases: /^pk ocean(?: apartments?)?(?: nyali)?$/,
+    },
 ];
 
 function confirmedUnit(name) {
@@ -142,7 +147,8 @@ export function unitNameResolver(bookings) {
 export function bookingLocationReview(bookings) {
     const units = new Map();
     for (const booking of bookings) {
-        const name = knownUnitName(booking.unit_name);
+        const label = knownUnitName(booking.unit_name);
+        const name = label.toLowerCase() === 'no name' ? '' : label;
         const confirmed = bookingLocation(name);
         const unit = confirmed ? name : name.replace(/\s+apartments?$/i, '');
         const key = unit.toLowerCase();

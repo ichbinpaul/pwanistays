@@ -82,7 +82,10 @@ test('the former totals include pending contribution and treat missing costs as 
 
 test('unit names combine verified aliases and matching suffixes without merging different locations or unit numbers', () => {
     const bookings = [
-        ['Aqua   Gardens', 'Nyali'], ['Aqua Garden', 'nyali'], ['Coral Gables Apartment', 'Diani'], ['Coral Gables', 'Diani'],
+        ['Aqua   Gardens', 'Nyali'], ['Aqua Garden', 'nyali'],
+        ['Coral Gables Apart', 'Diani'], ['Coral Gables', 'Diani'], ['Coral Gables Apartment', 'Diani'],
+        ['Coral Gables Apartments', 'Diani'], ['Coral Gables Apartment(s)', 'Diani'],
+        ['Bxton Point', 'Mombasa'], ['Buxton Point', 'Mombasa'],
         ['Palm Court', 'Watamu'], ['palm court apartments', 'Watamu'], ['Palm Court Apartment', 'Malindi'],
         ['Palm Court Unit 4', 'Watamu'], ['Palm Court Unit 5 Apartment', 'Watamu'],
         ['Mango Apartment', 'Shanzu'], ['Mango Apartments', 'Shanzu'],
@@ -90,15 +93,18 @@ test('unit names combine verified aliases and matching suffixes without merging 
 
     const unitName = unitNameResolver(bookings);
     assert.equal(unitName('AQUA GARDENS', 'Nyali'), 'Aqua Garden');
+    assert.equal(unitName('bxton point', ''), 'Buxton Point');
+    assert.equal(unitName('Coral Gables Apart', ''), 'Coral Gables');
     assert.equal(unitName('Coral Gables Apartments', ''), 'Coral Gables');
     assert.equal(unitName('Palm Court Apartment', 'watamu'), 'Palm Court');
     assert.equal(unitName('Palm Court Apartment', 'Malindi'), 'Palm Court Apartment');
     assert.equal(unitName('Palm Court Unit 5 Apartment', 'Watamu'), 'Palm Court Unit 5 Apartment');
     assert.equal(unitName('Mango Apartments', 'Shanzu'), 'Mango');
     const { units } = bookingReport(bookings);
-    assert.equal(units.length, 7);
+    assert.equal(units.length, 8);
     assert.equal(units.find(unit => unit.label === 'Aqua Garden · Nyali').contribution, 1000);
-    assert.equal(units.find(unit => unit.label === 'Coral Gables · Diani').contribution, 1000);
+    assert.equal(units.find(unit => unit.label === 'Coral Gables · Diani').contribution, 2500);
+    assert.equal(units.find(unit => unit.label === 'Buxton Point · Mombasa').contribution, 1000);
     assert.equal(bookings[0].unit_name, 'Aqua   Gardens');
 });
 

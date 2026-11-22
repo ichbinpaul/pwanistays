@@ -1,5 +1,5 @@
-import { amount, bookedAmounts, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=3';
-import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=3';
+import { amount, bookedAmounts, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=4';
+import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=4';
 
 const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";

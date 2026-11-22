@@ -1,4 +1,4 @@
-import { amount, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=3';
+import { amount, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=4';
 
 const digits = new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 });
 export const number = value => value == null ? '—' : digits.format(value);

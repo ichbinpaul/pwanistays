@@ -78,9 +78,13 @@ export function groupLabel(value, fallback = '') {
 const unitAliases = new Map([
     ['aqua garden', 'Aqua Garden'],
     ['aqua gardens', 'Aqua Garden'],
+    ['buxton point', 'Buxton Point'],
+    ['bxton point', 'Buxton Point'],
     ['coral gables', 'Coral Gables'],
+    ['coral gables apart', 'Coral Gables'],
     ['coral gables apartment', 'Coral Gables'],
     ['coral gables apartments', 'Coral Gables'],
+    ['coral gables apartment(s)', 'Coral Gables'],
 ]);
 
 function knownUnitName(name) {

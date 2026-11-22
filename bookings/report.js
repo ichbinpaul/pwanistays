@@ -1,4 +1,4 @@
-import { amount, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=2';
+import { amount, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=3';
 
 const digits = new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 });
 export const number = value => value == null ? '—' : digits.format(value);
@@ -34,7 +34,7 @@ const details = [
     ['Booked nights', row => row.nightCount ? row.nights : null],
     ['Guest payments (KES)', row => row.paidCount ? row.paid : null],
     ['Guest payment per night (KES)', row => row.pricedNights ? row.nightlyPaid / row.pricedNights : null],
-    ['Costed stays', row => row.costedCount],
+    ['Stays with contribution', row => row.costedCount],
     ['Contribution (KES)', row => row.costedCount ? row.contribution : null],
     ['Contribution per night (KES)', row => row.costedNights ? row.nightlyContribution / row.costedNights : null],
 ];
@@ -44,7 +44,7 @@ function reportTable(rows, label) {
     return `<div class="table-wrap" role="region" tabindex="0" aria-label="${label} performance">
         <table class="report-table"><thead><tr><th scope="col">${label}</th>
         ${details.map(([name]) => `<th scope="col">${name}</th>`).join('')}</tr></thead>
-        <tbody>${rows.map(row => `<tr><th scope="row">${escapeHtml(row.label)}</th>
+        <tbody>${rows.map(row => `<tr><th scope="row">${escapeHtml(row.unit || row.label)}${row.location ? `<small>${escapeHtml(row.location)}</small>` : ''}</th>
             ${details.map(([, read]) => `<td>${number(read(row))}</td>`).join('')}</tr>`).join('')}</tbody></table>
         </div>`;
 }
@@ -54,7 +54,7 @@ function exportReport(report, from, through) {
         ['PwaniStays booking performance'],
         ['Check-in from', from || 'All dates'], ['Check-in through', through || 'All dates'],
         ['Reporting basis', 'Whole stay attributed to check-in. Financial measures only include Complete stays.'],
-        ['Contribution', 'Guest payments less host cost and direct charges, with all three recorded.'],
+        ['Contribution', 'Recorded guest payments less host cost and direct charges. Blank costs and charges count as zero.'],
         ['Completed stays with unknown check-in, across all dates', report.undated],
         ['Completed stays with valid nights', report.totals.nightCount],
         ['Completed stays with recorded payment', report.totals.paidCount],
@@ -79,12 +79,12 @@ function card(label, value, context) {
 }
 
 function drawComparison(bookings) {
-    const { totals, otherStatus, missingAmounts, fullyCosted } = legacyComparison(bookings);
+    const { totals, otherStatus, withoutContribution, withContribution } = legacyComparison(bookings);
     const rows = [
         ['Former dashboard totals', totals],
         ['Pending, In Progress and other statuses', otherStatus],
-        ['Completed with missing amounts', missingAmounts],
-        ['Completed with all amounts recorded', fullyCosted],
+        ['Completed with contribution unavailable', withoutContribution],
+        ['Completed with contribution available', withContribution],
     ];
     return `<p>The former dashboard included all statuses and counted blank amounts as zero. This comparison uses all dates and the bookings loaded today.</p>
         <div class="table-wrap" role="region" tabindex="0" aria-label="Comparison with the former dashboard">
@@ -96,7 +96,7 @@ function drawComparison(bookings) {
                 </tbody>
             </table>
         </div>
-        <p>The performance report includes recorded payments from completed stays. Its contribution figure only includes completed stays with guest payment, host cost and charges recorded.</p>
+        <p>The performance report uses completed stays. Contribution requires a recorded guest payment. Blank host costs and direct charges count as zero.</p>
         ${totals.count > 1000 ? '<p>The former dashboard fetched bookings in one request. Its totals could have omitted records beyond the database response limit.</p>' : ''}`;
 }
 
@@ -119,7 +119,7 @@ export function setupReport(root, readBookings) {
         const row = unit.value ? report?.units[Number(unit.value)] : null;
         const contribution = row?.costedNights ? money(row.nightlyContribution / row.costedNights) : 'Unavailable';
         evidence.textContent = row
-            ? `${row.count} completed stays in this period. Recorded contribution per night: ${contribution}${row.costedNights ? ` across ${row.costedNights} costed nights` : ''}.`
+            ? `${row.count} completed stays in this period. Contribution per night: ${contribution}${row.costedNights ? ` across ${row.costedNights} nights` : ''}.`
             : 'Select a unit to see its booking history alongside your assumptions.';
     }
 
@@ -153,15 +153,15 @@ export function setupReport(root, readBookings) {
                 ${card('Completed stays', number(totals.count), `${pending} pending · ${inProgress} in progress${other ? ` · ${other} other` : ''}`)}
                 ${card('Booked nights', number(totals.nightCount ? totals.nights : null), `Valid dates for ${totals.nightCount} of ${totals.count} stays`)}
                 ${card('Completed guest payments', money(totals.paidCount ? totals.paid : null), `Recorded on ${totals.paidCount} of ${totals.count} completed stays`)}
-                ${card('Fully costed contribution', money(totals.costedCount ? totals.contribution : null), `All amounts recorded on ${totals.costedCount} of ${totals.count} completed stays`)}
+                ${card('Booking contribution', money(totals.costedCount ? totals.contribution : null), `Calculated for ${totals.costedCount} of ${totals.count} completed stays`)}
             </div>
             <div class="report-section">
                 ${reportTable(rows, sections.find(([key]) => key === dimension.value)[1])}
             </div>
             <details class="report-notes" ${(missingDates || undated || totals.count > totals.costedCount) ? 'open' : ''}>
                 <summary>How these figures are calculated</summary>
-                <p>Each stay is counted in full in the period of its check-in. Booking contribution is guest payment minus host cost and direct charges. Overheads, furnishing, tax and financing are outside this figure. Booked nights sum stays, so an occupancy rate also needs a record of nights available.</p>
-                <p>Completed stays with missing amounts: ${totals.count - totals.costedCount}. Completed stays with missing or invalid stay dates: ${missingDates}.
+                <p>Each stay is counted in full in the period of its check-in. Booking contribution is guest payment minus host cost and direct charges. Blank costs and charges count as zero. Overheads, furnishing, tax and financing are outside this figure. Booked nights sum stays, so an occupancy rate also needs a record of nights available.</p>
+                <p>Completed stays with contribution unavailable: ${totals.count - totals.costedCount}. Completed stays with missing or invalid stay dates: ${missingDates}.
                 ${undated && (from.value || through.value) ? `${undated} completed stays across all dates have an unknown check-in and are excluded by this filter.` : ''}</p>
             </details>`;
         unit.replaceChildren(new Option('Select a unit', ''), ...report.units.flatMap((row, index) =>

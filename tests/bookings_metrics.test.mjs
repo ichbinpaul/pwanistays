@@ -210,6 +210,30 @@ test('confirmed apartment aliases roll up corrected locations and keep distinct 
     assert.equal(bookings[3].location, 'Shanzu');
 });
 
+test('Golden Sun and Zuriluxe aliases consolidate without treating N/A as a property', () => {
+    const bookings = [
+        ['Golden Sand Resort', 'Diani'],
+        ['Golden Sun Aprtments', 'Diani'],
+        ['Golden Sun Resort', 'Diani'],
+        ['Zuriluxe', 'Malindi'],
+        ['Zuriluxe Oasis Village', 'Malindi'],
+        ['No Name', 'Bamburi'],
+        ['N/A', 'Malindi'],
+        ['', 'Mtwapa'],
+    ].map(([unit_name, location]) => ({ unit_name, location, status: 'Complete', guest_paid: 500 }));
+
+    const name = unitNameResolver(bookings);
+    assert.equal(name('No Name', 'Bamburi'), 'N/A');
+    const { units, locations } = bookingReport(bookings);
+    assert.equal(units.find(row => row.label === 'Golden Sun Resort · Diani').contribution, 1500);
+    assert.equal(units.find(row => row.label === 'Zuriluxe Oasis Village · Malindi').contribution, 1000);
+    const unavailable = units.find(row => row.label === 'N/A');
+    assert.equal(unavailable.count, 3);
+    assert.equal(unavailable.unit, undefined);
+    assert.equal(locations.find(row => row.label === 'Bamburi').contribution, 500);
+    assert.equal(bookingLocationReview(bookings).conflicts.length, 0);
+});
+
 test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {
     const existing = {
         guest_paid: 10_000, host_cost: 8_000, charges: null, profit: 2_000,

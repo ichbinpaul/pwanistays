@@ -33,9 +33,13 @@ WITH source AS (
 ), classified AS (
     SELECT *,
            COALESCE(confirmed_unit, CASE
-               WHEN lower(unit) IN ('no name', 'n/a') THEN ''
+               WHEN lower(unit) IN ('no name', 'na', 'n/a') THEN ''
                WHEN lower(unit) IN ('aqua garden', 'aqua gardens') THEN 'aqua garden'
                WHEN lower(unit) IN ('coral gables apart', 'coral gables apartment(s)') THEN 'coral gables'
+               WHEN lower(unit) IN ('gayla apartment', 'gayla apartments', 'gayla place apartment', 'gayla place apartments') THEN 'gayla place apartments'
+               WHEN lower(unit) IN ('harmony park', 'harmony park diani') THEN 'harmony park'
+               WHEN lower(unit) IN ('mtwapa pride', 'mtwapa pride apartment', 'mtwapa pride apartments') THEN 'mtwapa pride apartments'
+               WHEN lower(unit) IN ('nightingale', 'nightingale apartment', 'nightingale apartments') THEN 'nightingale apartments'
                WHEN lower(unit) IN ('zuriluxe', 'zuriluxe oasis village') THEN 'zuriluxe oasis village'
                ELSE regexp_replace(lower(unit), ' apartments?$', '')
            END) AS unit_key,
@@ -92,7 +96,7 @@ WITH source AS (
     LEFT JOIN patterns p USING (unit_key)
 ), output AS (
     SELECT '01 Booking to review' AS section, booking_id,
-           CASE WHEN lower(unit) IN ('', 'no name', 'n/a') THEN 'N/A' ELSE unit END AS unit,
+           CASE WHEN lower(unit) IN ('', 'no name', 'na', 'n/a') THEN 'N/A' ELSE unit END AS unit,
            status,
            COALESCE(NULLIF(recorded_location, ''), '(blank)') AS recorded_location,
            COALESCE(confirmed_location, usual_location) AS location_to_check,

@@ -218,6 +218,7 @@ test('Golden Sun and Zuriluxe aliases consolidate without treating N/A as a prop
         ['Zuriluxe', 'Malindi'],
         ['Zuriluxe Oasis Village', 'Malindi'],
         ['No Name', 'Bamburi'],
+        ['NA', 'Malindi'],
         ['N/A', 'Malindi'],
         ['', 'Mtwapa'],
     ].map(([unit_name, location]) => ({ unit_name, location, status: 'Complete', guest_paid: 500 }));
@@ -228,10 +229,30 @@ test('Golden Sun and Zuriluxe aliases consolidate without treating N/A as a prop
     assert.equal(units.find(row => row.label === 'Golden Sun Resort · Diani').contribution, 1500);
     assert.equal(units.find(row => row.label === 'Zuriluxe Oasis Village · Malindi').contribution, 1000);
     const unavailable = units.find(row => row.label === 'N/A');
-    assert.equal(unavailable.count, 3);
+    assert.equal(unavailable.count, 4);
     assert.equal(unavailable.unit, undefined);
     assert.equal(locations.find(row => row.label === 'Bamburi').contribution, 500);
     assert.equal(bookingLocationReview(bookings).conflicts.length, 0);
+});
+
+test('confirmed names take precedence over generic Apartment suffix grouping', () => {
+    const bookings = [
+        ['Gayla Apartment', 'Nyali'],
+        ['Gayla Place Apartments', 'Nyali'],
+        ['Harmony Park', 'Diani'],
+        ['Harmony Park Diani', 'Diani'],
+        ['Mtwapa Pride', 'Mtwapa'],
+        ['Mtwapa Pride Apartments', 'Mtwapa'],
+        ['Nightingale Apartment', 'Shanzu'],
+        ['Nightingale Apartments', 'Shanzu'],
+    ].map(([unit_name, location]) => ({ unit_name, location, status: 'Complete', guest_paid: 500 }));
+    const { units } = bookingReport(bookings);
+    assert.deepEqual(units.map(row => [row.label, row.count, row.contribution]), [
+        ['Gayla Place Apartments · Nyali', 2, 1000],
+        ['Harmony Park · Diani', 2, 1000],
+        ['Mtwapa Pride Apartments · Mtwapa', 2, 1000],
+        ['Nightingale Apartments · Shanzu', 2, 1000],
+    ]);
 });
 
 test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {

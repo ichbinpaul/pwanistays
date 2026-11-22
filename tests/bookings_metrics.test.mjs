@@ -168,6 +168,31 @@ test('location review identifies individual bookings across locations and status
     assert.equal(conflicts.find(row => row.id === 'PS011').locationToCheck, 'Nyali');
 });
 
+test('confirmed apartment aliases roll up corrected locations and keep distinct numbered units separate', () => {
+    const bookings = [
+        ['PS001', 'Silent Springs Villas', ''],
+        ['PS002', 'Third Avenue Beach Apartments', 'Mombasa'],
+        ['PS003', '3rd Avenue Beach Apartments', 'Nyali'],
+        ['PS004', 'APA Apartments Nyali', 'Shanzu'],
+        ['PS005', 'APA Apartment', 'Nyali'],
+        ['PS006', 'PK Ocean Apartments', 'Nyali'],
+        ['PS007', 'PK Ocean View Apartments', 'Mombasa'],
+        ['PS008', 'PK Ocean View Apartments A3', 'Nyali'],
+    ].map(([id, unit_name, location]) => ({ id, unit_name, location, status: 'Complete', guest_paid: 500 }));
+
+    const { locations, units } = bookingReport(bookings);
+    assert.deepEqual(locations.map(row => [row.label, row.count]), [['Nyali', 7], ['Diani', 1]]);
+    assert.equal(units.find(row => row.label === '3rd Avenue Beach Apartments · Nyali').contribution, 1000);
+    assert.equal(units.find(row => row.label === 'APA Apartments Nyali · Nyali').contribution, 1000);
+    assert.equal(units.find(row => row.label === 'PK Ocean Apartments · Nyali').contribution, 1000);
+    assert.equal(units.find(row => row.label === 'PK Ocean View Apartments A3 · Nyali').contribution, 500);
+
+    const { conflicts } = bookingLocationReview(bookings);
+    assert.deepEqual(conflicts.map(row => [row.id, row.locationToCheck]).sort(),
+        [['PS001', 'Diani'], ['PS002', 'Nyali'], ['PS004', 'Nyali'], ['PS007', 'Nyali']]);
+    assert.equal(bookings[3].location, 'Shanzu');
+});
+
 test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {
     const existing = {
         guest_paid: 10_000, host_cost: 8_000, charges: null, profit: 2_000,

@@ -89,6 +89,16 @@ const unitAliases = new Map([
 
 const confirmedUnits = [
     {
+        name: '3rd Avenue Beach Apartments',
+        location: 'Nyali',
+        aliases: /^(?:3rd|third) avenue beach apartments?(?: nyali)?$/,
+    },
+    {
+        name: 'APA Apartments Nyali',
+        location: 'Nyali',
+        aliases: /^apa apartments?(?: ?(?:nyali|shanzu))?$/,
+    },
+    {
         name: 'Coral Sands Residences',
         location: 'Nyali',
         aliases: /^coral sands(?: (?:(?:residen|reciden)ce|apartment)(?:s|\(s\))?)?(?: (?:nyali|diani))?$/,
@@ -101,7 +111,12 @@ const confirmedUnits = [
     {
         name: 'PK Ocean Apartments',
         location: 'Nyali',
-        aliases: /^pk ocean(?: apartments?)?(?: nyali)?$/,
+        aliases: /^pk oceans?(?: view)?(?: apartments?)?(?: nyali)?$/,
+    },
+    {
+        name: 'Silent Springs Villas',
+        location: 'Diani',
+        aliases: /^silent springs villas?(?: diani)?$/,
     },
 ];
 

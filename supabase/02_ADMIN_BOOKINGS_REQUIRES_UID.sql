@@ -4,7 +4,7 @@
 -- List any other explicitly approved staff UUIDs, separated by commas.
 BEGIN;
 
-SET LOCAL pwanistays.booking_admins = 'REPLACE-WITH-YOUR-SUPABASE-AUTH-USER-UUID';
+SET LOCAL pwanistays.booking_admins = 'de331908-92a3-47c5-8ed5-d5a0e11fbcd8';
 
 DO $$
 DECLARE

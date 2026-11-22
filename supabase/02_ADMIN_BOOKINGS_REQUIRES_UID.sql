@@ -1,45 +1,96 @@
--- OPTIONAL BUT STRONGLY RECOMMENDED. THIS FILE WILL ABORT UNTIL YOU CONFIGURE YOUR ADMIN AUTH UID.
--- Backup bookings, review 00_PRECHECK_READ_ONLY.sql and authenticate once in Supabase Auth dashboard.
--- Copy the UUID from Authentication -> Users and replace the placeholder below.
--- ONLY authenticated users listed in site_admins will access the private bookings table.
--- WARNING: Existing bookings RLS policies are replaced; other users/apps will lose access.
+-- Run the read-only preflight first. Review any views, routines or integrations
+-- that expose or depend on bookings. Back up the current grants and policies.
+-- Replace the placeholder below with your Authentication → Users UUID.
+-- List any other explicitly approved staff UUIDs, separated by commas.
 BEGIN;
 
-CREATE TABLE IF NOT EXISTS public.site_admins (
-  user_id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-ALTER TABLE public.site_admins ENABLE ROW LEVEL SECURITY;
-REVOKE ALL ON public.site_admins FROM PUBLIC, anon, authenticated;
+SET LOCAL pwanistays.booking_admins = 'REPLACE-WITH-YOUR-SUPABASE-AUTH-USER-UUID';
 
 DO $$
-DECLARE admin_uid text := 'REPLACE-WITH-YOUR-SUPABASE-AUTH-USER-UUID';
+DECLARE
+    configured_ids text := current_setting('pwanistays.booking_admins');
+    approved_ids uuid[];
 BEGIN
-  IF admin_uid = 'REPLACE-WITH-YOUR-SUPABASE-AUTH-USER-UUID' THEN
-    RAISE EXCEPTION 'STOP: configure your admin user UUID before running this script.';
-  END IF;
-  INSERT INTO public.site_admins(user_id) VALUES (admin_uid::uuid) ON CONFLICT DO NOTHING;
+    IF configured_ids = '' OR configured_ids LIKE '%REPLACE-%' THEN
+        RAISE EXCEPTION 'Set at least one approved Supabase Auth user UUID before running this migration.';
+    END IF;
+    SELECT array_agg(DISTINCT trim(id)::uuid)
+    INTO approved_ids
+    FROM unnest(string_to_array(configured_ids, ',')) AS ids(id);
+
+    IF EXISTS (
+        SELECT 1 FROM unnest(approved_ids) AS approved(user_id)
+        WHERE NOT EXISTS (SELECT 1 FROM auth.users u WHERE u.id = approved.user_id)
+    ) THEN
+        RAISE EXCEPTION 'Every approved UUID must match a user in this Supabase project.';
+    END IF;
+
+    CREATE TABLE IF NOT EXISTS public.site_admins (
+        user_id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+        created_at timestamptz NOT NULL DEFAULT now()
+    );
+    LOCK TABLE public.site_admins IN SHARE ROW EXCLUSIVE MODE;
+
+    IF EXISTS (SELECT 1 FROM public.site_admins WHERE user_id <> ALL (approved_ids)) THEN
+        RAISE EXCEPTION 'Existing site_admins includes a user outside your approved list. Review the existing membership before proceeding.';
+    END IF;
+    INSERT INTO public.site_admins (user_id)
+    SELECT unnest(approved_ids) ON CONFLICT DO NOTHING;
+END $$;
+
+ALTER TABLE public.site_admins ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON TABLE public.site_admins, public.bookings FROM PUBLIC, anon, authenticated;
+
+-- Table-level revokes do not remove separately granted column permissions.
+DO $$
+DECLARE
+    target_table text;
+    columns text;
+BEGIN
+    FOREACH target_table IN ARRAY ARRAY['site_admins', 'bookings'] LOOP
+        SELECT string_agg(quote_ident(attname), ', ')
+        INTO columns
+        FROM pg_attribute
+        WHERE attrelid = to_regclass(format('public.%I', target_table)) AND attnum > 0 AND NOT attisdropped;
+        EXECUTE format(
+            'REVOKE ALL PRIVILEGES (%s) ON TABLE public.%I FROM PUBLIC, anon, authenticated',
+            columns, target_table
+        );
+    END LOOP;
 END $$;
 
 CREATE OR REPLACE FUNCTION public.is_pwanistays_admin()
-RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = '' AS $$
-  SELECT EXISTS (SELECT 1 FROM public.site_admins a WHERE a.user_id = (SELECT auth.uid()));
+RETURNS boolean
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+    SELECT EXISTS (
+        SELECT 1 FROM public.site_admins a WHERE a.user_id = (SELECT auth.uid())
+    );
 $$;
-REVOKE ALL ON FUNCTION public.is_pwanistays_admin() FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.is_pwanistays_admin() FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.is_pwanistays_admin() TO authenticated;
 
-ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
-REVOKE ALL ON public.bookings FROM PUBLIC, anon, authenticated;
-GRANT SELECT, INSERT, UPDATE, DELETE ON public.bookings TO authenticated;
-DO $$ DECLARE r record; BEGIN
- FOR r IN SELECT policyname FROM pg_policies WHERE schemaname='public' AND tablename='bookings' LOOP
-  EXECUTE format('DROP POLICY %I ON public.bookings',r.policyname);
- END LOOP;
-END $$;
-CREATE POLICY bookings_admin_select ON public.bookings FOR SELECT TO authenticated USING ((select public.is_pwanistays_admin()));
-CREATE POLICY bookings_admin_insert ON public.bookings FOR INSERT TO authenticated WITH CHECK ((select public.is_pwanistays_admin()));
-CREATE POLICY bookings_admin_update ON public.bookings FOR UPDATE TO authenticated USING ((select public.is_pwanistays_admin())) WITH CHECK ((select public.is_pwanistays_admin()));
-CREATE POLICY bookings_admin_delete ON public.bookings FOR DELETE TO authenticated USING ((select public.is_pwanistays_admin()));
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.bookings TO authenticated;
+
+-- Keep existing policies. The restrictive gate is required even if there is
+-- an existing or future permissive policy that grants a wider audience access.
+DROP POLICY IF EXISTS bookings_approved_staff_gate ON public.bookings;
+CREATE POLICY bookings_approved_staff_gate
+ON public.bookings AS RESTRICTIVE FOR ALL TO PUBLIC
+USING ((SELECT public.is_pwanistays_admin()))
+WITH CHECK ((SELECT public.is_pwanistays_admin()));
+
+DROP POLICY IF EXISTS bookings_approved_staff_access ON public.bookings;
+CREATE POLICY bookings_approved_staff_access
+ON public.bookings FOR ALL TO authenticated
+USING ((SELECT public.is_pwanistays_admin()))
+WITH CHECK ((SELECT public.is_pwanistays_admin()));
+
 COMMIT;
--- Test with your admin login and an ordinary/non-admin account before considering complete.
--- Supabase SQL Editor database owner can still manage records independently of RLS.
+
+-- Confirm access with the approved account, an unapproved account and a signed-out client.
+-- Privileged database roles can still manage records. Keep service-role keys private.

@@ -87,15 +87,37 @@ const unitAliases = new Map([
     ['coral gables apartment(s)', 'Coral Gables'],
 ]);
 
+const confirmedUnits = [
+    {
+        name: 'Coral Sands Residences',
+        location: 'Nyali',
+        aliases: /^coral sands(?: (?:(?:residen|reciden)ce|apartment)(?:s|\(s\))?)?(?: (?:nyali|diani))?$/,
+    },
+    {
+        name: 'Mwembe Tayari',
+        location: 'Mombasa',
+        aliases: /^mwembe tayari(?: ?(?:nyali|mombasa(?: town)?))?$/,
+    },
+];
+
+function confirmedUnit(name) {
+    const label = groupLabel(String(name ?? '').toLowerCase().replace(/[,–—-]/g, ' '));
+    return confirmedUnits.find(unit => unit.aliases.test(label));
+}
+
 function knownUnitName(name) {
     const label = groupLabel(name);
-    return unitAliases.get(label.toLowerCase()) ?? label;
+    return confirmedUnit(label)?.name ?? unitAliases.get(label.toLowerCase()) ?? label;
+}
+
+export function bookingLocation(name, recordedLocation) {
+    return confirmedUnit(name)?.location ?? groupLabel(recordedLocation);
 }
 
 export function unitNameResolver(bookings) {
     const byLocation = new Map();
     for (const booking of bookings) {
-        const location = groupLabel(booking.location).toLowerCase();
+        const location = bookingLocation(booking.unit_name, booking.location).toLowerCase();
         const name = knownUnitName(booking.unit_name);
         if (!location || !name) continue;
         if (!byLocation.has(location)) byLocation.set(location, new Map());
@@ -103,6 +125,8 @@ export function unitNameResolver(bookings) {
         if (!names.has(name.toLowerCase())) names.set(name.toLowerCase(), name);
     }
     return (name, location) => {
+        const confirmed = confirmedUnit(name);
+        if (confirmed) return confirmed.name;
         const label = knownUnitName(name);
         const names = byLocation.get(groupLabel(location).toLowerCase());
         const shortName = label.replace(/\s+apartments?$/i, '');
@@ -113,6 +137,32 @@ export function unitNameResolver(bookings) {
         if (singular && names.has(`${key} apartments`)) return singular.replace(/\s+apartment$/i, '');
         return names?.get(label.toLowerCase()) ?? label;
     };
+}
+
+export function bookingLocationReview(bookings) {
+    const unitName = unitNameResolver(bookings);
+    const units = new Map();
+    for (const booking of bookings) {
+        const unit = unitName(booking.unit_name, booking.location);
+        if (!unit) continue;
+        const key = unit.toLowerCase();
+        if (!units.has(key)) {
+            units.set(key, { unit, confirmed: bookingLocation(unit), recorded: new Map(), missing: 0 });
+        }
+        const review = units.get(key);
+        const location = groupLabel(booking.location);
+        if (!location) {
+            review.missing++;
+            continue;
+        }
+        const locationKey = location.toLowerCase();
+        if (!review.recorded.has(locationKey)) review.recorded.set(locationKey, { location, count: 0 });
+        review.recorded.get(locationKey).count++;
+    }
+    return [...units.values()].filter(review => review.confirmed || review.recorded.size > 1).map(review => {
+        const recorded = [...review.recorded.values()].sort((a, b) => b.count - a.count || a.location.localeCompare(b.location));
+        return { ...review, recorded };
+    }).sort((a, b) => a.unit.localeCompare(b.unit));
 }
 
 function summary() {
@@ -166,7 +216,7 @@ export function bookingReport(bookings, from, through) {
         const nights = stayNights(date, booking.check_out);
         const money = bookedAmounts(booking);
         const unit = unitName(booking.unit_name, booking.location);
-        const location = groupLabel(booking.location, 'Location missing');
+        const location = bookingLocation(booking.unit_name, booking.location) || 'Location missing';
         const unitLabel = unit ? `${unit} · ${location}` : 'Unit missing';
         const labels = {
             units: [unitLabel, unit ? JSON.stringify([unit.toLowerCase(), location.toLowerCase()]) : null],

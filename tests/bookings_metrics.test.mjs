@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { bookedAmounts, bookingReport, bookingWrite, furnishingScenario, isoDay, legacyComparison, stayNights, unitNameResolver } from '../bookings/metrics.js';
+import { bookedAmounts, bookingLocation, bookingLocationReview, bookingReport, bookingWrite, furnishingScenario, isoDay, legacyComparison, stayNights, unitNameResolver } from '../bookings/metrics.js';
 
 test('stay dates use calendar days, and never turn reversed dates into positive nights', () => {
     assert.equal(isoDay('2026-02-30'), '');
@@ -106,6 +106,39 @@ test('unit names combine verified aliases and matching suffixes without merging 
     assert.equal(units.find(unit => unit.label === 'Coral Gables · Diani').contribution, 2500);
     assert.equal(units.find(unit => unit.label === 'Buxton Point · Mombasa').contribution, 1000);
     assert.equal(bookings[0].unit_name, 'Aqua   Gardens');
+});
+
+test('confirmed locations repair reporting while the review still counts original locations', () => {
+    const completed = (unit_name, location) => ({ unit_name, location, status: 'Complete', guest_paid: 500 });
+    const bookings = [
+        completed('Coral Sands', 'Diani'),
+        completed('Coral Sands Residences', 'Nyali'),
+        completed('Coral Sands Recidences', ''),
+        { ...completed('Coral Sands Apartments - Nyali', 'nyali'), status: 'Pending' },
+        completed('Mwembe TayariNyali', 'Nyali'),
+        completed('Mwembe Tayari', 'Mombasa'),
+        completed('Palm Villa', 'Watamu'),
+        completed('Palm Villa', 'Malindi'),
+        completed('Coral Sands Unit 2', 'Diani'),
+    ];
+
+    assert.equal(bookingLocation('Coral Sands Unit 2', 'Diani'), 'Diani');
+    assert.equal(bookingLocation('Mwembe Tayari - Nyali', ''), 'Mombasa');
+    const report = bookingReport(bookings);
+    assert.equal(report.units.find(unit => unit.label === 'Coral Sands Residences · Nyali').contribution, 1500);
+    assert.equal(report.units.find(unit => unit.label === 'Mwembe Tayari · Mombasa').contribution, 1000);
+    assert.equal(report.locations.find(location => location.label === 'Diani').count, 1);
+    assert.equal(report.units.filter(unit => unit.unit === 'Palm Villa').length, 2);
+
+    const review = bookingLocationReview(bookings);
+    assert.deepEqual(review.find(row => row.unit === 'Coral Sands Residences'), {
+        unit: 'Coral Sands Residences', confirmed: 'Nyali', missing: 1,
+        recorded: [{ location: 'Nyali', count: 2 }, { location: 'Diani', count: 1 }],
+    });
+    assert.deepEqual(review.find(row => row.unit === 'Mwembe Tayari').recorded,
+        [{ location: 'Mombasa', count: 1 }, { location: 'Nyali', count: 1 }]);
+    assert.equal(review.find(row => row.unit === 'Palm Villa').confirmed, '');
+    assert.equal(bookings[0].location, 'Diani');
 });
 
 test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {

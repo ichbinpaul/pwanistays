@@ -1,4 +1,4 @@
-import { amount, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=4';
+import { amount, bookingLocationReview, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=5';
 
 const digits = new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 });
 export const number = value => value == null ? '—' : digits.format(value);
@@ -100,6 +100,26 @@ function drawComparison(bookings) {
         ${totals.count > 1000 ? '<p>The former dashboard fetched bookings in one request. Its totals could have omitted records beyond the database response limit.</p>' : ''}`;
 }
 
+function drawLocationReview(bookings) {
+    const review = bookingLocationReview(bookings);
+    if (!review.length) return '<p>No unit names with conflicting recorded locations.</p>';
+    return `<p>Counts use the locations saved on bookings across all dates and statuses. The most frequent location can help you check a discrepancy.</p>
+        <div class="table-wrap" role="region" tabindex="0" aria-label="Recorded unit locations">
+            <table>
+                <thead><tr><th scope="col">Unit</th><th scope="col">Recorded locations</th>
+                    <th scope="col">Most frequent</th><th scope="col">Confirmed location</th></tr></thead>
+                <tbody>${review.map(({ unit, recorded, missing, confirmed }) => {
+                    const [top, next] = recorded;
+                    const mostFrequent = !top ? '—' : top.count === next?.count ? 'Tie' : top.location;
+                    const counts = recorded.map(({ location, count }) => `${escapeHtml(location)} (${number(count)})`);
+                    if (missing) counts.push(`Blank (${number(missing)})`);
+                    return `<tr><th scope="row">${escapeHtml(unit)}</th><td>${counts.join(' · ')}</td>
+                        <td>${escapeHtml(mostFrequent)}</td><td>${escapeHtml(confirmed || '—')}</td></tr>`;
+                }).join('')}</tbody>
+            </table>
+        </div>`;
+}
+
 export function setupReport(root, readBookings) {
     const form = root.querySelector('#reportFilters');
     const from = form.elements.from;
@@ -108,6 +128,7 @@ export function setupReport(root, readBookings) {
     const sort = form.elements.sort;
     const output = root.querySelector('#reportOutput');
     const comparison = root.querySelector('#legacyComparison');
+    const locationReview = root.querySelector('#unitLocationReview');
     const exportButton = root.querySelector('#exportReport');
     const calculator = root.querySelector('#furnishingForm');
     const unit = calculator.elements.unit;
@@ -130,6 +151,7 @@ export function setupReport(root, readBookings) {
         if (bookings === null) {
             output.innerHTML = '<p class="empty">Booking data is unavailable. Refresh bookings to try again.</p>';
             comparison.innerHTML = '';
+            locationReview.innerHTML = '';
             report = null;
             unit.replaceChildren(new Option('Select a unit', ''));
             showEvidence();
@@ -139,6 +161,7 @@ export function setupReport(root, readBookings) {
         const unitLabel = unit.selectedOptions[0]?.text;
         report = bookingReport(bookings, from.value, through.value);
         comparison.innerHTML = drawComparison(bookings);
+        locationReview.innerHTML = drawLocationReview(bookings);
         const { totals, pending, inProgress, other, undated } = report;
         const missingDates = totals.count - totals.nightCount;
         const rows = Array.from(report[dimension.value]);

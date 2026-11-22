@@ -130,15 +130,38 @@ test('confirmed locations repair reporting while the review still counts origina
     assert.equal(report.locations.find(location => location.label === 'Diani').count, 1);
     assert.equal(report.units.filter(unit => unit.unit === 'Palm Villa').length, 2);
 
-    const review = bookingLocationReview(bookings);
-    assert.deepEqual(review.find(row => row.unit === 'Coral Sands Residences'), {
+    const { patterns } = bookingLocationReview(bookings);
+    assert.deepEqual(patterns.find(row => row.unit === 'Coral Sands Residences'), {
         unit: 'Coral Sands Residences', confirmed: 'Nyali', missing: 1,
         recorded: [{ location: 'Nyali', count: 2 }, { location: 'Diani', count: 1 }],
     });
-    assert.deepEqual(review.find(row => row.unit === 'Mwembe Tayari').recorded,
+    assert.deepEqual(patterns.find(row => row.unit === 'Mwembe Tayari').recorded,
         [{ location: 'Mombasa', count: 1 }, { location: 'Nyali', count: 1 }]);
-    assert.equal(review.find(row => row.unit === 'Palm Villa').confirmed, '');
+    assert.equal(patterns.find(row => row.unit === 'Palm Villa').confirmed, '');
     assert.equal(bookings[0].location, 'Diani');
+});
+
+test('location review identifies individual bookings across locations and statuses', () => {
+    const bookings = [
+        ['PS001', 'Coral Sands Residences', 'Diani', 'Complete'],
+        ['PS002', 'Coral Sands', 'Nyali', 'Pending'],
+        ['PS003', 'Mwembe TayariNyali', 'Nyali', 'In Progress'],
+        ['PS004', 'Palm Court', 'Watamu', 'Complete'],
+        ['PS005', 'Palm Court Apartment', 'Malindi', 'Pending'],
+        ['PS006', 'Palm Court Apartments', 'Watamu', 'Complete'],
+        ['PS007', 'Bungalow 5', 'Bamburi', 'Complete'],
+        ['PS008', 'Bungalow 5', 'Kilifi', 'Complete'],
+        ['PS009', 'Ocean Home', '', 'Complete'],
+        ['PS010', '', '', 'Pending'],
+    ].map(([id, unit_name, location, status]) => ({ id, unit_name, location, status, guest_paid: 500 }));
+    const { conflicts } = bookingLocationReview(bookings);
+    assert.deepEqual(conflicts.map(row => row.id).sort(), ['PS001', 'PS003', 'PS005', 'PS007', 'PS008', 'PS009', 'PS010']);
+    assert.equal(conflicts.find(row => row.id === 'PS001').locationToCheck, 'Nyali');
+    assert.equal(conflicts.find(row => row.id === 'PS003').locationToCheck, 'Mombasa');
+    assert.equal(conflicts.find(row => row.id === 'PS005').locationToCheck, 'Watamu');
+    assert.equal(conflicts.find(row => row.id === 'PS005').status, 'Pending');
+    assert.equal(conflicts.find(row => row.id === 'PS007').locationToCheck, '');
+    assert.equal(conflicts.find(row => row.id === 'PS010').contribution, 500);
 });
 
 test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {

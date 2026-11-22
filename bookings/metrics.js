@@ -12,15 +12,19 @@ export function stayNights(checkIn, checkOut) {
 }
 
 export function amount(value) {
-    if (value == null || String(value).trim() === '') return null;
+    if (blankAmount(value)) return null;
     const number = Number(value);
     return Number.isFinite(number) ? number : null;
 }
 
+function blankAmount(value) {
+    return value == null || String(value).trim() === '';
+}
+
 export function bookedAmounts(booking) {
     const paid = amount(booking.guest_paid);
-    const host = amount(booking.host_cost);
-    const charges = amount(booking.charges);
+    const host = blankAmount(booking.host_cost) ? 0 : amount(booking.host_cost);
+    const charges = blankAmount(booking.charges) ? 0 : amount(booking.charges);
     const contribution = [paid, host, charges].includes(null) ? null : roundMoney(paid - host - charges);
     return { paid, contribution };
 }
@@ -35,19 +39,19 @@ function legacyContribution(booking) {
 
 export function legacyComparison(bookings) {
     const empty = () => ({ count: 0, paid: 0, contribution: 0 });
-    const totals = empty(), otherStatus = empty(), missingAmounts = empty(), fullyCosted = empty();
+    const totals = empty(), otherStatus = empty(), withoutContribution = empty(), withContribution = empty();
     for (const booking of bookings) {
         const paid = legacyAmount(booking.guest_paid);
         const contribution = legacyContribution(booking);
         const group = booking.status?.trim().toLowerCase() !== 'complete' ? otherStatus
-            : bookedAmounts(booking).contribution === null ? missingAmounts : fullyCosted;
+            : bookedAmounts(booking).contribution === null ? withoutContribution : withContribution;
         for (const row of [totals, group]) {
             row.count++;
             row.paid += paid;
             row.contribution += contribution;
         }
     }
-    return { totals, otherStatus, missingAmounts, fullyCosted };
+    return { totals, otherStatus, withoutContribution, withContribution };
 }
 
 export function bookingWrite(fields, previous = null) {
@@ -67,8 +71,44 @@ function roundMoney(number) {
     return Math.round((number + Math.sign(number) * Number.EPSILON) * 100) / 100;
 }
 
-function groupLabel(value, fallback) {
+export function groupLabel(value, fallback = '') {
     return String(value ?? '').trim().replace(/\s+/g, ' ') || fallback;
+}
+
+const unitAliases = new Map([
+    ['aqua garden', 'Aqua Garden'],
+    ['aqua gardens', 'Aqua Garden'],
+    ['coral gables', 'Coral Gables'],
+    ['coral gables apartment', 'Coral Gables'],
+    ['coral gables apartments', 'Coral Gables'],
+]);
+
+function knownUnitName(name) {
+    const label = groupLabel(name);
+    return unitAliases.get(label.toLowerCase()) ?? label;
+}
+
+export function unitNameResolver(bookings) {
+    const byLocation = new Map();
+    for (const booking of bookings) {
+        const location = groupLabel(booking.location).toLowerCase();
+        const name = knownUnitName(booking.unit_name);
+        if (!location || !name) continue;
+        if (!byLocation.has(location)) byLocation.set(location, new Map());
+        const names = byLocation.get(location);
+        if (!names.has(name.toLowerCase())) names.set(name.toLowerCase(), name);
+    }
+    return (name, location) => {
+        const label = knownUnitName(name);
+        const names = byLocation.get(groupLabel(location).toLowerCase());
+        const shortName = label.replace(/\s+apartments?$/i, '');
+        const key = shortName.toLowerCase();
+        const base = names?.get(key);
+        if (base) return base;
+        const singular = names?.get(`${key} apartment`);
+        if (singular && names.has(`${key} apartments`)) return singular.replace(/\s+apartment$/i, '');
+        return names?.get(label.toLowerCase()) ?? label;
+    };
 }
 
 function summary() {
@@ -101,6 +141,7 @@ function accumulate(group, nights, { paid, contribution }) {
 }
 
 export function bookingReport(bookings, from, through) {
+    const unitName = unitNameResolver(bookings);
     const totals = summary();
     const groups = { units: new Map(), months: new Map(), sources: new Map(), locations: new Map(),
         unitTypes: new Map(), guestTypes: new Map() };
@@ -120,7 +161,7 @@ export function bookingReport(bookings, from, through) {
 
         const nights = stayNights(date, booking.check_out);
         const money = bookedAmounts(booking);
-        const unit = groupLabel(booking.unit_name, '');
+        const unit = unitName(booking.unit_name, booking.location);
         const location = groupLabel(booking.location, 'Location missing');
         const unitLabel = unit ? `${unit} · ${location}` : 'Unit missing';
         const labels = {
@@ -134,7 +175,7 @@ export function bookingReport(bookings, from, through) {
         accumulate(totals, nights, money);
         for (const [dimension, [label, key = label.toLowerCase()]] of Object.entries(labels)) {
             const group = groups[dimension];
-            if (!group.has(key)) group.set(key, { label, ...summary() });
+            if (!group.has(key)) group.set(key, { label, ...summary(), ...(dimension === 'units' && unit ? { unit, location } : {}) });
             accumulate(group.get(key), nights, money);
         }
     }

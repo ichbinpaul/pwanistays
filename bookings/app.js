@@ -1,10 +1,11 @@
-import { amount, bookedAmounts, bookingWrite, isoDay, stayNights } from './metrics.js?v=2';
-import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=2';
+import { amount, bookedAmounts, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=3';
+import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=3';
 
 const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let bookings = [];
+let unitName = unitNameResolver(bookings);
 let filteredStatus = '';
 let filterText = '';
 let page = 0;
@@ -27,7 +28,8 @@ const moneyFields = ['guest_paid', 'host_cost', 'charges'];
 function addSuggestions() {
     for (const field of fieldOptions) {
         const list = document.getElementById(`${field}_options`);
-        const values = new Set(bookings.map(booking => booking[field]?.trim()).filter(Boolean));
+        const values = new Set(bookings.map(booking => field === 'unit_name'
+            ? unitName(booking.unit_name, booking.location) : booking[field]?.trim()).filter(Boolean));
         list.replaceChildren(...Array.from(values).sort((a, b) => a.localeCompare(b)).map(value => new Option(value)));
     }
 }
@@ -55,6 +57,7 @@ async function loadBookings() {
             if (data.length < size) break;
         }
         bookings = records;
+        unitName = unitNameResolver(bookings);
         addSuggestions();
         dataReady = true;
         add.disabled = importer.disabled = false;
@@ -62,6 +65,7 @@ async function loadBookings() {
     } catch {
         if (request !== loadRequest) return;
         bookings = [];
+        unitName = unitNameResolver(bookings);
         status.textContent = 'Could not load bookings. Try Refresh.';
     } finally {
         if (request === loadRequest) {
@@ -83,7 +87,8 @@ function renderBookingsTable() {
                 bookedAmounts(booking).contribution === null || !booking.unit_name?.trim())
             : booking.status === filteredStatus)) &&
         (!filterText || [booking.id, booking.guest_name, booking.unit_name, booking.location, booking.phone]
-            .some(value => String(value ?? '').toLowerCase().includes(filterText)))
+            .some(value => String(value ?? '').toLowerCase().includes(filterText)) ||
+            unitName(booking.unit_name, booking.location).toLowerCase().includes(unitName(filterText, booking.location).toLowerCase()))
     ).sort((a, b) => (statusOrder.get(a.status) ?? 3) - (statusOrder.get(b.status) ?? 3));
 
     if (!filtered.length) {
@@ -121,7 +126,7 @@ function renderBookingsTable() {
             return `<tr>
                 <td><input type="checkbox" class="rowCheckbox" data-id="${id}" aria-label="Select booking ${id}"></td>
                 <th scope="row">${escapeHtml(booking.guest_name || 'Unnamed guest')}<small>${id}</small></th>
-                <td>${escapeHtml(booking.unit_name || '—')}<small>${escapeHtml(booking.location)}</small>
+                <td>${escapeHtml(unitName(booking.unit_name, booking.location) || '—')}<small>${escapeHtml(booking.location)}</small>
                     <small class="mobile-dates">${dates.join(' → ')}</small></td>
                 <td>${dates.join(' → ') || '—'}<small>${nights ? `${number(nights)} nights` : ''}</small></td>
                 <td><span class="badge badge-${statusOrder.get(booking.status) ?? 3}">${status}</span></td>
@@ -207,6 +212,7 @@ function openModal(booking = null) {
         const input = form.elements[field];
         if (!input || !booking) continue;
         input.value = field.startsWith('check_') ? isoDay(booking[field]) : booking[field] ?? '';
+        if (field === 'unit_name') input.value = unitName(booking.unit_name, booking.location);
         if (field === 'status' && !booking[field]) {
             input.add(new Option('Unspecified', '', false, true));
         } else if (['status', 'gender'].includes(field) && booking[field] && input.value !== booking[field]) {
@@ -258,6 +264,7 @@ async function saveBooking(event) {
     const changes = id
         ? Object.fromEntries(Object.entries(data).filter(([field, value]) => value !== originalForm[field]))
         : data;
+    if (changes.unit_name) changes.unit_name = unitName(changes.unit_name, data.location);
     if (!Object.keys(changes).length) {
         document.getElementById('modal').close();
         return;
@@ -428,11 +435,12 @@ async function importCSVWithProgress() {
             if (dbRow.check_out) dbRow.check_out = dbRow.check_out.substring(0,10);
             const { id, ...input } = dbRow;
             const { data: existing, error: lookupError } = await supabaseClient.from('bookings')
-                .select('guest_paid,host_cost,charges,check_in,check_out').eq('id', id).maybeSingle();
+                .select('guest_paid,host_cost,charges,check_in,check_out,location').eq('id', id).maybeSingle();
             if (lookupError) {
                 skipped++;
                 skippedRows.push(idx + 2);
             } else if (existing) {
+                if (input.unit_name) input.unit_name = unitName(input.unit_name, Object.hasOwn(input, 'location') ? input.location : existing.location);
                 for (const field of [...moneyFields, 'check_in', 'check_out']) {
                     if (Object.hasOwn(input, field) && (input[field] == null
                         ? existing[field] == null : String(input[field]) === String(existing[field]))) delete input[field];
@@ -442,6 +450,7 @@ async function importCSVWithProgress() {
                 else { skipped++; skippedRows.push(idx+2); }
             } else {
                 const now = new Date().toISOString();
+                if (input.unit_name) input.unit_name = unitName(input.unit_name, input.location);
                 const { error } = await supabaseClient.from('bookings')
                     .insert([{ ...bookingWrite(input), id, created_at: now, updated_at: now }]);
                 if (!error) imported++;
@@ -503,7 +512,7 @@ const bookingDialog = `
                 <fieldset>
                     <legend>Stay</legend>
                     <div class="form-grid">
-                        ${suggest('unit_name', 'Unit')}
+                        ${suggest('unit_name', 'Apartment or unit')}
                         ${suggest('location', 'Location')}
                         ${suggest('unit_type', 'Unit type')}
                         ${input('check_in', 'Check-in', 'type="date"')}
@@ -513,7 +522,7 @@ const bookingDialog = `
                 </fieldset>
                 <fieldset>
                     <legend>Booking amounts (KES)</legend>
-                    <p class="field-help">Use 0 when a cost or charge is zero. Leave unknown amounts blank.</p>
+                    <p class="field-help">Blank host costs and direct charges count as zero. Enter the guest payment to calculate contribution.</p>
                     <div class="form-grid">
                         ${cost('guest_paid', 'Guest paid')}
                         ${cost('host_cost', 'Host cost')}
@@ -590,10 +599,11 @@ function setupBookingForm() {
     form.addEventListener('submit', saveBooking);
     form.addEventListener('input', updatePreview);
     form.elements.unit_name.addEventListener('change', () => {
-        const normalize = value => String(value ?? '').trim().toLowerCase();
-        const name = normalize(form.elements.unit_name.value);
+        const normalize = value => groupLabel(value).toLowerCase();
+        const name = form.elements.unit_name.value;
         if (!name) return;
-        const matches = bookings.filter(booking => normalize(booking.unit_name) === name &&
+        const matches = bookings.filter(booking =>
+            unitName(booking.unit_name, booking.location).toLowerCase() === unitName(name, booking.location).toLowerCase() &&
             (!form.elements.location.value || normalize(booking.location) === normalize(form.elements.location.value)));
         for (const property of ['location', 'unit_type', 'host']) {
             const known = new Set(matches.map(booking => booking[property]?.trim()).filter(Boolean));
@@ -601,6 +611,7 @@ function setupBookingForm() {
                 form.elements[property].value = known.values().next().value;
             }
         }
+        form.elements.unit_name.value = unitName(name, form.elements.location.value);
     });
 
     const lookup = document.getElementById('returningGuestSearch');
@@ -644,6 +655,7 @@ async function renderApp() {
     if (!session) {
         ++loadRequest;
         bookings = [];
+        unitName = unitNameResolver(bookings);
         dataReady = false;
         app.innerHTML = `
             <section class="sign-in">

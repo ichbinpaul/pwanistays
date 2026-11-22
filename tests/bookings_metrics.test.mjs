@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { bookedAmounts, bookingReport, bookingWrite, furnishingScenario, isoDay, legacyComparison, stayNights } from '../bookings/metrics.js';
+import { bookedAmounts, bookingReport, bookingWrite, furnishingScenario, isoDay, legacyComparison, stayNights, unitNameResolver } from '../bookings/metrics.js';
 
 test('stay dates use calendar days, and never turn reversed dates into positive nights', () => {
     assert.equal(isoDay('2026-02-30'), '');
@@ -11,9 +11,12 @@ test('stay dates use calendar days, and never turn reversed dates into positive 
     assert.equal(stayNights('', '2026-11-02'), null);
 });
 
-test('contribution distinguishes an explicit zero, missing inputs and a loss', () => {
+test('contribution uses zero for blank costs but requires a recorded guest payment', () => {
     assert.deepEqual(bookedAmounts({ guest_paid: '1000', host_cost: 0, charges: '0' }), { paid: 1000, contribution: 1000 });
-    assert.deepEqual(bookedAmounts({ guest_paid: '1000', host_cost: 0, charges: '' }), { paid: 1000, contribution: null });
+    assert.deepEqual(bookedAmounts({ guest_paid: '1000', host_cost: '500', charges: '' }), { paid: 1000, contribution: 500 });
+    assert.deepEqual(bookedAmounts({ guest_paid: '1000', host_cost: null, charges: ' ' }), { paid: 1000, contribution: 1000 });
+    assert.deepEqual(bookedAmounts({ guest_paid: '1000', host_cost: 'invalid' }), { paid: 1000, contribution: null });
+    assert.deepEqual(bookedAmounts({ guest_paid: '', host_cost: 0 }), { paid: null, contribution: null });
     assert.deepEqual(bookedAmounts({ guest_paid: '0', host_cost: '10.01', charges: '0.02' }), { paid: 0, contribution: -10.03 });
 });
 
@@ -33,8 +36,8 @@ test('reports keep pipeline out of financials and attribute periods by check-in'
     assert.equal(report.totals.count, 3);
     assert.equal(report.totals.nights, 4);
     assert.equal(report.totals.paid, 36000);
-    assert.equal(report.totals.costedCount, 2);
-    assert.equal(report.totals.contribution, 8000);
+    assert.equal(report.totals.costedCount, 3);
+    assert.equal(report.totals.contribution, 19000);
     assert.equal(report.totals.costedNights, 4);
     assert.equal(report.totals.nightlyContribution, 8000);
     assert.equal(report.units.length, 2);
@@ -63,17 +66,40 @@ test('projected payback allows for expenses, zero bookings and impossible break-
 test('the former totals include pending contribution and treat missing costs as zero', () => {
     const completed = { status: 'Complete', guest_paid: 12_000, host_cost: 9_000, charges: 500, profit: 123 };
     const pending = { status: 'Pending', guest_paid: 4_000, host_cost: 3_500, charges: 0 };
-    const incomplete = { status: 'Complete', guest_paid: 2_000, host_cost: 500, charges: '' };
-    const bookings = [completed, pending, incomplete];
+    const completedWithoutCharges = { status: 'Complete', guest_paid: 2_000, host_cost: 500, charges: '' };
+    const completedWithoutPayment = { status: 'Complete', guest_paid: null, host_cost: 250 };
+    const bookings = [completed, pending, completedWithoutCharges, completedWithoutPayment];
 
     const comparison = legacyComparison(bookings);
-    assert.deepEqual(comparison.totals, { count: 3, paid: 18_000, contribution: 4_500 });
+    assert.deepEqual(comparison.totals, { count: 4, paid: 18_000, contribution: 4_250 });
     assert.deepEqual(comparison.otherStatus, { count: 1, paid: 4_000, contribution: 500 });
-    assert.equal(comparison.missingAmounts.contribution, 1_500);
-    assert.equal(comparison.fullyCosted.contribution, 2_500);
+    assert.equal(comparison.withoutContribution.contribution, -250);
+    assert.equal(comparison.withContribution.contribution, 4_000);
     assert.equal(bookingReport(bookings).totals.paid, 14_000);
-    assert.equal(bookingReport(bookings).totals.contribution, 2_500);
+    assert.equal(bookingReport(bookings).totals.contribution, 4_000);
     assert.equal(completed.profit, 123);
+});
+
+test('unit names combine verified aliases and matching suffixes without merging different locations or unit numbers', () => {
+    const bookings = [
+        ['Aqua   Gardens', 'Nyali'], ['Aqua Garden', 'nyali'], ['Coral Gables Apartment', 'Diani'], ['Coral Gables', 'Diani'],
+        ['Palm Court', 'Watamu'], ['palm court apartments', 'Watamu'], ['Palm Court Apartment', 'Malindi'],
+        ['Palm Court Unit 4', 'Watamu'], ['Palm Court Unit 5 Apartment', 'Watamu'],
+        ['Mango Apartment', 'Shanzu'], ['Mango Apartments', 'Shanzu'],
+    ].map(([unit_name, location]) => ({ unit_name, location, status: 'Complete', guest_paid: 500 }));
+
+    const unitName = unitNameResolver(bookings);
+    assert.equal(unitName('AQUA GARDENS', 'Nyali'), 'Aqua Garden');
+    assert.equal(unitName('Coral Gables Apartments', ''), 'Coral Gables');
+    assert.equal(unitName('Palm Court Apartment', 'watamu'), 'Palm Court');
+    assert.equal(unitName('Palm Court Apartment', 'Malindi'), 'Palm Court Apartment');
+    assert.equal(unitName('Palm Court Unit 5 Apartment', 'Watamu'), 'Palm Court Unit 5 Apartment');
+    assert.equal(unitName('Mango Apartments', 'Shanzu'), 'Mango');
+    const { units } = bookingReport(bookings);
+    assert.equal(units.length, 7);
+    assert.equal(units.find(unit => unit.label === 'Aqua Garden · Nyali').contribution, 1000);
+    assert.equal(units.find(unit => unit.label === 'Coral Gables · Diani').contribution, 1000);
+    assert.equal(bookings[0].unit_name, 'Aqua   Gardens');
 });
 
 test('edits to unrelated fields leave stored amounts and derived fields untouched', () => {

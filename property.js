@@ -124,38 +124,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       li.textContent = text;
       amenitiesList.appendChild(li);
     }
-    const urls = await u.images(db, data);
-    const main = document.getElementById('pwMainImage');
-    const ownedCover = main.dataset.seoSource === String(data.image_url || '').trim()
-      ? main.dataset.seoImage : null;
-    const cover = ownedCover || urls[0];
-    if (urls.length) {
-      for (const selector of ['meta[property="og:image"]', 'meta[property="og:image:secure_url"]', 'meta[name="twitter:image"]']) {
-        const tag = document.querySelector(selector);
-        if (tag) tag.content = cover;
-      }
-    }
-    const thumbs = document.getElementById('pwThumbs');
-    if (!urls.length) document.getElementById('pwNoPhoto').hidden = false;
-    else {
-      main.src = cover; main.alt = `${data.title || 'Accommodation'} — photo 1`; main.hidden = false;
-      if (urls.length > 1) {
-        thumbs.hidden = false;
-        urls.slice(0,18).forEach((src,i) => {
-          const b = document.createElement('button'); b.type = 'button';
-          b.setAttribute('aria-label',`View property photo ${i+1}`);
-          b.setAttribute('aria-pressed',i===0 ? 'true' : 'false');
-          const img = document.createElement('img'); img.src=src; img.alt=''; img.loading='lazy';
-          b.appendChild(img);
-          b.addEventListener('click',() => {
-            main.src = src; main.alt = `${data.title || 'Accommodation'} — photo ${i+1}`;
-            thumbs.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x===b ? 'true':'false'));
-          });
-          thumbs.appendChild(b);
-        });
-      }
-    }
-    status.hidden = true; content.hidden = false;
+    status.hidden = true;
+    content.hidden = false;
+    loadGallery(u, db, data).catch(error => {
+      console.warn('Unable to render the property gallery:', error);
+    });
   } catch (err) {
     console.error('Unable to load property:',err);
     status.hidden = false;
@@ -183,3 +156,69 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
   if (submit) submit.disabled = false;
 });
+
+async function loadGallery(u, db, data) {
+  const main = document.getElementById('pwMainImage');
+  const ownedCover = main.dataset.seoSource === String(data.image_url || '').trim()
+    ? main.dataset.seoImage : null;
+  const currentCover = String(data.image_url || '').trim();
+  const initialCover = ownedCover || (/^https:\/\//.test(currentCover) ? currentCover : '');
+  if (initialCover && main.getAttribute('src') !== initialCover) {
+    main.src = initialCover;
+    main.alt = `${data.title || 'Accommodation'} — photo 1`;
+    main.hidden = false;
+  }
+  const urls = await u.images(db, data);
+  const cover = ownedCover || urls[0];
+  if (urls.length) {
+    for (const selector of ['meta[property="og:image"]', 'meta[property="og:image:secure_url"]', 'meta[name="twitter:image"]']) {
+      const tag = document.querySelector(selector);
+      if (tag) tag.content = cover;
+    }
+  }
+  const thumbs = document.getElementById('pwThumbs');
+  if (!urls.length) document.getElementById('pwNoPhoto').hidden = false;
+  else {
+    main.src = cover; main.alt = `${data.title || 'Accommodation'} — photo 1`; main.hidden = false;
+    if (urls.length > 1) {
+      thumbs.hidden = false;
+      let shown = 0;
+      let selected;
+      const more = document.createElement('button');
+      more.type = 'button';
+      more.className = 'pw-btn pw-btn-outline pw-more-photos';
+      more.setAttribute('aria-controls', thumbs.id);
+
+      function addPhotos() {
+        const end = Math.min(shown + 12, urls.length);
+        const batch = document.createDocumentFragment();
+        let firstAdded;
+        for (let i = shown; i < end; i++) {
+          const src = i === 0 ? cover : urls[i];
+          const b = document.createElement('button'); b.type = 'button';
+          b.setAttribute('aria-label',`View property photo ${i+1}`);
+          b.setAttribute('aria-pressed',i===0 ? 'true' : 'false');
+          const img = document.createElement('img'); img.src=src; img.alt=''; img.loading='lazy'; img.decoding='async';
+          b.appendChild(img);
+          b.addEventListener('click',() => {
+            main.src = src; main.alt = `${data.title || 'Accommodation'} — photo ${i+1}`;
+            selected?.setAttribute('aria-pressed', 'false');
+            selected = b;
+            b.setAttribute('aria-pressed', 'true');
+          });
+          if (i === 0) selected = b;
+          if (!firstAdded) firstAdded = b;
+          batch.appendChild(b);
+        }
+        thumbs.appendChild(batch);
+        shown = end;
+        if (shown < urls.length) thumbs.after(more);
+        else more.remove();
+        more.textContent = `Show more photos (${shown} of ${urls.length})`;
+        return firstAdded;
+      }
+      more.addEventListener('click', () => addPhotos()?.focus());
+      addPhotos();
+    }
+  }
+}

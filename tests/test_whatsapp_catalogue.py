@@ -118,12 +118,12 @@ class GalleryTests(unittest.TestCase):
             with self.assertRaisesRegex(mod.SourceError, "pagination"):
                 mod.fetch_gallery(BASE, KEY, ID)
 
-    def test_cover_first_deduplicates_and_caps_at_twenty(self):
+    def test_cover_first_deduplicates_and_keeps_all_photos(self):
         cover = photo_path(name="05.jpeg") + "?cache=123"
         photos = mod.select_photos(BASE, row(image_url=cover),
                                    [image(f"{i:02}.jpeg") for i in reversed(range(1, 26))])
-        self.assertEqual(len(photos), 20)
-        self.assertEqual(photos[-1], photo_path(name="20.jpeg"))
+        self.assertEqual(len(photos), 25)
+        self.assertEqual(photos[-1], photo_path(name="25.jpeg"))
         self.assertEqual(photos[0], cover)
         self.assertEqual(photos[1:5], [photo_path(name=f"{i:02}.jpeg") for i in range(1, 5)])
         self.assertEqual(sum("05.jpeg" in url for url in photos), 1)

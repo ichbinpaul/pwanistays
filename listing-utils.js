@@ -47,7 +47,7 @@
   }
   const allowedImage = /\.(jpe?g|png|webp|avif|gif)(?:$|\?)/i;
   async function images(db, property) {
-    const result = [];
+    const cover = String(property.image_url || '').trim();
     if (UUID.test(property.id || '')) {
       try {
         // PWANI_GALLERY_REVISIONS_V1: allow atomic gallery switching while
@@ -55,29 +55,48 @@
         // Only recognize revision subfolders under this SAME property's public bucket.
         let galleryPrefix = property.id;
         const base = `${SUPABASE_URL}/storage/v1/object/public/property_images/${property.id}/`;
-        const imageUrl = String(property.image_url || '');
-        if (imageUrl.startsWith(base)) {
+        if (cover.startsWith(base)) {
           try {
-            const remainder = decodeURIComponent(imageUrl.slice(base.length).split(/[?#]/)[0]);
+            const remainder = decodeURIComponent(cover.slice(base.length).split(/[?#]/)[0]);
             const dirname = remainder.includes('/') ? remainder.slice(0, remainder.lastIndexOf('/')) : '';
             if (/^_pwani_v6_[a-f0-9]{16}$/.test(dirname)) galleryPrefix += '/' + dirname;
           } catch (_) { /* use legacy gallery safely */ }
         }
-        const {data, error} = await db.storage.from('property_images').list(galleryPrefix, {limit: 100});
-        if (!error && data) {
-          const sorted = data.filter(f => f.name && allowedImage.test(f.name)).sort((a,b) => {
-            const x = +(a.name.match(/\d+/) || [0])[0], y = +(b.name.match(/\d+/) || [0])[0];
-            return x-y || a.name.localeCompare(b.name);
+        const bucket = db.storage.from('property_images');
+        const pageSize = 100;
+        const files = [];
+        const seenNames = new Set();
+        for (let offset = 0; ; offset += pageSize) {
+          const {data, error} = await bucket.list(galleryPrefix, {
+            limit: pageSize, offset, sortBy: {column: 'name', order: 'asc'}
           });
-          for (const file of sorted) {
-            const {data: url} = db.storage.from('property_images').getPublicUrl(galleryPrefix+'/'+file.name);
-            if (url && url.publicUrl && /^https:\/\//.test(url.publicUrl)) result.push(url.publicUrl);
+          if (error || !Array.isArray(data)) throw error || new Error('Invalid gallery response');
+          for (const file of data) {
+            if (typeof file.name !== 'string' || seenNames.has(file.name)) throw new Error('Incomplete gallery listing');
+            seenNames.add(file.name);
+            if (!file.name.includes('/') && allowedImage.test(file.name) && file.metadata?.mimetype?.startsWith('image/')) {
+              files.push(file.name);
+            }
           }
+          if (data.length < pageSize) break;
         }
+        files.sort((a,b) => {
+          const x = +(a.match(/\d+/) || [Number.MAX_SAFE_INTEGER])[0];
+          const y = +(b.match(/\d+/) || [Number.MAX_SAFE_INTEGER])[0];
+          return x-y || a.localeCompare(b);
+        });
+        const urls = files.map(name => bucket.getPublicUrl(galleryPrefix + '/' + name).data?.publicUrl)
+          .filter(url => /^https:\/\//.test(url || ''));
+        // A cached cover may carry a query string. Treat it as one photo.
+        if (/^https:\/\//.test(cover)) {
+          const match = urls.findIndex(url => url.split('?')[0] === cover.split('?')[0]);
+          if (match >= 0) urls.splice(match, 1);
+          urls.unshift(cover);
+        }
+        return urls;
       } catch (error) { console.warn('Property image request failed', error); }
     }
-    if (!result.length && /^https:\/\//.test(property.image_url || '')) result.push(property.image_url);
-    return result;
+    return /^https:\/\//.test(cover) ? [cover] : [];
   }
   function formatDate(s) {
     if (!validISO(s)) return 'Not selected';

@@ -1,5 +1,5 @@
-import { amount, bookedAmounts, bookingLocation, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=8';
-import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=8';
+import { amount, bookedAmounts, bookingLocation, bookingWrite, groupLabel, isoDay, stayNights, unitNameResolver } from './metrics.js?v=9';
+import { escapeHtml, money, number, saveCsv, setupReport } from './report.js?v=9';
 
 const SUPABASE_URL = "https://aanyrtsfeeynykskwxen.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_jda30uQX9ZzR_V8CzkeERw_nfx-QWkD";
@@ -592,11 +592,7 @@ const reportPanel = `
         <button type="button" id="clearReportDates" class="secondary">All dates</button>
     </form>
     <div id="reportOutput"></div>
-    <details class="report-notes" open>
-        <summary>Compare with former dashboard totals (all dates)</summary>
-        <div id="legacyComparison"></div>
-    </details>
-    <details class="report-notes">
+    <details id="unitLocationReviewPanel" class="report-notes" hidden>
         <summary>Review unit locations (all dates)</summary>
         <div id="unitLocationReview"></div>
     </details>

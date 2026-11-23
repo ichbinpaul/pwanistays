@@ -37,23 +37,6 @@ function legacyContribution(booking) {
     return legacyAmount(booking.guest_paid) - legacyAmount(booking.host_cost) - legacyAmount(booking.charges);
 }
 
-export function legacyComparison(bookings) {
-    const empty = () => ({ count: 0, paid: 0, contribution: 0 });
-    const totals = empty(), otherStatus = empty(), withoutContribution = empty(), withContribution = empty();
-    for (const booking of bookings) {
-        const paid = legacyAmount(booking.guest_paid);
-        const contribution = legacyContribution(booking);
-        const group = booking.status?.trim().toLowerCase() !== 'complete' ? otherStatus
-            : bookedAmounts(booking).contribution === null ? withoutContribution : withContribution;
-        for (const row of [totals, group]) {
-            row.count++;
-            row.paid += paid;
-            row.contribution += contribution;
-        }
-    }
-    return { totals, otherStatus, withoutContribution, withContribution };
-}
-
 export function bookingWrite(fields, previous = null) {
     const { profit, month, nights, ...patch } = fields;
     const booking = { ...previous, ...patch };
@@ -214,7 +197,7 @@ export function bookingLocationReview(bookings) {
         const [first, second] = recorded;
         const tied = first && first.count === second?.count;
         const usual = unit && !tied ? first?.location : '';
-        if (unit && (confirmed || recorded.length > 1 || missing)) patterns.push({ unit, confirmed, missing, recorded });
+        const previousConflictCount = conflicts.length;
 
         for (const { booking, location, recordedName } of review.bookings) {
             const key = location.toLowerCase();
@@ -235,6 +218,7 @@ export function bookingLocationReview(bookings) {
                 contribution: bookedAmounts(booking).contribution,
             });
         }
+        if (unit && conflicts.length > previousConflictCount) patterns.push({ unit, confirmed, missing, recorded });
     }
     patterns.sort((a, b) => a.unit.localeCompare(b.unit));
     conflicts.sort((a, b) => a.unit.localeCompare(b.unit) || String(a.id ?? '').localeCompare(String(b.id ?? ''), undefined, { numeric: true }));

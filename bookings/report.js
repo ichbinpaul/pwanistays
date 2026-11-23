@@ -1,4 +1,4 @@
-import { amount, bookingLocationReview, bookingReport, furnishingScenario, legacyComparison } from './metrics.js?v=8';
+import { amount, bookingLocationReview, bookingReport, furnishingScenario } from './metrics.js?v=9';
 
 const digits = new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 });
 export const number = value => value == null ? '—' : digits.format(value);
@@ -78,34 +78,12 @@ function card(label, value, context) {
     return `<div class="metric"><h3>${label}</h3><strong>${value}</strong><p>${context}</p></div>`;
 }
 
-function drawComparison(bookings) {
-    const { totals, otherStatus, withoutContribution, withContribution } = legacyComparison(bookings);
-    const rows = [
-        ['Former dashboard totals', totals],
-        ['Pending, In Progress and other statuses', otherStatus],
-        ['Completed with contribution unavailable', withoutContribution],
-        ['Completed with contribution available', withContribution],
-    ];
-    return `<p>The former dashboard included all statuses and counted blank amounts as zero. This comparison uses all dates and the bookings loaded today.</p>
-        <div class="table-wrap" role="region" tabindex="0" aria-label="Comparison with the former dashboard">
-            <table class="reconciliation-table">
-                <thead><tr><th scope="col">Booking group</th><th scope="col">Bookings</th>
-                    <th scope="col">Guest payments (KES)</th><th scope="col">Contribution by the old formula (KES)</th></tr></thead>
-                <tbody>${rows.map(([label, row]) => `<tr><th scope="row">${label}</th>
-                    <td>${number(row.count)}</td><td>${number(row.paid)}</td><td>${number(row.contribution)}</td></tr>`).join('')}
-                </tbody>
-            </table>
-        </div>
-        <p>The performance report uses completed stays. Contribution requires a recorded guest payment. Blank host costs and direct charges count as zero.</p>
-        ${totals.count > 1000 ? '<p>The former dashboard fetched bookings in one request. Its totals could have omitted records beyond the database response limit.</p>' : ''}`;
-}
-
 function drawLocationReview(bookings) {
     const { patterns, conflicts } = bookingLocationReview(bookings);
-    if (!patterns.length && !conflicts.length) return '<p>No bookings with conflicting or blank locations.</p>';
-    return `<p>Counts use the locations saved on bookings across all dates and statuses. Confirm a location before changing a booking flagged by frequency alone.</p>
+    if (!conflicts.length) return '';
+    return `<p>Confirm suggested locations before editing bookings.</p>
         <h3>Bookings to review (${number(conflicts.length)})</h3>
-        ${conflicts.length ? `<div class="table-wrap" role="region" tabindex="0" aria-label="Bookings with location conflicts">
+        <div class="table-wrap" role="region" tabindex="0" aria-label="Bookings with location conflicts">
             <table>
                 <thead><tr><th scope="col">Booking</th><th scope="col">Recorded unit</th><th scope="col">Status</th>
                     <th scope="col">Recorded location</th><th scope="col">Location to check</th>
@@ -117,7 +95,7 @@ function drawLocationReview(bookings) {
                     <td>${escapeHtml(row.location || 'Blank')}</td><td>${escapeHtml(row.locationToCheck || '—')}</td>
                     <td>${escapeHtml(row.reason)}</td><td>${money(row.contribution)}</td></tr>`).join('')}</tbody>
             </table>
-        </div>` : '<p>No bookings with conflicting or blank locations.</p>'}
+        </div>
         ${patterns.length ? `<h3>Recorded locations by unit</h3>
         <div class="table-wrap" role="region" tabindex="0" aria-label="Recorded unit locations">
             <table>
@@ -142,7 +120,7 @@ export function setupReport(root, readBookings, editBooking) {
     const dimension = form.elements.dimension;
     const sort = form.elements.sort;
     const output = root.querySelector('#reportOutput');
-    const comparison = root.querySelector('#legacyComparison');
+    const locationReviewPanel = root.querySelector('#unitLocationReviewPanel');
     const locationReview = root.querySelector('#unitLocationReview');
     const exportButton = root.querySelector('#exportReport');
     const calculator = root.querySelector('#furnishingForm');
@@ -170,7 +148,8 @@ export function setupReport(root, readBookings, editBooking) {
         exportButton.disabled = bookings === null;
         if (bookings === null) {
             output.innerHTML = '<p class="empty">Booking data is unavailable. Refresh bookings to try again.</p>';
-            comparison.innerHTML = '';
+            locationReviewPanel.open = false;
+            locationReviewPanel.hidden = true;
             locationReview.innerHTML = '';
             report = null;
             unit.replaceChildren(new Option('Select a unit', ''));
@@ -180,10 +159,12 @@ export function setupReport(root, readBookings, editBooking) {
 
         const unitLabel = unit.selectedOptions[0]?.text;
         report = bookingReport(bookings, from.value, through.value);
-        comparison.innerHTML = drawComparison(bookings);
-        locationReview.innerHTML = drawLocationReview(bookings);
+        const review = drawLocationReview(bookings);
+        locationReviewPanel.hidden = !review;
+        if (!review) locationReviewPanel.open = false;
+        locationReview.innerHTML = review;
         const { totals, pending, inProgress, other, undated } = report;
-        const missingDates = totals.count - totals.nightCount;
+        const excludedUndated = undated && (from.value || through.value);
         const rows = Array.from(report[dimension.value]);
         if (sort.value !== 'default') {
             const value = sort.value === 'contribution'
@@ -198,15 +179,10 @@ export function setupReport(root, readBookings, editBooking) {
                 ${card('Completed guest payments', money(totals.paidCount ? totals.paid : null), `Recorded on ${totals.paidCount} of ${totals.count} completed stays`)}
                 ${card('Booking contribution', money(totals.costedCount ? totals.contribution : null), `Calculated for ${totals.costedCount} of ${totals.count} completed stays`)}
             </div>
+            ${excludedUndated ? `<p class="field-help">This date filter excludes ${number(undated)} completed ${undated === 1 ? 'stay' : 'stays'} without a valid check-in date.</p>` : ''}
             <div class="report-section">
                 ${reportTable(rows, sections.find(([key]) => key === dimension.value)[1])}
-            </div>
-            <details class="report-notes" ${(missingDates || undated || totals.count > totals.costedCount) ? 'open' : ''}>
-                <summary>How these figures are calculated</summary>
-                <p>Each stay is counted in full in the period of its check-in. Booking contribution is guest payment minus host cost and direct charges. Blank costs and charges count as zero. Overheads, furnishing, tax and financing are outside this figure. Booked nights sum stays, so an occupancy rate also needs a record of nights available.</p>
-                <p>Completed stays with contribution unavailable: ${totals.count - totals.costedCount}. Completed stays with missing or invalid stay dates: ${missingDates}.
-                ${undated && (from.value || through.value) ? `${undated} completed stays across all dates have an unknown check-in and are excluded by this filter.` : ''}</p>
-            </details>`;
+            </div>`;
         unit.replaceChildren(new Option('Select a unit', ''), ...report.units.flatMap((row, index) =>
             row.unit ? [new Option(row.label, index, false, row.label === unitLabel)] : []));
         showEvidence();

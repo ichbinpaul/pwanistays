@@ -1,7 +1,7 @@
 # Automated catalogue source
 
 This prepares public property data and existing photo URLs, plus an optional
-Meta Hotels API adapter. No photos need to be uploaded again. The source JSON is
+Meta Hotels API adapter. The source JSON is
 **not a Meta CSV import feed, and no live WhatsApp connection has been activated**.
 Accommodation eligibility and support for connecting a Hotels and rentals
 catalogue to WhatsApp are assumed for development and remain unverified.
@@ -22,17 +22,65 @@ Each property contains `id`, `title`, `location`, `unit_type`, public `beds`,
 selected `amenities`, `url`, `description`, and `images`. Legacy caption prose,
 rate/contact lines and internal price/commission columns are excluded from the
 published source. IDs remain stable across refreshes. The property URL
-opens its existing website details and gallery. The image list contains at most
-20 HTTPS URLs: the designated cover first, then the numbered gallery order with
-duplicates removed. This is deterministic selection, not AI analysis of room
-coverage, sharpness, or photographic quality. A property with fewer than 20
-photos uses the available photos; it does not receive unrelated filler images.
+opens its existing website details and gallery. The source exports every valid
+public image URL, with the designated cover first and duplicate URLs removed.
+Property pages load gallery thumbnails in groups of 12. The optional Meta
+adapter still sends up to ten images per item.
 
 The source deliberately excludes internal rates, commissions, booking records,
 guest information, and raw legacy promotional captions. It does not invent free
 or placeholder prices, precise addresses, coordinates, star ratings, or live
 availability. Active listings are not a guarantee of availability on requested
 dates. Descriptions direct customers to request current rates and availability.
+
+## Update photos from Windows
+
+The scheduled GitHub workflow reads Supabase. Run the photo uploader on the
+computer with the local photos to copy additions, edits and removals to the
+active galleries.
+
+Download [sync_property_galleries.py](https://raw.githubusercontent.com/ichbinpaul/pwanistays/main/scripts/sync_property_galleries.py)
+to Downloads, then preview the match between active listings and their registered
+folders. The preview reports the number of photos, identical copies and folders
+that need attention.
+
+```powershell
+$script = "$env:USERPROFILE\Downloads\sync_property_galleries.py"
+$photos = "D:\AirbnbMedia\properties"
+py -3 $script $photos
+```
+
+Run a one-time backfill after checking the preview, or add `--watch` to backfill
+and continue scanning every 60 seconds. The watcher waits for two matching
+folder scans before uploading. Keep the PowerShell window open and the drive
+connected while it runs. Stop it with Ctrl+C. Use a single uploader for the
+same folders and keep the GitHub catalogue refresh scheduled.
+
+```powershell
+py -3 $script $photos --apply
+# Backfill and keep watching instead
+py -3 $script $photos --apply --watch
+# Check or update just one registered folder
+py -3 $script $photos --folder "diani/villas/unit1_2br_catherine" --apply
+```
+
+Python 3.9 or later is sufficient. Enter the Supabase project secret in the
+hidden prompt. The uploader reads supported photos from each mapped folder,
+including subfolders, and skips identical copies and hidden entries. It supports
+JPEG, PNG, WebP, AVIF and GIF up to 50 MiB per file, subject to the Supabase
+bucket's upload settings. Convert other image formats before syncing. Check the
+preview for missing, empty or overlapping folders. The script leaves those
+galleries live and reports the issue. Use the original cover again if its bytes
+are still present, otherwise the first filename in natural order becomes the
+cover. Each new revision becomes active after all files are verified against
+Supabase, and past revisions remain in storage.
+
+Visitors who reload a property page see the new gallery after activation.
+The website-owned cover and sharing metadata refresh on the existing GitHub
+workflow. The uploader requests an immediate refresh if an authenticated
+GitHub CLI is available. To refresh on demand, run the
+[workflow](https://github.com/ichbinpaul/pwanistays/actions/workflows/refresh-whatsapp-catalogue.yml)
+with operation `source_only`.
 
 ## Run and verify
 

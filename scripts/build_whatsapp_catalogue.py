@@ -26,7 +26,6 @@ ROOT = Path(__file__).resolve().parents[1]
 FIELDS = "id,title,location,unit_type,image_url,is_active,beds,description"
 PAGE_SIZE = 100
 MAX_PAGES = 1000
-MAX_IMAGES = 20
 REVISION = re.compile(r"^_pwani_v6_[a-f0-9]{16}$")
 IMAGE = re.compile(r"\.(?:jpe?g|png|webp|avif|gif)$", re.I)
 
@@ -145,16 +144,16 @@ def select_photos(base: str, row: dict, files: list[dict]) -> list[str]:
     expected = local_root + quote(prefix, safe="/") + "/"
     if valid_photo(cover) and (not cover.startswith(local_root) or cover.startswith(expected)):
         urls.append(cover)
+    seen = {urlsplit(item)._replace(query="", fragment="").geturl() for item in urls}
     for file in sorted(files, key=photo_order):
         url = expected + quote(file["name"], safe="")
         # Ignore cache query strings when identifying duplicate URLs.
         identity = urlsplit(url)._replace(query="", fragment="").geturl()
-        if any(urlsplit(item)._replace(query="", fragment="").geturl() == identity for item in urls):
+        if identity in seen:
             continue
         urls.append(url)
-        if len(urls) == MAX_IMAGES:
-            break
-    return urls[:MAX_IMAGES]
+        seen.add(identity)
+    return urls
 
 
 def public_amenities(value: str | None) -> list[str]:
@@ -241,7 +240,7 @@ def save_snapshot(snapshot: dict, directory: Path) -> bool:
               "generated_at": snapshot["generated_at"],
               "property_count": len(snapshot["properties"]),
               "image_count": sum(len(p["images"]) for p in snapshot["properties"]),
-              "max_images_per_property": MAX_IMAGES,
+              "largest_gallery": max(len(p["images"]) for p in snapshot["properties"]),
               "selection": "existing_cover_then_numbered_gallery",
               "activation": "Pending Meta import schema validation and WhatsApp catalogue connection"}
     changed = False

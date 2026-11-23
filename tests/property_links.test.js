@@ -103,3 +103,29 @@ test('public amenities omit rates and contact captions', () => {
     assert.deepEqual(Array.from(context.window.PwaniListings.amenities(caption)), ['WiFi', 'Swimming pool']);
     assert.deepEqual(Array.from(context.window.PwaniListings.amenities('• Ksh6500\n• 12,000 per night\n• $100\n• 6000/=\n• Parking')), ['Parking']);
 });
+
+test('the full property gallery includes later storage pages and keeps one designated cover', async () => {
+    const context = {window: {}, console};
+    load('listing-utils.js', context);
+    const u = context.window.PwaniListings;
+    const prefix = id + '/_pwani_v6_0123456789abcdef';
+    const base = 'https://aanyrtsfeeynykskwxen.supabase.co/storage/v1/object/public/property_images/';
+    const files = Array.from({length: 105}, (_, index) => ({
+        name: String(index + 1).padStart(3, '0') + '.jpg', metadata: {mimetype: 'image/jpeg'}
+    }));
+    const offsets = [];
+    const bucket = {
+        list(folder, {limit, offset}) {
+            assert.equal(folder, prefix);
+            offsets.push(offset);
+            return {data: files.slice(offset, offset + limit)};
+        },
+        getPublicUrl: name => ({data: {publicUrl: base + name}})
+    };
+    const cover = base + prefix + '/015.jpg?cache=1';
+    const urls = await u.images({storage: {from: () => bucket}}, {id, image_url: cover});
+    assert.deepEqual(offsets, [0, 100]);
+    assert.equal(urls.length, 105);
+    assert.equal(urls[0], cover);
+    assert.equal(urls.at(-1), base + prefix + '/105.jpg');
+});

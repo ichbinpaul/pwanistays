@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { bookedAmounts, bookingLocation, bookingLocationReview, bookingReport, bookingWrite, furnishingScenario, isoDay, legacyComparison, stayNights, unitNameResolver } from '../bookings/metrics.js';
+import { bookedAmounts, bookingLocation, bookingLocationReview, bookingReport, bookingWrite, furnishingScenario, isoDay, stayNights, unitNameResolver } from '../bookings/metrics.js';
 
 test('stay dates use calendar days, and never turn reversed dates into positive nights', () => {
     assert.equal(isoDay('2026-02-30'), '');
@@ -63,20 +63,19 @@ test('projected payback allows for expenses, zero bookings and impossible break-
     assert.equal(furnishingScenario({ ...inputs, fixed: 150000 }).breakEven, 125);
 });
 
-test('the former totals include pending contribution and treat missing costs as zero', () => {
+test('performance totals use completed stays and their recorded payments', () => {
     const completed = { status: 'Complete', guest_paid: 12_000, host_cost: 9_000, charges: 500, profit: 123 };
     const pending = { status: 'Pending', guest_paid: 4_000, host_cost: 3_500, charges: 0 };
     const completedWithoutCharges = { status: 'Complete', guest_paid: 2_000, host_cost: 500, charges: '' };
     const completedWithoutPayment = { status: 'Complete', guest_paid: null, host_cost: 250 };
     const bookings = [completed, pending, completedWithoutCharges, completedWithoutPayment];
 
-    const comparison = legacyComparison(bookings);
-    assert.deepEqual(comparison.totals, { count: 4, paid: 18_000, contribution: 4_250 });
-    assert.deepEqual(comparison.otherStatus, { count: 1, paid: 4_000, contribution: 500 });
-    assert.equal(comparison.withoutContribution.contribution, -250);
-    assert.equal(comparison.withContribution.contribution, 4_000);
-    assert.equal(bookingReport(bookings).totals.paid, 14_000);
-    assert.equal(bookingReport(bookings).totals.contribution, 4_000);
+    const { totals, pending: pendingCount } = bookingReport(bookings);
+    assert.equal(pendingCount, 1);
+    assert.equal(totals.count, 3);
+    assert.equal(totals.costedCount, 2);
+    assert.equal(totals.paid, 14_000);
+    assert.equal(totals.contribution, 4_000);
     assert.equal(completed.profit, 123);
 });
 

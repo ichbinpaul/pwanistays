@@ -109,9 +109,6 @@ small.mobile-dates { display: none; }
 .report-section, .report-notes { margin-top: 1rem; }
 .report-notes { padding: .78rem .9rem; background: #faf7ed; border-radius: .65rem; font-size: .875rem; }
 .report-notes p { margin-top: .5rem; }
-#legacyComparison .table-wrap { margin-top: .6rem; }
-.reconciliation-table { min-width: 36rem; }
-.reconciliation-table th:not(:first-child), .reconciliation-table td { text-align: right; }
 .report-table { min-width: 54rem; }
 .report-table th:not(:first-child), .report-table td { text-align: right; }
 .calculator { margin-top: 1.5rem; border-top: 1px solid var(--line); padding-top: 1.4rem; }

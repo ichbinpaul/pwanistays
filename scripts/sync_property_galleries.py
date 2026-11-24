@@ -6,6 +6,7 @@ from binascii import Error as Base64Error
 from dataclasses import dataclass
 from getpass import GetPassWarning, getpass
 import hashlib
+from http.client import IncompleteRead
 import json
 import os
 from pathlib import Path
@@ -27,6 +28,8 @@ REPO = "ichbinpaul/pwanistays"
 WORKFLOW = "refresh-whatsapp-catalogue.yml"
 MAX_BYTES = 50 * 1024 * 1024
 PAGE_SIZE = 100
+LISTING_RETRY_DELAYS = (2, 5)
+TEMPORARY_HTTP_ERRORS = {502, 503, 504}
 FIELDS = "id,title,folder_path,image_url,is_active"
 UNSUPPORTED = {".heic", ".heif", ".tif", ".tiff", ".bmp", ".svg", ".dng", ".raw", ".jxl"}
 FORMATS = {
@@ -41,6 +44,15 @@ FORMATS = {
 
 class GalleryError(Exception):
     pass
+
+
+class SupabaseConnectionError(GalleryError):
+    def __init__(self, reason):
+        code = getattr(reason, "winerror", None) or getattr(reason, "errno", None)
+        detail = type(reason).__name__
+        if isinstance(code, int):
+            detail += f", OS error {code}"
+        super().__init__(f"Connection to Supabase failed ({detail}).")
 
 
 @dataclass(frozen=True)
@@ -93,7 +105,9 @@ def request(method, path, *, headers=None, data=None, maximum=MAX_BYTES):
             details = error.read(4096) if error.code in (401, 403) else b""
         return error.code, details
     except URLError as error:
-        raise GalleryError(f"Could not reach the Supabase project ({type(error.reason).__name__}).") from None
+        raise SupabaseConnectionError(error.reason) from None
+    except (OSError, IncompleteRead) as error:
+        raise SupabaseConnectionError(error) from None
 
 
 def credentials():
@@ -182,16 +196,33 @@ def relative_folder(value):
     return Path(*parts)
 
 
+def read_listing_page(headers, offset):
+    query = urlencode({"select": FIELDS, "is_active": "eq.true", "order": "id.asc",
+                       "offset": offset, "limit": PAGE_SIZE})
+    page = offset // PAGE_SIZE + 1
+    operation = f"Could not read active listings from Supabase (page {page})"
+    for delay in (*LISTING_RETRY_DELAYS, None):
+        try:
+            status, body = request("GET", "/rest/v1/properties?" + query, headers=headers)
+        except SupabaseConnectionError as error:
+            failure = f"{operation}. {error}"
+        else:
+            if status == 200:
+                return json.loads(body)
+            failure = f"{operation}, HTTP {status}." + access_hint(status, body)
+            if status not in TEMPORARY_HTTP_ERRORS:
+                raise GalleryError(failure)
+        if delay is None:
+            raise GalleryError(failure)
+        print(f"{failure} Retrying in {delay} seconds.", file=sys.stderr, flush=True)
+        time.sleep(delay)
+
+
 def list_properties(headers):
     rows = []
     seen = set()
     for offset in range(0, 100_000, PAGE_SIZE):
-        query = urlencode({"select": FIELDS, "is_active": "eq.true", "order": "id.asc",
-                           "offset": offset, "limit": PAGE_SIZE})
-        status, body = request("GET", "/rest/v1/properties?" + query, headers=headers)
-        if status != 200:
-            raise GalleryError(f"Could not read active listings (HTTP {status})." + access_hint(status, body))
-        batch = json.loads(body)
+        batch = read_listing_page(headers, offset)
         if not isinstance(batch, list):
             raise GalleryError("Unexpected response while reading active listings.")
         for row in batch:

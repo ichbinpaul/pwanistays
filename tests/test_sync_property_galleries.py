@@ -6,6 +6,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import Mock, patch
+from urllib.error import URLError
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import sync_property_galleries as mod
@@ -20,6 +21,35 @@ def image(path, payload):
 
 
 class GallerySyncTests(unittest.TestCase):
+    def test_retries_transient_listing_failures_on_the_same_page(self):
+        failure = mod.SupabaseConnectionError(OSError(10060, "connect timed out"))
+        with patch.object(mod, "request", side_effect=[failure, (503, b""), (200, b"[]")]) as request, \
+                patch.object(mod.time, "sleep") as sleep, contextlib.redirect_stderr(io.StringIO()) as log:
+            self.assertEqual(mod.read_listing_page({}, 100), [])
+        self.assertEqual(request.call_count, 3)
+        self.assertTrue(all("offset=100" in call.args[1] for call in request.call_args_list))
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [2, 5])
+        self.assertIn("page 2", log.getvalue())
+        self.assertIn("OS error 10060", log.getvalue())
+
+    def test_listing_authentication_errors_fail_without_retrying(self):
+        with patch.object(mod, "request", return_value=(401, b"")) as request, \
+                patch.object(mod.time, "sleep") as sleep:
+            with self.assertRaisesRegex(mod.GalleryError, "HTTP 401"):
+                mod.read_listing_page({}, 0)
+            request.assert_called_once()
+            sleep.assert_not_called()
+
+    def test_connection_errors_include_the_os_code_without_request_details(self):
+        original = OSError("connection failed")
+        original.winerror = 10065
+        opener = Mock()
+        opener.open.side_effect = URLError(original)
+        with patch.object(mod, "build_opener", return_value=opener):
+            with self.assertRaisesRegex(mod.SupabaseConnectionError, r"\(OSError, OS error 10065\)"):
+                mod.request("GET", "/rest/v1/properties", headers={"apikey": "test-secret"})
+        opener.open.assert_called_once()
+
     def test_keeps_all_unique_photos_and_nested_amenities(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

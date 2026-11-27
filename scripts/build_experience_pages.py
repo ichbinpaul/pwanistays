@@ -29,7 +29,7 @@ def render_photo_credits(images):
  seen=set()
  for image in images:
   url=image.get('attribution_url')
-  if not url or url in seen:continue
+  if image.get('credit_required') is False or not url or url in seen:continue
   seen.add(url)
   photo=e(image.get('caption') or image['alt'])
   author=e(image.get('author') or 'See the source for authorship')

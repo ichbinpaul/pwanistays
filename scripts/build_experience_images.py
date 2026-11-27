@@ -67,10 +67,15 @@ def read_original(row, cache, download):
             raise ValueError('Invalid local image path')
         return path.read_bytes()
     parsed = urlsplit(source)
-    if parsed.scheme != 'https' or parsed.hostname not in ALLOWED_HOSTS:
-        raise ValueError('Only original Wikimedia photo sources can be downloaded')
-    resolved = commons_info(row, cache, download) if parsed.hostname == 'commons.wikimedia.org' else source
-    if urlsplit(resolved).scheme != 'https' or urlsplit(resolved).hostname not in ALLOWED_HOSTS:
+    if parsed.scheme == 'https' and parsed.hostname in ALLOWED_HOSTS:
+        download_hosts = ALLOWED_HOSTS
+        resolved = commons_info(row, cache, download) if parsed.hostname == 'commons.wikimedia.org' else source
+    elif parsed.scheme == 'https' and parsed.hostname == 'unsplash.com' and row.get('reviewed'):
+        download_hosts = {'images.unsplash.com'}
+        resolved = row['download_url']
+    else:
+        raise ValueError('Only Wikimedia and reviewed stock photo sources can be downloaded')
+    if urlsplit(resolved).scheme != 'https' or urlsplit(resolved).hostname not in download_hosts:
         raise ValueError('Unexpected photo download host')
     path = cache / (hashlib.sha256(source.encode()).hexdigest() + '.image')
     if path.exists():
@@ -79,7 +84,8 @@ def read_original(row, cache, download):
         raise ValueError(f"Original not cached: {row['stem']}; run with --download")
     req = Request(resolved, headers={'User-Agent': 'PwaniStays-photo-preparation/1.0 (https://pwanistays.com)'})
     with urlopen(req, timeout=30) as response:
-        if urlsplit(response.geturl()).hostname not in ALLOWED_HOSTS:
+        destination = urlsplit(response.geturl())
+        if destination.scheme != 'https' or destination.hostname not in download_hosts:
             raise ValueError('Unexpected image redirect')
         if not response.headers.get('Content-Type', '').startswith('image/'):
             raise ValueError(f"Source is not an image: {row['stem']}")
@@ -167,8 +173,8 @@ def publish(prepared):
                       'sizes': HERO_SIZES if row['role'] == 'hero' else CARD_SIZES,
                       'alt': row['alt'], 'caption': row['caption'],
                       'source': row['source'], 'source_sha256': digest})
-        for key in ('author', 'license', 'license_name', 'attribution_url', 'position'):
-            if row.get(key):
+        for key in ('author', 'license', 'license_name', 'attribution_url', 'position', 'credit_required'):
+            if key in row:
                 image[key] = row[key]
         group = catalog[row['page']]
         if row['role'] == 'hero':

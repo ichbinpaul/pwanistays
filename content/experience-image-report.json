@@ -441,60 +441,60 @@
   },
   {
     "title": "Nairobi Food & Market Exploration",
-    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_City_Market_in_Kenya.jpg?width=1200",
+    "source": "https://www.pexels.com/photo/vibrant-nairobi-market-stalls-displaying-african-textiles-35856106/",
     "variants": [
       {
-        "src": "/images/experiences/nairobi-city-market-360.webp",
+        "src": "/images/experiences/nairobi-market-textile-stalls-360.webp",
         "width": 360,
         "height": 240,
-        "bytes": 18528,
-        "quality": 76
+        "bytes": 23308,
+        "quality": 72
       },
       {
-        "src": "/images/experiences/nairobi-city-market-720.webp",
+        "src": "/images/experiences/nairobi-market-textile-stalls-720.webp",
         "width": 720,
         "height": 480,
-        "bytes": 61752,
-        "quality": 76
+        "bytes": 73244,
+        "quality": 68
       }
     ]
   },
   {
     "title": "Lake Naivasha & Crescent Island",
-    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boat_on_Lake_Naivasha.jpg?width=1200",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Lake_Naivasha_tourists.jpg",
     "variants": [
       {
-        "src": "/images/experiences/lake-naivasha-boat-360.webp",
+        "src": "/images/experiences/lake-naivasha-shoreline-boats-360.webp",
         "width": 360,
         "height": 240,
-        "bytes": 5752,
+        "bytes": 18872,
         "quality": 76
       },
       {
-        "src": "/images/experiences/lake-naivasha-boat-720.webp",
+        "src": "/images/experiences/lake-naivasha-shoreline-boats-720.webp",
         "width": 720,
         "height": 480,
-        "bytes": 18110,
+        "bytes": 73510,
         "quality": 76
       }
     ]
   },
   {
     "title": "Ngong Hills & Kibera Cultural Insight",
-    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ngong_Hills_Kenya.jpg?width=1200",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/9/95/View_From_Ngong_Hills.jpg",
     "variants": [
       {
-        "src": "/images/experiences/ngong-hills-kenya-360.webp",
+        "src": "/images/experiences/ngong-hills-valley-view-360.webp",
         "width": 360,
         "height": 240,
-        "bytes": 10086,
+        "bytes": 4372,
         "quality": 76
       },
       {
-        "src": "/images/experiences/ngong-hills-kenya-607.webp",
-        "width": 607,
-        "height": 405,
-        "bytes": 31702,
+        "src": "/images/experiences/ngong-hills-valley-view-720.webp",
+        "width": 720,
+        "height": 480,
+        "bytes": 17694,
         "quality": 76
       }
     ]

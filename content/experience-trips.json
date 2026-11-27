@@ -994,19 +994,20 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/nairobi-city-market-720.webp",
+            "src": "/images/experiences/nairobi-market-textile-stalls-720.webp",
             "width": 720,
             "height": 480,
-            "srcset": "/images/experiences/nairobi-city-market-360.webp 360w, /images/experiences/nairobi-city-market-720.webp 720w",
+            "srcset": "/images/experiences/nairobi-market-textile-stalls-360.webp 360w, /images/experiences/nairobi-market-textile-stalls-720.webp 720w",
             "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
-            "alt": "The City Market building in Nairobi",
-            "caption": "Various Nairobi Locations",
-            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_City_Market_in_Kenya.jpg?width=1200",
-            "source_sha256": "6de82165fc8c6d2893b056c5d7bca87a97cbdb06cbf36314ae351371484862cc",
-            "author": "AEira-WMF",
-            "license": "https://creativecommons.org/licenses/by/4.0",
-            "license_name": "CC BY 4.0",
-            "attribution_url": "https://commons.wikimedia.org/wiki/File:Nairobi_City_Market_in_Kenya.jpg"
+            "alt": "Colourful textiles and garments at market stalls in Nairobi",
+            "caption": "Nairobi market stalls",
+            "source": "https://www.pexels.com/photo/vibrant-nairobi-market-stalls-displaying-african-textiles-35856106/",
+            "source_sha256": "b6764bcad92e5cc2f54d3ae4b1ee0c9af5d514546654a7d264123b5d3387ebce",
+            "author": "Enoch Wafula",
+            "license": "https://www.pexels.com/license/",
+            "license_name": "Pexels License",
+            "attribution_url": "https://www.pexels.com/photo/vibrant-nairobi-market-stalls-displaying-african-textiles-35856106/",
+            "credit_required": false
           }
         },
         {
@@ -1042,19 +1043,20 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/lake-naivasha-boat-720.webp",
+            "src": "/images/experiences/lake-naivasha-shoreline-boats-720.webp",
             "width": 720,
             "height": 480,
-            "srcset": "/images/experiences/lake-naivasha-boat-360.webp 360w, /images/experiences/lake-naivasha-boat-720.webp 720w",
+            "srcset": "/images/experiences/lake-naivasha-shoreline-boats-360.webp 360w, /images/experiences/lake-naivasha-shoreline-boats-720.webp 720w",
             "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
-            "alt": "A boat on Lake Naivasha",
-            "caption": "Lake Naivasha (2 hours from Nairobi)",
-            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boat_on_Lake_Naivasha.jpg?width=1200",
-            "source_sha256": "6bcc78a6a12fa4855974bede0c16cc39ea26c5bb753c7330d4a2dd7947fdf01f",
-            "author": "Sabina Müller",
-            "license": "https://creativecommons.org/licenses/by-sa/4.0",
-            "license_name": "CC BY-SA 4.0",
-            "attribution_url": "https://commons.wikimedia.org/wiki/File:Boat_on_Lake_Naivasha.jpg"
+            "alt": "Boats and wading birds along the shore of Lake Naivasha",
+            "caption": "Lake Naivasha",
+            "source": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Lake_Naivasha_tourists.jpg",
+            "source_sha256": "567938216c780062eab2069c2a72047b2e748089e59c03c2013921d477e03bad",
+            "author": "Shyamal",
+            "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+            "license_name": "CC0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Lake_Naivasha_tourists.jpg",
+            "credit_required": false
           }
         },
         {
@@ -1090,19 +1092,20 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/ngong-hills-kenya-607.webp",
-            "width": 607,
-            "height": 405,
-            "srcset": "/images/experiences/ngong-hills-kenya-360.webp 360w, /images/experiences/ngong-hills-kenya-607.webp 607w",
+            "src": "/images/experiences/ngong-hills-valley-view-720.webp",
+            "width": 720,
+            "height": 480,
+            "srcset": "/images/experiences/ngong-hills-valley-view-360.webp 360w, /images/experiences/ngong-hills-valley-view-720.webp 720w",
             "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
-            "alt": "The rolling landscape of Ngong Hills, Kenya",
-            "caption": "Ngong Hills & Kibera, Nairobi",
-            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ngong_Hills_Kenya.jpg?width=1200",
-            "source_sha256": "29be4861d42967d90eb332a461feaf3b2dc5ca3aa08253867efd23652e138bd2",
-            "author": "Realisticbiscuit",
-            "license": "https://creativecommons.org/licenses/by-sa/4.0",
-            "license_name": "CC BY-SA 4.0",
-            "attribution_url": "https://commons.wikimedia.org/wiki/File:Ngong_Hills_Kenya.jpg"
+            "alt": "A wide view of plains and scattered fields from Ngong Hills, Kenya",
+            "caption": "View from Ngong Hills",
+            "source": "https://upload.wikimedia.org/wikipedia/commons/9/95/View_From_Ngong_Hills.jpg",
+            "source_sha256": "3d88d71b2478a8adda39f374c68637ef36331fff833ee951bffc8ea2adbd2d08",
+            "author": "safaritravelplus",
+            "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+            "license_name": "CC0",
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:View_From_Ngong_Hills.jpg",
+            "credit_required": false
           }
         },
         {

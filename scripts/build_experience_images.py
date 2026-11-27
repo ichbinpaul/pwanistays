@@ -24,6 +24,7 @@ SOURCE = ROOT / 'content/experience-photo-sources.json'
 CONTENT = ROOT / 'content/experience-trips.json'
 OUTPUT = ROOT / 'images/experiences'
 ALLOWED_HOSTS = {'commons.wikimedia.org', 'upload.wikimedia.org', 'thumb.wikimedia.org'}
+STOCK_IMAGE_HOSTS = {'unsplash.com': 'images.unsplash.com', 'www.pexels.com': 'images.pexels.com'}
 CARD_SIZES = '(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px'
 HERO_SIZES = '(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px'
 
@@ -70,8 +71,8 @@ def read_original(row, cache, download):
     if parsed.scheme == 'https' and parsed.hostname in ALLOWED_HOSTS:
         download_hosts = ALLOWED_HOSTS
         resolved = commons_info(row, cache, download) if parsed.hostname == 'commons.wikimedia.org' else source
-    elif parsed.scheme == 'https' and parsed.hostname == 'unsplash.com' and row.get('reviewed'):
-        download_hosts = {'images.unsplash.com'}
+    elif parsed.scheme == 'https' and parsed.hostname in STOCK_IMAGE_HOSTS and row.get('reviewed'):
+        download_hosts = {STOCK_IMAGE_HOSTS[parsed.hostname]}
         resolved = row['download_url']
     else:
         raise ValueError('Only Wikimedia and reviewed stock photo sources can be downloaded')

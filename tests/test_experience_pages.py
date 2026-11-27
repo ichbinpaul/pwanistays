@@ -23,3 +23,10 @@ class ExperienceTests(unittest.TestCase):
   for mode in ['empty','duplicate']:
    source=self.source();items=source['categories'][0]['items'];source['categories'][0]['items']=[] if mode=='empty' else [items[0],items[0]]
    with self.assertRaises(ValueError):mod.render_pages(source)
+ def test_public_photo_credits_only_skip_explicitly_optional_attribution(self):
+  required={'attribution_url':'https://example.com/required','alt':'Required credit'}
+  optional={'attribution_url':'https://example.com/optional','alt':'Optional credit','credit_required':False}
+  credits=mod.render_photo_credits([required, optional])
+  self.assertIn('https://example.com/required',credits)
+  self.assertNotIn('https://example.com/optional',credits)
+  self.assertEqual(mod.render_photo_credits([optional]),'')

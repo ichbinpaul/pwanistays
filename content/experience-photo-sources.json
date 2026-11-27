@@ -251,16 +251,18 @@
     {
       "page": "nairobi",
       "title": "Nairobi Wildlife Conservation Experience",
-      "stem": "nairobi-national-park-giraffe",
-      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Giraffe%2C_Nairobi_National_Park.jpg?width=1200",
-      "caption": "Nairobi National Park & Animal Orphanages",
-      "alt": "A giraffe in Nairobi National Park",
+      "stem": "nairobi-park-giraffe-city",
+      "source": "https://unsplash.com/photos/a-giraffe-standing-in-front-of-a-city-skyline-9gFshR2w1iw",
+      "caption": "Nairobi National Park",
+      "alt": "A giraffe in Nairobi National Park with the city skyline behind it",
       "role": "trip",
       "reviewed": true,
-      "author": "Michelle Juma",
-      "license": "https://creativecommons.org/licenses/by-sa/4.0",
-      "license_name": "CC BY-SA 4.0",
-      "attribution_url": "https://commons.wikimedia.org/wiki/File:Giraffe,_Nairobi_National_Park.jpg"
+      "author": "Evans Dims",
+      "license": "https://unsplash.com/license",
+      "license_name": "Unsplash License",
+      "attribution_url": "https://unsplash.com/photos/a-giraffe-standing-in-front-of-a-city-skyline-9gFshR2w1iw",
+      "download_url": "https://images.unsplash.com/photo-1690831195945-31fd13dda712?auto=format&fit=max&fm=jpg&w=1400&q=92",
+      "credit_required": false
     },
     {
       "page": "nairobi",
@@ -274,21 +276,25 @@
       "author": "さえぼー",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "license_name": "CC0",
-      "attribution_url": "https://commons.wikimedia.org/wiki/File:Karen_Blixen_Museum_House.jpg"
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Karen_Blixen_Museum_House.jpg",
+      "credit_required": false
     },
     {
       "page": "nairobi",
       "title": "Karura Forest Adventure & City Views",
-      "stem": "karura-forest-nairobi",
-      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nature_trail_within_Karura_Forest_(1).jpg?width=1200",
-      "caption": "Karura Forest & Nairobi Viewpoints",
-      "alt": "A nature trail in Karura Forest, Nairobi",
+      "stem": "nairobi-karura-woodland-path",
+      "source": "https://unsplash.com/photos/shallow-focus-photo-of-green-plants-LLG12OKmR_c",
+      "caption": "Karura Forest, Nairobi",
+      "alt": "A wooded path with exposed roots and a timber railing in Nairobi’s Karura Forest",
       "role": "trip",
       "reviewed": true,
-      "author": "Eva Ayub",
-      "license": "https://creativecommons.org/licenses/by-sa/4.0",
-      "license_name": "CC BY-SA 4.0",
-      "attribution_url": "https://commons.wikimedia.org/wiki/File:Nature_trail_within_Karura_Forest_(1).jpg"
+      "author": "Zac Wolff",
+      "license": "https://unsplash.com/license",
+      "license_name": "Unsplash License",
+      "attribution_url": "https://unsplash.com/photos/shallow-focus-photo-of-green-plants-LLG12OKmR_c",
+      "download_url": "https://images.unsplash.com/photo-1577457040621-ccf4817bafde?auto=format&fit=max&fm=jpg&w=1450&q=92",
+      "credit_required": false,
+      "position": "50% 60%"
     },
     {
       "page": "nairobi",
@@ -344,36 +350,40 @@
       "author": "SeanTwice",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "license_name": "CC0",
-      "attribution_url": "https://commons.wikimedia.org/wiki/File:Tea_farm_in_Limuru,_Kenya.jpg"
+      "attribution_url": "https://commons.wikimedia.org/wiki/File:Tea_farm_in_Limuru,_Kenya.jpg",
+      "credit_required": false
     },
     {
       "page": "nairobi",
       "title": "Nairobi By Night — Entertainment & Culture",
-      "stem": "nairobi-skyline-at-night",
-      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_skyline_at_Night.jpg?width=1200",
-      "caption": "Various Nairobi Nightlife Spots",
-      "alt": "The Nairobi skyline illuminated at night",
+      "stem": "nairobi-city-night-light-trails",
+      "source": "https://unsplash.com/photos/a-view-of-a-city-at-night-from-the-top-of-a-building-833P7yxEHF8",
+      "caption": "Central Nairobi at night",
+      "alt": "Traffic light trails among buildings in central Nairobi at night",
       "role": "trip",
       "reviewed": true,
-      "author": "Kevoyugi",
-      "license": "https://creativecommons.org/licenses/by-sa/4.0",
-      "license_name": "CC BY-SA 4.0",
-      "attribution_url": "https://commons.wikimedia.org/wiki/File:Nairobi_skyline_at_Night.jpg",
-      "position": "50% 80%"
+      "author": "Click Smith | Nick254 Media Ltd",
+      "license": "https://unsplash.com/license",
+      "license_name": "Unsplash License",
+      "attribution_url": "https://unsplash.com/photos/a-view-of-a-city-at-night-from-the-top-of-a-building-833P7yxEHF8",
+      "download_url": "https://images.unsplash.com/photo-1646066394887-c6cfe3aa8887?auto=format&fit=max&fm=jpg&w=1400&q=92",
+      "credit_required": false
     },
     {
       "page": "nairobi",
       "title": "Nairobi & Inland",
-      "stem": "nairobi-kicc-skyline",
-      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg?width=1200",
-      "caption": "Nairobi skyline",
-      "alt": "An aerial view of Nairobi’s skyline from the KICC rooftop",
+      "stem": "nairobi-kicc-daylight",
+      "source": "https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-vyagy6HJpVE",
+      "caption": "Nairobi skyline with the Kenyatta International Convention Centre",
+      "alt": "The Kenyatta International Convention Centre in Nairobi’s skyline under a blue sky",
       "role": "hero",
       "reviewed": true,
-      "author": "Lebu Ayiga",
-      "license": "https://creativecommons.org/licenses/by-sa/4.0",
-      "license_name": "CC BY-SA 4.0",
-      "attribution_url": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg"
+      "author": "Kenny Murgor",
+      "license": "https://unsplash.com/license",
+      "license_name": "Unsplash License",
+      "attribution_url": "https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-vyagy6HJpVE",
+      "download_url": "https://images.unsplash.com/photo-1693902997450-7e912c0d3554?auto=format&fit=max&fm=jpg&w=1800&q=92",
+      "credit_required": false
     }
   ]
 }

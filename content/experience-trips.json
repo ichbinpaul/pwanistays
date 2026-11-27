@@ -846,19 +846,20 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/nairobi-national-park-giraffe-720.webp",
+            "src": "/images/experiences/nairobi-park-giraffe-city-720.webp",
             "width": 720,
             "height": 480,
-            "srcset": "/images/experiences/nairobi-national-park-giraffe-360.webp 360w, /images/experiences/nairobi-national-park-giraffe-720.webp 720w",
+            "srcset": "/images/experiences/nairobi-park-giraffe-city-360.webp 360w, /images/experiences/nairobi-park-giraffe-city-720.webp 720w",
             "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
-            "alt": "A giraffe in Nairobi National Park",
-            "caption": "Nairobi National Park & Animal Orphanages",
-            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Giraffe%2C_Nairobi_National_Park.jpg?width=1200",
-            "source_sha256": "fc3c7f04e35c03a3f2c31cccaaa9ee69362d6ef680e8c6f1fbae4755add94da9",
-            "author": "Michelle Juma",
-            "license": "https://creativecommons.org/licenses/by-sa/4.0",
-            "license_name": "CC BY-SA 4.0",
-            "attribution_url": "https://commons.wikimedia.org/wiki/File:Giraffe,_Nairobi_National_Park.jpg"
+            "alt": "A giraffe in Nairobi National Park with the city skyline behind it",
+            "caption": "Nairobi National Park",
+            "source": "https://unsplash.com/photos/a-giraffe-standing-in-front-of-a-city-skyline-9gFshR2w1iw",
+            "source_sha256": "0461409f80359005611939a01c6f43a258a9f641dd6e14371f352a1650ec2c74",
+            "author": "Evans Dims",
+            "license": "https://unsplash.com/license",
+            "license_name": "Unsplash License",
+            "attribution_url": "https://unsplash.com/photos/a-giraffe-standing-in-front-of-a-city-skyline-9gFshR2w1iw",
+            "credit_required": false
           }
         },
         {
@@ -906,7 +907,8 @@
             "author": "さえぼー",
             "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
             "license_name": "CC0",
-            "attribution_url": "https://commons.wikimedia.org/wiki/File:Karen_Blixen_Museum_House.jpg"
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Karen_Blixen_Museum_House.jpg",
+            "credit_required": false
           }
         },
         {
@@ -942,19 +944,21 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/karura-forest-nairobi-720.webp",
+            "src": "/images/experiences/nairobi-karura-woodland-path-720.webp",
             "width": 720,
             "height": 480,
-            "srcset": "/images/experiences/karura-forest-nairobi-360.webp 360w, /images/experiences/karura-forest-nairobi-720.webp 720w",
+            "srcset": "/images/experiences/nairobi-karura-woodland-path-360.webp 360w, /images/experiences/nairobi-karura-woodland-path-720.webp 720w",
             "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
-            "alt": "A nature trail in Karura Forest, Nairobi",
-            "caption": "Karura Forest & Nairobi Viewpoints",
-            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nature_trail_within_Karura_Forest_(1).jpg?width=1200",
-            "source_sha256": "88134cbb3b0d4fd65d8d2c0fe5ecfa082d0f7171ec8d16aa0b02f26c4449901f",
-            "author": "Eva Ayub",
-            "license": "https://creativecommons.org/licenses/by-sa/4.0",
-            "license_name": "CC BY-SA 4.0",
-            "attribution_url": "https://commons.wikimedia.org/wiki/File:Nature_trail_within_Karura_Forest_(1).jpg"
+            "alt": "A wooded path with exposed roots and a timber railing in Nairobi’s Karura Forest",
+            "caption": "Karura Forest, Nairobi",
+            "source": "https://unsplash.com/photos/shallow-focus-photo-of-green-plants-LLG12OKmR_c",
+            "source_sha256": "415bbd0992972e18c673ebd6781116148de7588941ab9823a7393187d1eda2ea",
+            "author": "Zac Wolff",
+            "license": "https://unsplash.com/license",
+            "license_name": "Unsplash License",
+            "attribution_url": "https://unsplash.com/photos/shallow-focus-photo-of-green-plants-LLG12OKmR_c",
+            "position": "50% 60%",
+            "credit_required": false
           }
         },
         {
@@ -1146,7 +1150,8 @@
             "author": "SeanTwice",
             "license": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
             "license_name": "CC0",
-            "attribution_url": "https://commons.wikimedia.org/wiki/File:Tea_farm_in_Limuru,_Kenya.jpg"
+            "attribution_url": "https://commons.wikimedia.org/wiki/File:Tea_farm_in_Limuru,_Kenya.jpg",
+            "credit_required": false
           }
         },
         {
@@ -1182,37 +1187,38 @@
             ]
           ],
           "image": {
-            "src": "/images/experiences/nairobi-skyline-at-night-720.webp",
+            "src": "/images/experiences/nairobi-city-night-light-trails-720.webp",
             "width": 720,
             "height": 480,
-            "srcset": "/images/experiences/nairobi-skyline-at-night-360.webp 360w, /images/experiences/nairobi-skyline-at-night-720.webp 720w",
+            "srcset": "/images/experiences/nairobi-city-night-light-trails-360.webp 360w, /images/experiences/nairobi-city-night-light-trails-720.webp 720w",
             "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1050px) 44vw, 384px",
-            "alt": "The Nairobi skyline illuminated at night",
-            "caption": "Various Nairobi Nightlife Spots",
-            "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nairobi_skyline_at_Night.jpg?width=1200",
-            "source_sha256": "532eb7f84729dfb1a2ef29ed502c3ba31af6c2c5b3bbe8c03a6ecabd97a6a768",
-            "author": "Kevoyugi",
-            "license": "https://creativecommons.org/licenses/by-sa/4.0",
-            "license_name": "CC BY-SA 4.0",
-            "attribution_url": "https://commons.wikimedia.org/wiki/File:Nairobi_skyline_at_Night.jpg",
-            "position": "50% 80%"
+            "alt": "Traffic light trails among buildings in central Nairobi at night",
+            "caption": "Central Nairobi at night",
+            "source": "https://unsplash.com/photos/a-view-of-a-city-at-night-from-the-top-of-a-building-833P7yxEHF8",
+            "source_sha256": "e3d015515a4f3d592db954bce41c438d8d88fd3892bd333bc950c3ae23d6371f",
+            "author": "Click Smith | Nick254 Media Ltd",
+            "license": "https://unsplash.com/license",
+            "license_name": "Unsplash License",
+            "attribution_url": "https://unsplash.com/photos/a-view-of-a-city-at-night-from-the-top-of-a-building-833P7yxEHF8",
+            "credit_required": false
           }
         }
       ],
       "hero_image": {
-        "src": "/images/experiences/nairobi-kicc-skyline-1200.webp",
+        "src": "/images/experiences/nairobi-kicc-daylight-1200.webp",
         "width": 1200,
         "height": 900,
-        "srcset": "/images/experiences/nairobi-kicc-skyline-640.webp 640w, /images/experiences/nairobi-kicc-skyline-1200.webp 1200w",
+        "srcset": "/images/experiences/nairobi-kicc-daylight-640.webp 640w, /images/experiences/nairobi-kicc-daylight-1200.webp 1200w",
         "sizes": "(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 48vw, 620px",
-        "alt": "An aerial view of Nairobi’s skyline from the KICC rooftop",
-        "caption": "Nairobi skyline",
-        "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg?width=1200",
-        "source_sha256": "a996c3ecdfc949a636b0b3db8cf032a4b584a19061c80d5f859503fe8c142ea6",
-        "author": "Lebu Ayiga",
-        "license": "https://creativecommons.org/licenses/by-sa/4.0",
-        "license_name": "CC BY-SA 4.0",
-        "attribution_url": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Nairobi_skyline_from_the_KICC_rooftop_at_golden_hour.jpg"
+        "alt": "The Kenyatta International Convention Centre in Nairobi’s skyline under a blue sky",
+        "caption": "Nairobi skyline with the Kenyatta International Convention Centre",
+        "source": "https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-vyagy6HJpVE",
+        "source_sha256": "4a5ae49d46fc175fec9e30f0ab39d9e97e62da7842c40b86db970ed338bad873",
+        "author": "Kenny Murgor",
+        "license": "https://unsplash.com/license",
+        "license_name": "Unsplash License",
+        "attribution_url": "https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-vyagy6HJpVE",
+        "credit_required": false
       }
     }
   ]
